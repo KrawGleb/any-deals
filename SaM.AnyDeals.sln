@@ -1,0 +1,43 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.4.33103.184
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{419A6ACE-0419-4315-A6FB-B0E63D39432E}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "tests", "tests", "{02906BE5-8FEF-4D83-A6E9-A19696278334}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SaM.AnyDeals.API", "src\SaM.AnyDeals.API\SaM.AnyDeals.API.csproj", "{DB90DA8A-832B-464C-8DBE-1F8C10D158C3}"
+EndProject
+Project("{E53339B2-1760-4266-BCC7-CA923CBCF16C}") = "docker-compose", "docker-compose.dcproj", "{871D70CF-A60D-4892-B3BE-14088AD7A075}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{CF6E2C8B-3828-4CFA-B3A4-638D5B517B08}"
+	ProjectSection(SolutionItems) = preProject
+		.gitignore = .gitignore
+	EndProjectSection
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{DB90DA8A-832B-464C-8DBE-1F8C10D158C3}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{DB90DA8A-832B-464C-8DBE-1F8C10D158C3}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{DB90DA8A-832B-464C-8DBE-1F8C10D158C3}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{DB90DA8A-832B-464C-8DBE-1F8C10D158C3}.Release|Any CPU.Build.0 = Release|Any CPU
+		{871D70CF-A60D-4892-B3BE-14088AD7A075}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{871D70CF-A60D-4892-B3BE-14088AD7A075}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{871D70CF-A60D-4892-B3BE-14088AD7A075}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{871D70CF-A60D-4892-B3BE-14088AD7A075}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{DB90DA8A-832B-464C-8DBE-1F8C10D158C3} = {419A6ACE-0419-4315-A6FB-B0E63D39432E}
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {799D36CB-3804-421D-B98D-C4F525BCAC0B}
+	EndGlobalSection
+EndGlobal

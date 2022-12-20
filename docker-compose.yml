@@ -1,0 +1,15 @@
+version: '3.4'
+
+services:
+  api:
+    image: ${DOCKER_REGISTRY-}api
+    build:
+      context: src/SaM.AnyDeals.API
+      dockerfile: Dockerfile
+  client:
+    image: ${DOCKER_REGISTRY-}client
+    build:
+      context: src/SaM.AnyDeals.Web
+      dockerfile: Dockerfile
+  proxy:
+    image: nginx:latest
