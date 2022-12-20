@@ -1,6 +1,9 @@
 version: '3.4'
 
 services:
+  database:
+    ports:
+      - "1433:1433"
   api:
     environment:
       - ASPNETCORE_ENVIRONMENT=Development
