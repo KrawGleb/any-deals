@@ -1,11 +1,18 @@
 version: '3.4'
 
 services:
+  database:
+    image: "mcr.microsoft.com/mssql/server:2019-latest"
+    environment:
+      - ACCEPT_EULA=Y
+      - SA_PASSWORD=ChangeMe123!
   api:
     image: ${DOCKER_REGISTRY-}api
     build:
       context: src/SaM.AnyDeals.API
       dockerfile: Dockerfile
+    depends_on:
+      - database
   client:
     image: ${DOCKER_REGISTRY-}client
     build:
