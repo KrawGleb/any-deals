@@ -421,3 +421,6 @@ src/SaM.AnyDeals.Web/*.env.production.local
 src/SaM.AnyDeals.Web/npm-debug.log*
 src/SaM.AnyDeals.Web/yarn-debug.log*
 src/SaM.AnyDeals.Web/yarn-error.log*
+
+# SQL Server volume
+data

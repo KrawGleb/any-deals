@@ -4,6 +4,8 @@ services:
   database:
     ports:
       - "1433:1433"
+    volumes:
+      - ./data:/var/opt/mssql/data
   backend:
     environment:
       - ASPNETCORE_ENVIRONMENT=Development
