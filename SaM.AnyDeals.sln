@@ -13,7 +13,9 @@ Project("{E53339B2-1760-4266-BCC7-CA923CBCF16C}") = "docker-compose", "docker-co
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{CF6E2C8B-3828-4CFA-B3A4-638D5B517B08}"
 	ProjectSection(SolutionItems) = preProject
+		.editorconfig = .editorconfig
 		.gitignore = .gitignore
+		README.md = README.md
 	EndProjectSection
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SaM.AnyDeals.Application", "src\SaM.AnyDeals.Application\SaM.AnyDeals.Application.csproj", "{B3698EAF-1EF0-44F7-B9F9-14A05F468BF9}"
