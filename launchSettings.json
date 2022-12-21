@@ -4,10 +4,10 @@
       "commandName": "DockerCompose",
       "commandVersion": "1.0",
       "composeLaunchAction": "LaunchBrowser",
-      "composeLaunchServiceName": "api",
+      "composeLaunchServiceName": "backend",
       "composeLaunchUrl": "http://localhost:5000/swagger",
       "serviceActions": {
-        "api": "StartDebugging",
+        "backend": "StartDebugging",
         "client": "StartWithoutDebugging",
         "database": "StartWithoutDebugging",
         "proxy": "StartWithoutDebugging"

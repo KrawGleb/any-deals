@@ -6,8 +6,8 @@ services:
     environment:
       - ACCEPT_EULA=Y
       - SA_PASSWORD=ChangeMe123!
-  api:
-    image: ${DOCKER_REGISTRY-}api
+  backend:
+    image: ${DOCKER_REGISTRY-}backend
     build:
       context: src/SaM.AnyDeals.API
       dockerfile: Dockerfile
