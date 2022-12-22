@@ -26,6 +26,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SaM.AnyDeals.DataAccess", "
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SaM.AnyDeals.DataAccess.Models", "src\SaM.AnyDeals.DataAccess.Models\SaM.AnyDeals.DataAccess.Models.csproj", "{0E0973E4-414E-4937-8A0E-031F0A53B4FB}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SaM.AnyDeals.Common", "src\SaM.AnyDeals.Common\SaM.AnyDeals.Common.csproj", "{02B23D81-089B-4E6A-B6C0-640A9B729CFC}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -56,6 +58,10 @@ Global
 		{0E0973E4-414E-4937-8A0E-031F0A53B4FB}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{0E0973E4-414E-4937-8A0E-031F0A53B4FB}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{0E0973E4-414E-4937-8A0E-031F0A53B4FB}.Release|Any CPU.Build.0 = Release|Any CPU
+		{02B23D81-089B-4E6A-B6C0-640A9B729CFC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{02B23D81-089B-4E6A-B6C0-640A9B729CFC}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{02B23D81-089B-4E6A-B6C0-640A9B729CFC}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{02B23D81-089B-4E6A-B6C0-640A9B729CFC}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -66,6 +72,7 @@ Global
 		{11D56C40-A5A0-464E-9C7A-87717DF3C8AB} = {419A6ACE-0419-4315-A6FB-B0E63D39432E}
 		{50C14A7C-28B1-4439-B852-C69CF25073D1} = {419A6ACE-0419-4315-A6FB-B0E63D39432E}
 		{0E0973E4-414E-4937-8A0E-031F0A53B4FB} = {419A6ACE-0419-4315-A6FB-B0E63D39432E}
+		{02B23D81-089B-4E6A-B6C0-640A9B729CFC} = {419A6ACE-0419-4315-A6FB-B0E63D39432E}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {799D36CB-3804-421D-B98D-C4F525BCAC0B}
