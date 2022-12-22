@@ -9,17 +9,14 @@
   <ItemGroup>
     <PackageReference Include="MediatR" Version="11.1.0" />
     <PackageReference Include="MediatR.Extensions.Microsoft.DependencyInjection" Version="11.0.0" />
+    <PackageReference Include="Microsoft.AspNetCore.Identity" Version="2.2.0" />
     <PackageReference Include="Microsoft.Extensions.DependencyInjection.Abstractions" Version="7.0.0" />
+    <PackageReference Include="System.IdentityModel.Tokens.Jwt" Version="6.21.0" />
   </ItemGroup>
 
   <ItemGroup>
     <ProjectReference Include="..\SaM.AnyDeals.Application.Models\SaM.AnyDeals.Application.Models.csproj" />
     <ProjectReference Include="..\SaM.AnyDeals.DataAccess.Models\SaM.AnyDeals.DataAccess.Models.csproj" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Folder Include="Handlers\Auth\QueryHandlers\" />
-    <Folder Include="Requests\Auth\Queries\Login\" />
   </ItemGroup>
 
 </Project>

@@ -11,6 +11,8 @@ services:
     build:
       context: src/SaM.AnyDeals.API
       dockerfile: Dockerfile
+    environment:
+      - JWTSecurityKey=!123__MyJWTSecretKey__123!
     depends_on:
       - database
   client:
