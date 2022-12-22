@@ -14,6 +14,12 @@
 
   <ItemGroup>
     <ProjectReference Include="..\SaM.AnyDeals.Application.Models\SaM.AnyDeals.Application.Models.csproj" />
+    <ProjectReference Include="..\SaM.AnyDeals.DataAccess.Models\SaM.AnyDeals.DataAccess.Models.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Handlers\Auth\QueryHandlers\" />
+    <Folder Include="Requests\Auth\Queries\Login\" />
   </ItemGroup>
 
 </Project>

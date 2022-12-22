@@ -1,6 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
-using SaM.AnyDeals.DataAccess.Models.Identity;
+using SaM.AnyDeals.DataAccess.Models.Auth;
 
 namespace SaM.AnyDeals.DataAccess.EntityConfigurations;
 

@@ -1,5 +1,5 @@
 ﻿using SaM.AnyDeals.DataAccess.Models.Enums;
-using SaM.AnyDeals.DataAccess.Models.Identity;
+using SaM.AnyDeals.DataAccess.Models.Auth;
 
 namespace SaM.AnyDeals.DataAccess.Models.Entries;
 

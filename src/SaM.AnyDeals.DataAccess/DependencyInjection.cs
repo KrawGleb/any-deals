@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using SaM.AnyDeals.DataAccess.Implementations;
-using SaM.AnyDeals.DataAccess.Models.Identity;
+using SaM.AnyDeals.DataAccess.Models.Auth;
 
 namespace SaM.AnyDeals.DataAccess;
 

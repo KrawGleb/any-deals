@@ -1,4 +1,5 @@
 using Microsoft.AspNetCore.HttpOverrides;
+using SaM.AnyDeals.Application;
 using SaM.AnyDeals.DataAccess;
 using SaM.AnyDeals.DataAccess.Extensions;
 
@@ -9,6 +10,7 @@ var configuration = builder.Configuration;
 // Add services to the container.
 
 services.AddDataAccess(configuration);
+services.AddApplication();
 
 services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
