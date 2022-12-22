@@ -10,6 +10,11 @@ public class AdvertEntityConfiguration : EntityConfigurationBase<AdvertDbEntry>
     public override void ConfigureRelationships(EntityTypeBuilder<AdvertDbEntry> builder)
     {
         builder
+            .HasOne(a => a.Creator)
+            .WithMany(c => c.Adverts)
+            .HasForeignKey(a => a.CreatorId);
+
+        builder
             .HasOne(a => a.City)
             .WithMany(c => c.Adverts)
             .OnDelete(DeleteBehavior.NoAction);
@@ -22,7 +27,8 @@ public class AdvertEntityConfiguration : EntityConfigurationBase<AdvertDbEntry>
         builder
             .HasOne(a => a.Contacts)
             .WithOne(c => c.Advert)
-            .OnDelete(DeleteBehavior.Cascade);
+            .OnDelete(DeleteBehavior.Cascade)
+            .HasForeignKey<ContactsDbEntry>(c => c.AdvertId);
 
         builder
             .HasMany(a => a.Attachments)

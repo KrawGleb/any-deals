@@ -10,7 +10,8 @@ public class ContactsEntityConfiguration : EntityConfigurationBase<ContactsDbEnt
     {
         builder
             .HasOne(c => c.Advert)
-            .WithOne(a => a.Contacts);
+            .WithOne(a => a.Contacts)
+            .HasForeignKey<AdvertDbEntry>(a => a.ContactsId);
     }
 
     public override void ConfigureConstraints(EntityTypeBuilder<ContactsDbEntry> builder)

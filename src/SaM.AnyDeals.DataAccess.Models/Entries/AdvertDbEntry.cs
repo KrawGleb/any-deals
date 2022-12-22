@@ -11,7 +11,7 @@ public class AdvertDbEntry : DbEntryBase
     public bool IsCommertial { get; set; }
     public bool IsOffline { get; set; }
 
-    public int CreatorId { get; set; }
+    public string? CreatorId { get; set; }
     public ApplicationUser? Creator { get; set; }
 
     public int CityId { get; set; }

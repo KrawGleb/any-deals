@@ -155,6 +155,198 @@ namespace SaM.AnyDeals.DataAccess.Migrations
                     b.ToTable("AspNetUserTokens", (string)null);
                 });
 
+            modelBuilder.Entity("SaM.AnyDeals.DataAccess.Models.Entries.AdvertDbEntry", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<int>("CategoryId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("CityId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("ContactsId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("CreatorId")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<string>("Decsription")
+                        .IsRequired()
+                        .HasMaxLength(1000)
+                        .HasColumnType("nvarchar(1000)");
+
+                    b.Property<bool>("IsCommertial")
+                        .HasColumnType("bit");
+
+                    b.Property<bool>("IsOffline")
+                        .HasColumnType("bit");
+
+                    b.Property<string>("Title")
+                        .IsRequired()
+                        .HasMaxLength(100)
+                        .HasColumnType("nvarchar(100)");
+
+                    b.Property<int>("Type")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("CategoryId");
+
+                    b.HasIndex("CityId");
+
+                    b.HasIndex("ContactsId")
+                        .IsUnique();
+
+                    b.HasIndex("CreatorId");
+
+                    b.ToTable("AdvertDbEntry");
+                });
+
+            modelBuilder.Entity("SaM.AnyDeals.DataAccess.Models.Entries.AttachmentDbEntry", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<int>("AdvertId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Link")
+                        .IsRequired()
+                        .HasMaxLength(300)
+                        .HasColumnType("nvarchar(300)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("AdvertId");
+
+                    b.ToTable("AttachmentDbEntry");
+                });
+
+            modelBuilder.Entity("SaM.AnyDeals.DataAccess.Models.Entries.CategoryDbEntry", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasMaxLength(100)
+                        .HasColumnType("nvarchar(100)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("CategoryDbEntry");
+                });
+
+            modelBuilder.Entity("SaM.AnyDeals.DataAccess.Models.Entries.CityDbEntry", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<int>("CountryId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasMaxLength(50)
+                        .HasColumnType("nvarchar(50)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("CountryId");
+
+                    b.ToTable("CityDbEntry");
+                });
+
+            modelBuilder.Entity("SaM.AnyDeals.DataAccess.Models.Entries.ContactsDbEntry", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<string>("Address")
+                        .HasMaxLength(100)
+                        .HasColumnType("nvarchar(100)");
+
+                    b.Property<int>("AdvertId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Email")
+                        .HasMaxLength(100)
+                        .HasColumnType("nvarchar(100)");
+
+                    b.Property<string>("Facebook")
+                        .HasMaxLength(100)
+                        .HasColumnType("nvarchar(100)");
+
+                    b.Property<string>("Instagram")
+                        .HasMaxLength(100)
+                        .HasColumnType("nvarchar(100)");
+
+                    b.Property<string>("LinkedIn")
+                        .HasMaxLength(100)
+                        .HasColumnType("nvarchar(100)");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasMaxLength(100)
+                        .HasColumnType("nvarchar(100)");
+
+                    b.Property<string>("Phone")
+                        .HasMaxLength(20)
+                        .HasColumnType("nvarchar(20)");
+
+                    b.Property<string>("Telegram")
+                        .HasMaxLength(100)
+                        .HasColumnType("nvarchar(100)");
+
+                    b.Property<string>("VK")
+                        .HasMaxLength(100)
+                        .HasColumnType("nvarchar(100)");
+
+                    b.Property<string>("WhatsApp")
+                        .HasMaxLength(100)
+                        .HasColumnType("nvarchar(100)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("ContactsDbEntry");
+                });
+
+            modelBuilder.Entity("SaM.AnyDeals.DataAccess.Models.Entries.CountryDbEntry", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasMaxLength(50)
+                        .HasColumnType("nvarchar(50)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("CountryDbEntry");
+                });
+
             modelBuilder.Entity("SaM.AnyDeals.DataAccess.Models.Identity.ApplicationUser", b =>
                 {
                     b.Property<string>("Id")
@@ -269,6 +461,92 @@ namespace SaM.AnyDeals.DataAccess.Migrations
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+                });
+
+            modelBuilder.Entity("SaM.AnyDeals.DataAccess.Models.Entries.AdvertDbEntry", b =>
+                {
+                    b.HasOne("SaM.AnyDeals.DataAccess.Models.Entries.CategoryDbEntry", "Category")
+                        .WithMany("Adverts")
+                        .HasForeignKey("CategoryId")
+                        .OnDelete(DeleteBehavior.NoAction)
+                        .IsRequired();
+
+                    b.HasOne("SaM.AnyDeals.DataAccess.Models.Entries.CityDbEntry", "City")
+                        .WithMany("Adverts")
+                        .HasForeignKey("CityId")
+                        .OnDelete(DeleteBehavior.NoAction)
+                        .IsRequired();
+
+                    b.HasOne("SaM.AnyDeals.DataAccess.Models.Entries.ContactsDbEntry", "Contacts")
+                        .WithOne("Advert")
+                        .HasForeignKey("SaM.AnyDeals.DataAccess.Models.Entries.AdvertDbEntry", "ContactsId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("SaM.AnyDeals.DataAccess.Models.Identity.ApplicationUser", "Creator")
+                        .WithMany("Adverts")
+                        .HasForeignKey("CreatorId")
+                        .OnDelete(DeleteBehavior.Cascade);
+
+                    b.Navigation("Category");
+
+                    b.Navigation("City");
+
+                    b.Navigation("Contacts");
+
+                    b.Navigation("Creator");
+                });
+
+            modelBuilder.Entity("SaM.AnyDeals.DataAccess.Models.Entries.AttachmentDbEntry", b =>
+                {
+                    b.HasOne("SaM.AnyDeals.DataAccess.Models.Entries.AdvertDbEntry", "Advert")
+                        .WithMany("Attachments")
+                        .HasForeignKey("AdvertId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Advert");
+                });
+
+            modelBuilder.Entity("SaM.AnyDeals.DataAccess.Models.Entries.CityDbEntry", b =>
+                {
+                    b.HasOne("SaM.AnyDeals.DataAccess.Models.Entries.CountryDbEntry", "Country")
+                        .WithMany("Cities")
+                        .HasForeignKey("CountryId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Country");
+                });
+
+            modelBuilder.Entity("SaM.AnyDeals.DataAccess.Models.Entries.AdvertDbEntry", b =>
+                {
+                    b.Navigation("Attachments");
+                });
+
+            modelBuilder.Entity("SaM.AnyDeals.DataAccess.Models.Entries.CategoryDbEntry", b =>
+                {
+                    b.Navigation("Adverts");
+                });
+
+            modelBuilder.Entity("SaM.AnyDeals.DataAccess.Models.Entries.CityDbEntry", b =>
+                {
+                    b.Navigation("Adverts");
+                });
+
+            modelBuilder.Entity("SaM.AnyDeals.DataAccess.Models.Entries.ContactsDbEntry", b =>
+                {
+                    b.Navigation("Advert");
+                });
+
+            modelBuilder.Entity("SaM.AnyDeals.DataAccess.Models.Entries.CountryDbEntry", b =>
+                {
+                    b.Navigation("Cities");
+                });
+
+            modelBuilder.Entity("SaM.AnyDeals.DataAccess.Models.Identity.ApplicationUser", b =>
+                {
+                    b.Navigation("Adverts");
                 });
 #pragma warning restore 612, 618
         }
