@@ -11,4 +11,5 @@ public static class ContactsConstraints
     public const int TelegramMaxLength = 100;
     public const int LinkedInMaxLength = 100;
     public const int WhatsAppMaxLength = 100;
+    public const int InstagramMaxLength = 100;
 }

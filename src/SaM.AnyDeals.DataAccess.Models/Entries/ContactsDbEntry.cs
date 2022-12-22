@@ -12,4 +12,7 @@ public class ContactsDbEntry : DbEntryBase
     public string? LinkedIn { get; set; }
     public string? Telegram { get; set; }
     public string? WhatsApp { get; set; }
+
+    public int AdvertId { get; set; }
+    public AdvertDbEntry? Advert { get; set; }
 }

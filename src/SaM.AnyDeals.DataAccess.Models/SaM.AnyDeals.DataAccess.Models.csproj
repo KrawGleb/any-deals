@@ -10,4 +10,8 @@
     <PackageReference Include="Microsoft.AspNetCore.Identity.EntityFrameworkCore" Version="7.0.1" />
   </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\SaM.AnyDeals.Common\SaM.AnyDeals.Common.csproj" />
+  </ItemGroup>
+
 </Project>

@@ -6,4 +6,6 @@ public class CityDbEntry : DbEntryBase
 
     public int CountryId { get; set; }
     public CountryDbEntry? Country { get; set; }
+
+    public List<AdvertDbEntry>? Adverts { get; set; }
 }
