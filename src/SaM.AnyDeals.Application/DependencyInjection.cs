@@ -14,8 +14,6 @@ public static class DependencyInjection
         services.AddMediatR(assembly);
         services.AddAutoMapper(assembly);
 
-        Console.WriteLine(Environment.GetEnvironmentVariable("JWTSecurityKey"));
-
         services.Configure<JWTConfiguration>(instance 
             => instance.Key = Environment.GetEnvironmentVariable("JWTSecurityKey"));
 

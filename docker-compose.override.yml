@@ -10,6 +10,7 @@ services:
     environment:
       - ASPNETCORE_ENVIRONMENT=Development
       - ASPNETCORE_URLS=http://+:80
+      - UseDockerDB=true
       - JWTSecurityKey=!123__MyJWTSecretKey__123!
     ports:
       - "5000:80"
