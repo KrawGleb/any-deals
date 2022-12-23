@@ -6,7 +6,7 @@ namespace SaM.AnyDeals.DataAccess.Models.Entries;
 public class AdvertDbEntry : DbEntryBase
 {
     public string? Title { get; set; }
-    public string? Decsription { get; set; }
+    public string? Description { get; set; }
     public AdvertType Type { get; set; }
     public bool IsCommertial { get; set; }
     public bool IsOffline { get; set; }

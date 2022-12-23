@@ -44,7 +44,7 @@ public class AdvertEntityConfiguration : EntityConfigurationBase<AdvertDbEntry>
             .IsRequired();
 
         builder
-            .Property(a => a.Decsription)
+            .Property(a => a.Description)
             .HasMaxLength(AdvertConstraints.DescriptionMaxLength)
             .IsRequired();
     }
