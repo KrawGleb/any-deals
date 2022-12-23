@@ -47,7 +47,7 @@ function SignUp(props: any) {
           <div className="row">
             <ArrowBackIcon />
           </div>
-          <p className="row nav-text">Back</p>
+          <p className="row nav-text prevent-select">Back</p>
         </div>
       </div>
       <div className="signup__content">
