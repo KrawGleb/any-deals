@@ -1,11 +1,5 @@
-import { Input } from "@mui/material";
-
 function Home() {
-  return (
-    <div>
-      <Input />
-    </div>
-  );
+  return <div>Home works</div>;
 }
 
 export default Home;
