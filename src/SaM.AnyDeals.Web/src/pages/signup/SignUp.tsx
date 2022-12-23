@@ -5,6 +5,7 @@ import Input from "../../components/Input";
 import PrimaryButton from "../../components/PrimaryButton";
 import * as yup from "yup";
 import { yupResolver } from "@hookform/resolvers/yup";
+import axios from "axios";
 
 const schema = yup.object().shape({
   name: yup
@@ -38,6 +39,10 @@ function SignUp(props: any) {
 
   const onSubmit = (data: any) => {
     console.log(data);
+    axios
+      .post("/api/auth/register", data)
+      .then((result) => console.log(result))
+      .catch((error) => console.log(error));
   };
 
   return (
@@ -63,7 +68,7 @@ function SignUp(props: any) {
 
           <div className="form-field form__name">
             <Input
-              {...register("name", { required: true })}
+              {...register("username", { required: true })}
               label="Name"
               error={!!errors.name}
               helperText={errors?.name?.message}

@@ -10,11 +10,12 @@ services:
     environment:
       - ASPNETCORE_ENVIRONMENT=Development
       - ASPNETCORE_URLS=http://+:80
+      - JWTSecurityKey=!123__MyJWTSecretKey__123!
     ports:
       - "5000:80"
   client:
     ports:
-      - "5001:3000" 
+      - "5001:3000"
   proxy:
     volumes:
       - ./nginx.conf:/etc/nginx/nginx.conf 
