@@ -33,7 +33,7 @@ services.AddAuthentication(options =>
         ValidateIssuer = true,
         ValidateAudience = true,
         ValidIssuer = "AnyDealsBackend",
-        ValidAudience = "AnyDealsFrontent",
+        ValidAudience = "AnyDealsFrontend",
         RequireExpirationTime = true,
     };
 });

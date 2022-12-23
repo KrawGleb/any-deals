@@ -16,6 +16,7 @@ public class ApplicationDbContext : IdentityDbContext<ApplicationUser, IdentityR
     private DbSet<CountryDbEntry> Countries { get; set; }
     private DbSet<CityDbEntry> Cities { get; set; }
 
+
     public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options)
         : base(options)
     { }

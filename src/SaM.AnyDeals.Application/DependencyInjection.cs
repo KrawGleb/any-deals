@@ -12,6 +12,7 @@ public static class DependencyInjection
         var assembly = Assembly.GetExecutingAssembly();
 
         services.AddMediatR(assembly);
+        services.AddAutoMapper(assembly);
 
         Console.WriteLine(Environment.GetEnvironmentVariable("JWTSecurityKey"));
 
