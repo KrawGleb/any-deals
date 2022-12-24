@@ -2,6 +2,6 @@
 
 public class CityViewModel
 {
-    public string? City { get; set; }
+    public string? Name { get; set; }
     public CountryViewModel? Country { get; set; }
 }

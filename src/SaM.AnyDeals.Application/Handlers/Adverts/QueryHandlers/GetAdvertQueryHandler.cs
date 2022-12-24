@@ -29,7 +29,7 @@ public class GetAdvertQueryHandler : IRequestHandler<GetAdvertQuery, Response>
 
     private async Task<AdvertViewModel> GetAdvertAsync(int id, CancellationToken cancellationToken)
     {
-        var entry = await _advertsRepository.GetByIdAsync(id, true, cancellationToken);
+        var entry = await _advertsRepository.GetByIdAsync(id, false, cancellationToken);
         var viewModel = _mapper.Map<AdvertViewModel>(entry);
 
         return viewModel;

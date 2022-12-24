@@ -17,25 +17,16 @@ public class AdvertsRepository : RepositoryBase<AdvertDbEntry>, IAdvertsReposito
             ? _table
             : _table.AsNoTracking();
 
+        query = query
+            .Include(e => e.Contacts)
+            .Include(e => e.Attachments)
+            .Include(e => e.Category)
+            .Include(e => e.Creator)
+            .Include(e => e.City)
+                .ThenInclude(c => c!.Country);
+
         var entry = await query.FirstOrDefaultAsync(a => a.Id == id, cancellationToken)
             ?? throw new NotFoundException($"Entry with id {id} not found.");
-
-        // TODO: use builder?
-        await _context.Entry(entry)
-            .Reference(e => e.Contacts)
-            .LoadAsync(cancellationToken);
-
-        await _context.Entry(entry)
-            .Collection(e => e.Attachments!)
-            .LoadAsync(cancellationToken);
-        
-        await _context.Entry(entry)
-            .Reference(e => e.Category)
-            .LoadAsync(cancellationToken);
-
-        await _context.Entry(entry)
-            .Reference(e => e.Creator)
-            .LoadAsync(cancellationToken);
 
         return entry;
     }
