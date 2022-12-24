@@ -8,7 +8,7 @@ import { yupResolver } from "@hookform/resolvers/yup";
 import axios from "axios";
 
 const schema = yup.object().shape({
-  name: yup
+  username: yup
     .string()
     .matches(/^([^0-9]*)$/, "Name should not contain numbers")
     .required("Name is a required field"),
@@ -26,7 +26,7 @@ const schema = yup.object().shape({
     .oneOf([yup.ref("password"), null], "Passwords must match"),
 });
 
-function SignUp(props: any) {
+export default function SignUp() {
   const navigateToHome = () => (window.location.href = "/");
   const {
     register,
@@ -36,6 +36,11 @@ function SignUp(props: any) {
     mode: "onBlur",
     resolver: yupResolver(schema),
   });
+  setTimeout(() => {
+    console.log(errors);
+    console.log(isDirty);
+    console.log(isValid);
+  }, 1000);
 
   const onSubmit = (data: any) => {
     console.log(data);
@@ -70,8 +75,8 @@ function SignUp(props: any) {
             <Input
               {...register("username", { required: true })}
               label="Name"
-              error={!!errors.name}
-              helperText={errors?.name?.message}
+              error={!!errors.username}
+              helperText={errors?.username?.message}
             />
           </div>
 
@@ -112,5 +117,3 @@ function SignUp(props: any) {
     </div>
   );
 }
-
-export default SignUp;
