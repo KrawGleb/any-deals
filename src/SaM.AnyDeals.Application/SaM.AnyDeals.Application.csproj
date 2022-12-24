@@ -22,9 +22,4 @@
     <ProjectReference Include="..\SaM.AnyDeals.DataAccess\SaM.AnyDeals.DataAccess.csproj" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="Handlers\Adverts\QueryHandlers\" />
-    <Folder Include="Requests\Adverts\Queries\" />
-  </ItemGroup>
-
 </Project>

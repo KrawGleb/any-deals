@@ -1,4 +1,4 @@
-﻿namespace SaM.AnyDeals.DataAccess.Models.Enums;
+﻿namespace SaM.AnyDeals.Common.Enums;
 
 public enum AdvertType
 {

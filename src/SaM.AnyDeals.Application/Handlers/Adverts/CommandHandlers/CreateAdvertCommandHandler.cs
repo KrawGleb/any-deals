@@ -3,7 +3,6 @@ using MediatR;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.Identity.Client;
 using SaM.AnyDeals.Application.Models.Responses;
 using SaM.AnyDeals.Application.Requests.Adverts.Commands;
 using SaM.AnyDeals.Common.Exceptions;
@@ -21,7 +20,6 @@ public class CreateAdvertCommandHandler : IRequestHandler<CreateAdvertCommand, R
     private readonly IHttpContextAccessor _httpContextAccessor;
     private readonly IMapper _mapper;
     private readonly UserManager<ApplicationUser> _userManager;
-    private readonly ApplicationDbContext _applicationDbContext;
 
     public CreateAdvertCommandHandler(
         IAdvertsRepository advertsRepository,
@@ -34,7 +32,6 @@ public class CreateAdvertCommandHandler : IRequestHandler<CreateAdvertCommand, R
         _httpContextAccessor = httpContextAccessor;
         _mapper = mapper;
         _userManager = userManager;
-        _applicationDbContext = applicationDbContext;
     }
 
     public async Task<Response> Handle(CreateAdvertCommand request, CancellationToken cancellationToken)

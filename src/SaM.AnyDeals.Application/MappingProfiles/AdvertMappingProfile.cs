@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using SaM.AnyDeals.Application.Models.ViewModels;
 using SaM.AnyDeals.Application.Requests.Adverts.Commands;
 using SaM.AnyDeals.DataAccess.Models.Entries;
 
@@ -9,5 +10,6 @@ public class AdvertMappingProfile : Profile
 	public AdvertMappingProfile()
 	{
 		CreateMap<CreateAdvertCommand, AdvertDbEntry>();
+		CreateMap<AdvertDbEntry, AdvertViewModel>();
 	}
 }

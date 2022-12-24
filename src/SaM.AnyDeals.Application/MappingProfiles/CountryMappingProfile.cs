@@ -4,10 +4,10 @@ using SaM.AnyDeals.DataAccess.Models.Entries;
 
 namespace SaM.AnyDeals.Application.MappingProfiles;
 
-public class ContactsMappingProfile : Profile
+public class CountryMappingProfile : Profile
 {
-	public ContactsMappingProfile()
+	public CountryMappingProfile()
 	{
-		CreateMap<ContactsDbEntry, ContactsViewModel>();
+		CreateMap<CountryDbEntry, CountryViewModel>();
 	}
 }
