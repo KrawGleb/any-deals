@@ -4,6 +4,7 @@ using Microsoft.IdentityModel.Tokens;
 using SaM.AnyDeals.Application;
 using SaM.AnyDeals.DataAccess;
 using SaM.AnyDeals.DataAccess.Extensions;
+using SaM.AnyDeals.Infrastructure;
 using System.Text;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -12,6 +13,7 @@ var configuration = builder.Configuration;
 
 services.AddDataAccess(configuration);
 services.AddApplication();
+services.AddInfrastructure();
 
 services.AddControllers();
 services.AddEndpointsApiExplorer();

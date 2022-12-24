@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Mvc;
 using SaM.AnyDeals.Application.Requests.Adverts.Commands;
 using SaM.AnyDeals.Application.Requests.Adverts.Queries;
+using SaM.AnyDeals.Infrastructure.Filters;
 
 namespace SaM.AnyDeals.API.Controllers;
 
@@ -12,6 +13,11 @@ public class AdvertsController : ApiControllerBase
 {
     [HttpPost("create")]
     public async Task<IActionResult> CreateAdvertAsync([FromBody] CreateAdvertCommand command, CancellationToken cancellationToken)
+        => Ok(await Mediator.Send(command, cancellationToken));
+
+    [HttpDelete("delete")]
+    [ServiceFilter(typeof(ProtectedAdvertsActionFilter))]
+    public async Task<IActionResult> DeleteAdvertAsync([FromBody] DeleteAdvertCommand command, CancellationToken cancellationToken)
         => Ok(await Mediator.Send(command, cancellationToken));
 
     [HttpGet("get/{id}")]

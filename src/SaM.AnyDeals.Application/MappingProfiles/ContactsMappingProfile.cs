@@ -8,6 +8,7 @@ public class ContactsMappingProfile : Profile
 {
 	public ContactsMappingProfile()
 	{
-		CreateMap<ContactsDbEntry, ContactsViewModel>();
+		CreateMap<ContactsDbEntry, ContactsViewModel>()
+			.ReverseMap();
 	}
 }

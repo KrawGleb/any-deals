@@ -6,14 +6,6 @@ namespace SaM.AnyDeals.DataAccess.EntityConfigurations;
 
 public class ContactsEntityConfiguration : EntityConfigurationBase<ContactsDbEntry>
 {
-    public override void ConfigureRelationships(EntityTypeBuilder<ContactsDbEntry> builder)
-    {
-        builder
-            .HasOne(c => c.Advert)
-            .WithOne(a => a.Contacts)
-            .HasForeignKey<AdvertDbEntry>(a => a.ContactsId);
-    }
-
     public override void ConfigureConstraints(EntityTypeBuilder<ContactsDbEntry> builder)
     {
         builder

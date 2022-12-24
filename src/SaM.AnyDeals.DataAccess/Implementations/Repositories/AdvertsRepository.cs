@@ -39,4 +39,11 @@ public class AdvertsRepository : RepositoryBase<AdvertDbEntry>, IAdvertsReposito
 
         return entry;
     }
+
+    public async Task<string> GetAdvertCreatorIdAsync(int id)
+    {
+        var advert = await _table.FirstOrDefaultAsync(a => a.Id == id)
+            ?? throw new NotFoundException($"Advert with id {id} not found.");
+        return advert.CreatorId;
+    } 
 }

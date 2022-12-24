@@ -8,6 +8,7 @@ public class AttachmentMappingProfile : Profile
 {
 	public AttachmentMappingProfile()
 	{
-		CreateMap<AttachmentDbEntry, AttachmentViewModel>();
+		CreateMap<AttachmentDbEntry, AttachmentViewModel>()
+			.ReverseMap();
 	}
 }

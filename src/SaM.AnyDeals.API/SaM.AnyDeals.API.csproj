@@ -24,6 +24,7 @@
   <ItemGroup>
     <ProjectReference Include="..\SaM.AnyDeals.Application\SaM.AnyDeals.Application.csproj" />
     <ProjectReference Include="..\SaM.AnyDeals.DataAccess\SaM.AnyDeals.DataAccess.csproj" />
+    <ProjectReference Include="..\SaM.AnyDeals.Infrastructure\SaM.AnyDeals.Infrastructure.csproj" />
   </ItemGroup>
 
 </Project>
