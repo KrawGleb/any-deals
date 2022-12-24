@@ -1,8 +1,8 @@
 import "./SignUp.scss";
 import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 import { useForm } from "react-hook-form";
-import Input from "../../components/Input";
-import PrimaryButton from "../../components/PrimaryButton";
+import Input from "../../components/common/Input";
+import PrimaryButton from "../../components/common/PrimaryButton";
 import * as yup from "yup";
 import { yupResolver } from "@hookform/resolvers/yup";
 import axios from "axios";
