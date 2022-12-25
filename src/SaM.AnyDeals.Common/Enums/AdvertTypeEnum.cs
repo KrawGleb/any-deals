@@ -2,7 +2,7 @@
 
 public enum AdvertType
 {
-    Search = 0,
+    Request = 0,
     Offer,
     Event
 }
