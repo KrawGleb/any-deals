@@ -7,7 +7,7 @@ const CustomTabs = styled(Tabs)<TabsProps>(({ theme }) => ({
   },
   "&.MuiTabs-root": {
     display: "flex",
-    flex: "1 1 auto",
+    flex: "0 0 auto",
     alignSelf: "stretch",
     ".MuiTabs-scroller": {
       ".MuiTabs-flexContainer": {
