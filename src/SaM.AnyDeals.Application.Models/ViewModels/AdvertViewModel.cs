@@ -7,6 +7,7 @@ public class AdvertViewModel
     public string? Title { get; set; }
     public string? Description { get; set; }
     public AdvertType Type { get; set; }
+    public SubCategory SubCategory { get; set; }
     public bool IsCommertial { get; set; }
     public bool IsOffline { get; set; }
 

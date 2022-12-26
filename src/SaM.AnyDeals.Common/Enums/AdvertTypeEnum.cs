@@ -3,6 +3,5 @@
 public enum AdvertType
 {
     Request = 0,
-    Offer,
-    Event
+    Offer
 }
