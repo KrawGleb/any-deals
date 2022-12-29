@@ -1,22 +1,43 @@
 import "./Filters.scss";
-import { Paper, Tabs, Box, Typography, Button } from "@mui/material";
+import {
+  Paper,
+  Tabs,
+  Box,
+  Typography,
+  Button,
+  Tab,
+  ToggleButtonGroup,
+} from "@mui/material";
 import ArrowDropDownIcon from "@mui/icons-material/ArrowDropDown";
 import React, { SyntheticEvent, useState } from "react";
 import TypeTab from "../../common/type-tabs/TypeTab";
 import { FiltersTextField } from "./text-field/FiltersTextField";
 import SearchIcon from "@mui/icons-material/Search";
+import TypeTabs from "./type-tabs/TypeTabs";
+import ButtonGroup from "@mui/material/ButtonGroup";
+import ToggleButton from "@mui/material/ToggleButton";
+import FormatButton from "./format/FormatButton";
 
 export default function Filters() {
-  const [value, setValue] = useState(0);
+  const [subCategory, setSubCategory] = useState(0);
+  const [type, setType] = useState(0);
+  const [isCommercial, setIsCommercial] = useState(false);
+  const [isSocial, setIsSocial] = useState(false);
+  const [formats, setFormats] = useState(() => []);
 
-  const handleChange = (event: SyntheticEvent, newValue: number) => {
-    setValue(newValue);
-  };
+  const handleSubCategoryChange = (event: SyntheticEvent, newValue: number) =>
+    setSubCategory(newValue);
+
+  const handleTypeChange = (event: SyntheticEvent, newValue: number) =>
+    setType(newValue);
+
+  const handleFormatsChange = (event: SyntheticEvent, newFormats: []) =>
+    setFormats(newFormats);
 
   return (
-    <Paper className="filters">
+    <Box className="filters">
       <div className="filters__root">
-        <Tabs value={value} onChange={handleChange}>
+        <Tabs value={subCategory} onChange={handleSubCategoryChange}>
           <TypeTab label="Services nearby" />
           <TypeTab label="Online services" />
           <TypeTab label="Places and events" />
@@ -58,11 +79,27 @@ export default function Filters() {
               sx={{ minWidth: "8rem", borderRadius: "10px" }}
               endIcon={<SearchIcon />}
             >
-              Search{" "}
+              Search
             </Button>
           </Box>
         </form>
+
+        <Box className="type-buttons">
+          <TypeTabs value={type} onChange={handleTypeChange}>
+            <Tab disableRipple label="Offers" />
+            <Tab disableRipple label="Requests" />
+            <Tab disableRipple label="All" />
+          </TypeTabs>
+          <ToggleButtonGroup
+            className="toggle-buttons"
+            value={formats}
+            onChange={handleFormatsChange}
+          >
+            <FormatButton value="commercial">Commercial</FormatButton>
+            <FormatButton value="social">Social</FormatButton>
+          </ToggleButtonGroup>
+        </Box>
       </div>
-    </Paper>
+    </Box>
   );
 }

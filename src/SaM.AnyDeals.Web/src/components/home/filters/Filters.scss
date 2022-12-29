@@ -115,4 +115,15 @@
       max-width: 200px;
     }
   }
+
+  .type-buttons {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 16px;
+
+    .toggle-buttons {
+      display: flex;
+      column-gap: 1rem;
+    }
+  }
 }
