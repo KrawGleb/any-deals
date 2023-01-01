@@ -3,7 +3,6 @@ import React, { SyntheticEvent, useState } from "react";
 import PanelTab from "../../common/tab-panel/Tab";
 import PanelTabs from "../../common/tab-panel/Tabs";
 import PrimaryButton from "../../common/PrimaryButton";
-import Filters from "../filters/Filters";
 import { Box } from "@mui/material";
 
 export default function Header() {
@@ -22,8 +21,9 @@ export default function Header() {
           <div className="header__container">
             <div className="logo">Any Deals</div>
             <PanelTabs value={value} onChange={handleChange}>
-              <PanelTab label="Adverts" />
-              <PanelTab label="About" />
+              <PanelTab label="Adverts" to="/adverts/search" />
+              <PanelTab label="My adverts" to="/adverts/my" />
+              <PanelTab label="About" to="/about" />
             </PanelTabs>
             <div className="actions">
               <PrimaryButton
@@ -42,7 +42,6 @@ export default function Header() {
           </div>
         </Box>
       </div>
-      <Filters></Filters>
     </>
   );
 }

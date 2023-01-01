@@ -1,5 +1,6 @@
 import { styled, Tab, TabProps } from "@mui/material";
 import React from "react";
+import { Link } from "react-router-dom";
 
 const CustomTab = styled(Tab)<TabProps>(({ theme }) => ({
   backgroundColor: "inherit",
@@ -15,5 +16,7 @@ const CustomTab = styled(Tab)<TabProps>(({ theme }) => ({
 }));
 
 export default function PanelTab(props: any) {
-  return <CustomTab disableRipple {...props} />;
+  return (
+    <CustomTab disableRipple {...props} component={Link} />
+  );
 }

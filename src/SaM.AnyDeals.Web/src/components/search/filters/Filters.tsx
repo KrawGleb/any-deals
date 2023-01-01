@@ -1,6 +1,5 @@
 import "./Filters.scss";
 import {
-  Paper,
   Tabs,
   Box,
   Typography,
@@ -14,8 +13,6 @@ import TypeTab from "../../common/type-tabs/TypeTab";
 import { FiltersTextField } from "./text-field/FiltersTextField";
 import SearchIcon from "@mui/icons-material/Search";
 import TypeTabs from "./type-tabs/TypeTabs";
-import ButtonGroup from "@mui/material/ButtonGroup";
-import ToggleButton from "@mui/material/ToggleButton";
 import FormatButton from "./format/FormatButton";
 
 export default function Filters() {
