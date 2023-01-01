@@ -2,6 +2,7 @@
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using SaM.AnyDeals.Common.Constraints;
 using SaM.AnyDeals.DataAccess.Models.Entries;
+using SaM.AnyDeals.DataAccess.Population;
 
 namespace SaM.AnyDeals.DataAccess.EntityConfigurations;
 
@@ -13,6 +14,11 @@ public class CountryEntityConfiguration : EntityConfigurationBase<CountryDbEntry
             .HasMany(c => c.Cities)
             .WithOne(c => c.Country)
             .OnDelete(DeleteBehavior.Cascade);
+        /*builder
+            .OwnsMany(c => c.Cities)
+            .WithOwner(c => c.Country);
+*/
+        //builder.Populate();
     }
 
     public override void ConfigureConstraints(EntityTypeBuilder<CountryDbEntry> builder)

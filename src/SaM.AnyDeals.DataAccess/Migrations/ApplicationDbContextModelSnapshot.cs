@@ -270,7 +270,7 @@ namespace SaM.AnyDeals.DataAccess.Migrations
 
                     b.HasIndex("CreatorId");
 
-                    b.ToTable("Adverts");
+                    b.ToTable("Adverts", (string)null);
                 });
 
             modelBuilder.Entity("SaM.AnyDeals.DataAccess.Models.Entries.AttachmentDbEntry", b =>
@@ -293,7 +293,7 @@ namespace SaM.AnyDeals.DataAccess.Migrations
 
                     b.HasIndex("AdvertId");
 
-                    b.ToTable("Attachments");
+                    b.ToTable("Attachments", (string)null);
                 });
 
             modelBuilder.Entity("SaM.AnyDeals.DataAccess.Models.Entries.CategoryDbEntry", b =>
@@ -311,7 +311,7 @@ namespace SaM.AnyDeals.DataAccess.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Categories");
+                    b.ToTable("Categories", (string)null);
                 });
 
             modelBuilder.Entity("SaM.AnyDeals.DataAccess.Models.Entries.CityDbEntry", b =>
@@ -334,7 +334,7 @@ namespace SaM.AnyDeals.DataAccess.Migrations
 
                     b.HasIndex("CountryId");
 
-                    b.ToTable("Cities");
+                    b.ToTable("Cities", (string)null);
                 });
 
             modelBuilder.Entity("SaM.AnyDeals.DataAccess.Models.Entries.ContactsDbEntry", b =>
@@ -394,7 +394,7 @@ namespace SaM.AnyDeals.DataAccess.Migrations
                     b.HasIndex("AdvertId")
                         .IsUnique();
 
-                    b.ToTable("Contacts");
+                    b.ToTable("Contacts", (string)null);
                 });
 
             modelBuilder.Entity("SaM.AnyDeals.DataAccess.Models.Entries.CountryDbEntry", b =>
@@ -412,7 +412,7 @@ namespace SaM.AnyDeals.DataAccess.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Countries");
+                    b.ToTable("Countries", (string)null);
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
