@@ -8,7 +8,6 @@ using SaM.AnyDeals.Application.Requests.Adverts.Commands;
 using SaM.AnyDeals.Common.Exceptions;
 using SaM.AnyDeals.Common.Extensions;
 using SaM.AnyDeals.DataAccess.Implementations;
-using SaM.AnyDeals.DataAccess.Interfaces.Repositories;
 using SaM.AnyDeals.DataAccess.Models.Auth;
 using SaM.AnyDeals.DataAccess.Models.Entries;
 
@@ -16,19 +15,18 @@ namespace SaM.AnyDeals.Application.Handlers.Adverts.CommandHandlers;
 
 public class CreateAdvertCommandHandler : IRequestHandler<CreateAdvertCommand, Response>
 {
-    private readonly IAdvertsRepository _advertsRepository;
+    private readonly ApplicationDbContext _applicationDbContext;
     private readonly IHttpContextAccessor _httpContextAccessor;
     private readonly IMapper _mapper;
     private readonly UserManager<ApplicationUser> _userManager;
 
     public CreateAdvertCommandHandler(
-        IAdvertsRepository advertsRepository,
+        ApplicationDbContext applicationDbContext,
         IHttpContextAccessor httpContextAccessor,
         IMapper mapper,
-        UserManager<ApplicationUser> userManager,
-        ApplicationDbContext applicationDbContext)
+        UserManager<ApplicationUser> userManager)
     {
-        _advertsRepository = advertsRepository;
+        _applicationDbContext = applicationDbContext;
         _httpContextAccessor = httpContextAccessor;
         _mapper = mapper;
         _userManager = userManager;
@@ -47,9 +45,10 @@ public class CreateAdvertCommandHandler : IRequestHandler<CreateAdvertCommand, R
         var advertOwner = await GetAdvertOwnerAsync(userId, cancellationToken);
         var advert = _mapper.Map<AdvertDbEntry>(request);
 
+        await _applicationDbContext.Adverts.AddAsync(advert, cancellationToken);
+        await _applicationDbContext.SaveChangesAsync(cancellationToken);
+        
         advertOwner.Adverts!.Add(advert);
-
-        await _advertsRepository.CreateAsync(advert, cancellationToken);
         await _userManager.UpdateAsync(advertOwner);
     }
 

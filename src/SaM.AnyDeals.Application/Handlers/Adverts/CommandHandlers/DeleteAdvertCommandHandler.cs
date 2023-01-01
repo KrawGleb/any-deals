@@ -1,22 +1,27 @@
 ﻿using MediatR;
 using SaM.AnyDeals.Application.Models.Responses;
 using SaM.AnyDeals.Application.Requests.Adverts.Commands;
-using SaM.AnyDeals.DataAccess.Interfaces.Repositories;
+using SaM.AnyDeals.Common.Exceptions;
+using SaM.AnyDeals.DataAccess.Implementations;
 
 namespace SaM.AnyDeals.Application.Handlers.Adverts.CommandHandlers;
 
 public class DeleteAdvertCommandHandler : IRequestHandler<DeleteAdvertCommand, Response>
 {
-    private readonly IAdvertsRepository _advertsRepository;
+    private readonly ApplicationDbContext _applicationDbContext;
 
-    public DeleteAdvertCommandHandler(IAdvertsRepository advertsRepository)
+    public DeleteAdvertCommandHandler(ApplicationDbContext applicationDbContext)
     {
-        _advertsRepository = advertsRepository;
+        _applicationDbContext = applicationDbContext;
     }
 
     public async Task<Response> Handle(DeleteAdvertCommand request, CancellationToken cancellationToken)
     {
-        await _advertsRepository.DeleteAsync(request.Id, cancellationToken);
+        var application = await _applicationDbContext.Adverts.FindAsync(request.Id, cancellationToken)
+            ?? throw new NotFoundException($"Application with id {request.Id} not found.");
+
+        _applicationDbContext.Adverts.Remove(application);
+        await _applicationDbContext.SaveChangesAsync(cancellationToken);
 
         return new Response();
     }

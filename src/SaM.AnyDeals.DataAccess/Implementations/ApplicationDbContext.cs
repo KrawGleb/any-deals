@@ -3,18 +3,19 @@ using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using SaM.AnyDeals.DataAccess.Models.Auth;
 using SaM.AnyDeals.DataAccess.Models.Entries;
+using SaM.AnyDeals.DataAccess.Population;
 using System.Reflection;
 
 namespace SaM.AnyDeals.DataAccess.Implementations;
 
 public class ApplicationDbContext : IdentityDbContext<ApplicationUser, IdentityRole, string>
 {
-    private DbSet<AdvertDbEntry> Adverts { get; set; }
-    private DbSet<AttachmentDbEntry> Attachments { get; set; }
-    private DbSet<CategoryDbEntry> Categories { get; set; }
-    private DbSet<ContactsDbEntry> Contacts { get; set; }
-    private DbSet<CountryDbEntry> Countries { get; set; }
-    private DbSet<CityDbEntry> Cities { get; set; }
+    public DbSet<AdvertDbEntry> Adverts { get; set; }
+    public DbSet<AttachmentDbEntry> Attachments { get; set; }
+    public DbSet<CategoryDbEntry> Categories { get; set; }
+    public DbSet<ContactsDbEntry> Contacts { get; set; }
+    public DbSet<CountryDbEntry> Countries { get; set; }
+    public DbSet<CityDbEntry> Cities { get; set; }
 
 
     public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options)
