@@ -3,8 +3,6 @@ import {
   Box,
   FormControl,
   FormControlLabel,
-  FormLabel,
-  Grid,
   MenuItem,
   Radio,
   RadioGroup,
@@ -15,13 +13,30 @@ import {
 import Button from "@mui/material/Button";
 import React, { useState } from "react";
 import FakeSelect from "../../../components/common/fake-select/FakeSelect";
-import Input from "../../../components/common/Input";
-import PrimaryButton from "../../../components/common/PrimaryButton";
-import ArrowForwardIosIcon from '@mui/icons-material/ArrowForwardIos';
-import FormSelect from "../../../components/common/Select";
+import ArrowForwardIosIcon from "@mui/icons-material/ArrowForwardIos";
 import "./NewAdvert.scss";
+import Input from "../../../components/common/Input";
+import SelectDialog from "../../../components/common/select-dialog/SelectDialog";
+
+const countries = [1, 2, 3, 4, 5, 6].map((n) => `Country-${n}`);
+
+const cities = [1, 2, 3, 4, 5, 6].map((n) => `City-${n}`);
 
 export default function NewAdvert() {
+  const [isCountrySelectOpen, setIsCountrySelectOpen] = useState(false);
+  const [selectedCountry, setSelectedCountry] = useState<string | undefined>();
+  const handleSelectCountryDialogClose = (value: string | undefined) => {
+    setIsCountrySelectOpen(false);
+    setSelectedCountry(value);
+  };
+
+  const [isCitySelectOpen, setIsCitySelectOpen] = useState(false);
+  const [selectedCity, setSelectedCity] = useState<string | undefined>();
+  const handleSelectCityDialogClose = (value?: string) => {
+    setIsCitySelectOpen(false);
+    setSelectedCity(value);
+  };
+
   const [group, setGroup] = useState("");
   const handleChange = (event: SelectChangeEvent) => {
     console.log(event.target.value as string);
@@ -30,6 +45,19 @@ export default function NewAdvert() {
 
   return (
     <Box>
+      <SelectDialog
+        open={isCountrySelectOpen}
+        onClose={handleSelectCountryDialogClose}
+        selectedValue={selectedCountry}
+        variants={countries}
+      />
+      <SelectDialog
+        open={isCitySelectOpen}
+        onClose={handleSelectCityDialogClose}
+        selectedValue={selectedCity}
+        variants={cities}
+      />
+
       <div className="new">
         <div className="new__container">
           <div className="back-line">
@@ -37,7 +65,9 @@ export default function NewAdvert() {
               <div className="row">
                 <ArrowBack fontSize="medium" />
               </div>
-              <p className="row nav-text prevent-select">Back</p>
+              <Typography className="row nav-text prevent-select">
+                Back
+              </Typography>
             </div>
           </div>
           <form className="form">
@@ -118,8 +148,16 @@ export default function NewAdvert() {
                 Advertisement's location
               </Typography>
               <Stack direction="row" spacing={2}>
-                <FakeSelect label="Country" required />
-                <FakeSelect label="City" required />
+                <FakeSelect
+                  label={selectedCountry ?? "Country"}
+                  required
+                  onClick={() => setIsCountrySelectOpen(true)}
+                />
+                <FakeSelect
+                  label={selectedCity ?? "City"}
+                  required
+                  onClick={() => setIsCitySelectOpen(true)}
+                />
               </Stack>
             </div>
 
@@ -169,7 +207,9 @@ export default function NewAdvert() {
               <Button variant="contained" sx={{ marginRight: "16px" }}>
                 Cancel
               </Button>
-              <Button variant="contained" endIcon={<ArrowForwardIosIcon />}>Create and publish</Button>
+              <Button variant="contained" endIcon={<ArrowForwardIosIcon />}>
+                Create and publish
+              </Button>
             </div>
           </form>
         </div>
