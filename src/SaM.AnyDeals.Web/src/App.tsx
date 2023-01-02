@@ -1,5 +1,5 @@
 import React from "react";
-import { Route, Routes } from "react-router-dom";
+import { Navigate, Route, Routes } from "react-router-dom";
 import "./App.scss";
 import Home from "./pages/home/Home";
 import MyAdverts from "./pages/adverts/my/MyAdverts";
@@ -12,7 +12,7 @@ function App() {
   return (
     <div className="app">
       <Routes>
-        <Route path="/" element={<Home />} />
+        <Route path="/" element={<Navigate to="/adverts/search" />} />
         <Route path="/signup" element={<SignUp />} />
         <Route path="/signin" element={<SignIn />} />
         <Route path="/adverts" element={<Home />}>
