@@ -19,8 +19,8 @@ import Input from "../../../components/common/Input";
 import SelectDialog from "../../../components/common/select-dialog/SelectDialog";
 
 const countries = [1, 2, 3, 4, 5, 6].map((n) => `Country-${n}`);
-
 const cities = [1, 2, 3, 4, 5, 6].map((n) => `City-${n}`);
+const categories = [1, 2, 3, 4, 5, 6].map((n) => `Category-${n}`);
 
 export default function NewAdvert() {
   const [isCountrySelectOpen, setIsCountrySelectOpen] = useState(false);
@@ -35,6 +35,15 @@ export default function NewAdvert() {
   const handleSelectCityDialogClose = (value?: string) => {
     setIsCitySelectOpen(false);
     setSelectedCity(value);
+  };
+
+  const [isCategorySelectOpen, setIsCategorySelectOpen] = useState(false);
+  const [selectedCategory, setSelectedCategory] = useState<
+    string | undefined
+  >();
+  const handleSelectCategoryDialogClose = (value: string | undefined) => {
+    setIsCategorySelectOpen(false);
+    setSelectedCategory(value);
   };
 
   const [group, setGroup] = useState("");
@@ -56,6 +65,12 @@ export default function NewAdvert() {
         onClose={handleSelectCityDialogClose}
         selectedValue={selectedCity}
         variants={cities}
+      />
+      <SelectDialog
+        open={isCategorySelectOpen}
+        onClose={handleSelectCategoryDialogClose}
+        selectedValue={selectedCategory}
+        variants={categories}
       />
 
       <div className="new">
@@ -139,7 +154,11 @@ export default function NewAdvert() {
 
             <Stack spacing={2} className="mb-5">
               <Input label="Title" required />
-              <FakeSelect label="Category" required />
+              <FakeSelect
+                label={selectedCategory ?? "Category"}
+                required
+                onClick={() => setIsCategorySelectOpen(true)}
+              />
               <Input label="Description" required multiline rows={4} />
             </Stack>
 
