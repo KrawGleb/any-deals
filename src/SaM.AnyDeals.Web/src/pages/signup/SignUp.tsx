@@ -8,7 +8,7 @@ import { yupResolver } from "@hookform/resolvers/yup";
 import { RegisterRequest } from "../../models/api/auth/register-request";
 import { registerUser } from "../../features/api/auth/authActions";
 import { useDispatch } from "react-redux";
-import { AppDispatch } from "../../store/init";
+import { AppDispatch } from "../../store/store";
 
 const schema = yup.object().shape({
   username: yup
