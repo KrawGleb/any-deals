@@ -1,6 +1,7 @@
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.HttpOverrides;
 using Microsoft.IdentityModel.Tokens;
+using Newtonsoft.Json.Converters;
 using SaM.AnyDeals.Application;
 using SaM.AnyDeals.DataAccess;
 using SaM.AnyDeals.DataAccess.Extensions;
@@ -15,7 +16,13 @@ services.AddDataAccess(configuration);
 services.AddApplication();
 services.AddInfrastructure();
 
-services.AddControllers();
+services
+    .AddControllers()
+    .AddNewtonsoftJson(options =>
+    {
+        options.SerializerSettings.Converters.Add(new StringEnumConverter());
+    });
+
 services.AddEndpointsApiExplorer();
 services.AddSwaggerGen();
 
