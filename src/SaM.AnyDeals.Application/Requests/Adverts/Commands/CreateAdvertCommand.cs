@@ -10,7 +10,7 @@ public class CreateAdvertCommand : IRequest<Response>
     public string? Title { get; set; }
     public string? Description { get; set; }
     public AdvertType Type { get; set; }
-    public bool IsCommertial { get; set; }
+    public bool IsCommercial { get; set; }
     public bool IsOffline { get; set; }
     public int CityId { get; set; }
     public int CategoryId { get; set; }
