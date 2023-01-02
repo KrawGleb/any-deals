@@ -7,10 +7,9 @@ public class AdvertDbEntry : DbEntryBase
 {
     public string? Title { get; set; }
     public string? Description { get; set; }
-    public AdvertType Type { get; set; }
-    public SubCategory SubCategory { get; set; }
-    public bool IsCommertial { get; set; }
-    public bool IsOffline { get; set; }
+    public AdvertGoal Goal { get; set; }
+    public AdvertGroup Group { get; set; }
+    public AdvertInterest Interest { get; set; }
 
     public string? CreatorId { get; set; }
     public ApplicationUser? Creator { get; set; }

@@ -1,6 +1,6 @@
 ﻿namespace SaM.AnyDeals.Common.Enums;
 
-public enum AdvertType
+public enum AdvertGoal
 {
     Request = 0,
     Offer

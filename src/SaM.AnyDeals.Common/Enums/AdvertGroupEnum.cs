@@ -2,7 +2,7 @@
 
 namespace SaM.AnyDeals.Common.Enums;
 
-public enum SubCategory
+public enum AdvertGroup
 {
     [EnumMember(Value = "Nearbly service")]
     NearblyService = 0,
