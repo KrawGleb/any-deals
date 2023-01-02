@@ -1,10 +1,8 @@
 import {
   Box,
   Dialog,
-  DialogTitle,
   Typography,
   List,
-  ListItem,
   ListItemText,
   ListItemButton,
 } from "@mui/material";

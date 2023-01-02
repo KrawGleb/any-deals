@@ -1,4 +1,5 @@
 import ArrowBack from "@mui/icons-material/ArrowBack";
+import * as yup from "yup";
 import {
   Box,
   FormControl,
@@ -17,12 +18,50 @@ import ArrowForwardIosIcon from "@mui/icons-material/ArrowForwardIos";
 import "./NewAdvert.scss";
 import Input from "../../../components/common/Input";
 import SelectDialog from "../../../components/common/select-dialog/SelectDialog";
+import { useNavigate } from "react-router-dom";
+import { useForm } from "react-hook-form";
+import { yupResolver } from "@hookform/resolvers/yup";
+import { useCreateAdvertMutation } from "../../../features/api/adverts/advertsService";
+import { Advert } from "../../../models/advert";
+import { Contacts } from "../../../models/contacts";
 
 const countries = [1, 2, 3, 4, 5, 6].map((n) => `Country-${n}`);
 const cities = [1, 2, 3, 4, 5, 6].map((n) => `City-${n}`);
 const categories = [1, 2, 3, 4, 5, 6].map((n) => `Category-${n}`);
 
+const schema = yup.object().shape({
+  subCategory: yup.string(),
+  type: yup.string(),
+  interest: yup.string(),
+  title: yup.string(),
+  category: yup.string(),
+  description: yup.string(),
+  country: yup.string(),
+  city: yup.string(),
+  name: yup.string(),
+  email: yup.string(),
+  phone: yup.string(),
+  address: yup.string(),
+  facebook: yup.string(),
+  vk: yup.string(),
+  instagram: yup.string(),
+  linkedIn: yup.string(),
+  telegram: yup.string(),
+  whatsApp: yup.string(),
+});
+
 export default function NewAdvert() {
+  const navigate = useNavigate();
+  const [createNewAdvert, response] = useCreateAdvertMutation();
+  const {
+    register,
+    handleSubmit,
+    formState: { isDirty, isValid, errors },
+  } = useForm({
+    mode: "onBlur",
+    resolver: yupResolver(schema),
+  });
+
   const [isCountrySelectOpen, setIsCountrySelectOpen] = useState(false);
   const [selectedCountry, setSelectedCountry] = useState<string | undefined>();
   const handleSelectCountryDialogClose = (value: string | undefined) => {
@@ -48,8 +87,32 @@ export default function NewAdvert() {
 
   const [group, setGroup] = useState("");
   const handleChange = (event: SelectChangeEvent) => {
-    console.log(event.target.value as string);
     setGroup(event.target.value as string);
+  };
+
+  const onSubmit = (data: any) => {
+    let advert: Advert = {
+      title: data.title,
+      description: data.description,
+      contacts: {
+        name: data.name,
+        phone: data.phone,
+        address: data.address,
+        email: data.email,
+        facebook: data.facebook,
+        instagram: data.instagram,
+        linkedIn: data.linkedIn,
+        telegram: data.telegram,
+        vk: data.vk,
+        whatsApp: data.whatsApp,
+      } as Contacts,
+    } as Advert;
+
+    console.log(advert);
+
+    createNewAdvert(advert)
+      .unwrap()
+      .then((smth: any) => console.log(smth));
   };
 
   return (
@@ -76,7 +139,7 @@ export default function NewAdvert() {
       <div className="new">
         <div className="new__container">
           <div className="back-line">
-            <div className="line">
+            <div className="line" onClick={() => navigate("/adverts/my")}>
               <div className="row">
                 <ArrowBack fontSize="medium" />
               </div>
@@ -85,7 +148,7 @@ export default function NewAdvert() {
               </Typography>
             </div>
           </div>
-          <form className="form">
+          <form className="form" onSubmit={handleSubmit(onSubmit, onSubmit)}>
             <Box className="title">
               <Typography variant="h5" className="title__text">
                 Basic information
@@ -98,6 +161,7 @@ export default function NewAdvert() {
                 In which section would you like to place your ad?
               </Typography>
               <Input
+                {...register("subCategory")}
                 value={group}
                 onChange={handleChange}
                 label="Group"
@@ -124,17 +188,19 @@ export default function NewAdvert() {
                     value="offer"
                     control={<Radio />}
                     label="I suggest"
+                    {...register("type")}
                   />
                   <FormControlLabel
                     value="search"
                     control={<Radio />}
                     label="I'm looking for"
+                    {...register("type")}
                   />
                 </RadioGroup>
               </FormControl>
             </div>
 
-            <div className="form__goal mb-4">
+            <div className="form__interest mb-4">
               <FormControl>
                 <Typography variant="h5">My interest</Typography>
                 <RadioGroup row>
@@ -142,24 +208,32 @@ export default function NewAdvert() {
                     value="commercial"
                     control={<Radio />}
                     label="Commercial"
+                    {...register("interest")}
                   />
                   <FormControlLabel
                     value="social"
                     control={<Radio />}
                     label="Social"
+                    {...register("interest")}
                   />
                 </RadioGroup>
               </FormControl>
             </div>
 
             <Stack spacing={2} className="mb-5">
-              <Input label="Title" required />
+              <Input label="Title" required {...register("title")} />
               <FakeSelect
                 label={selectedCategory ?? "Category"}
                 required
                 onClick={() => setIsCategorySelectOpen(true)}
               />
-              <Input label="Description" required multiline rows={4} />
+              <Input
+                label="Description"
+                required
+                multiline
+                rows={4}
+                {...register("description")}
+              />
             </Stack>
 
             <div className="form__location mb-5">
@@ -189,28 +263,28 @@ export default function NewAdvert() {
 
               <Stack spacing={3}>
                 <Stack direction="row" spacing={3}>
-                  <Input label="Name" required />
-                  <Input label="Email" />
+                  <Input label="Name" required {...register("name")} />
+                  <Input label="Email" {...register("email")} />
                 </Stack>
 
                 <Stack direction="row" spacing={3}>
-                  <Input label="Phone number" />
-                  <Input label="Address" />
+                  <Input label="Phone number" {...register("phone")} />
+                  <Input label="Address" {...register("address")} />
                 </Stack>
 
                 <Stack direction="row" spacing={3}>
-                  <Input label="Facebook" />
-                  <Input label="VK" />
+                  <Input label="Facebook" {...register("facebook")} />
+                  <Input label="VK" {...register("vk")} />
                 </Stack>
 
                 <Stack direction="row" spacing={3}>
-                  <Input label="Instagram" />
-                  <Input label="LinkedIn" />
+                  <Input label="Instagram" {...register("instagram")} />
+                  <Input label="LinkedIn" {...register("linkedIn")} />
                 </Stack>
 
                 <Stack direction="row" spacing={3}>
-                  <Input label="Telegram" />
-                  <Input label="WhatsApp" />
+                  <Input label="Telegram" {...register("telegram")} />
+                  <Input label="WhatsApp" {...register("whatsApp")} />
                 </Stack>
               </Stack>
             </div>
@@ -223,10 +297,18 @@ export default function NewAdvert() {
             </div>
 
             <div className="form__actions">
-              <Button variant="contained" sx={{ marginRight: "16px" }}>
+              <Button
+                variant="contained"
+                sx={{ marginRight: "16px" }}
+                onClick={() => navigate("/adverts/my")}
+              >
                 Cancel
               </Button>
-              <Button variant="contained" endIcon={<ArrowForwardIosIcon />}>
+              <Button
+                type="submit"
+                variant="contained"
+                endIcon={<ArrowForwardIosIcon />}
+              >
                 Create and publish
               </Button>
             </div>

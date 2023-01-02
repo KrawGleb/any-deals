@@ -15,30 +15,32 @@ const authSlice = createSlice({
   name: "auth",
   initialState,
   reducers: {},
-  extraReducers: {
-    [registerUser.pending as any]: (state: AuthState) => {
-      state.error = null;
-    },
-    [registerUser.fulfilled as any]: (state: AuthState, { payload }) => {
-      state.succeeded = true;
-    },
-    [registerUser.rejected as any]: (state: AuthState, { payload }) => {
-      state.succeeded = false;
-      state.error = payload;
-    },
-
-    [loginUser.pending as any]: (state: AuthState, { payload }) => {
-      state.error = null;
-    },
-    [loginUser.fulfilled as any]: (state: AuthState, { payload }) => {
-      state.succeeded = true;
-      state.userInfo = payload;
-      state.userToken = payload.token;
-    },
-    [loginUser.rejected as any]: (state: AuthState, { payload }) => {
+  extraReducers: (builder) => {
+    builder
+      .addCase(registerUser.pending, (state) => {
+        state.error = null;
+      })
+      .addCase(registerUser.fulfilled, (state, { payload }) => {
+        state.succeeded = true;
+      })
+      .addCase(registerUser.rejected, (state, { payload }) => {
         state.succeeded = false;
         state.error = payload;
-    },
+      });
+
+    builder
+      .addCase(loginUser.pending, (state, { payload }) => {
+        state.error = null;
+      })
+      .addCase(loginUser.fulfilled, (state, { payload }) => {
+        state.succeeded = true;
+        state.userInfo = payload;
+        state.userToken = payload.token;
+      })
+      .addCase(loginUser.rejected, (state, { payload }) => {
+        state.succeeded = false;
+        state.error = payload;
+      });
   },
 });
 

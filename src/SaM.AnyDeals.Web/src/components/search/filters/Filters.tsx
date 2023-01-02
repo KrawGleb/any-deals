@@ -18,7 +18,9 @@ import FormatButton from "./format/FormatButton";
 export default function Filters() {
   const [subCategory, setSubCategory] = useState(0);
   const [type, setType] = useState(0);
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const [isCommercial, setIsCommercial] = useState(false);
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const [isSocial, setIsSocial] = useState(false);
   const [formats, setFormats] = useState(() => []);
 
