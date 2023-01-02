@@ -1,0 +1,23 @@
+.my {
+  position: fixed;
+  top: 6rem;
+  width: 100%;
+  z-index: 2;
+  display: flex;
+  justify-content: space-around;
+
+  .row {
+    width: 1170px;
+    padding: 1rem 5.5rem;
+    display: flex;
+    flex-direction: row-reverse;
+  }
+}
+
+.link {
+  text-decoration: none;
+  color: white;
+  width: 100%;
+  height: 100%;
+  margin: 6px 16px;
+}

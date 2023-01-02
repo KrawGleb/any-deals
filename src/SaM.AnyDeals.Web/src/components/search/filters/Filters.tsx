@@ -10,9 +10,9 @@ import {
 import ArrowDropDownIcon from "@mui/icons-material/ArrowDropDown";
 import React, { SyntheticEvent, useState } from "react";
 import TypeTab from "../../common/type-tabs/TypeTab";
-import { FiltersTextField } from "./text-field/FiltersTextField";
+import { FiltersTextField } from "../../search/filters/text-field/FiltersTextField";
 import SearchIcon from "@mui/icons-material/Search";
-import TypeTabs from "./type-tabs/TypeTabs";
+import TypeTabs from "../../search/filters/type-tabs/TypeTabs";
 import FormatButton from "./format/FormatButton";
 
 export default function Filters() {
