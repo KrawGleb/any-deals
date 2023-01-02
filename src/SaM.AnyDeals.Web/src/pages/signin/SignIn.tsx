@@ -1,11 +1,15 @@
+import React from "react";
 import "./SignIn.scss";
-import ArrowBackIcon from "@mui/icons-material/ArrowBack";
-import { useForm } from "react-hook-form";
-import Input from "../../components/common/Input";
-import PrimaryButton from "../../components/common/PrimaryButton";
 import * as yup from "yup";
+import Input from "../../components/common/Input";
+import ArrowBackIcon from "@mui/icons-material/ArrowBack";
+import PrimaryButton from "../../components/common/PrimaryButton";
+import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
-import axios from "axios";
+import { LoginRequest } from "../../models/api/auth/login-request";
+import { AppDispatch } from "../../store/init";
+import { useDispatch } from "react-redux";
+import { loginUser } from "../../features/api/auth/authActions";
 
 const schema = yup.object().shape({
   email: yup
@@ -17,6 +21,7 @@ const schema = yup.object().shape({
 });
 
 export default function SignIn() {
+  const dispatch = useDispatch<AppDispatch>();
   const navigateToHome = () => (window.location.href = "/");
   const {
     register,
@@ -27,13 +32,7 @@ export default function SignIn() {
     resolver: yupResolver(schema),
   });
 
-  const onSubmit = (data: any) => {
-    console.log(data);
-    axios
-      .post("/api/auth/login", data)
-      .then((result) => console.log(result))
-      .catch((error) => console.log(error));
-  };
+  const onSubmit = (data: any) => dispatch(loginUser(data as LoginRequest));
 
   return (
     <div className="signin">

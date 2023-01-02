@@ -5,7 +5,10 @@ import Input from "../../components/common/Input";
 import PrimaryButton from "../../components/common/PrimaryButton";
 import * as yup from "yup";
 import { yupResolver } from "@hookform/resolvers/yup";
-import axios from "axios";
+import { RegisterRequest } from "../../models/api/auth/register-request";
+import { registerUser } from "../../features/api/auth/authActions";
+import { useDispatch } from "react-redux";
+import { AppDispatch } from "../../store/init";
 
 const schema = yup.object().shape({
   username: yup
@@ -27,6 +30,7 @@ const schema = yup.object().shape({
 });
 
 export default function SignUp() {
+  const dispatch = useDispatch<AppDispatch>();
   const navigateToHome = () => (window.location.href = "/");
   const {
     register,
@@ -36,18 +40,9 @@ export default function SignUp() {
     mode: "onBlur",
     resolver: yupResolver(schema),
   });
-  setTimeout(() => {
-    console.log(errors);
-    console.log(isDirty);
-    console.log(isValid);
-  }, 1000);
 
   const onSubmit = (data: any) => {
-    console.log(data);
-    axios
-      .post("/api/auth/register", data)
-      .then((result) => console.log(result))
-      .catch((error) => console.log(error));
+    dispatch(registerUser(data as RegisterRequest));
   };
 
   return (
