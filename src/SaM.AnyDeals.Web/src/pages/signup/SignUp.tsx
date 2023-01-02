@@ -9,6 +9,7 @@ import { RegisterRequest } from "../../models/api/auth/register-request";
 import { registerUser } from "../../features/api/auth/authActions";
 import { useDispatch } from "react-redux";
 import { AppDispatch } from "../../store/store";
+import { useNavigate } from "react-router-dom";
 
 const schema = yup.object().shape({
   username: yup
@@ -31,7 +32,7 @@ const schema = yup.object().shape({
 
 export default function SignUp() {
   const dispatch = useDispatch<AppDispatch>();
-  const navigateToHome = () => (window.location.href = "/");
+  const navigate = useNavigate();
   const {
     register,
     handleSubmit,
@@ -48,7 +49,7 @@ export default function SignUp() {
   return (
     <div className="signup">
       <div className="back-line">
-        <div className="line" onClick={navigateToHome}>
+        <div className="line" onClick={() => navigate("/")}>
           <div className="row">
             <ArrowBackIcon />
           </div>

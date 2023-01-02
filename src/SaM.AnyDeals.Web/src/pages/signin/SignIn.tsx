@@ -10,6 +10,7 @@ import { LoginRequest } from "../../models/api/auth/login-request";
 import { AppDispatch } from "../../store/store";
 import { useDispatch } from "react-redux";
 import { loginUser } from "../../features/api/auth/authActions";
+import { useNavigate } from "react-router-dom";
 
 const schema = yup.object().shape({
   email: yup
@@ -21,8 +22,8 @@ const schema = yup.object().shape({
 });
 
 export default function SignIn() {
+  const navigate = useNavigate();
   const dispatch = useDispatch<AppDispatch>();
-  const navigateToHome = () => (window.location.href = "/");
   const {
     register,
     handleSubmit,
@@ -32,12 +33,15 @@ export default function SignIn() {
     resolver: yupResolver(schema),
   });
 
-  const onSubmit = (data: any) => dispatch(loginUser(data as LoginRequest));
+  const onSubmit = (data: any) =>
+    dispatch(loginUser(data as LoginRequest)).then((response) => {
+      if (response.payload.succeeded) navigate("/");
+    });
 
   return (
     <div className="signin">
       <div className="back-line">
-        <div className="line" onClick={navigateToHome}>
+        <div className="line" onClick={() => navigate("/")}>
           <div className="row">
             <ArrowBackIcon />
           </div>

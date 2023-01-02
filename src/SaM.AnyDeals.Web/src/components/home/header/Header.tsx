@@ -3,16 +3,19 @@ import React, { SyntheticEvent, useState } from "react";
 import PanelTab from "../../common/tab-panel/Tab";
 import PanelTabs from "../../common/tab-panel/Tabs";
 import PrimaryButton from "../../common/PrimaryButton";
-import { Box } from "@mui/material";
+import { Box, Typography } from "@mui/material";
+import { useSelector } from "react-redux";
+import { useNavigate } from "react-router-dom";
 
 export default function Header() {
+  const navigate = useNavigate();
   const [value, setValue] = useState(0);
 
   const handleChange = (event: SyntheticEvent, newValue: number) => {
     setValue(newValue);
   };
 
-  const navigate = (url: string) => (window.location.href = url);
+  const { userInfo } = useSelector((state: any) => state.auth);
 
   return (
     <>
@@ -25,18 +28,24 @@ export default function Header() {
             <PanelTab label="About" to="/about" />
           </PanelTabs>
           <div className="actions">
-            <PrimaryButton
-              className="actions__signup"
-              onClick={() => navigate("/signup")}
-            >
-              Signup
-            </PrimaryButton>
-            <PrimaryButton
-              className="actions__login"
-              onClick={() => navigate("/signin")}
-            >
-              Login
-            </PrimaryButton>
+            {userInfo.username ? (
+              <Typography>{userInfo.username}</Typography>
+            ) : (
+              <>
+                <PrimaryButton
+                  className="actions__signup"
+                  onClick={() => navigate("/signup")}
+                >
+                  Signup
+                </PrimaryButton>
+                <PrimaryButton
+                  className="actions__login"
+                  onClick={() => navigate("/signin")}
+                >
+                  Signin
+                </PrimaryButton>
+              </>
+            )}
           </div>
         </div>
       </Box>
