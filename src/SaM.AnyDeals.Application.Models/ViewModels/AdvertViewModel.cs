@@ -1,15 +1,12 @@
-﻿using SaM.AnyDeals.Common.Enums;
-
-namespace SaM.AnyDeals.Application.Models.ViewModels;
+﻿namespace SaM.AnyDeals.Application.Models.ViewModels;
 
 public class AdvertViewModel
 {
     public string? Title { get; set; }
     public string? Description { get; set; }
-    public AdvertGoal Type { get; set; }
-    public AdvertGroup SubCategory { get; set; }
-    public bool IsCommertial { get; set; }
-    public bool IsOffline { get; set; }
+    public string? Goal { get; set; }
+    public string? Group { get; set; }
+    public string? Interest { get; set; }
 
     public ApplicationUserViewModel? Creator { get; set; }
     public CityViewModel? City { get; set; }

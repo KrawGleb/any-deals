@@ -1,6 +1,9 @@
-﻿using MediatR;
+﻿using AutoMapper;
+using MediatR;
 using Microsoft.Extensions.DependencyInjection;
+using SaM.AnyDeals.Application.MappingProfiles;
 using SaM.AnyDeals.Application.Models.Configurations;
+using SaM.AnyDeals.DataAccess.Implementations;
 using System.Reflection;
 
 namespace SaM.AnyDeals.Application;
@@ -14,7 +17,7 @@ public static class DependencyInjection
         services.AddMediatR(assembly);
         services.AddAutoMapper(assembly);
 
-        services.Configure<JWTConfiguration>(instance 
+        services.Configure<JWTConfiguration>(instance
             => instance.Key = Environment.GetEnvironmentVariable("JWTSecurityKey"));
 
         return services;

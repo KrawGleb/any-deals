@@ -12,8 +12,8 @@ public class CreateAdvertCommand : IRequest<Response>
     public AdvertGoal Goal { get; set; }
     public AdvertGroup Group { get; set; }
     public AdvertInterest Interest { get; set; }
-    public int CityId { get; set; }
-    public int CategoryId { get; set; }
+    public string? City { get; set; }
+    public string? Category { get; set; }
     public ContactsViewModel? Contacts { get; set; }
     public List<AttachmentViewModel>? Attachments { get; set; }
 }
