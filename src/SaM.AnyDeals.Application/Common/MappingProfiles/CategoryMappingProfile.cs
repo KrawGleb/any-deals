@@ -2,12 +2,12 @@
 using SaM.AnyDeals.Application.Models.ViewModels;
 using SaM.AnyDeals.DataAccess.Models.Entries;
 
-namespace SaM.AnyDeals.Application.MappingProfiles;
+namespace SaM.AnyDeals.Application.Common.MappingProfiles;
 
 public class CategoryMappingProfile : Profile
 {
-	public CategoryMappingProfile()
-	{
-		CreateMap<CategoryDbEntry, CategoryViewModel>();
-	}
+    public CategoryMappingProfile()
+    {
+        CreateMap<CategoryDbEntry, CategoryViewModel>();
+    }
 }
