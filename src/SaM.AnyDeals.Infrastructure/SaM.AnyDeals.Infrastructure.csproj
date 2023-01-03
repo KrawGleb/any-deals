@@ -12,6 +12,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\SaM.AnyDeals.Application.Models\SaM.AnyDeals.Application.Models.csproj" />
     <ProjectReference Include="..\SaM.AnyDeals.Common\SaM.AnyDeals.Common.csproj" />
     <ProjectReference Include="..\SaM.AnyDeals.DataAccess.Models\SaM.AnyDeals.DataAccess.Models.csproj" />
     <ProjectReference Include="..\SaM.AnyDeals.DataAccess\SaM.AnyDeals.DataAccess.csproj" />
