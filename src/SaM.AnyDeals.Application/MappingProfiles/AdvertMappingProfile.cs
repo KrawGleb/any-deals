@@ -1,8 +1,7 @@
 ﻿using AutoMapper;
 using SaM.AnyDeals.Application.Models.ViewModels;
-using SaM.AnyDeals.Application.Requests.Adverts.Commands;
+using SaM.AnyDeals.Application.Requests.Adverts.Commands.Create;
 using SaM.AnyDeals.Common.Extensions;
-using SaM.AnyDeals.DataAccess.Implementations;
 using SaM.AnyDeals.DataAccess.Models.Entries;
 
 namespace SaM.AnyDeals.Application.MappingProfiles;

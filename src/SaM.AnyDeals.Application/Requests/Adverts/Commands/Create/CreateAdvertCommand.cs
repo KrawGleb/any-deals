@@ -3,7 +3,7 @@ using SaM.AnyDeals.Application.Models.Responses;
 using SaM.AnyDeals.Application.Models.ViewModels;
 using SaM.AnyDeals.Common.Enums;
 
-namespace SaM.AnyDeals.Application.Requests.Adverts.Commands;
+namespace SaM.AnyDeals.Application.Requests.Adverts.Commands.Create;
 
 public class CreateAdvertCommand : IRequest<Response>
 {

@@ -3,10 +3,9 @@ using MediatR;
 using Microsoft.EntityFrameworkCore;
 using SaM.AnyDeals.Application.Models.Responses;
 using SaM.AnyDeals.Application.Models.ViewModels;
-using SaM.AnyDeals.Application.Requests.Adverts.Queries;
 using SaM.AnyDeals.DataAccess.Implementations;
 
-namespace SaM.AnyDeals.Application.Handlers.Adverts.QueryHandlers;
+namespace SaM.AnyDeals.Application.Requests.Adverts.Queries.Get;
 
 public class GetAdvertQueryHandler : IRequestHandler<GetAdvertQuery, Response>
 {

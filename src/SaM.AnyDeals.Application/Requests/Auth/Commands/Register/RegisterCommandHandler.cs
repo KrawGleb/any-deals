@@ -1,10 +1,9 @@
 ﻿using MediatR;
 using Microsoft.AspNetCore.Identity;
 using SaM.AnyDeals.Application.Models.Responses;
-using SaM.AnyDeals.Application.Requests.Auth.Commands.Register;
 using SaM.AnyDeals.DataAccess.Models.Auth;
 
-namespace SaM.AnyDeals.Application.Handlers.Auth.CommandHandlers;
+namespace SaM.AnyDeals.Application.Requests.Auth.Commands.Register;
 
 public class RegisterCommandHandler : IRequestHandler<RegisterCommand, Response>
 {

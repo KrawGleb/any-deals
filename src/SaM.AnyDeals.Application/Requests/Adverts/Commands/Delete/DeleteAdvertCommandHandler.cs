@@ -1,10 +1,9 @@
 ﻿using MediatR;
 using SaM.AnyDeals.Application.Models.Responses;
-using SaM.AnyDeals.Application.Requests.Adverts.Commands;
 using SaM.AnyDeals.Common.Exceptions;
 using SaM.AnyDeals.DataAccess.Implementations;
 
-namespace SaM.AnyDeals.Application.Handlers.Adverts.CommandHandlers;
+namespace SaM.AnyDeals.Application.Requests.Adverts.Commands.Delete;
 
 public class DeleteAdvertCommandHandler : IRequestHandler<DeleteAdvertCommand, Response>
 {
