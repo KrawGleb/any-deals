@@ -5,7 +5,7 @@ import Input from "../../components/common/Input";
 import PrimaryButton from "../../components/common/PrimaryButton";
 import * as yup from "yup";
 import { yupResolver } from "@hookform/resolvers/yup";
-import { RegisterRequest } from "../../models/api/auth/register-request";
+import { RegisterRequest } from "../../models/api/auth/registerRequest";
 import { registerUser } from "../../features/api/auth/authActions";
 import { useDispatch } from "react-redux";
 import { AppDispatch } from "../../store/store";

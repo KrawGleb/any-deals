@@ -6,7 +6,7 @@ import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 import PrimaryButton from "../../components/common/PrimaryButton";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
-import { LoginRequest } from "../../models/api/auth/login-request";
+import { LoginRequest } from "../../models/api/auth/loginRequest";
 import { AppDispatch } from "../../store/store";
 import { useDispatch } from "react-redux";
 import { loginUser } from "../../features/api/auth/authActions";

@@ -1,7 +1,7 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
 import axios from "axios";
-import { LoginRequest } from "../../../models/api/auth/login-request";
-import { RegisterRequest } from "../../../models/api/auth/register-request";
+import { LoginRequest } from "../../../models/api/auth/loginRequest";
+import { RegisterRequest } from "../../../models/api/auth/registerRequest";
 
 const config = {
   headers: {
