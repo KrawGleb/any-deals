@@ -1,6 +1,7 @@
 ﻿using FluentValidation;
 using MediatR;
 using Microsoft.Extensions.DependencyInjection;
+using SaM.AnyDeals.Application.Common.Behaviors;
 using SaM.AnyDeals.Application.Models.Configurations;
 using System.Reflection;
 
@@ -12,12 +13,14 @@ public static class DependencyInjection
     {
         var assembly = Assembly.GetExecutingAssembly();
 
+        services.AddValidatorsFromAssembly(assembly);
         services.AddMediatR(assembly);
         services.AddAutoMapper(assembly);
-        services.AddValidatorsFromAssembly(assembly);
 
         services.Configure<JWTConfiguration>(instance
             => instance.Key = Environment.GetEnvironmentVariable("JWTSecurityKey"));
+
+        services.AddTransient(typeof(IPipelineBehavior<,>), typeof(ValidationBehavior<,>));
 
         return services;
     }

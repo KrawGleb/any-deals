@@ -7,11 +7,11 @@ public class CreateAdvertCommandValidator : AbstractValidator<CreateAdvertComman
 {
 	public CreateAdvertCommandValidator()
 	{
-		RuleFor(c => c.Title)
+		RuleFor(x => x.Title)
 			.NotEmpty()
 			.MaximumLength(AdvertConstraints.TitleMaxLength);
 
-		RuleFor(c => c.Description)
+		RuleFor(x => x.Description)
 			.MaximumLength(AdvertConstraints.DescriptionMaxLength);
 	}
 }
