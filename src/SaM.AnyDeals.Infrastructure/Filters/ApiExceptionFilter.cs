@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using FluentValidation;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Filters;
 using SaM.AnyDeals.Application.Models.Responses;
@@ -15,6 +16,7 @@ public class ApiExceptionFilter : IActionFilter, IOrderedFilter
         _exceptionHandlers = new Dictionary<Type, Action<ActionExecutedContext>>
         {
             { typeof(NotFoundException), HandleNotFoundException },
+            { typeof(ValidationException), HandleValidationException }
         };
     }
 
@@ -69,4 +71,21 @@ public class ApiExceptionFilter : IActionFilter, IOrderedFilter
             StatusCode = StatusCodes.Status404NotFound
         };
     }
+
+    private void HandleValidationException(ActionExecutedContext context)
+    {
+        var exception = (ValidationException)context.Exception;
+        var errors = exception.Errors.Select(e => e.ErrorMessage);
+
+        var response = new ErrorResponse()
+        {
+            Errors = errors
+        };
+
+        context.Result = new ObjectResult(response)
+        {
+            StatusCode = StatusCodes.Status400BadRequest
+        };
+    }
+
 }
