@@ -4,14 +4,13 @@ using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
 using SaM.AnyDeals.Application.Models.Configurations;
 using SaM.AnyDeals.Application.Models.Responses;
-using SaM.AnyDeals.Application.Requests.Auth.Queries.Login;
 using SaM.AnyDeals.Common.Exceptions;
 using SaM.AnyDeals.DataAccess.Models.Auth;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Text;
 
-namespace SaM.AnyDeals.Application.Handlers.Auth.QueryHandlers;
+namespace SaM.AnyDeals.Application.Requests.Auth.Queries.Login;
 
 public class LoginQueryHandler : IRequestHandler<LoginQuery, Response>
 {

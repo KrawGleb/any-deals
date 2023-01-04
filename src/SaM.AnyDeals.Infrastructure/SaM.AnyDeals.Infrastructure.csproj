@@ -7,11 +7,13 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="FluentValidation" Version="11.4.0" />
     <PackageReference Include="Microsoft.AspNetCore.Mvc.Abstractions" Version="2.2.0" />
     <PackageReference Include="Microsoft.AspNetCore.Mvc.Core" Version="2.2.5" />
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\SaM.AnyDeals.Application.Models\SaM.AnyDeals.Application.Models.csproj" />
     <ProjectReference Include="..\SaM.AnyDeals.Common\SaM.AnyDeals.Common.csproj" />
     <ProjectReference Include="..\SaM.AnyDeals.DataAccess.Models\SaM.AnyDeals.DataAccess.Models.csproj" />
     <ProjectReference Include="..\SaM.AnyDeals.DataAccess\SaM.AnyDeals.DataAccess.csproj" />

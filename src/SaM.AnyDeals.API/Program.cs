@@ -1,10 +1,12 @@
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.HttpOverrides;
 using Microsoft.IdentityModel.Tokens;
+using Newtonsoft.Json.Converters;
 using SaM.AnyDeals.Application;
 using SaM.AnyDeals.DataAccess;
 using SaM.AnyDeals.DataAccess.Extensions;
 using SaM.AnyDeals.Infrastructure;
+using SaM.AnyDeals.Infrastructure.Filters;
 using System.Text;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -15,7 +17,12 @@ services.AddDataAccess(configuration);
 services.AddApplication();
 services.AddInfrastructure();
 
-services.AddControllers();
+services
+    .AddControllers(options => 
+        options.Filters.Add<ApiExceptionFilter>())
+    .AddNewtonsoftJson(options =>
+        options.SerializerSettings.Converters.Add(new StringEnumConverter()));
+
 services.AddEndpointsApiExplorer();
 services.AddSwaggerGen();
 
