@@ -15,10 +15,10 @@ public static class CountriesPopulator
         {
             Id = countryId++,
             Name = country,
-        });
+        }).ToList();
 
         builder.HasData(entries);
 
-        return entries.ToList();
+        return entries;
     }
 }

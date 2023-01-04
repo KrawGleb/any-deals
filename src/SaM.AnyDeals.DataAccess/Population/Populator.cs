@@ -8,6 +8,6 @@ public static class Populator
     public static void Populate(this ModelBuilder modelBuilder)
     {
         var populatedCountries = modelBuilder.Entity<CountryDbEntry>().Populate();
-        var populatedCities = modelBuilder.Entity<CityDbEntry>().Populate(populatedCountries);
+        modelBuilder.Entity<CityDbEntry>().Populate(populatedCountries);
     }
 }

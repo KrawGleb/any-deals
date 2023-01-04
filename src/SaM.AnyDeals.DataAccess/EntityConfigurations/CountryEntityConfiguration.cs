@@ -14,11 +14,6 @@ public class CountryEntityConfiguration : EntityConfigurationBase<CountryDbEntry
             .HasMany(c => c.Cities)
             .WithOne(c => c.Country)
             .OnDelete(DeleteBehavior.Cascade);
-        /*builder
-            .OwnsMany(c => c.Cities)
-            .WithOwner(c => c.Country);
-*/
-        //builder.Populate();
     }
 
     public override void ConfigureConstraints(EntityTypeBuilder<CountryDbEntry> builder)
