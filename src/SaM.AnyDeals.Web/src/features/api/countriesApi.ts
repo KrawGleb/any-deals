@@ -1,7 +1,11 @@
-import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
+import {
+  BaseQueryApi,
+  createApi,
+  fetchBaseQuery,
+} from "@reduxjs/toolkit/query/react";
 import { City } from "../../models/api/city";
 import { Country } from "../../models/api/country";
-
+import { CommonResponse } from "./responses/commonResponse";
 
 export const countriesApi = createApi({
   reducerPath: "countriesApi",
@@ -15,11 +19,18 @@ export const countriesApi = createApi({
       transformResponse: (response: any) => response.body,
     }),
     getCities: builder.query<City[], number>({
-      query: (countryId) => ({
-        url: `/api/countries/${countryId}`,
-        method: "GET",
-      }),
-      transformResponse: (response: any) => response.body
+      async queryFn(
+        countryId: number,
+        _queryApi: BaseQueryApi,
+        _extraOptions: {},
+        fetchWithBQ
+      ) {
+        if (countryId > 0) {
+          const cities = await fetchWithBQ(`/api/countries/${countryId}`);
+
+          return { data: (cities.data as CommonResponse).body as City[] };
+        } else return { data: [] as City[] };
+      },
     }),
   }),
 });

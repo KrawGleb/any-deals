@@ -12,7 +12,7 @@ import {
   Typography,
 } from "@mui/material";
 import Button from "@mui/material/Button";
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import FakeSelect from "../../../components/common/fake-select/FakeSelect";
 import ArrowForwardIosIcon from "@mui/icons-material/ArrowForwardIos";
 import "./NewAdvert.scss";
@@ -21,18 +21,18 @@ import SelectDialog from "../../../components/common/select-dialog/SelectDialog"
 import { useNavigate } from "react-router-dom";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
-import { useCreateAdvertMutation } from "../../../features/api/advertsService";
+import { useCreateAdvertMutation } from "../../../features/api/advertsApi";
 import { Advert } from "../../../models/api/advert";
 import {
   useGetCitiesQuery,
   useGetCountriesQuery,
-} from "../../../features/api/countriesService";
+} from "../../../features/api/countriesApi";
 import { Contacts } from "../../../models/api/contacts";
 import { SelectableItem } from "../../../models/selectableItem";
 import { City } from "../../../models/api/city";
 import { Category } from "../../../models/api/category";
 import { Country } from "../../../models/api/country";
-import { useGetCategoriesQuery } from "../../../features/api/categoriesService";
+import { useGetCategoriesQuery } from "../../../features/api/categoriesApi";
 
 const schema = yup.object().shape({
   group: yup.number(),
@@ -58,12 +58,11 @@ const schema = yup.object().shape({
 export default function NewAdvert() {
   const navigate = useNavigate();
 
-  const [createNewAdvert, _] = useCreateAdvertMutation();
+  const [createNewAdvert, ] = useCreateAdvertMutation();
 
   const {
     register,
     handleSubmit,
-    formState: { isDirty, isValid, errors },
   } = useForm({
     mode: "onBlur",
     resolver: yupResolver(schema),
@@ -84,7 +83,6 @@ export default function NewAdvert() {
     setIsCitySelectOpen(false);
     setSelectedCity(value as City);
   };
-  // TODO: filter queries (-1 isn't valid value)
   let cities: City[] = useGetCitiesQuery(selectedCountry?.id ?? -1).data ?? [];
 
   const [isCategorySelectOpen, setIsCategorySelectOpen] = useState(false);
