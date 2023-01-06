@@ -1,5 +1,6 @@
-import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 import { Category } from "../../models/api/category";
+import { CommonResponse } from "../../models/api/responses/commonResponse";
+import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 
 export const categoriesApi = createApi({
   reducerPath: "categoriesApi",
@@ -10,7 +11,7 @@ export const categoriesApi = createApi({
         url: "/api/categories",
         method: "GET",
       }),
-      transformResponse: (response: any) => response.body,
+      transformResponse: (response: CommonResponse) => response.body,
     }),
   }),
 });

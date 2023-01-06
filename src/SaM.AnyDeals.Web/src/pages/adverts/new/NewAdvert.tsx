@@ -1,5 +1,8 @@
-import ArrowBack from "@mui/icons-material/ArrowBack";
+import "./NewAdvert.scss";
 import * as yup from "yup";
+import { yupResolver } from "@hookform/resolvers/yup";
+import React, { useState } from "react";
+
 import {
   Box,
   FormControl,
@@ -10,39 +13,37 @@ import {
   SelectChangeEvent,
   Stack,
   Typography,
+  Button
 } from "@mui/material";
-import Button from "@mui/material/Button";
-import React, { useState } from "react";
-import FakeSelect from "../../../components/common/fake-select/FakeSelect";
+import ArrowBack from "@mui/icons-material/ArrowBack";
 import ArrowForwardIosIcon from "@mui/icons-material/ArrowForwardIos";
-import "./NewAdvert.scss";
+
+import FakeSelect from "../../../components/common/fake-select/FakeSelect";
 import Input from "../../../components/common/Input";
 import SelectDialog from "../../../components/common/select-dialog/SelectDialog";
-import { useNavigate } from "react-router-dom";
-import { useForm } from "react-hook-form";
-import { yupResolver } from "@hookform/resolvers/yup";
-import { useCreateAdvertMutation } from "../../../features/api/advertsApi";
+
 import { Advert } from "../../../models/api/advert";
+import { Category } from "../../../models/api/category";
+import { City } from "../../../models/api/city";
+import { Contacts } from "../../../models/api/contacts";
+import { Country } from "../../../models/api/country";
+import { SelectableItem } from "../../../models/selectableItem";
+
+import { useCreateAdvertMutation } from "../../../features/api/advertsApi";
+import { useForm } from "react-hook-form";
+import { useGetCategoriesQuery } from "../../../features/api/categoriesApi";
+import { useNavigate } from "react-router-dom";
 import {
   useGetCitiesQuery,
   useGetCountriesQuery,
 } from "../../../features/api/countriesApi";
-import { Contacts } from "../../../models/api/contacts";
-import { SelectableItem } from "../../../models/selectableItem";
-import { City } from "../../../models/api/city";
-import { Category } from "../../../models/api/category";
-import { Country } from "../../../models/api/country";
-import { useGetCategoriesQuery } from "../../../features/api/categoriesApi";
 
 const schema = yup.object().shape({
-  group: yup.number(),
-  goal: yup.number(),
-  interest: yup.number(),
   title: yup.string(),
-  category: yup.string(),
   description: yup.string(),
-  country: yup.string(),
-  city: yup.string(),
+  goal: yup.number(),
+  group: yup.number(),
+  interest: yup.number(),
   name: yup.string(),
   email: yup.string(),
   phone: yup.string(),
@@ -57,17 +58,14 @@ const schema = yup.object().shape({
 
 export default function NewAdvert() {
   const navigate = useNavigate();
+  const [createNewAdvert] = useCreateAdvertMutation();
 
-  const [createNewAdvert, ] = useCreateAdvertMutation();
-
-  const {
-    register,
-    handleSubmit,
-  } = useForm({
+  const { register, handleSubmit } = useForm({
     mode: "onBlur",
     resolver: yupResolver(schema),
   });
 
+  const { data: countries } = useGetCountriesQuery();
   const [isCountrySelectOpen, setIsCountrySelectOpen] = useState(false);
   const [selectedCountry, setSelectedCountry] = useState<Country | undefined>();
   const handleSelectCountryDialogClose = (value?: SelectableItem) => {
@@ -75,16 +73,16 @@ export default function NewAdvert() {
     setSelectedCountry(value as Country);
     setSelectedCity(undefined);
   };
-  const { data: countries } = useGetCountriesQuery();
 
+  let cities: City[] = useGetCitiesQuery(selectedCountry?.id ?? -1).data ?? [];
   const [isCitySelectOpen, setIsCitySelectOpen] = useState(false);
   const [selectedCity, setSelectedCity] = useState<City | undefined>();
   const handleSelectCityDialogClose = (value?: SelectableItem) => {
     setIsCitySelectOpen(false);
     setSelectedCity(value as City);
   };
-  let cities: City[] = useGetCitiesQuery(selectedCountry?.id ?? -1).data ?? [];
 
+  const { data: categories } = useGetCategoriesQuery();
   const [isCategorySelectOpen, setIsCategorySelectOpen] = useState(false);
   const [selectedCategory, setSelectedCategory] = useState<
     Category | undefined
@@ -94,11 +92,10 @@ export default function NewAdvert() {
     setIsCategorySelectOpen(false);
     setSelectedCategory(value as Category);
   };
-  const { data: categories } = useGetCategoriesQuery();
 
-  const [group, setGroup] = useState("");
+  const [group, setGroup] = useState<number | undefined>();
   const handleChange = (event: SelectChangeEvent) => {
-    setGroup(event.target.value as string);
+    setGroup(+event.target.value);
   };
 
   const onSubmit = (data: any) => {
@@ -106,12 +103,10 @@ export default function NewAdvert() {
       cityId: selectedCity!.id,
       categoryId: selectedCategory!.id,
       contacts: {
-        ...data
+        ...data,
       } as Contacts,
-      ...data
+      ...data,
     } as Advert;
-
-    console.log({...advert});
 
     createNewAdvert(advert).unwrap();
   };
