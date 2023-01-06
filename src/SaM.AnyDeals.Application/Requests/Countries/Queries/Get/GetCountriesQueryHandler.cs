@@ -22,7 +22,10 @@ public class GetCountriesQueryHandler : IRequestHandler<GetCountriesQuery, Respo
 
     public async Task<Response> Handle(GetCountriesQuery request, CancellationToken cancellationToken)
     {
-        var countries = await _applicationDbContext.Countries.ToListAsync(cancellationToken);
+        var countries = await _applicationDbContext
+            .Countries
+            .OrderBy(c => c.Name)
+            .ToListAsync(cancellationToken);
         var countriesVM = _mapper.Map<List<CountryViewModel>>(countries);
 
         return new CommonResponse

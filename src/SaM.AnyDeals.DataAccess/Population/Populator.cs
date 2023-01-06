@@ -9,5 +9,6 @@ public static class Populator
     {
         var populatedCountries = modelBuilder.Entity<CountryDbEntry>().Populate();
         modelBuilder.Entity<CityDbEntry>().Populate(populatedCountries);
+        modelBuilder.Entity<CategoryDbEntry>().Populate();
     }
 }

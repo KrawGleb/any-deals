@@ -25,6 +25,7 @@ public class GetCitiesQueryHandler : IRequestHandler<GetCitiesQuery, Response>
         var cities = await _applicationDbContext
             .Cities
             .Where(c => c.CountryId == request.CountryId)
+            .OrderBy(c => c.Name)
             .ToListAsync(cancellationToken);
         var citiesVM = _mapper.Map<List<CityViewModel>>(cities);
 

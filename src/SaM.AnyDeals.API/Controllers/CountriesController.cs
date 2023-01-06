@@ -9,10 +9,10 @@ namespace SaM.AnyDeals.API.Controllers;
 public class CountriesController : ApiControllerBase
 {
     [HttpGet]
-    public async Task<IActionResult> GetCountriesAsync()
-        => Ok(await Mediator.Send(new GetCountriesQuery()));
+    public async Task<IActionResult> GetCountriesAsync(CancellationToken cancellationToken)
+        => Ok(await Mediator.Send(new GetCountriesQuery(), cancellationToken));
 
     [HttpGet("{countryId}")]
-    public async Task<IActionResult> GetCitiesAsync([FromRoute] int countryId)
-        => Ok(await Mediator.Send(new GetCitiesQuery(countryId)));
+    public async Task<IActionResult> GetCitiesAsync([FromRoute] int countryId, CancellationToken cancellationToken)
+        => Ok(await Mediator.Send(new GetCitiesQuery(countryId), cancellationToken));
 }
