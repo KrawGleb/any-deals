@@ -34,10 +34,12 @@ export default function SelectDialog(props: SelectDialogProps) {
     setFilter("");
     onClose(selectedValue);
   };
+  
   const handleListItemClick = (value: SelectableItem) => {
     setFilter("");
     onClose(value);
-  }
+  };
+
   const handleFilterChange = (e: ChangeEvent<HTMLInputElement>) =>
     setFilter(e.target.value);
 

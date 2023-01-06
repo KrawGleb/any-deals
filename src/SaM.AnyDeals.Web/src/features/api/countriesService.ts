@@ -1,6 +1,6 @@
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
-import { City } from "../../../models/api/city";
-import { Country } from "../../../models/api/country";
+import { City } from "../../models/api/city";
+import { Country } from "../../models/api/country";
 
 
 export const countriesApi = createApi({

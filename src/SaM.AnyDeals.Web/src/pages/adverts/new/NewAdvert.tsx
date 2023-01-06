@@ -21,12 +21,12 @@ import SelectDialog from "../../../components/common/select-dialog/SelectDialog"
 import { useNavigate } from "react-router-dom";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
-import { useCreateAdvertMutation } from "../../../features/api/adverts/advertsService";
+import { useCreateAdvertMutation } from "../../../features/api/advertsService";
 import { Advert } from "../../../models/api/advert";
 import {
   useGetCitiesQuery,
   useGetCountriesQuery,
-} from "../../../features/api/countries/countriesService";
+} from "../../../features/api/countriesService";
 import { Contacts } from "../../../models/api/contacts";
 import { SelectableItem } from "../../../models/selectableItem";
 import { City } from "../../../models/api/city";
@@ -116,6 +116,7 @@ export default function NewAdvert() {
         vk: data.vk,
         whatsApp: data.whatsApp,
       } as Contacts,
+      cityId: selectedCity!.id
     } as Advert;
 
     console.log(advert);
