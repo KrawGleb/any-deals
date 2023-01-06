@@ -9,17 +9,20 @@ public static class CitiesPopulator
     public static List<CityDbEntry> Populate(this EntityTypeBuilder<CityDbEntry> builder, List<CountryDbEntry> countries)
     {
         var entries = new List<CityDbEntry>();
-        var cityId = 1;
 
         foreach (var country in countries)
         {
-            Console.WriteLine($"{country.Id} - {country.Name}");
-            var cities = CitiesAndCountriesCsvLoader.GetCitiesByCountry(country.Name);
-            entries.AddRange(cities.Select(city => new CityDbEntry() { Id = cityId++, Name = city, CountryId = country.Id }));
+            var cities = CitiesAndCountriesCsvLoader.GetCitiesByCountry(country.Name!);
+            entries.AddRange(cities.Select(record => new CityDbEntry()
+            {
+                Id = record.Id,
+                CountryId = country.Id,
+                Name = record.CityAscii,
+            }));
         }
 
         builder.HasData(entries);
 
-        return entries.ToList();
+        return entries;
     }
 }

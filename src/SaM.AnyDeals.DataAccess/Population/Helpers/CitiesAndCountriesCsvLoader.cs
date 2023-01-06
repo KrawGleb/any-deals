@@ -28,19 +28,19 @@ public class CitiesAndCountriesCsvLoader
         return countries!;
     }
 
-    public static List<string> GetCitiesByCountry(string country)
+    public static List<Record> GetCitiesByCountry(string country)
     {
         var cities = _records
             .Where(r => r.Country!.ToLower() == country.ToLower())
-            .Select(r => r.CityAscii)
             .Distinct()
             .ToList();
 
         return cities!;
     }
 
-    private class Record
+    public class Record
     {
+        [Name("id")] public int Id { get; set; }
         [Name("country")] public string? Country { get; set; }
         [Name("city_ascii")] public string? CityAscii { get; set; }
         [Name("city")] private string? City { get; set; }
@@ -51,6 +51,5 @@ public class CitiesAndCountriesCsvLoader
         [Name("admin_name")] private string? AdminName { get; set; }
         [Name("capital")] private string? Capital { get; set; }
         [Name("population")] private string? Population { get; set; }
-        [Name("id")] private string? Id { get; set; }
     }
 }
