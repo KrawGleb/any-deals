@@ -24,10 +24,14 @@ export default function SelectDialog(props: SelectDialogProps) {
   const [listItems, setListItems] = useState<SelectableItem[]>([]);
 
   useEffect(() => {
-    const filteredList = variants.filter((variant) =>
-      variant.name.toLowerCase().startsWith(filter.toLowerCase())
-    );
-    setListItems(filteredList);
+    const timeOutId = setTimeout(() => {
+      const filteredList = variants.filter((variant) =>
+        variant.name.toLowerCase().startsWith(filter.toLowerCase())
+      );
+      setListItems(filteredList);
+    }, 500);
+
+    return () => clearTimeout(timeOutId);
   }, [filter, variants]);
 
   const handleClose = () => {

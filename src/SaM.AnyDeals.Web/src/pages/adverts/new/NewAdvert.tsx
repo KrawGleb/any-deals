@@ -32,11 +32,12 @@ import { SelectableItem } from "../../../models/selectableItem";
 import { City } from "../../../models/api/city";
 import { Category } from "../../../models/api/category";
 import { Country } from "../../../models/api/country";
+import { useGetCategoriesQuery } from "../../../features/api/categoriesService";
 
 const schema = yup.object().shape({
-  subCategory: yup.string(),
-  type: yup.string(),
-  interest: yup.string(),
+  group: yup.number(),
+  goal: yup.number(),
+  interest: yup.number(),
   title: yup.string(),
   category: yup.string(),
   description: yup.string(),
@@ -83,6 +84,7 @@ export default function NewAdvert() {
     setIsCitySelectOpen(false);
     setSelectedCity(value as City);
   };
+  // TODO: filter queries (-1 isn't valid value)
   let cities: City[] = useGetCitiesQuery(selectedCountry?.id ?? -1).data ?? [];
 
   const [isCategorySelectOpen, setIsCategorySelectOpen] = useState(false);
@@ -90,10 +92,11 @@ export default function NewAdvert() {
     Category | undefined
   >();
   const handleSelectCategoryDialogClose = (value?: SelectableItem) => {
+    console.log(value);
     setIsCategorySelectOpen(false);
     setSelectedCategory(value as Category);
   };
-  let categories: Category[] = [];
+  const { data: categories } = useGetCategoriesQuery();
 
   const [group, setGroup] = useState("");
   const handleChange = (event: SelectChangeEvent) => {
@@ -102,24 +105,15 @@ export default function NewAdvert() {
 
   const onSubmit = (data: any) => {
     let advert: Advert = {
-      title: data.title,
-      description: data.description,
+      cityId: selectedCity!.id,
+      categoryId: selectedCategory!.id,
       contacts: {
-        name: data.name,
-        phone: data.phone,
-        address: data.address,
-        email: data.email,
-        facebook: data.facebook,
-        instagram: data.instagram,
-        linkedIn: data.linkedIn,
-        telegram: data.telegram,
-        vk: data.vk,
-        whatsApp: data.whatsApp,
+        ...data
       } as Contacts,
-      cityId: selectedCity!.id
+      ...data
     } as Advert;
 
-    console.log(advert);
+    console.log({...advert});
 
     createNewAdvert(advert).unwrap();
   };
@@ -170,20 +164,20 @@ export default function NewAdvert() {
                 In which section would you like to place your ad?
               </Typography>
               <Input
-                {...register("subCategory")}
+                {...register("group")}
                 value={group}
                 onChange={handleChange}
                 label="Group"
                 select
                 required
               >
-                <MenuItem key={10} value="10">
+                <MenuItem key={0} value={0}>
                   Services nearby
                 </MenuItem>
-                <MenuItem key={20} value="20">
+                <MenuItem key={1} value={1}>
                   Online services
                 </MenuItem>
-                <MenuItem key={30} value="30">
+                <MenuItem key={2} value={2}>
                   Events and places
                 </MenuItem>
               </Input>
@@ -194,16 +188,16 @@ export default function NewAdvert() {
                 <Typography variant="h5">Advertisement's goal</Typography>
                 <RadioGroup row>
                   <FormControlLabel
-                    value="offer"
-                    control={<Radio />}
-                    label="I suggest"
-                    {...register("type")}
-                  />
-                  <FormControlLabel
-                    value="search"
+                    value={0}
                     control={<Radio />}
                     label="I'm looking for"
-                    {...register("type")}
+                    {...register("goal")}
+                  />
+                  <FormControlLabel
+                    value={1}
+                    control={<Radio />}
+                    label="I suggest"
+                    {...register("goal")}
                   />
                 </RadioGroup>
               </FormControl>
@@ -214,13 +208,13 @@ export default function NewAdvert() {
                 <Typography variant="h5">My interest</Typography>
                 <RadioGroup row>
                   <FormControlLabel
-                    value="commercial"
+                    value={0}
                     control={<Radio />}
                     label="Commercial"
                     {...register("interest")}
                   />
                   <FormControlLabel
-                    value="social"
+                    value={1}
                     control={<Radio />}
                     label="Social"
                     {...register("interest")}
@@ -232,7 +226,7 @@ export default function NewAdvert() {
             <Stack spacing={2} className="mb-5">
               <Input label="Title" required {...register("title")} />
               <FakeSelect
-                label={selectedCategory ?? "Category"}
+                label={selectedCategory?.name ?? "Category"}
                 required
                 onClick={() => setIsCategorySelectOpen(true)}
               />
