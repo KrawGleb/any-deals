@@ -1,20 +1,26 @@
 import "./FakeSelect.scss";
-import React from "react";
-import { Box, Typography } from "@mui/material";
+import React, { forwardRef } from "react";
 import ArrowDropDownIcon from "@mui/icons-material/ArrowDropDown";
+import InputAdornment from "@mui/material/InputAdornment";
+import Input from "../Input";
 
-export default function FakeSelect({ ...props }) {
+export const FakeSelect = forwardRef(({ ...props }: any, ref) => {
   return (
-    <Box className="fake-select" {...props}>
-      <div className="fake-select-input">
-        <Box className="fake-select-input__content">
-          <Typography className="fake-select-input__content-text">
-            {props.label}
-            {props.required ? " *" : " "}
-          </Typography>
-          <ArrowDropDownIcon className="fake-select-input__icon" />
-        </Box>
-      </div>
-    </Box>
+    <div className="fake-select">
+      <Input
+        ref={ref}
+        {...props}
+        InputProps={{
+          readOnly: true,
+          endAdornment: (
+            <InputAdornment disableTypography position="end">
+              <ArrowDropDownIcon />
+            </InputAdornment>
+          ),
+        }}
+      />
+    </div>
   );
-}
+});
+
+export default FakeSelect;

@@ -13,7 +13,7 @@ import {
   SelectChangeEvent,
   Stack,
   Typography,
-  Button
+  Button,
 } from "@mui/material";
 import ArrowBack from "@mui/icons-material/ArrowBack";
 import ArrowForwardIosIcon from "@mui/icons-material/ArrowForwardIos";
@@ -39,13 +39,16 @@ import {
 } from "../../../features/api/countriesApi";
 
 const schema = yup.object().shape({
-  title: yup.string(),
+  title: yup.string().required("Title is a required field"),
   description: yup.string(),
-  goal: yup.number(),
-  group: yup.number(),
-  interest: yup.number(),
-  name: yup.string(),
-  email: yup.string(),
+  goal: yup.number().required("Goal is a required field"),
+  group: yup.number().required("Group is a required field"),
+  interest: yup.number().required(),
+  category: yup.string().required("Category is a required field"),
+  country: yup.string().required("Country is a required field"),
+  city: yup.string().required("City is a required field"),
+  name: yup.string().required("Name is a required field"),
+  email: yup.string().email("Invalid email format"),
   phone: yup.string(),
   address: yup.string(),
   facebook: yup.string(),
@@ -60,7 +63,11 @@ export default function NewAdvert() {
   const navigate = useNavigate();
   const [createNewAdvert] = useCreateAdvertMutation();
 
-  const { register, handleSubmit } = useForm({
+  const {
+    register,
+    handleSubmit,
+    formState: { isDirty, isValid, errors },
+  } = useForm({
     mode: "onBlur",
     resolver: yupResolver(schema),
   });
@@ -158,11 +165,13 @@ export default function NewAdvert() {
               </Typography>
               <Input
                 {...register("group")}
+                required
+                select
+                label="Group"
                 value={group}
                 onChange={handleChange}
-                label="Group"
-                select
-                required
+                error={!!errors.group}
+                helperText={errors?.group?.message}
               >
                 <MenuItem key={0} value={0}>
                   Services nearby
@@ -179,7 +188,7 @@ export default function NewAdvert() {
             <div className="form__goal">
               <FormControl>
                 <Typography variant="h5">Advertisement's goal</Typography>
-                <RadioGroup row>
+                <RadioGroup row defaultValue={0}>
                   <FormControlLabel
                     value={0}
                     control={<Radio />}
@@ -199,7 +208,7 @@ export default function NewAdvert() {
             <div className="form__interest mb-4">
               <FormControl>
                 <Typography variant="h5">My interest</Typography>
-                <RadioGroup row>
+                <RadioGroup row defaultValue={0}>
                   <FormControlLabel
                     value={0}
                     control={<Radio />}
@@ -217,15 +226,24 @@ export default function NewAdvert() {
             </div>
 
             <Stack spacing={2} className="mb-5">
-              <Input label="Title" required {...register("title")} />
-              <FakeSelect
-                label={selectedCategory?.name ?? "Category"}
+              <Input
+                label="Title"
                 required
+                {...register("title")}
+                error={!!errors.title}
+                helperText={errors?.title?.message}
+              />
+              <FakeSelect
+                required
+                label="Category"
+                value={selectedCategory?.name ?? ""}
                 onClick={() => setIsCategorySelectOpen(true)}
+                {...register("category")}
+                error={!!errors.category}
+                helperText={errors?.category?.message}
               />
               <Input
                 label="Description"
-                required
                 multiline
                 rows={4}
                 {...register("description")}
@@ -238,14 +256,22 @@ export default function NewAdvert() {
               </Typography>
               <Stack direction="row" spacing={2}>
                 <FakeSelect
-                  label={selectedCountry?.name ?? "Country"}
                   required
+                  label="Country"
+                  value={selectedCountry?.name ?? ""}
                   onClick={() => setIsCountrySelectOpen(true)}
+                  {...register("country")}
+                  error={!!errors.country}
+                  helperText={errors?.country?.message}
                 />
                 <FakeSelect
-                  label={selectedCity?.name ?? "City"}
                   required
+                  label="City"
+                  value={selectedCity?.name ?? ""}
                   onClick={() => setIsCitySelectOpen(true)}
+                  {...register("city")}
+                  error={!!errors.city}
+                  helperText={errors?.city?.message}
                 />
               </Stack>
             </div>
@@ -259,7 +285,13 @@ export default function NewAdvert() {
 
               <Stack spacing={3}>
                 <Stack direction="row" spacing={3}>
-                  <Input label="Name" required {...register("name")} />
+                  <Input
+                    label="Name"
+                    required
+                    {...register("name")}
+                    error={!!errors.name}
+                    helperText={errors?.name?.message}
+                  />
                   <Input label="Email" {...register("email")} />
                 </Stack>
 
@@ -304,6 +336,7 @@ export default function NewAdvert() {
                 type="submit"
                 variant="contained"
                 endIcon={<ArrowForwardIosIcon />}
+                disabled={!isDirty || !isValid}
               >
                 Create and publish
               </Button>
