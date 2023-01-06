@@ -5,7 +5,7 @@ import {
 } from "@reduxjs/toolkit/query/react";
 import { City } from "../../models/api/city";
 import { Country } from "../../models/api/country";
-import { CommonResponse } from "./responses/commonResponse";
+import { CommonResponse } from "../../models/api/responses/commonResponse";
 
 export const countriesApi = createApi({
   reducerPath: "countriesApi",
