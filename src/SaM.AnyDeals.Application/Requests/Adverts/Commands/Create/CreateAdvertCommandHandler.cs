@@ -44,19 +44,6 @@ public class CreateAdvertCommandHandler : IRequestHandler<CreateAdvertCommand, R
         var advertOwner = await GetAdvertOwnerAsync(userId, cancellationToken);
         var advert = _mapper.Map<AdvertDbEntry>(request);
 
-        var city = await _applicationDbContext
-            .Cities
-            .SingleOrDefaultAsync(c => c.Name!.ToLower() == request.City!.ToLower(), cancellationToken)
-            ?? throw new NotFoundException($"City {request.City} not found.");
-
-        var category = await _applicationDbContext
-            .Categories
-            .SingleOrDefaultAsync(c => c.Name!.ToLower() == request.Category!.ToLower(), cancellationToken)
-            ?? throw new NotFoundException($"Category {request.Category} not found");
-
-        advert.City = city;
-        advert.Category = category;
-
         await _applicationDbContext.Adverts.AddAsync(advert, cancellationToken);
         await _applicationDbContext.SaveChangesAsync(cancellationToken);
 

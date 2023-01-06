@@ -16,8 +16,6 @@ public class AdvertMappingProfile : Profile
             .ForMember(d => d.Group, s => s.MapFrom(e => e.Group.GetEnumMemberValue()))
             .ForMember(d => d.Interest, s => s.MapFrom(e => e.Interest.GetEnumMemberValue()));
 
-        CreateMap<CreateAdvertCommand, AdvertDbEntry>()
-            .ForMember(e => e.City, c => c.Ignore())
-            .ForMember(e => e.Category, c => c.Ignore());
+        CreateMap<CreateAdvertCommand, AdvertDbEntry>();
     }
 }
