@@ -7,30 +7,37 @@ import {
   ListItemButton,
 } from "@mui/material";
 import React, { ChangeEvent, useEffect, useState } from "react";
+import { SelectableItem } from "../../../models/selectableItem";
 import Input from "../Input";
 import "./SelectDialog.scss";
 
 export interface SelectDialogProps {
   open: boolean;
-  selectedValue: string | undefined;
-  variants: string[];
-  onClose: (value: string | undefined) => void;
+  selectedValue: SelectableItem;
+  variants: SelectableItem[];
+  onClose: (value: SelectableItem | undefined) => void;
 }
 
 export default function SelectDialog(props: SelectDialogProps) {
   const { onClose, selectedValue, open, variants } = props;
   const [filter, setFilter] = useState("");
-  const [listItems, setListItems] = useState<string[]>([]);
+  const [listItems, setListItems] = useState<SelectableItem[]>([]);
 
   useEffect(() => {
     const filteredList = variants.filter((variant) =>
-      variant.toLowerCase().startsWith(filter.toLowerCase())
+      variant.name.toLowerCase().startsWith(filter.toLowerCase())
     );
     setListItems(filteredList);
   }, [filter, variants]);
 
-  const handleClose = () => onClose(selectedValue);
-  const handleListItemClick = (value: string) => onClose(value);
+  const handleClose = () => {
+    setFilter("");
+    onClose(selectedValue);
+  };
+  const handleListItemClick = (value: SelectableItem) => {
+    setFilter("");
+    onClose(value);
+  }
   const handleFilterChange = (e: ChangeEvent<HTMLInputElement>) =>
     setFilter(e.target.value);
 
@@ -43,12 +50,12 @@ export default function SelectDialog(props: SelectDialogProps) {
         <Input label="Filter" className="mb-3" onChange={handleFilterChange} />
         <List className="dialog__list">
           {listItems.map((variant) => (
-            <li key={variant}>
+            <li key={variant.id}>
               <ListItemButton
-                key={variant}
+                key={variant.id}
                 onClick={() => handleListItemClick(variant)}
               >
-                <ListItemText primary={variant} />
+                <ListItemText primary={variant.name} />
               </ListItemButton>
             </li>
           ))}

@@ -12,7 +12,7 @@ import {
   Typography,
 } from "@mui/material";
 import Button from "@mui/material/Button";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import FakeSelect from "../../../components/common/fake-select/FakeSelect";
 import ArrowForwardIosIcon from "@mui/icons-material/ArrowForwardIos";
 import "./NewAdvert.scss";
@@ -22,12 +22,16 @@ import { useNavigate } from "react-router-dom";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { useCreateAdvertMutation } from "../../../features/api/adverts/advertsService";
-import { Advert } from "../../../models/advert";
-import { Contacts } from "../../../models/contacts";
-
-const countries = [1, 2, 3, 4, 5, 6].map((n) => `Country-${n}`);
-const cities = [1, 2, 3, 4, 5, 6].map((n) => `City-${n}`);
-const categories = [1, 2, 3, 4, 5, 6].map((n) => `Category-${n}`);
+import { Advert } from "../../../models/api/advert";
+import {
+  useGetCitiesQuery,
+  useGetCountriesQuery,
+} from "../../../features/api/countries/countriesService";
+import { Contacts } from "../../../models/api/contacts";
+import { SelectableItem } from "../../../models/selectableItem";
+import { City } from "../../../models/api/city";
+import { Category } from "../../../models/api/category";
+import { Country } from "../../../models/api/country";
 
 const schema = yup.object().shape({
   subCategory: yup.string(),
@@ -52,7 +56,9 @@ const schema = yup.object().shape({
 
 export default function NewAdvert() {
   const navigate = useNavigate();
-  const [createNewAdvert, response] = useCreateAdvertMutation();
+
+  const [createNewAdvert, _] = useCreateAdvertMutation();
+
   const {
     register,
     handleSubmit,
@@ -63,27 +69,31 @@ export default function NewAdvert() {
   });
 
   const [isCountrySelectOpen, setIsCountrySelectOpen] = useState(false);
-  const [selectedCountry, setSelectedCountry] = useState<string | undefined>();
-  const handleSelectCountryDialogClose = (value: string | undefined) => {
+  const [selectedCountry, setSelectedCountry] = useState<Country | undefined>();
+  const handleSelectCountryDialogClose = (value?: SelectableItem) => {
     setIsCountrySelectOpen(false);
-    setSelectedCountry(value);
+    setSelectedCountry(value as Country);
+    setSelectedCity(undefined);
   };
+  const { data: countries } = useGetCountriesQuery();
 
   const [isCitySelectOpen, setIsCitySelectOpen] = useState(false);
-  const [selectedCity, setSelectedCity] = useState<string | undefined>();
-  const handleSelectCityDialogClose = (value?: string) => {
+  const [selectedCity, setSelectedCity] = useState<City | undefined>();
+  const handleSelectCityDialogClose = (value?: SelectableItem) => {
     setIsCitySelectOpen(false);
-    setSelectedCity(value);
+    setSelectedCity(value as City);
   };
+  let cities: City[] = useGetCitiesQuery(selectedCountry?.id ?? -1).data ?? [];
 
   const [isCategorySelectOpen, setIsCategorySelectOpen] = useState(false);
   const [selectedCategory, setSelectedCategory] = useState<
-    string | undefined
+    Category | undefined
   >();
-  const handleSelectCategoryDialogClose = (value: string | undefined) => {
+  const handleSelectCategoryDialogClose = (value?: SelectableItem) => {
     setIsCategorySelectOpen(false);
-    setSelectedCategory(value);
+    setSelectedCategory(value as Category);
   };
+  let categories: Category[] = [];
 
   const [group, setGroup] = useState("");
   const handleChange = (event: SelectChangeEvent) => {
@@ -110,9 +120,7 @@ export default function NewAdvert() {
 
     console.log(advert);
 
-    createNewAdvert(advert)
-      .unwrap()
-      .then((smth: any) => console.log(smth));
+    createNewAdvert(advert).unwrap();
   };
 
   return (
@@ -120,20 +128,20 @@ export default function NewAdvert() {
       <SelectDialog
         open={isCountrySelectOpen}
         onClose={handleSelectCountryDialogClose}
-        selectedValue={selectedCountry}
-        variants={countries}
+        selectedValue={selectedCountry as SelectableItem}
+        variants={(countries as SelectableItem[]) ?? []}
       />
       <SelectDialog
         open={isCitySelectOpen}
         onClose={handleSelectCityDialogClose}
-        selectedValue={selectedCity}
-        variants={cities}
+        selectedValue={selectedCity as SelectableItem}
+        variants={(cities as SelectableItem[]) ?? []}
       />
       <SelectDialog
         open={isCategorySelectOpen}
         onClose={handleSelectCategoryDialogClose}
-        selectedValue={selectedCategory}
-        variants={categories}
+        selectedValue={selectedCategory as SelectableItem}
+        variants={(categories as SelectableItem[]) ?? []}
       />
 
       <div className="new">
@@ -242,12 +250,12 @@ export default function NewAdvert() {
               </Typography>
               <Stack direction="row" spacing={2}>
                 <FakeSelect
-                  label={selectedCountry ?? "Country"}
+                  label={selectedCountry?.name ?? "Country"}
                   required
                   onClick={() => setIsCountrySelectOpen(true)}
                 />
                 <FakeSelect
-                  label={selectedCity ?? "City"}
+                  label={selectedCity?.name ?? "City"}
                   required
                   onClick={() => setIsCitySelectOpen(true)}
                 />
