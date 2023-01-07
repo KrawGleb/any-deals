@@ -3,10 +3,12 @@ import { advertsApi } from "../api/advertsApi";
 import authSlice from "../api/auth/authSlice";
 import { categoriesApi } from "../api/categoriesApi";
 import { countriesApi } from "../api/countriesApi";
+import fileUploadSlice from "./fileUploadSlice";
 
 const store = configureStore({
   reducer: {
     auth: authSlice,
+    fileUpload: fileUploadSlice,
     [advertsApi.reducerPath]: advertsApi.reducer,
     [countriesApi.reducerPath]: countriesApi.reducer,
     [categoriesApi.reducerPath]: categoriesApi.reducer,
@@ -15,7 +17,7 @@ const store = configureStore({
     getDefaultMiddleware().concat([
       advertsApi.middleware,
       countriesApi.middleware,
-      categoriesApi.middleware
+      categoriesApi.middleware,
     ]),
 });
 
