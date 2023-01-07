@@ -37,18 +37,19 @@ import {
   useGetCitiesQuery,
   useGetCountriesQuery,
 } from "../../../features/api/countriesApi";
+import { ValidationMessages } from "../../../features/helpers/validationMessages";
 
 const schema = yup.object().shape({
-  title: yup.string().required("Title is a required field"),
+  title: yup.string().required(ValidationMessages.required("Title")),
   description: yup.string(),
-  goal: yup.number().required("Goal is a required field"),
-  group: yup.number().required("Group is a required field"),
+  goal: yup.number().required(ValidationMessages.required("Goal")),
+  group: yup.number().required(ValidationMessages.required("Group")),
   interest: yup.number().required(),
-  category: yup.string().required("Category is a required field"),
-  country: yup.string().required("Country is a required field"),
-  city: yup.string().required("City is a required field"),
-  name: yup.string().required("Name is a required field"),
-  email: yup.string().email("Invalid email format"),
+  category: yup.string().required(ValidationMessages.required("Category")),
+  country: yup.string().required(ValidationMessages.required("Country")),
+  city: yup.string().required(ValidationMessages.required("City")),
+  name: yup.string().required(ValidationMessages.required("Name")),
+  email: yup.string().email(ValidationMessages.email()),
   phone: yup.string(),
   address: yup.string(),
   facebook: yup.string(),
