@@ -6,8 +6,8 @@ import {
   uploadBytesResumable,
 } from "firebase/storage";
 import React, { useEffect, useState } from "react";
-import firebaseStorage from "../../../../store/firebaseStorage";
-import FileHeader from "../file-header/FileHeader";
+import firebaseStorage from "../../../../features/store/firebaseStorage";
+import FileHeader from "../fileHeader/FileHeader";
 import { FileUploadWithProgressProps } from "./FileUploadWithProgressProps";
 
 export default function FileUploadWithProgress({
@@ -24,6 +24,7 @@ export default function FileUploadWithProgress({
     }
 
     upload();
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   return (

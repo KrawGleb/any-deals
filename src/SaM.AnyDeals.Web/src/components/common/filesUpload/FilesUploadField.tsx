@@ -3,8 +3,8 @@ import { deleteObject, ref } from "firebase/storage";
 import React, { useCallback, useState } from "react";
 import { FileRejection, useDropzone } from "react-dropzone";
 import { UploadedFile } from "../../../models/uploadedFile";
-import firebaseStorage from "../../../store/firebaseStorage";
-import FileUploadWithProgress from "./file-upload/FileUploadWithProgress";
+import firebaseStorage from "../../../features/store/firebaseStorage";
+import FileUploadWithProgress from "./fileUpload/FileUploadWithProgress";
 
 export default function FilesUploadField() {
   const [files, setFiles] = useState<UploadedFile[]>([]);

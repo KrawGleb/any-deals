@@ -1,7 +1,7 @@
 import "./Header.scss";
 import React, { SyntheticEvent, useState } from "react";
-import PanelTab from "../../common/tab-panel/Tab";
-import PanelTabs from "../../common/tab-panel/Tabs";
+import PanelTab from "../../common/tabPanel/Tab";
+import PanelTabs from "../../common/tabPanel/Tabs";
 import PrimaryButton from "../../common/PrimaryButton";
 import { Box, Typography } from "@mui/material";
 import { useSelector } from "react-redux";

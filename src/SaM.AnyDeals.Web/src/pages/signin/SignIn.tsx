@@ -7,7 +7,7 @@ import PrimaryButton from "../../components/common/PrimaryButton";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { LoginRequest } from "../../models/api/auth/loginRequest";
-import { AppDispatch } from "../../store/store";
+import { AppDispatch } from "../../features/store/store";
 import { useDispatch } from "react-redux";
 import { loginUser } from "../../features/api/auth/authActions";
 import { useNavigate } from "react-router-dom";

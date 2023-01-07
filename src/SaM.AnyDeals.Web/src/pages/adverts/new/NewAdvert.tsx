@@ -18,9 +18,9 @@ import {
 import ArrowBack from "@mui/icons-material/ArrowBack";
 import ArrowForwardIosIcon from "@mui/icons-material/ArrowForwardIos";
 
-import FakeSelect from "../../../components/common/fake-select/FakeSelect";
+import FakeSelect from "../../../components/common/fakeSelect/FakeSelect";
 import Input from "../../../components/common/Input";
-import SelectDialog from "../../../components/common/select-dialog/SelectDialog";
+import SelectDialog from "../../../components/common/selectDialog/SelectDialog";
 
 import { Advert } from "../../../models/api/advert";
 import { Category } from "../../../models/api/category";
@@ -38,8 +38,7 @@ import {
   useGetCountriesQuery,
 } from "../../../features/api/countriesApi";
 import { ValidationMessages } from "../../../features/helpers/validationMessages";
-import Dropzone from "react-dropzone";
-import FilesUploadField from "../../../components/common/files-upload/FilesUploadField";
+import FilesUploadField from "../../../components/common/filesUpload/FilesUploadField";
 
 const schema = yup.object().shape({
   title: yup.string().required(ValidationMessages.required("Title")),

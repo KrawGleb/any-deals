@@ -1,8 +1,8 @@
 import { configureStore } from "@reduxjs/toolkit";
-import { advertsApi } from "../features/api/advertsApi";
-import authSlice from "../features/api/auth/authSlice";
-import { categoriesApi } from "../features/api/categoriesApi";
-import { countriesApi } from "../features/api/countriesApi";
+import { advertsApi } from "../api/advertsApi";
+import authSlice from "../api/auth/authSlice";
+import { categoriesApi } from "../api/categoriesApi";
+import { countriesApi } from "../api/countriesApi";
 
 const store = configureStore({
   reducer: {
