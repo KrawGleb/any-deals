@@ -293,7 +293,12 @@ export default function NewAdvert() {
                     error={!!errors.name}
                     helperText={errors?.name?.message}
                   />
-                  <Input label="Email" {...register("email")} />
+                  <Input
+                    label="Email"
+                    {...register("email")}
+                    error={!!errors.email}
+                    helperText={errors?.email?.message}
+                  />
                 </Stack>
 
                 <Stack direction="row" spacing={3}>
