@@ -38,6 +38,8 @@ import {
   useGetCountriesQuery,
 } from "../../../features/api/countriesApi";
 import { ValidationMessages } from "../../../features/helpers/validationMessages";
+import Dropzone from "react-dropzone";
+import FilesUploadField from "../../../components/common/files-upload/FilesUploadField";
 
 const schema = yup.object().shape({
   title: yup.string().required(ValidationMessages.required("Title")),
@@ -328,6 +330,8 @@ export default function NewAdvert() {
               <Typography variant="subtitle1" className="mb-3" color="gray">
                 The first file will be visible on the announcement card
               </Typography>
+
+              <FilesUploadField />
             </div>
 
             <div className="form__actions">
