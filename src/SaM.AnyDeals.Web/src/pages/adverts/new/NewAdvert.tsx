@@ -39,6 +39,9 @@ import {
 } from "../../../features/api/countriesApi";
 import { ValidationMessages } from "../../../features/helpers/validationMessages";
 import FilesUploadField from "../../../components/common/filesUpload/FilesUploadField";
+import { useSelector } from "react-redux";
+import { UploadedFile } from "../../../models/uploadedFile";
+import { AttachmentType } from "../../../models/enums/documentType";
 
 const schema = yup.object().shape({
   title: yup.string().required(ValidationMessages.required("Title")),
@@ -64,6 +67,9 @@ const schema = yup.object().shape({
 export default function NewAdvert() {
   const navigate = useNavigate();
   const [createNewAdvert] = useCreateAdvertMutation();
+  const uploadedFiles = useSelector(
+    (state: any) => state.fileUpload.files as UploadedFile[]
+  );
 
   const {
     register,
@@ -108,9 +114,15 @@ export default function NewAdvert() {
   };
 
   const onSubmit = (data: any) => {
-    let advert: Advert = {
+    const attachments = uploadedFiles.map((fileWrapper) => ({
+      link: fileWrapper.url,
+      type: AttachmentType.convert(fileWrapper.file.type),
+    }));
+
+    const advert: Advert = {
       cityId: selectedCity!.id,
       categoryId: selectedCategory!.id,
+      attachments,
       contacts: {
         ...data,
       } as Contacts,

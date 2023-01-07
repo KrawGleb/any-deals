@@ -1,3 +1,4 @@
+import "./FilesUploadField.scss";
 import { Grid } from "@mui/material";
 import React, { useCallback, useState } from "react";
 import { FileRejection, useDropzone } from "react-dropzone";
@@ -50,7 +51,7 @@ export default function FilesUploadField() {
   return (
     <>
       <Grid item>
-        <div {...getRootProps()}>
+        <div {...getRootProps()} className="dropzone">
           <input {...getInputProps()} />
           <p>Drag 'n' drop some files here, or click to select files</p>
         </div>
