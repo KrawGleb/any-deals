@@ -7,17 +7,20 @@ import {
 } from "firebase/storage";
 import React, { useEffect, useState } from "react";
 import firebaseStorage from "../../../../store/firebaseStorage";
+import FileHeader from "../file-header/FileHeader";
 import { FileUploadWithProgressProps } from "./FileUploadWithProgressProps";
 
 export default function FileUploadWithProgress({
   file,
+  onDelete,
+  onUpload,
 }: FileUploadWithProgressProps) {
   const [progress, setProgress] = useState(0);
 
   useEffect(() => {
     async function upload() {
       const ref = await uploadFile(file, setProgress);
-      console.log(await getDownloadURL(ref));
+      onUpload(file, await getDownloadURL(ref));
     }
 
     upload();
@@ -25,6 +28,7 @@ export default function FileUploadWithProgress({
 
   return (
     <Grid item>
+      <FileHeader file={file} onDelete={onDelete} />
       <LinearProgress variant="determinate" value={progress} />
     </Grid>
   );
