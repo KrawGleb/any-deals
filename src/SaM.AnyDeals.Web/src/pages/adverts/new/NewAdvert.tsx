@@ -41,7 +41,8 @@ import { ValidationMessages } from "../../../features/helpers/validationMessages
 import FilesUploadField from "../../../components/common/filesUpload/FilesUploadField";
 import { useSelector } from "react-redux";
 import { UploadedFile } from "../../../models/uploadedFile";
-import { AttachmentType } from "../../../models/enums/documentType";
+import { AttachmentType } from "../../../models/enums/attachmentType";
+import { CreateAdvertRequest } from "../../../models/api/requests/createAdvertRequest";
 
 const schema = yup.object().shape({
   title: yup.string().required(ValidationMessages.required("Title")),
@@ -119,7 +120,7 @@ export default function NewAdvert() {
       type: AttachmentType.convert(fileWrapper.file.type),
     }));
 
-    const advert: Advert = {
+    const advert: CreateAdvertRequest = {
       cityId: selectedCity!.id,
       categoryId: selectedCategory!.id,
       attachments,
@@ -127,7 +128,7 @@ export default function NewAdvert() {
         ...data,
       } as Contacts,
       ...data,
-    } as Advert;
+    };
 
     createNewAdvert(advert).unwrap();
   };

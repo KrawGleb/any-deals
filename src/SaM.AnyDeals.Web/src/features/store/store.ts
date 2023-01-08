@@ -4,11 +4,13 @@ import authSlice from "../api/auth/authSlice";
 import { categoriesApi } from "../api/categoriesApi";
 import { countriesApi } from "../api/countriesApi";
 import fileUploadSlice from "./fileUploadSlice";
+import myAdvertsSlice from "./myAdvertsSlice";
 
 const store = configureStore({
   reducer: {
     auth: authSlice,
     fileUpload: fileUploadSlice,
+    myAdverts: myAdvertsSlice,
     [advertsApi.reducerPath]: advertsApi.reducer,
     [countriesApi.reducerPath]: countriesApi.reducer,
     [categoriesApi.reducerPath]: categoriesApi.reducer,

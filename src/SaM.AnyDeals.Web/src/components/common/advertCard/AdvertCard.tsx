@@ -1,25 +1,45 @@
 import "./AdvertCard.scss";
 import React from "react";
-import { Box, ListItem } from "@mui/material";
+import { Box, Paper } from "@mui/material";
+import { AdvertCardProps } from "./AdvertCardProps";
+import AttachmentType from "../../../models/enums/attachmentType";
+import { Goal } from "../../../models/enums/goal";
+import { Interest } from "../../../models/enums/interest";
 
-export default function AdvertCard() {
+export default function AdvertCard({ advert }: AdvertCardProps) {
+  const previewImage = advert.attachments.find(
+    (a) => a.type === AttachmentType.Image
+  );
+
+  const getGoalClassName = (goal: number) => (goal === 0 ? "goal__request" : "goal__offer");
+  const getInterestClassName = (interest: number) =>
+    interest === 0 ? "commercial" : "social";
+
   return (
-    <ListItem className="card__root">
+    <Paper className="card__root">
       <Box className="card__content">
         <Box className="card__content__header">
-          <Box className="goal">Goal</Box>
-          <Box className="interest">Interest</Box>
+          <Box className={"goal " + getGoalClassName(advert.goal)}>
+            {Goal.convert(advert.goal)}
+          </Box>
+          <Box className={"interest " + getInterestClassName(advert.interest)}>
+            {Interest.convert(advert.interest)}
+          </Box>
         </Box>
-        <p className="card__content__title">Title</p>
-        <p className="card__content__category">Category</p>
-        <p className="card__content__country">Country</p>
+        <p className="card__content__title">{advert.title}</p>
+        <p className="card__content__category">{advert.category.name}</p>
+        <p className="card__content__country">{`${advert.city.country?.name}, ${advert.city.name}`}</p>
         <Box className="card__content__footer">
-          <p className="creator">Name</p>
+          <p className="creator">{advert.creator.userName}</p>
         </Box>
       </Box>
-      <Box className="card__image">
-        <img src="https://vmestestorage.s3.eu-central-1.amazonaws.com/20e52b99-c281-4a54-9823-d26319f16602/73e52d2c-7536-4416-b74f-b65955f94ad0.jpeg" />
-      </Box>
-    </ListItem>
+      {previewImage ? (
+        <Box className="card__image">
+          <img src={previewImage.link} alt="" />
+        </Box>
+      ) : (
+        <></>
+      )}
+    </Paper>
   );
 }

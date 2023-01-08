@@ -16,7 +16,7 @@ export const countriesApi = createApi({
         url: "/api/countries",
         method: "GET",
       }),
-      transformResponse: (response: any) => response.body,
+      transformResponse: (response: CommonResponse) => response.body,
     }),
     getCities: builder.query<City[], number>({
       async queryFn(

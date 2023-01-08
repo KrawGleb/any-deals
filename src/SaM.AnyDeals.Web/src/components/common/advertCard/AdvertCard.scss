@@ -30,6 +30,14 @@
         height: 1.5rem;
         -webkit-box-align: center;
         align-items: center;
+      }
+
+      .request {
+        color: rgb(215, 142, 0);
+        background-color: rgba(255, 170, 6, 0.1);
+      }
+
+      .offer {
         color: rgb(57, 129, 238);
         background-color: rgba(57, 129, 238, 0.14);
       }
@@ -42,7 +50,14 @@
         -webkit-box-align: center;
         align-items: center;
         column-gap: 0.625rem;
+      }
+
+      .commercial {
         color: rgb(57, 129, 238);
+      }
+
+      .social {
+        color: rgb(27, 176, 100);
       }
     }
 

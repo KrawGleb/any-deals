@@ -2,8 +2,12 @@ import React from "react";
 import "./MyAdverts.scss";
 import { Button } from "@mui/material";
 import { Link } from "react-router-dom";
+import { useGetMyAdvertsQuery } from "../../../features/api/advertsApi";
+import AdvertsList from "../../../components/common/advertsList/AdvertsList";
 
 export default function MyAdverts() {
+  const { data: myAdverts } = useGetMyAdvertsQuery();
+
   return (
     <div className="my">
       <div className="row">
@@ -15,6 +19,7 @@ export default function MyAdverts() {
           </Button>
         </div>
       </div>
+      <AdvertsList adverts={myAdverts ?? []} />
     </div>
   );
 }

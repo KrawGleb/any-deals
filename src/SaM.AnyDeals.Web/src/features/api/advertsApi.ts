@@ -1,4 +1,6 @@
-import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
+import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
+import { Advert } from "../../models/api/advert";
+import { CommonResponse } from "../../models/api/responses/commonResponse";
 import { RootState } from "../store/store";
 
 export const advertsApi = createApi({
@@ -25,7 +27,14 @@ export const advertsApi = createApi({
       }),
       invalidatesTags: ["Post"],
     }),
+    getMyAdverts: builder.query<Advert[], void>({
+      query: () => ({
+        url: "/api/adverts/my",
+        method: "GET",
+      }),
+      transformResponse: (response: CommonResponse) => response.body,
+    }),
   }),
 });
 
-export const { useCreateAdvertMutation } = advertsApi;
+export const { useCreateAdvertMutation, useGetMyAdvertsQuery } = advertsApi;
