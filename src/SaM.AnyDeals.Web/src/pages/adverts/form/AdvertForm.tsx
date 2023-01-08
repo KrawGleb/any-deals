@@ -30,7 +30,7 @@ import { Country } from "../../../models/api/country";
 import { SelectableItem } from "../../../models/selectableItem";
 
 import { useCreateAdvertMutation } from "../../../features/api/advertsApi";
-import { useForm } from "react-hook-form";
+import { Controller, useForm } from "react-hook-form";
 import { useGetCategoriesQuery } from "../../../features/api/categoriesApi";
 import { useNavigate } from "react-router-dom";
 import {
@@ -78,6 +78,7 @@ export default function AdvertForm({ advert }: AdvertFormProps) {
     register,
     handleSubmit,
     setValue,
+    control,
     formState: { isDirty, isValid, errors },
   } = useForm({
     mode: "onBlur",
@@ -220,8 +221,8 @@ export default function AdvertForm({ advert }: AdvertFormProps) {
               <Typography variant="subtitle1" className="mb-3" color="gray">
                 In which section would you like to place your ad?
               </Typography>
+
               <Input
-                {...register("group")}
                 required
                 select
                 label="Group"
