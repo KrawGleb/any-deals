@@ -22,6 +22,10 @@ public class AdvertsController : ApiControllerBase
     public async Task<IActionResult> DeleteAdvertAsync([FromBody] DeleteAdvertCommand command, CancellationToken cancellationToken)
         => Ok(await Mediator.Send(command, cancellationToken));
 
+    [HttpGet("my")]
+    public async Task<IActionResult> GetMyAdvertsAsync(CancellationToken cancellationToken)
+        => Ok(await Mediator.Send(new GetMyAdvertsQuery(), cancellationToken));
+
     [HttpGet("get/{id}")]
     [AllowAnonymous]
     public async Task<IActionResult> GetAvertAsync([FromRoute] int id, CancellationToken cancellationToken)

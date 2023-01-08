@@ -4,6 +4,7 @@ using Microsoft.EntityFrameworkCore;
 using SaM.AnyDeals.Application.Models.Responses;
 using SaM.AnyDeals.Application.Models.ViewModels;
 using SaM.AnyDeals.DataAccess;
+using SaM.AnyDeals.DataAccess.Extensions;
 
 namespace SaM.AnyDeals.Application.Requests.Adverts.Queries.Get;
 
@@ -31,12 +32,7 @@ public class GetAdvertQueryHandler : IRequestHandler<GetAdvertQuery, Response>
     {
         var entry = await _applicationDbContext.Adverts
             .AsNoTracking()
-            .Include(a => a.Contacts)
-            .Include(a => a.Creator)
-            .Include(a => a.City)
-                .ThenInclude(c => c!.Country)
-            .Include(a => a.Category)
-            .Include(a => a.Attachments)
+            .FullInclude()
             .FirstOrDefaultAsync(e => e.Id == id, cancellationToken);
 
         var viewModel = _mapper.Map<AdvertViewModel>(entry);
