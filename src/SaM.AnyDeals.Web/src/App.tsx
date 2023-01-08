@@ -20,7 +20,7 @@ function App() {
           <Route path="my" element={<MyAdverts />} />
           <Route path="search" element={<Search />} />
           <Route path="new" element={<NewAdvert />} />
-          <Route path="edit" element={<EditAdvert />}/>
+          <Route path="edit" element={<EditAdvert />} />
         </Route>
       </Routes>
     </div>

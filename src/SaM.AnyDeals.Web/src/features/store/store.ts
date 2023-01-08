@@ -4,9 +4,11 @@ import authSlice from "../api/auth/authSlice";
 import { categoriesApi } from "../api/categoriesApi";
 import { countriesApi } from "../api/countriesApi";
 import fileUploadSlice from "./fileUploadSlice";
+import { loadState, saveState } from "./localStorage";
 import myAdvertsSlice from "./myAdvertsSlice";
 
 const store = configureStore({
+  preloadedState: loadState(),
   reducer: {
     auth: authSlice,
     fileUpload: fileUploadSlice,
@@ -22,6 +24,12 @@ const store = configureStore({
       categoriesApi.middleware,
     ]),
 });
+
+store.subscribe(() =>
+  saveState({
+    auth: store.getState().auth,
+  })
+);
 
 export default store;
 export type AppDispatch = typeof store.dispatch;
