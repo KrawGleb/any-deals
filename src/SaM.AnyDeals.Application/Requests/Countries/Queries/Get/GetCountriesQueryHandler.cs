@@ -3,7 +3,7 @@ using MediatR;
 using Microsoft.EntityFrameworkCore;
 using SaM.AnyDeals.Application.Models.Responses;
 using SaM.AnyDeals.Application.Models.ViewModels;
-using SaM.AnyDeals.DataAccess.Implementations;
+using SaM.AnyDeals.DataAccess;
 
 namespace SaM.AnyDeals.Application.Requests.Countries.Queries.Get;
 

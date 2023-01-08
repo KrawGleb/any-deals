@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Mvc;
 using SaM.AnyDeals.Application.Requests.Adverts.Commands.Create;
 using SaM.AnyDeals.Application.Requests.Adverts.Commands.Delete;
 using SaM.AnyDeals.Application.Requests.Adverts.Queries.Get;
+using SaM.AnyDeals.Application.Requests.Adverts.Queries.GetMy;
 using SaM.AnyDeals.Infrastructure.Filters;
 
 namespace SaM.AnyDeals.API.Controllers;

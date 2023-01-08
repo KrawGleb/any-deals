@@ -1,7 +1,6 @@
 ﻿using Microsoft.AspNetCore.Builder;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
-using SaM.AnyDeals.DataAccess.Implementations;
 
 namespace SaM.AnyDeals.DataAccess.Extensions;
 

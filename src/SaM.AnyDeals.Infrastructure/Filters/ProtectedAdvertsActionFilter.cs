@@ -3,7 +3,7 @@ using Microsoft.AspNetCore.Mvc.Filters;
 using SaM.AnyDeals.Common.Exceptions;
 using SaM.AnyDeals.Common.Extensions;
 using SaM.AnyDeals.Common.Interfaces;
-using SaM.AnyDeals.DataAccess.Implementations;
+using SaM.AnyDeals.DataAccess;
 
 namespace SaM.AnyDeals.Infrastructure.Filters;
 
