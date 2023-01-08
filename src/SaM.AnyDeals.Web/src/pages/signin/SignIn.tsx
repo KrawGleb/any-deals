@@ -3,7 +3,6 @@ import "./SignIn.scss";
 import * as yup from "yup";
 import Input from "../../components/common/Input";
 import ArrowBackIcon from "@mui/icons-material/ArrowBack";
-import PrimaryButton from "../../components/common/PrimaryButton";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { LoginRequest } from "../../models/api/auth/loginRequest";
@@ -11,6 +10,7 @@ import { AppDispatch } from "../../features/store/store";
 import { useDispatch } from "react-redux";
 import { loginUser } from "../../features/api/auth/authActions";
 import { useNavigate } from "react-router-dom";
+import { Button } from "@mui/material";
 
 const schema = yup.object().shape({
   email: yup
@@ -75,9 +75,15 @@ export default function SignIn() {
             />
           </div>
 
-          <PrimaryButton type="submit" disabled={!isDirty || !isValid}>
+          <Button
+            fullWidth
+            variant="contained"
+            color="primary"
+            type="submit"
+            disabled={!isDirty || !isValid}
+          >
             Login
-          </PrimaryButton>
+          </Button>
         </form>
       </div>
     </div>

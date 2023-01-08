@@ -2,8 +2,7 @@ import "./Header.scss";
 import React, { SyntheticEvent, useState } from "react";
 import PanelTab from "../../common/tabPanel/Tab";
 import PanelTabs from "../../common/tabPanel/Tabs";
-import PrimaryButton from "../../common/PrimaryButton";
-import { Box, Typography } from "@mui/material";
+import { Box, Button, Typography } from "@mui/material";
 import { useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 
@@ -33,18 +32,24 @@ export default function Header() {
                 <Typography>{userInfo.username}</Typography>
               ) : (
                 <>
-                  <PrimaryButton
+                  <Button
+                    fullWidth
+                    variant="contained"
+                    color="primary"
                     className="actions__signup"
                     onClick={() => navigate("/signup")}
                   >
                     Signup
-                  </PrimaryButton>
-                  <PrimaryButton
+                  </Button>
+                  <Button
+                    fullWidth
+                    variant="contained"
+                    color="primary"
                     className="actions__login"
                     onClick={() => navigate("/signin")}
                   >
                     Signin
-                  </PrimaryButton>
+                  </Button>
                 </>
               )}
             </div>

@@ -2,7 +2,6 @@ import "./SignUp.scss";
 import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 import { useForm } from "react-hook-form";
 import Input from "../../components/common/Input";
-import PrimaryButton from "../../components/common/PrimaryButton";
 import * as yup from "yup";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { RegisterRequest } from "../../models/api/auth/registerRequest";
@@ -10,6 +9,7 @@ import { registerUser } from "../../features/api/auth/authActions";
 import { useDispatch } from "react-redux";
 import { AppDispatch } from "../../features/store/store";
 import { useNavigate } from "react-router-dom";
+import { Button } from "@mui/material";
 
 const schema = yup.object().shape({
   username: yup
@@ -105,9 +105,15 @@ export default function SignUp() {
             />
           </div>
 
-          <PrimaryButton type="submit" disabled={!isDirty || !isValid}>
+          <Button
+            fullWidth
+            variant="contained"
+            color="primary"
+            type="submit"
+            disabled={!isDirty || !isValid}
+          >
             Continue
-          </PrimaryButton>
+          </Button>
         </form>
       </div>
     </div>
