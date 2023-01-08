@@ -19,36 +19,38 @@ export default function Header() {
 
   return (
     <>
-      <Box className="header">
-        <div className="header__container">
-          <div className="logo">Any Deals</div>
-          <PanelTabs value={value} onChange={handleChange}>
-            <PanelTab label="Adverts" to="/adverts/search" />
-            <PanelTab label="My adverts" to="/adverts/my" />
-            <PanelTab label="About" to="/about" />
-          </PanelTabs>
-          <div className="actions">
-            {userInfo.username ? (
-              <Typography>{userInfo.username}</Typography>
-            ) : (
-              <>
-                <PrimaryButton
-                  className="actions__signup"
-                  onClick={() => navigate("/signup")}
-                >
-                  Signup
-                </PrimaryButton>
-                <PrimaryButton
-                  className="actions__login"
-                  onClick={() => navigate("/signin")}
-                >
-                  Signin
-                </PrimaryButton>
-              </>
-            )}
+      <div className="spacer">
+        <Box className="header">
+          <div className="header__container">
+            <div className="logo">Any Deals</div>
+            <PanelTabs value={value} onChange={handleChange}>
+              <PanelTab label="Adverts" to="/adverts/search" />
+              <PanelTab label="My adverts" to="/adverts/my" />
+              <PanelTab label="About" to="/about" />
+            </PanelTabs>
+            <div className="actions">
+              {userInfo.username ? (
+                <Typography>{userInfo.username}</Typography>
+              ) : (
+                <>
+                  <PrimaryButton
+                    className="actions__signup"
+                    onClick={() => navigate("/signup")}
+                  >
+                    Signup
+                  </PrimaryButton>
+                  <PrimaryButton
+                    className="actions__login"
+                    onClick={() => navigate("/signin")}
+                  >
+                    Signin
+                  </PrimaryButton>
+                </>
+              )}
+            </div>
           </div>
-        </div>
-      </Box>
+        </Box>
+      </div>
     </>
   );
 }
