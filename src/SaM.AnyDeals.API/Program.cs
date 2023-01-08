@@ -20,8 +20,7 @@ services.AddInfrastructure();
 services
     .AddControllers(options => 
         options.Filters.Add<ApiExceptionFilter>())
-    .AddNewtonsoftJson(options =>
-        options.SerializerSettings.Converters.Add(new StringEnumConverter()));
+    .AddNewtonsoftJson();
 
 services.AddEndpointsApiExplorer();
 services.AddSwaggerGen();
