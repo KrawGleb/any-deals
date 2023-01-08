@@ -10,7 +10,6 @@ import {
   MenuItem,
   Radio,
   RadioGroup,
-  SelectChangeEvent,
   Stack,
   Typography,
   Button,
@@ -22,7 +21,6 @@ import FakeSelect from "../../../components/common/fakeSelect/FakeSelect";
 import Input from "../../../components/common/Input";
 import SelectDialog from "../../../components/common/selectDialog/SelectDialog";
 
-import { Advert } from "../../../models/api/advert";
 import { Category } from "../../../models/api/category";
 import { City } from "../../../models/api/city";
 import { Contacts } from "../../../models/api/contacts";
@@ -44,13 +42,18 @@ import { UploadedFile } from "../../../models/uploadedFile";
 import { AttachmentType } from "../../../models/enums/attachmentType";
 import { CreateAdvertRequest } from "../../../models/api/requests/createAdvertRequest";
 import { AdvertFormProps } from "./AdvertFromProps";
+import { SerializableFile } from "../../../models/serializableFile";
+import { resetFiles } from "../../../features/store/fileUploadSlice";
 
 const schema = yup.object().shape({
   title: yup.string().required(ValidationMessages.required("Title")),
   description: yup.string(),
-  goal: yup.number().required(ValidationMessages.required("Goal")),
-  group: yup.number().required(ValidationMessages.required("Group")),
-  interest: yup.number().required(),
+  goal: yup.number().required(ValidationMessages.required("Goal")).default(0),
+  group: yup
+    .number()
+    .required(ValidationMessages.required("Group"))
+    .default("" as any),
+  interest: yup.number().required().default(0),
   category: yup.string().required(ValidationMessages.required("Category")),
   country: yup.string().required(ValidationMessages.required("Country")),
   city: yup.string().required(ValidationMessages.required("City")),
@@ -68,6 +71,7 @@ const schema = yup.object().shape({
 });
 
 export default function AdvertForm({ advert }: AdvertFormProps) {
+  resetFiles();
   const navigate = useNavigate();
   const [createNewAdvert] = useCreateAdvertMutation();
   const uploadedFiles = useSelector(
@@ -81,6 +85,7 @@ export default function AdvertForm({ advert }: AdvertFormProps) {
     control,
     formState: { isDirty, isValid, errors },
   } = useForm({
+    defaultValues: schema.getDefault() as any,
     mode: "onBlur",
     resolver: yupResolver(schema),
   });
@@ -112,11 +117,6 @@ export default function AdvertForm({ advert }: AdvertFormProps) {
     setSelectedCategory(value as Category);
   };
 
-  const [group, setGroup] = useState<number | undefined>();
-  const handleChange = (event: SelectChangeEvent) => {
-    setGroup(+event.target.value);
-  };
-
   const onSubmit = (data: any) => {
     const attachments = uploadedFiles.map((fileWrapper) => ({
       link: fileWrapper.url,
@@ -137,7 +137,6 @@ export default function AdvertForm({ advert }: AdvertFormProps) {
   };
 
   useEffect(() => {
-    console.log(advert);
     if (!advert) return;
 
     const selectedCategory = categories?.find(
@@ -151,16 +150,16 @@ export default function AdvertForm({ advert }: AdvertFormProps) {
     setSelectedCategory(selectedCategory);
     setSelectedCountry(selectedCountry);
     setSelectedCity(selectedCity);
-    setGroup(advert.group);
 
     setValue("title", advert.title);
     setValue("description", advert.description);
-    setValue("goal", advert.goal.toString());
+    setValue("goal", advert.goal);
     setValue("interest", advert.interest);
+    setValue("group", advert.group, { shouldTouch: true });
 
     Object.keys(advert.contacts).forEach((contact) =>
       setValue(
-        contact,
+        contact as any,
         advert.contacts[contact as keyof typeof advert.contacts],
         { shouldTouch: true, shouldDirty: true }
       )
@@ -222,43 +221,54 @@ export default function AdvertForm({ advert }: AdvertFormProps) {
                 In which section would you like to place your ad?
               </Typography>
 
-              <Input
-                required
-                select
-                label="Group"
-                value={group}
-                error={!!errors.group}
-                helperText={errors?.group?.message}
-              >
-                <MenuItem key={0} value={0}>
-                  Services nearby
-                </MenuItem>
-                <MenuItem key={1} value={1}>
-                  Online services
-                </MenuItem>
-                <MenuItem key={2} value={2}>
-                  Events and places
-                </MenuItem>
-              </Input>
+              <Controller
+                control={control}
+                name="group"
+                render={({ field }) => (
+                  <Input
+                    required
+                    select
+                    label="Group"
+                    defaultValue=""
+                    {...field}
+                    error={!!errors.group}
+                    helperText={errors?.group?.message}
+                  >
+                    <MenuItem key={0} value={0}>
+                      Services nearby
+                    </MenuItem>
+                    <MenuItem key={1} value={1}>
+                      Online services
+                    </MenuItem>
+                    <MenuItem key={2} value={2}>
+                      Events and places
+                    </MenuItem>
+                  </Input>
+                )}
+              />
             </div>
 
             <div className="form__goal">
               <FormControl>
                 <Typography variant="h5">Advertisement's goal</Typography>
-                <RadioGroup row defaultValue={0}>
-                  <FormControlLabel
-                    value="0"
-                    control={<Radio />}
-                    label="I'm looking for"
-                    {...register("goal")}
-                  />
-                  <FormControlLabel
-                    value="1"
-                    control={<Radio />}
-                    label="I suggest"
-                    {...register("goal")}
-                  />
-                </RadioGroup>
+                <Controller
+                  name="goal"
+                  control={control}
+                  render={({ field }) => (
+                    <RadioGroup row defaultValue={0} {...field}>
+                      <FormControlLabel
+                        value={0}
+                        control={<Radio />}
+                        label="I'm looking for"
+                      />
+                      <FormControlLabel
+                        value={1}
+                        control={<Radio />}
+                        label="I suggest"
+                      />
+                    </RadioGroup>
+                  )}
+                />
               </FormControl>
             </div>
 
@@ -385,25 +395,48 @@ export default function AdvertForm({ advert }: AdvertFormProps) {
                 The first file will be visible on the announcement card
               </Typography>
 
-              <FilesUploadField />
+              <FilesUploadField
+                uploadedFiles={
+                  advert?.attachments
+                    ? advert.attachments.map(
+                        (attachment) =>
+                          ({
+                            name: "Name here",
+                            file: {} as SerializableFile,
+                            url: attachment.link,
+                            errors: [],
+                          } as UploadedFile)
+                      )
+                    : []
+                }
+              />
             </div>
 
             <div className="form__actions">
-              <Button
-                variant="contained"
-                sx={{ marginRight: "16px" }}
-                onClick={() => navigate("/adverts/my")}
-              >
-                Cancel
-              </Button>
-              <Button
-                type="submit"
-                variant="contained"
-                endIcon={<ArrowForwardIosIcon />}
-                disabled={!isDirty || !isValid}
-              >
-                Create and publish
-              </Button>
+              <div className="left">
+                <Button
+                  variant="contained"
+                  sx={{ marginRight: "16px" }}
+                  onClick={() => navigate("/adverts/my")}
+                >
+                  Cancel
+                </Button>
+                <Button
+                  type="submit"
+                  variant="contained"
+                  endIcon={<ArrowForwardIosIcon />}
+                  disabled={!isDirty || !isValid}
+                >
+                  Create and publish
+                </Button>
+              </div>
+              {advert ? (
+                <Button variant="contained" color="error">
+                  Delete advert
+                </Button>
+              ) : (
+                <></>
+              )}
             </div>
           </form>
         </div>

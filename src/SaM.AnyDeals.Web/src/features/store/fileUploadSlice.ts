@@ -9,13 +9,20 @@ const fileUploadSlice = createSlice({
     files: [] as UploadedFile[],
   },
   reducers: {
+    resetFiles(state) {
+      state.files = [];
+    },
     addFiles(state, action) {
       state.files.push(...action.payload.files);
     },
     deleteFile(state, action) {
       const fileWrapper = state.files.find(
-        (fw) => JSON.stringify(fw.file) === JSON.stringify(action.payload.file)
+        (fw) =>
+          JSON.stringify(fw.file) === JSON.stringify(action.payload.file) ||
+          fw.url === action.payload.file?.url
       );
+
+      console.log(fileWrapper);
 
       state.files = state.files.filter((fw) => fw !== fileWrapper);
 
@@ -34,6 +41,7 @@ const fileUploadSlice = createSlice({
   },
 });
 
-export const { addFiles, deleteFile, uploadFile } = fileUploadSlice.actions;
+export const { addFiles, deleteFile, uploadFile, resetFiles } =
+  fileUploadSlice.actions;
 
 export default fileUploadSlice.reducer;
