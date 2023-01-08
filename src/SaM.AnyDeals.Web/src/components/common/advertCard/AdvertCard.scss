@@ -32,12 +32,12 @@
         align-items: center;
       }
 
-      .request {
+      .goal__request {
         color: rgb(215, 142, 0);
         background-color: rgba(255, 170, 6, 0.1);
       }
 
-      .offer {
+      .goal__offer {
         color: rgb(57, 129, 238);
         background-color: rgba(57, 129, 238, 0.14);
       }
@@ -52,11 +52,11 @@
         column-gap: 0.625rem;
       }
 
-      .commercial {
+      .interest__commercial {
         color: rgb(57, 129, 238);
       }
 
-      .social {
+      .interest__social {
         color: rgb(27, 176, 100);
       }
     }

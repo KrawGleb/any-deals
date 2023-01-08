@@ -11,9 +11,10 @@ export default function AdvertCard({ advert }: AdvertCardProps) {
     (a) => a.type === AttachmentType.Image
   );
 
-  const getGoalClassName = (goal: number) => (goal === 0 ? "goal__request" : "goal__offer");
+  const getGoalClassName = (goal: number) =>
+    goal === 0 ? "goal__request" : "goal__offer";
   const getInterestClassName = (interest: number) =>
-    interest === 0 ? "commercial" : "social";
+    interest === 0 ? "interest__commercial" : "interest__social";
 
   return (
     <Paper className="card__root">
@@ -30,7 +31,7 @@ export default function AdvertCard({ advert }: AdvertCardProps) {
         <p className="card__content__category">{advert.category.name}</p>
         <p className="card__content__country">{`${advert.city.country?.name}, ${advert.city.name}`}</p>
         <Box className="card__content__footer">
-          <p className="creator">{advert.creator.userName}</p>
+          <p className="creator">{advert.contacts.name}</p>
         </Box>
       </Box>
       {previewImage ? (
