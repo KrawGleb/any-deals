@@ -5,9 +5,9 @@ public class AdvertViewModel
     public int Id { get; set; }
     public string? Title { get; set; }
     public string? Description { get; set; }
-    public string? Goal { get; set; }
-    public string? Group { get; set; }
-    public string? Interest { get; set; }
+    public int Goal { get; set; }
+    public int Group { get; set; }
+    public int Interest { get; set; }
 
     public ApplicationUserViewModel? Creator { get; set; }
     public CityViewModel? City { get; set; }

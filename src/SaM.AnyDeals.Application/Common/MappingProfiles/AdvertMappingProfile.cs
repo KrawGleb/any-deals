@@ -10,12 +10,7 @@ public class AdvertMappingProfile : Profile
 {
     public AdvertMappingProfile()
     {
-
-        CreateMap<AdvertDbEntry, AdvertViewModel>()
-            .ForMember(d => d.Goal, s => s.MapFrom(e => e.Goal.GetEnumMemberValue()))
-            .ForMember(d => d.Group, s => s.MapFrom(e => e.Group.GetEnumMemberValue()))
-            .ForMember(d => d.Interest, s => s.MapFrom(e => e.Interest.GetEnumMemberValue()));
-
+        CreateMap<AdvertDbEntry, AdvertViewModel>();
         CreateMap<CreateAdvertCommand, AdvertDbEntry>();
     }
 }
