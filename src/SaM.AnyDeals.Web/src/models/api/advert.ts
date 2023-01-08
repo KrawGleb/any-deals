@@ -5,6 +5,7 @@ import { City } from "./city";
 import { Contacts } from "./contacts";
 
 export interface Advert {
+  id: number;
   title: string;
   description: string;
   goal: number;

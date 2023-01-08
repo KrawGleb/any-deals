@@ -19,7 +19,7 @@ export default function MyAdverts() {
           </Button>
         </div>
       </div>
-      <AdvertsList adverts={myAdverts ?? []} />
+      <AdvertsList allowEditing={true} adverts={myAdverts ?? []} />
     </div>
   );
 }

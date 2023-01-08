@@ -5,8 +5,10 @@ import { AdvertCardProps } from "./AdvertCardProps";
 import AttachmentType from "../../../models/enums/attachmentType";
 import { Goal } from "../../../models/enums/goal";
 import { Interest } from "../../../models/enums/interest";
+import { useNavigate } from "react-router-dom";
 
-export default function AdvertCard({ advert }: AdvertCardProps) {
+export default function AdvertCard({ advert, allowEditing }: AdvertCardProps) {
+  const navigate = useNavigate();
   const previewImage = advert.attachments.find(
     (a) => a.type === AttachmentType.Image
   );
@@ -16,8 +18,12 @@ export default function AdvertCard({ advert }: AdvertCardProps) {
   const getInterestClassName = (interest: number) =>
     interest === 0 ? "interest__commercial" : "interest__social";
 
+  const onClick = () => {
+    allowEditing ? navigate(`/adverts/edit?id=${advert.id}`) : navigate("");
+  };
+
   return (
-    <Paper className="card__root">
+    <Paper className="card__root" onClick={onClick}>
       <Box className="card__content">
         <Box className="card__content__header">
           <Box className={"goal " + getGoalClassName(advert.goal)}>
