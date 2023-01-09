@@ -9,7 +9,7 @@ export default function UploadedFileComponent({
 }: UploadedFileComponentProps) {
   return (
     <Grid item>
-      <FileHeader file={file} onDelete={onDelete} />
+      <FileHeader name={file.name} file={file} onDelete={onDelete} />
       <LinearProgress variant="determinate" value={100} />
     </Grid>
   );

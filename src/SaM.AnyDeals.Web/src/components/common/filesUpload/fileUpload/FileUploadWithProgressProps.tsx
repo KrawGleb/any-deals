@@ -1,4 +1,6 @@
+import { UploadableFile } from "../../../../models/uploadableFile";
+
 export interface FileUploadWithProgressProps {
-  file: File;
-  onDelete: (file: File) => void;
+  file: UploadableFile;
+  onDelete: (file: UploadableFile) => void;
 }

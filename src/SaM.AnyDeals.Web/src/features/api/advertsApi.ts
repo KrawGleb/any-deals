@@ -27,6 +27,16 @@ export const advertsApi = createApi({
       }),
       invalidatesTags: ["Post"],
     }),
+    updateAdvert: builder.mutation({
+      query: (payload) => ({
+        url: "/api/adverts/update",
+        method: "PATCH",
+        body: payload,
+        headers: {
+          "Content-type": "application/json; charset=UTF-8",
+        },
+      }),
+    }),
     getMyAdverts: builder.query<Advert[], void>({
       query: () => ({
         url: "/api/adverts/my",
@@ -37,4 +47,8 @@ export const advertsApi = createApi({
   }),
 });
 
-export const { useCreateAdvertMutation, useGetMyAdvertsQuery } = advertsApi;
+export const {
+  useCreateAdvertMutation,
+  useUpdateAdvertMutation,
+  useGetMyAdvertsQuery,
+} = advertsApi;

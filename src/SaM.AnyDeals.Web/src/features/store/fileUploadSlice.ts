@@ -1,40 +1,25 @@
-import { createSlice } from "@reduxjs/toolkit";
-import { deleteObject, ref } from "firebase/storage";
-import { UploadedFile } from "../../models/uploadedFile";
-import firebaseStorage from "./firebaseStorage";
+import { createSlice, PayloadAction } from "@reduxjs/toolkit";
+import { StoredFile } from "../../models/storedFile";
 
 const fileUploadSlice = createSlice({
   name: "fileUpload",
   initialState: {
-    files: [] as UploadedFile[],
+    files: [] as StoredFile[],
   },
   reducers: {
     resetFiles(state) {
       state.files = [];
     },
-    addFiles(state, action) {
-      state.files.push(...action.payload.files);
+    addFiles(state, action: PayloadAction<StoredFile[]>) {
+      state.files.push(...action.payload);
     },
-    deleteFile(state, action) {
-      const fileWrapper = state.files.find(
-        (fw) =>
-          JSON.stringify(fw.file) === JSON.stringify(action.payload.file) ||
-          fw.url === action.payload.file?.url
-      );
-
-      state.files = state.files.filter((fw) => fw !== fileWrapper);
-
-      if (fileWrapper?.url) {
-        const fileRef = ref(firebaseStorage, fileWrapper.url);
-        deleteObject(fileRef);
-      }
+    deleteFile(state, action: PayloadAction<{ id: number }>) {
+      const fileWrapper = state.files.find((fw) => fw.id === action.payload.id);
+      if (fileWrapper) fileWrapper.deleted = true;
     },
-    uploadFile(state, action) {
-      state.files = state.files.map((fileWrapper) =>
-        JSON.stringify(fileWrapper.file) === JSON.stringify(action.payload.file)
-          ? { ...fileWrapper, url: action.payload.url }
-          : fileWrapper
-      );
+    uploadFile(state, action: PayloadAction<{ id: number; url: string }>) {
+      const fileWrapper = state.files.find((fw) => fw.id === action.payload.id);
+      if (fileWrapper) fileWrapper.url = action.payload.url;
     },
   },
 });

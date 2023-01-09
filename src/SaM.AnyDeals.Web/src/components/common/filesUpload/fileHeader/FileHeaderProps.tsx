@@ -1,6 +1,8 @@
-import { UploadedFile } from "../../../../models/uploadedFile";
+import { StoredFile } from "../../../../models/storedFile";
+import { UploadableFile } from "../../../../models/uploadableFile";
 
 export interface FileHeaderProps {
-  file: File | UploadedFile;
-  onDelete: ((file: File) => void) | ((file: UploadedFile) => void);
+  name: string;
+  file: UploadableFile | StoredFile;
+  onDelete: ((file: UploadableFile) => void) | ((file: StoredFile) => void);
 }

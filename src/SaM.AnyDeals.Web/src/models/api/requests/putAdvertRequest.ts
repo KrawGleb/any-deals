@@ -1,7 +1,7 @@
 import { Attachment } from "../attachment";
 import { Contacts } from "../contacts";
 
-export interface CreateAdvertRequest {
+export interface PutAdvertRequest {
   title: string;
   description: string;
   goal: number;

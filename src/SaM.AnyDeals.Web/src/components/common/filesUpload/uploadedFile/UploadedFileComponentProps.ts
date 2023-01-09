@@ -1,6 +1,6 @@
-import { UploadedFile } from "../../../../models/uploadedFile";
+import { StoredFile } from "../../../../models/storedFile";
 
 export interface UploadedFileComponentProps {
-  file: UploadedFile;
-  onDelete: (file: UploadedFile) => void;
+  file: StoredFile;
+  onDelete: (file: StoredFile) => void;
 }

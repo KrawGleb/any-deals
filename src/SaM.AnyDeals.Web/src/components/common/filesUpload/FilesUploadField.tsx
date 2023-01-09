@@ -2,58 +2,65 @@ import "./FilesUploadField.scss";
 import { Grid } from "@mui/material";
 import React, { useCallback, useEffect, useState } from "react";
 import { FileRejection, useDropzone } from "react-dropzone";
-import { UploadedFile } from "../../../models/uploadedFile";
+import { StoredFile } from "../../../models/storedFile";
 import FileUploadWithProgress from "./fileUpload/FileUploadWithProgress";
-import { useDispatch } from "react-redux";
-import { addFiles, deleteFile } from "../../../features/store/fileUploadSlice";
-import { mapFile } from "../../../features/helpers/mapFile";
+import { useDispatch, useSelector } from "react-redux";
+import { addFiles, deleteFile, resetFiles } from "../../../features/store/fileUploadSlice";
 import { FilesUploadFieldProps } from "./FilesUploadFieldProps";
 import UploadedFileComponent from "./uploadedFile/UploadedFileComponent";
 import Stack from "@mui/material/Stack";
+import { RootState } from "../../../features/store/store";
+import { UploadableFile } from "../../../models/uploadableFile";
 
 export default function FilesUploadField({
   uploadedFiles,
 }: FilesUploadFieldProps) {
   const dispatch = useDispatch();
-  const [files, setFiles] = useState<File[]>([]);
-  const [_uploadedFiles, setUploadedFiles] = useState<
-    UploadedFile[] | undefined
+  const storedFilesCount = useSelector((state: RootState) => state.fileUpload.files.length);
+
+  const [files, setFiles] = useState<UploadableFile[]>([]);
+  const [_storedFiles, setStoredFiles] = useState<
+    StoredFile[] | undefined
   >(uploadedFiles);
 
   const onDrop = useCallback(
-    (acceptedFiles: File[], rejectedFiles: FileRejection[]) => {
-      const mappedAccepted = acceptedFiles.map(
-        (f) => ({ name: f.name, file: mapFile(f), errors: [] } as UploadedFile)
-      );
-      const mappedRejected = rejectedFiles.map(
-        (rf) =>
-          ({
-            file: mapFile(rf.file),
-            errors: rf.errors,
-          } as UploadedFile)
-      );
+    (acceptedFiles: File[], _rejectedFiles: FileRejection[]) => {
+      let fileId = storedFilesCount;
+      const storedFiles: StoredFile[] = [];
+      const uploadableFile: UploadableFile[] = [];
 
-      setFiles((curr) => [
-        ...curr,
-        ...acceptedFiles,
-        ...rejectedFiles.map((rf) => rf.file),
-      ]);
+      acceptedFiles.forEach((file) => {
+        storedFiles.push({
+          id: fileId,
+          name: file.name,
+          type: file.type,
+          deleted: false,
+          new: true
+        });
 
-      dispatch(addFiles({ files: [...mappedAccepted, ...mappedRejected] }));
+        uploadableFile.push({
+          id: fileId,
+          file,
+        });
+
+        fileId++;
+      });
+
+      setFiles((curr) => [...curr, ...uploadableFile]);
+      dispatch(addFiles(storedFiles));
     },
-    [dispatch]
+    [dispatch, storedFilesCount]
   );
 
-  const onDelete = (file: File) => {
-    const serializableFile = mapFile(file);
-
-    setFiles((cur) => cur.filter((f) => f !== file));
-    dispatch(deleteFile({ file: serializableFile }));
+  const onDelete = (file: UploadableFile) => {
+    setFiles((cur) => cur.filter((f) => f.id !== file.id));
+    console.log("Delete with id", file.id);
+    dispatch(deleteFile({ id: file.id }));
   };
 
-  const onDeleteUploaded = (uploadedFile: UploadedFile) => {
-    setUploadedFiles((cur) => cur?.filter((f) => f !== uploadedFile));
-    dispatch(deleteFile({ file: uploadedFile }));
+  const onDeleteUploaded = (uploadedFile: StoredFile) => {
+    setStoredFiles((cur) => cur?.filter((f) => f.id !== uploadedFile.id));
+    dispatch(deleteFile({ id: uploadedFile.id }));
   };
 
   const { getRootProps, getInputProps } = useDropzone({
@@ -65,7 +72,8 @@ export default function FilesUploadField({
   });
 
   useEffect(() => {
-    dispatch(addFiles({ files: uploadedFiles ?? [] }));
+    dispatch(resetFiles());
+    dispatch(addFiles(uploadedFiles ?? []));
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
@@ -81,7 +89,7 @@ export default function FilesUploadField({
         {files.map((file, index) => (
           <FileUploadWithProgress key={index} file={file} onDelete={onDelete} />
         ))}
-        {_uploadedFiles?.map((file, index) => (
+        {_storedFiles?.map((file, index) => (
           <UploadedFileComponent
             key={index}
             file={file}

@@ -27,7 +27,10 @@ import { Contacts } from "../../../models/api/contacts";
 import { Country } from "../../../models/api/country";
 import { SelectableItem } from "../../../models/selectableItem";
 
-import { useCreateAdvertMutation } from "../../../features/api/advertsApi";
+import {
+  useCreateAdvertMutation,
+  useUpdateAdvertMutation,
+} from "../../../features/api/advertsApi";
 import { Controller, useForm } from "react-hook-form";
 import { useGetCategoriesQuery } from "../../../features/api/categoriesApi";
 import { useNavigate } from "react-router-dom";
@@ -38,12 +41,11 @@ import {
 import { ValidationMessages } from "../../../features/helpers/validationMessages";
 import FilesUploadField from "../../../components/common/filesUpload/FilesUploadField";
 import { useSelector } from "react-redux";
-import { UploadedFile } from "../../../models/uploadedFile";
+import { StoredFile } from "../../../models/storedFile";
 import { AttachmentType } from "../../../models/enums/attachmentType";
-import { CreateAdvertRequest } from "../../../models/api/requests/createAdvertRequest";
+import { PutAdvertRequest } from "../../../models/api/requests/putAdvertRequest";
 import { AdvertFormProps } from "./AdvertFromProps";
-import { SerializableFile } from "../../../models/serializableFile";
-import { resetFiles } from "../../../features/store/fileUploadSlice";
+import { FirebaseService } from "../../../features/services/firebaseService";
 
 const schema = yup.object().shape({
   title: yup.string().required(ValidationMessages.required("Title")),
@@ -71,12 +73,13 @@ const schema = yup.object().shape({
 });
 
 export default function AdvertForm({ advert }: AdvertFormProps) {
-  resetFiles();
   const navigate = useNavigate();
   const [createNewAdvert] = useCreateAdvertMutation();
+  const [updateAdvert] = useUpdateAdvertMutation();
   const uploadedFiles = useSelector(
-    (state: any) => state.fileUpload.files as UploadedFile[]
+    (state: any) => state.fileUpload.files as StoredFile[]
   );
+  const isEditMode = !!advert;
 
   const {
     register,
@@ -118,12 +121,16 @@ export default function AdvertForm({ advert }: AdvertFormProps) {
   };
 
   const onSubmit = (data: any) => {
-    const attachments = uploadedFiles.map((fileWrapper) => ({
-      link: fileWrapper.url,
-      type: AttachmentType.convert(fileWrapper.file.type),
-    }));
+    updateFiles({ shouldSave: true });
 
-    const createAdvertRequest: CreateAdvertRequest = {
+    const attachments = uploadedFiles
+      .filter((fileWrapper) => !fileWrapper.deleted)
+      .map((fileWrapper) => ({
+        link: fileWrapper.url,
+        type: AttachmentType.convert(fileWrapper.type),
+      }));
+
+    const putAdvertRequest: PutAdvertRequest = {
       cityId: selectedCity!.id,
       categoryId: selectedCategory!.id,
       attachments,
@@ -133,7 +140,29 @@ export default function AdvertForm({ advert }: AdvertFormProps) {
       ...data,
     };
 
-    createNewAdvert(createAdvertRequest).unwrap();
+    isEditMode
+      ? updateAdvert(putAdvertRequest)
+      : createNewAdvert(putAdvertRequest);
+  };
+
+  const onCancel = () => {
+    updateFiles({ shouldSave: false });
+    navigate("/adverts/my");
+  };
+
+  const updateFiles = ({ shouldSave }: { shouldSave: boolean }) => {
+    shouldSave
+      ? uploadedFiles
+          .filter((fileWrapper) => fileWrapper.deleted)
+          .forEach((fileToDelete) =>
+            FirebaseService.deleteFile(fileToDelete.url)
+          )
+      : uploadedFiles
+          .filter((fileWrapper) => fileWrapper.new)
+          .forEach((fileWrapper) => {
+            console.log(fileWrapper);
+            FirebaseService.deleteFile(fileWrapper.url);
+          });
   };
 
   useEffect(() => {
@@ -399,13 +428,16 @@ export default function AdvertForm({ advert }: AdvertFormProps) {
                 uploadedFiles={
                   advert?.attachments
                     ? advert.attachments.map(
-                        (attachment) =>
+                        (attachment, index) =>
                           ({
+                            id: index,
                             name: "Name here",
-                            file: {} as SerializableFile,
+                            type: AttachmentType.convertToString(
+                              attachment.type
+                            ),
+                            deleted: false,
                             url: attachment.link,
-                            errors: [],
-                          } as UploadedFile)
+                          } as StoredFile)
                       )
                     : []
                 }
@@ -417,7 +449,7 @@ export default function AdvertForm({ advert }: AdvertFormProps) {
                 <Button
                   variant="contained"
                   sx={{ marginRight: "16px" }}
-                  onClick={() => navigate("/adverts/my")}
+                  onClick={onCancel}
                 >
                   Cancel
                 </Button>

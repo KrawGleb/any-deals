@@ -1,5 +1,5 @@
-import { UploadedFile } from "../../../models/uploadedFile";
+import { StoredFile } from "../../../models/storedFile";
 
 export interface FilesUploadFieldProps {
-    uploadedFiles?: UploadedFile[];
+    uploadedFiles?: StoredFile[];
 }
