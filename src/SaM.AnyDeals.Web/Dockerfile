@@ -1,6 +1,8 @@
-FROM node:15.13-alpine
+FROM node:19.4-alpine
 WORKDIR /app
-COPY ./package*.json ./
+COPY ../SaM.AnyDeals.Web/package.json .
+COPY ../SaM.AnyDeals.Web/package-lock.json .
+
 ENV PATH /app/node_modules/.bin:$PATH
 RUN npm install
 CMD ["npm", "start"]

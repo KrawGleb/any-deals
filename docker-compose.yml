@@ -9,14 +9,14 @@ services:
   backend:
     image: ${DOCKER_REGISTRY-}backend
     build:
-      context: src/SaM.AnyDeals.API
-      dockerfile: Dockerfile
+      context: src
+      dockerfile: SaM.AnyDeals.API/Dockerfile
     depends_on:
       - database
   client:
     image: ${DOCKER_REGISTRY-}client
     build:
-      context: src/SaM.AnyDeals.Web
-      dockerfile: Dockerfile
+      context: src
+      dockerfile: SaM.AnyDeals.Web/Dockerfile
   proxy:
     image: nginx:latest

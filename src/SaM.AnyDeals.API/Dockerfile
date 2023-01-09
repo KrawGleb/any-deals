@@ -3,14 +3,19 @@
 FROM mcr.microsoft.com/dotnet/aspnet:7.0 AS base
 WORKDIR /app
 EXPOSE 80
-EXPOSE 443
 
 FROM mcr.microsoft.com/dotnet/sdk:7.0 AS build
 WORKDIR /src
-COPY ["src/SaM.AnyDeals.API/SaM.AnyDeals.API.csproj", "src/SaM.AnyDeals.API/"]
-RUN dotnet restore "src/SaM.AnyDeals.API/SaM.AnyDeals.API.csproj"
+COPY ["../SaM.AnyDeals.API/SaM.AnyDeals.API.csproj", "SaM.AnyDeals.API/"]
+COPY ["../SaM.AnyDeals.Application/SaM.AnyDeals.Application.csproj", "SaM.AnyDeals.Application/"]
+COPY ["../SaM.AnyDeals.Application.Models/SaM.AnyDeals.Application.Models.csproj", "SaM.AnyDeals.Application.Models/"]
+COPY ["../SaM.AnyDeals.Common/SaM.AnyDeals.Common.csproj", "SaM.AnyDeals.Common/"]
+COPY ["../SaM.AnyDeals.DataAccess.Models/SaM.AnyDeals.DataAccess.Models.csproj", "SaM.AnyDeals.DataAccess.Models/"]
+COPY ["../SaM.AnyDeals.DataAccess/SaM.AnyDeals.DataAccess.csproj", "SaM.AnyDeals.DataAccess/"]
+COPY ["../SaM.AnyDeals.Infrastructure/SaM.AnyDeals.Infrastructure.csproj", "SaM.AnyDeals.Infrastructure/"]
+RUN dotnet restore "SaM.AnyDeals.API/SaM.AnyDeals.API.csproj"
 COPY . .
-WORKDIR "/src/src/SaM.AnyDeals.API"
+WORKDIR "/src/SaM.AnyDeals.API"
 RUN dotnet build "SaM.AnyDeals.API.csproj" -c Release -o /app/build
 
 FROM build AS publish
