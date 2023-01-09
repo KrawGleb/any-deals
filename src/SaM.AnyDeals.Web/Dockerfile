@@ -5,4 +5,5 @@ COPY ../SaM.AnyDeals.Web/package-lock.json .
 
 ENV PATH /app/node_modules/.bin:$PATH
 RUN npm install
+COPY . .
 CMD ["npm", "start"]
