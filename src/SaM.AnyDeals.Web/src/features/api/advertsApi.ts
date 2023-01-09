@@ -7,6 +7,8 @@ export const advertsApi = createApi({
   reducerPath: "advertsApi",
   baseQuery: fetchBaseQuery({
     prepareHeaders: (headers, { getState }) => {
+      headers.set("Content-type", "application/json; charset=UTF-8");
+
       const token = (getState() as RootState).auth.userToken;
       if (token) {
         headers.set("authorization", `Bearer ${token}`);
@@ -14,34 +16,38 @@ export const advertsApi = createApi({
       }
     },
   }),
-  tagTypes: ["Post"],
+  tagTypes: ["Advert"],
   endpoints: (builder) => ({
     createAdvert: builder.mutation({
       query: (payload) => ({
         url: "/api/adverts/create",
         method: "POST",
         body: payload,
-        headers: {
-          "Content-type": "application/json; charset=UTF-8",
-        },
       }),
-      invalidatesTags: ["Post"],
+      invalidatesTags: ["Advert"],
+    }),
+    deleteAdvert: builder.mutation({
+      query: (payload: { id: number }) => ({
+        url: "/api/adverts/delete",
+        method: "DELETE",
+        body: payload,
+      }),
+      invalidatesTags: ["Advert"],
     }),
     updateAdvert: builder.mutation({
       query: (payload) => ({
         url: "/api/adverts/update",
         method: "PATCH",
         body: payload,
-        headers: {
-          "Content-type": "application/json; charset=UTF-8",
-        },
       }),
+      invalidatesTags: ["Advert"],
     }),
     getMyAdverts: builder.query<Advert[], void>({
       query: () => ({
         url: "/api/adverts/my",
         method: "GET",
       }),
+      providesTags: ["Advert"],
       transformResponse: (response: CommonResponse) => response.body,
     }),
   }),
@@ -50,5 +56,6 @@ export const advertsApi = createApi({
 export const {
   useCreateAdvertMutation,
   useUpdateAdvertMutation,
+  useDeleteAdvertMutation,
   useGetMyAdvertsQuery,
 } = advertsApi;

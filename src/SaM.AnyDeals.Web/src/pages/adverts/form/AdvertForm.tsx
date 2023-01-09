@@ -29,6 +29,7 @@ import { SelectableItem } from "../../../models/selectableItem";
 
 import {
   useCreateAdvertMutation,
+  useDeleteAdvertMutation,
   useUpdateAdvertMutation,
 } from "../../../features/api/advertsApi";
 import { Controller, useForm } from "react-hook-form";
@@ -46,6 +47,7 @@ import { AttachmentType } from "../../../models/enums/attachmentType";
 import { PutAdvertRequest } from "../../../models/api/requests/putAdvertRequest";
 import { AdvertFormProps } from "./AdvertFromProps";
 import { FirebaseService } from "../../../features/services/firebaseService";
+import { Attachment } from "../../../models/api/attachment";
 
 const schema = yup.object().shape({
   title: yup.string().required(ValidationMessages.required("Title")),
@@ -76,6 +78,7 @@ export default function AdvertForm({ advert }: AdvertFormProps) {
   const navigate = useNavigate();
   const [createNewAdvert] = useCreateAdvertMutation();
   const [updateAdvert] = useUpdateAdvertMutation();
+  const [deleteAdvert] = useDeleteAdvertMutation();
   const uploadedFiles = useSelector(
     (state: any) => state.fileUpload.files as StoredFile[]
   );
@@ -125,10 +128,14 @@ export default function AdvertForm({ advert }: AdvertFormProps) {
 
     const attachments = uploadedFiles
       .filter((fileWrapper) => !fileWrapper.deleted)
-      .map((fileWrapper) => ({
-        link: fileWrapper.url,
-        type: AttachmentType.convert(fileWrapper.type),
-      }));
+      .map(
+        (fileWrapper) =>
+          ({
+            name: fileWrapper.name,
+            link: fileWrapper.url,
+            type: AttachmentType.convert(fileWrapper.type),
+          } as Attachment)
+      );
 
     const putAdvertRequest: PutAdvertRequest = {
       cityId: selectedCity!.id,
@@ -140,14 +147,22 @@ export default function AdvertForm({ advert }: AdvertFormProps) {
       ...data,
     };
 
-    isEditMode
+    const mutationAction = isEditMode
       ? updateAdvert(putAdvertRequest)
       : createNewAdvert(putAdvertRequest);
+
+    mutationAction.then(() => navigate("/adverts/my"));
   };
 
   const onCancel = () => {
     updateFiles({ shouldSave: false });
     navigate("/adverts/my");
+  };
+
+  const onDelete = () => {
+    deleteAdvert({ id: advert!.id }).then(() => {
+      navigate("/adverts/my");
+    });
   };
 
   const updateFiles = ({ shouldSave }: { shouldSave: boolean }) => {
@@ -463,7 +478,7 @@ export default function AdvertForm({ advert }: AdvertFormProps) {
                 </Button>
               </div>
               {advert ? (
-                <Button variant="contained" color="error">
+                <Button variant="contained" color="error" onClick={onDelete}>
                   Delete advert
                 </Button>
               ) : (
