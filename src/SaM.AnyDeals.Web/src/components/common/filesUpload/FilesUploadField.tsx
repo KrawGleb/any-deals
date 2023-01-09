@@ -9,6 +9,7 @@ import { addFiles, deleteFile } from "../../../features/store/fileUploadSlice";
 import { mapFile } from "../../../features/helpers/mapFile";
 import { FilesUploadFieldProps } from "./FilesUploadFieldProps";
 import UploadedFileComponent from "./uploadedFile/UploadedFileComponent";
+import Stack from "@mui/material/Stack";
 
 export default function FilesUploadField({
   uploadedFiles,
@@ -64,8 +65,8 @@ export default function FilesUploadField({
   });
 
   useEffect(() => {
-    console.log(uploadedFiles);
     dispatch(addFiles({ files: uploadedFiles ?? [] }));
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   return (
@@ -76,16 +77,18 @@ export default function FilesUploadField({
           <p>Drag 'n' drop some files here, or click to select files</p>
         </div>
       </Grid>
-      {files.map((file, index) => (
-        <FileUploadWithProgress key={index} file={file} onDelete={onDelete} />
-      ))}
-      {_uploadedFiles?.map((file, index) => (
-        <UploadedFileComponent
-          key={index}
-          file={file}
-          onDelete={onDeleteUploaded}
-        />
-      ))}
+      <Stack spacing={1} sx={{ marginTop: "6px" }}>
+        {files.map((file, index) => (
+          <FileUploadWithProgress key={index} file={file} onDelete={onDelete} />
+        ))}
+        {_uploadedFiles?.map((file, index) => (
+          <UploadedFileComponent
+            key={index}
+            file={file}
+            onDelete={onDeleteUploaded}
+          />
+        ))}
+      </Stack>
     </>
   );
 }

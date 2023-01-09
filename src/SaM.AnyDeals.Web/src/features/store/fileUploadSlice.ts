@@ -22,8 +22,6 @@ const fileUploadSlice = createSlice({
           fw.url === action.payload.file?.url
       );
 
-      console.log(fileWrapper);
-
       state.files = state.files.filter((fw) => fw !== fileWrapper);
 
       if (fileWrapper?.url) {

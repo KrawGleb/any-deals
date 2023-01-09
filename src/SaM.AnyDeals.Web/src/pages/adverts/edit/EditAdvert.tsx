@@ -5,9 +5,9 @@ import AdvertForm from "../form/AdvertForm";
 
 export default function EditAdvert() {
   const query = useQuery() as any;
-  const advertId: number = query.get("id") as number;
+  const advertId: number = +query.get("id");
   const { data: adverts } = useGetMyAdvertsQuery();
-  const advert = adverts?.find((a) => a.id == advertId);
+  const advert = adverts?.find((a) => a.id === advertId);
 
   return <AdvertForm advert={advert} />;
 }
