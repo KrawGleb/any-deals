@@ -19,5 +19,9 @@ public class AttachmentEntityConfiguration : EntityConfigurationBase<AttachmentD
             .Property(a => a.Link)
             .HasMaxLength(AttachmentConstraints.LinkMaxLength)
             .IsRequired();
+
+        builder
+            .Property(a => a.Name)
+            .HasMaxLength(AttachmentConstraints.NameMaxLength);
     }
 }

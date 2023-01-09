@@ -8,6 +8,10 @@ public class AttachmentViewModelValidator : AbstractValidator<AttachmentViewMode
 {
 	public AttachmentViewModelValidator()
 	{
+		RuleFor(x => x.Name)
+			.NotEmpty()
+			.MaximumLength(AttachmentConstraints.NameMaxLength);
+
 		RuleFor(x => x.Link)
 			.NotEmpty()
 			.MaximumLength(AttachmentConstraints.LinkMaxLength);
