@@ -1,7 +1,6 @@
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.HttpOverrides;
 using Microsoft.IdentityModel.Tokens;
-using Newtonsoft.Json.Converters;
 using SaM.AnyDeals.Application;
 using SaM.AnyDeals.DataAccess;
 using SaM.AnyDeals.DataAccess.Extensions;
@@ -18,9 +17,8 @@ services.AddApplication();
 services.AddInfrastructure();
 
 services
-    .AddControllers(options => 
-        options.Filters.Add<ApiExceptionFilter>())
-    .AddNewtonsoftJson();
+    .AddControllers(options =>
+        options.Filters.Add<ApiExceptionFilter>());
 
 services.AddEndpointsApiExplorer();
 services.AddSwaggerGen();
