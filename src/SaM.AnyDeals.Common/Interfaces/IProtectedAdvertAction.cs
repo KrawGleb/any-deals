@@ -2,5 +2,5 @@
 
 public interface IProtectedAdvertAction
 {
-    public int Id { get; set; }
+    public int Id { get; }
 }

@@ -5,15 +5,14 @@ using SaM.AnyDeals.Common.Enums;
 
 namespace SaM.AnyDeals.Application.Requests.Adverts.Commands.Create;
 
-public class CreateAdvertCommand : IRequest<Response>
-{
-    public string? Title { get; set; }
-    public string? Description { get; set; }
-    public AdvertGoal Goal { get; set; }
-    public AdvertGroup Group { get; set; }
-    public AdvertInterest Interest { get; set; }
-    public int? CityId { get; set; }
-    public int? CategoryId { get; set; }
-    public ContactsViewModel? Contacts { get; set; }
-    public List<AttachmentViewModel>? Attachments { get; set; }
-}
+public record CreateAdvertCommand(
+    string? Title,
+    string? Description,
+    AdvertGoal Goal,
+    AdvertGroup Group,
+    AdvertInterest Interest,
+    int? CityId,
+    int? CategoryId,
+    ContactsViewModel? Contacts,
+    List<AttachmentViewModel>? Attachments
+    ) : IRequest<Response>;

@@ -4,7 +4,5 @@ using SaM.AnyDeals.Common.Interfaces;
 
 namespace SaM.AnyDeals.Application.Requests.Adverts.Commands.Delete;
 
-public class DeleteAdvertCommand : IRequest<Response>, IProtectedAdvertAction
-{
-    public int Id { get; set; }
-}
+public record DeleteAdvertCommand(int Id) : IRequest<Response>, IProtectedAdvertAction;
+
