@@ -30,23 +30,27 @@ public class UpdateAdvertCommandHandler : IRequestHandler<UpdateAdvertCommand, R
             .SingleOrDefaultAsync(a => a.Id == request.Id, cancellationToken)
             ?? throw new NotFoundException($"Advert with id {request.Id} not found.");
 
-        var attachments = entity.Attachments ?? Enumerable.Empty<AttachmentDbEntry>();
-        var requestAttachments = request.Attachments ?? Enumerable.Empty<AttachmentViewModel>();
+        _applicationDbContext
+            .Entry(entity)
+            .CurrentValues
+            .SetValues(request);
 
         _applicationDbContext
             .Entry(entity.Contacts!)
             .CurrentValues
             .SetValues(request.Contacts!);
 
-        /*_applicationDbContext
-            .Entry(entity.Contacts!)
-            .Property(c => c.Id)
-            .IsModified = false;
-*/
-        _applicationDbContext
-            .Entry(entity)
-            .CurrentValues
-            .SetValues(request);
+        UpdateAttachments(entity, request);
+        
+        await _applicationDbContext.SaveChangesAsync(cancellationToken);
+
+        return new Response();
+    }
+
+    private void UpdateAttachments(AdvertDbEntry entity, UpdateAdvertCommand request)
+    {
+        var attachments = entity.Attachments ?? Enumerable.Empty<AttachmentDbEntry>();
+        var requestAttachments = request.Attachments ?? Enumerable.Empty<AttachmentViewModel>();
 
         var attachmentsToRemove = attachments
             .Where(a => !requestAttachments.Any(x => x.Link == a.Link));
@@ -56,9 +60,5 @@ public class UpdateAdvertCommandHandler : IRequestHandler<UpdateAdvertCommand, R
             .Where(a => !attachments.Any(x => x.Link == a.Link));
         var attachmentsEntities = _mapper.Map<List<AttachmentDbEntry>>(attachmentsToCreate);
         entity.Attachments?.AddRange(attachmentsEntities);
-
-        await _applicationDbContext.SaveChangesAsync(cancellationToken);
-
-        return new Response();
     }
 }
