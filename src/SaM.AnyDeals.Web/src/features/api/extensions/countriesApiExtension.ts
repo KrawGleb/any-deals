@@ -1,15 +1,12 @@
 import {
   BaseQueryApi,
-  createApi,
-  fetchBaseQuery,
 } from "@reduxjs/toolkit/query/react";
-import { City } from "../../models/api/city";
-import { Country } from "../../models/api/country";
-import { CommonResponse } from "../../models/api/responses/commonResponse";
+import { City } from "../../../models/api/city";
+import { Country } from "../../../models/api/country";
+import { CommonResponse } from "../../../models/api/responses/commonResponse";
+import { baseApi } from "../baseApi";
 
-export const countriesApi = createApi({
-  reducerPath: "countriesApi",
-  baseQuery: fetchBaseQuery({}),
+export const countriesApiExtension = baseApi.injectEndpoints({
   endpoints: (builder) => ({
     getCountries: builder.query<Country[], void>({
       query: () => ({
@@ -33,6 +30,7 @@ export const countriesApi = createApi({
       },
     }),
   }),
+  overrideExisting: false,
 });
 
-export const { useGetCountriesQuery, useGetCitiesQuery } = countriesApi;
+export const { useGetCountriesQuery, useGetCitiesQuery } = countriesApiExtension;

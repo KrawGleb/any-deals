@@ -1,22 +1,8 @@
-import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
-import { Advert } from "../../models/api/advert";
-import { CommonResponse } from "../../models/api/responses/commonResponse";
-import { RootState } from "../store/store";
+import { Advert } from "../../../models/api/advert";
+import { CommonResponse } from "../../../models/api/responses/commonResponse";
+import { baseApi } from "../baseApi";
 
-export const advertsApi = createApi({
-  reducerPath: "advertsApi",
-  baseQuery: fetchBaseQuery({
-    prepareHeaders: (headers, { getState }) => {
-      headers.set("Content-type", "application/json; charset=UTF-8");
-
-      const token = (getState() as RootState).auth.userToken;
-      if (token) {
-        headers.set("authorization", `Bearer ${token}`);
-        return headers;
-      }
-    },
-  }),
-  tagTypes: ["Advert"],
+export const advertsApiExtension = baseApi.injectEndpoints({
   endpoints: (builder) => ({
     createAdvert: builder.mutation({
       query: (payload) => ({
@@ -51,6 +37,7 @@ export const advertsApi = createApi({
       transformResponse: (response: CommonResponse) => response.body,
     }),
   }),
+  overrideExisting: false,
 });
 
 export const {
@@ -58,4 +45,4 @@ export const {
   useUpdateAdvertMutation,
   useDeleteAdvertMutation,
   useGetMyAdvertsQuery,
-} = advertsApi;
+} = advertsApiExtension;

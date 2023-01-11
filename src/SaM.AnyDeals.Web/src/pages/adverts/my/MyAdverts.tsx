@@ -2,7 +2,7 @@ import React from "react";
 import "./MyAdverts.scss";
 import { Button } from "@mui/material";
 import { Link } from "react-router-dom";
-import { useGetMyAdvertsQuery } from "../../../features/api/advertsApi";
+import { useGetMyAdvertsQuery } from "../../../features/api/extensions/advertsApiExtension";
 import AdvertsList from "../../../components/common/advertsList/AdvertsList";
 
 export default function MyAdverts() {

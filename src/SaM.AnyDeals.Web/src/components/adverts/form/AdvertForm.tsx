@@ -31,14 +31,9 @@ import {
   useCreateAdvertMutation,
   useDeleteAdvertMutation,
   useUpdateAdvertMutation,
-} from "../../../features/api/advertsApi";
+} from "../../../features/api/extensions/advertsApiExtension";
 import { Controller, useForm } from "react-hook-form";
-import { useGetCategoriesQuery } from "../../../features/api/categoriesApi";
 import { useNavigate } from "react-router-dom";
-import {
-  useGetCitiesQuery,
-  useGetCountriesQuery,
-} from "../../../features/api/countriesApi";
 import { ValidationMessages } from "../../../features/helpers/validationMessages";
 import FilesUploadField from "../../common/filesUpload/FilesUploadField";
 import { useSelector } from "react-redux";
@@ -48,6 +43,11 @@ import { PutAdvertRequest } from "../../../models/api/requests/putAdvertRequest"
 import { AdvertFormProps } from "./AdvertFromProps";
 import { FirebaseService } from "../../../features/services/firebaseService";
 import { Attachment } from "../../../models/api/attachment";
+import {
+  useGetCitiesQuery,
+  useGetCountriesQuery,
+} from "../../../features/api/extensions/countriesApiExtension";
+import { useGetCategoriesQuery } from "../../../features/api/extensions/categoriesApiExtension";
 
 const schema = yup.object().shape({
   title: yup.string().required(ValidationMessages.required("Title")),

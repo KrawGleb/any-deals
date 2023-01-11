@@ -1,11 +1,9 @@
 import { configureStore } from "@reduxjs/toolkit";
-import { advertsApi } from "../api/advertsApi";
 import authSlice from "../api/auth/authSlice";
-import { categoriesApi } from "../api/categoriesApi";
-import { countriesApi } from "../api/countriesApi";
 import fileUploadSlice from "./fileUploadSlice";
 import { loadState, saveState } from "./localStorage";
 import myAdvertsSlice from "./myAdvertsSlice";
+import { baseApi } from "../api/baseApi";
 
 const store = configureStore({
   preloadedState: loadState(),
@@ -13,16 +11,10 @@ const store = configureStore({
     auth: authSlice,
     fileUpload: fileUploadSlice,
     myAdverts: myAdvertsSlice,
-    [advertsApi.reducerPath]: advertsApi.reducer,
-    [countriesApi.reducerPath]: countriesApi.reducer,
-    [categoriesApi.reducerPath]: categoriesApi.reducer,
+    [baseApi.reducerPath]: baseApi.reducer,
   },
   middleware: (getDefaultMiddleware) =>
-    getDefaultMiddleware().concat([
-      advertsApi.middleware,
-      countriesApi.middleware,
-      categoriesApi.middleware,
-    ]),
+    getDefaultMiddleware().concat([baseApi.middleware]),
 });
 
 store.subscribe(() =>

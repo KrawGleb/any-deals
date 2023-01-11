@@ -1,5 +1,5 @@
 import React from "react";
-import { useGetMyAdvertsQuery } from "../../../features/api/advertsApi";
+import { useGetMyAdvertsQuery } from "../../../features/api/extensions/advertsApiExtension";
 import useQuery from "../../../features/hooks/useQuery";
 import AdvertForm from "../../../components/adverts/form/AdvertForm";
 
