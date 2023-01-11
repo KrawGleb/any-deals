@@ -1,7 +1,7 @@
 import React from "react";
 import { useGetMyAdvertsQuery } from "../../../features/api/advertsApi";
 import useQuery from "../../../features/hooks/useQuery";
-import AdvertForm from "../form/AdvertForm";
+import AdvertForm from "../../../components/adverts/form/AdvertForm";
 
 export default function EditAdvert() {
   const query = useQuery() as any;

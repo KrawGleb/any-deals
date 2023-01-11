@@ -17,9 +17,9 @@ import {
 import ArrowBack from "@mui/icons-material/ArrowBack";
 import ArrowForwardIosIcon from "@mui/icons-material/ArrowForwardIos";
 
-import FakeSelect from "../../../components/common/fakeSelect/FakeSelect";
-import Input from "../../../components/common/Input";
-import SelectDialog from "../../../components/common/selectDialog/SelectDialog";
+import FakeSelect from "../../common/fakeSelect/FakeSelect";
+import Input from "../../common/Input";
+import SelectDialog from "../../common/selectDialog/SelectDialog";
 
 import { Category } from "../../../models/api/category";
 import { City } from "../../../models/api/city";
@@ -40,7 +40,7 @@ import {
   useGetCountriesQuery,
 } from "../../../features/api/countriesApi";
 import { ValidationMessages } from "../../../features/helpers/validationMessages";
-import FilesUploadField from "../../../components/common/filesUpload/FilesUploadField";
+import FilesUploadField from "../../common/filesUpload/FilesUploadField";
 import { useSelector } from "react-redux";
 import { StoredFile } from "../../../models/storedFile";
 import { AttachmentType } from "../../../models/enums/attachmentType";
