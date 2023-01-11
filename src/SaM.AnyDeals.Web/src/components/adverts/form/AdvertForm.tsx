@@ -138,6 +138,7 @@ export default function AdvertForm({ advert }: AdvertFormProps) {
       );
 
     const putAdvertRequest: PutAdvertRequest = {
+      id: advert?.id,
       cityId: selectedCity!.id,
       categoryId: selectedCategory!.id,
       attachments,
@@ -183,6 +184,12 @@ export default function AdvertForm({ advert }: AdvertFormProps) {
   useEffect(() => {
     if (!advert) return;
 
+    const setValueOptions = {
+      shouldTouch: true,
+      shouldDirty: true,
+      shouldValidate: true,
+    };
+
     const selectedCategory = categories?.find(
       (c) => c.id === advert.category.id
     );
@@ -194,18 +201,21 @@ export default function AdvertForm({ advert }: AdvertFormProps) {
     setSelectedCategory(selectedCategory);
     setSelectedCountry(selectedCountry);
     setSelectedCity(selectedCity);
-
-    setValue("title", advert.title);
-    setValue("description", advert.description);
-    setValue("goal", advert.goal);
-    setValue("interest", advert.interest);
-    setValue("group", advert.group, { shouldTouch: true });
+    
+    setValue("country", advert.city.country.name, setValueOptions);
+    setValue("city", advert.city.name, setValueOptions);
+    setValue("category", advert.category.name, setValueOptions);
+    setValue("title", advert.title, setValueOptions);
+    setValue("description", advert.description, setValueOptions);
+    setValue("goal", advert.goal, setValueOptions);
+    setValue("interest", advert.interest, setValueOptions);
+    setValue("group", advert.group, setValueOptions);
 
     Object.keys(advert.contacts).forEach((contact) =>
       setValue(
         contact as any,
         advert.contacts[contact as keyof typeof advert.contacts],
-        { shouldTouch: true, shouldDirty: true }
+        setValueOptions
       )
     );
   }, [
