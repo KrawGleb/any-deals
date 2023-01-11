@@ -456,7 +456,7 @@ export default function AdvertForm({ advert }: AdvertFormProps) {
                         (attachment, index) =>
                           ({
                             id: index,
-                            name: "Name here",
+                            name: attachment.name,
                             type: AttachmentType.convertToString(
                               attachment.type
                             ),
