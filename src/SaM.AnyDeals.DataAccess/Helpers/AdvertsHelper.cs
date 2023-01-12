@@ -12,6 +12,9 @@ public static class AdvertsHelper
             Id = advert.Id,
             Title = advert.Title,
             Country = advert.City?.Country?.Name,
+            Goal = (int)advert.Goal,
+            Interest = (int)advert.Interest,
+            Category = advert.Category?.Name,
             City = advert.City?.Name,
             Creator = advert.Contacts?.Name,
             PreviewUrl = advert.Attachments?.FirstOrDefault(a => a.Type == AttachmentType.Image)?.Link

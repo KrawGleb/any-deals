@@ -1,6 +1,7 @@
 ﻿using Microsoft.Extensions.Logging;
 using Nest;
 using SaM.AnyDeals.Common.Constants;
+using SaM.AnyDeals.Common.Models;
 using SaM.AnyDeals.DataAccess.Models.Elastic;
 using SaM.AnyDeals.DataAccess.Services.Interfaces;
 
@@ -19,6 +20,16 @@ public class ElasticService : IElasticService
         _logger = logger;
     }
 
+    public async Task<IEnumerable<AdvertElasticEntry>> SearchAdvertsAsync(SearchAdvertsParams searchParams, CancellationToken cancellationToken = default)
+    {
+        var request = searchParams.SearchRequest;
+        var response = await _elasticClient.SearchAsync<AdvertElasticEntry>(request, cancellationToken);
+
+        LogResponse(response);
+
+        return response.Documents.ToList();
+    }
+
     public async Task<IndexResponse> IndexAdvertAsync(AdvertElasticEntry advert, CancellationToken cancellationToken = default)
     {
         var response = await _elasticClient
@@ -29,6 +40,7 @@ public class ElasticService : IElasticService
 
         return response;
     }
+
     public async Task<UpdateResponse<AdvertElasticEntry>> UpdateAdvertAsync(AdvertElasticEntry advert, CancellationToken cancellationToken = default)
     {
         var response = await _elasticClient
@@ -49,7 +61,7 @@ public class ElasticService : IElasticService
         return response;
     }
 
-    private void LogResponse(WriteResponseBase response)
+    private void LogResponse(IResponse response)
     {
         if (response.IsValid)
             _logger.LogInformation(response.DebugInformation);
