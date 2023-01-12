@@ -2,7 +2,12 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Nest;
 using SaM.AnyDeals.DataAccess.Models.Auth;
+using SaM.AnyDeals.DataAccess.Services.Interfaces;
+using SaM.AnyDeals.DataAccess.Services;
+using SaM.AnyDeals.DataAccess.Models.Elastic;
+using SaM.AnyDeals.Common.Constants;
 
 namespace SaM.AnyDeals.DataAccess;
 
@@ -10,6 +15,8 @@ public static class DependencyInjection
 {
     public static IServiceCollection AddDataAccess(this IServiceCollection services, IConfiguration configuration)
     {
+        services.AddElastic();
+
         var connectionStringLabel = string.Empty;
         
         if (bool.TryParse(Environment.GetEnvironmentVariable("UseDockerDB"), out var useDockerDB))
@@ -34,5 +41,29 @@ public static class DependencyInjection
             .AddEntityFrameworkStores<ApplicationDbContext>();
 
         return services;
+    }
+
+    private static void AddElastic(this IServiceCollection services)
+    {
+        services.AddSingleton<IElasticClient>(factory =>
+        {
+            var connectionUri = new Uri(Environment.GetEnvironmentVariable("BONSAI_URL")!);
+
+            var settings = new ConnectionSettings(connectionUri)
+                .DefaultMappingFor<AdvertElasticEntry>(i => i.IndexName(ElasticConstants.IndexName))
+                .EnableHttpCompression()
+                .ConnectionLimit(-1);
+
+            var client = new ElasticClient(settings);
+
+            var response = client.Indices.Create(
+                ElasticConstants.IndexName,
+                index => index.Map<AdvertElasticEntry>(x => x.AutoMap()));
+
+            return client;
+
+        });
+
+        services.AddScoped<IElasticService, ElasticService>();
     }
 }

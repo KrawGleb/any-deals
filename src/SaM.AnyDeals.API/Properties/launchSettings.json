@@ -26,7 +26,8 @@
       "launchUrl": "swagger",
       "environmentVariables": {
         "ASPNETCORE_ENVIRONMENT": "Development",
-        "JWTSecurityKey": "!123__MyJWTSecretKey__123!"
+        "JWTSecurityKey": "!123__MyJWTSecretKey__123!",
+        "BONSAI_URL": "https:\\\\g31tl4o47y:43efs4e33r@box-294175690.eu-west-1.bonsaisearch.net:443"
       }
     },
     "Docker": {
