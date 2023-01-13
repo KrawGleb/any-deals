@@ -1,5 +1,7 @@
 import { Advert } from "../../../models/api/advert";
+import { ElasticAdvert } from "../../../models/api/elasticAdvert";
 import { CommonResponse } from "../../../models/api/responses/commonResponse";
+import { SearchAdvertsParams } from "../../../models/searchAdvertsParams";
 import { baseApi } from "../baseApi";
 
 export const advertsApiExtension = baseApi.injectEndpoints({
@@ -36,6 +38,15 @@ export const advertsApiExtension = baseApi.injectEndpoints({
       providesTags: ["Advert"],
       transformResponse: (response: CommonResponse) => response.body,
     }),
+    searchAdverts: builder.query<ElasticAdvert[], SearchAdvertsParams>({
+      query: (payload: SearchAdvertsParams) => ({
+        url: "/api/adverts/search",
+        method: "GET",
+        params: {...payload}
+      }),
+      providesTags: ["Advert"],
+      transformResponse: (response: CommonResponse) => response.body,
+    })
   }),
   overrideExisting: false,
 });
@@ -45,4 +56,5 @@ export const {
   useUpdateAdvertMutation,
   useDeleteAdvertMutation,
   useGetMyAdvertsQuery,
+  useSearchAdvertsQuery,
 } = advertsApiExtension;

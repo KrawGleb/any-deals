@@ -52,7 +52,8 @@ public static class DependencyInjection
             var settings = new ConnectionSettings(connectionUri)
                 .DefaultMappingFor<AdvertElasticEntry>(i => i.IndexName(ElasticConstants.IndexName))
                 .EnableHttpCompression()
-                .ConnectionLimit(-1);
+                .ConnectionLimit(-1)
+                .DisableDirectStreaming();
 
             var client = new ElasticClient(settings);
 

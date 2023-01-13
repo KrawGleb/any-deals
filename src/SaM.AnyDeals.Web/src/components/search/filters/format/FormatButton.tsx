@@ -7,6 +7,7 @@ const CustomFormatButton = styled(ToggleButton)<ToggleButtonProps>(
       borderRadius: "10px !important",
       padding: "0 2.5rem",
       minHeight: "2.5rem",
+      border: "1px solid lightgray !important"
     },
   })
 );

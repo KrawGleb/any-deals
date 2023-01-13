@@ -2,15 +2,15 @@ import { configureStore } from "@reduxjs/toolkit";
 import authSlice from "../api/auth/authSlice";
 import fileUploadSlice from "./fileUploadSlice";
 import { loadState, saveState } from "./localStorage";
-import myAdvertsSlice from "./myAdvertsSlice";
 import { baseApi } from "../api/baseApi";
+import filtersSlice from "./filtersSlice";
 
 const store = configureStore({
   preloadedState: loadState(),
   reducer: {
     auth: authSlice,
     fileUpload: fileUploadSlice,
-    myAdverts: myAdvertsSlice,
+    filters: filtersSlice,
     [baseApi.reducerPath]: baseApi.reducer,
   },
   middleware: (getDefaultMiddleware) =>
