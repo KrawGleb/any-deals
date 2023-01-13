@@ -5,6 +5,7 @@ import PanelTabs from "../../common/tabPanel/Tabs";
 import { Box, Button, Typography } from "@mui/material";
 import { useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
+import { RootState } from "../../../features/store/store";
 
 export default function Header() {
   const navigate = useNavigate();
@@ -14,7 +15,8 @@ export default function Header() {
     setValue(newValue);
   };
 
-  const { userInfo } = useSelector((state: any) => state.auth);
+  const { userInfo }: any = useSelector((state: RootState) => state.auth);
+  const isLoggedIn = !!userInfo.username;
 
   return (
     <>
@@ -24,11 +26,15 @@ export default function Header() {
             <div className="logo">Any Deals</div>
             <PanelTabs value={value} onChange={handleChange}>
               <PanelTab label="Adverts" to="/adverts/search" />
-              <PanelTab label="My adverts" to="/adverts/my" />
+              {isLoggedIn ? (
+                <PanelTab label="My adverts" to="/adverts/my" />
+              ) : (
+                <></>
+              )}
               <PanelTab label="About" to="/about" />
             </PanelTabs>
             <div className="actions">
-              {userInfo.username ? (
+              {isLoggedIn ? (
                 <Typography>{userInfo.username}</Typography>
               ) : (
                 <>

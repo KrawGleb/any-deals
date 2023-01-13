@@ -2,6 +2,7 @@ import { Advert } from "../../../models/api/advert";
 import { ElasticAdvert } from "../../../models/api/elasticAdvert";
 import { CommonResponse } from "../../../models/api/responses/commonResponse";
 import { SearchAdvertsParams } from "../../../models/searchAdvertsParams";
+import transformErrorResponse from "../../helpers/transformErrorResponse";
 import { baseApi } from "../baseApi";
 
 export const advertsApiExtension = baseApi.injectEndpoints({
@@ -13,6 +14,7 @@ export const advertsApiExtension = baseApi.injectEndpoints({
         body: payload,
       }),
       invalidatesTags: ["Advert"],
+      transformErrorResponse
     }),
     deleteAdvert: builder.mutation({
       query: (payload: { id: number }) => ({
@@ -21,6 +23,7 @@ export const advertsApiExtension = baseApi.injectEndpoints({
         body: payload,
       }),
       invalidatesTags: ["Advert"],
+      transformErrorResponse
     }),
     updateAdvert: builder.mutation({
       query: (payload) => ({
@@ -29,6 +32,7 @@ export const advertsApiExtension = baseApi.injectEndpoints({
         body: payload,
       }),
       invalidatesTags: ["Advert"],
+      transformErrorResponse
     }),
     getMyAdverts: builder.query<Advert[], void>({
       query: () => ({
@@ -37,6 +41,7 @@ export const advertsApiExtension = baseApi.injectEndpoints({
       }),
       providesTags: ["Advert"],
       transformResponse: (response: CommonResponse) => response.body,
+      transformErrorResponse: (response) => transformErrorResponse(response)
     }),
     searchAdverts: builder.query<ElasticAdvert[], SearchAdvertsParams>({
       query: (payload: SearchAdvertsParams) => ({
@@ -46,6 +51,7 @@ export const advertsApiExtension = baseApi.injectEndpoints({
       }),
       providesTags: ["Advert"],
       transformResponse: (response: CommonResponse) => response.body,
+      transformErrorResponse
     })
   }),
   overrideExisting: false,
