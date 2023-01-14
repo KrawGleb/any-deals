@@ -19,7 +19,11 @@ export default function MyAdverts() {
           </Button>
         </div>
       </div>
-      <AdvertsList allowEditing={true} adverts={myAdverts ?? []} />
+      <AdvertsList
+        allowEditing={true}
+        adverts={myAdverts ?? []}
+        styles={{ height: "80vh" }}
+      />
     </div>
   );
 }

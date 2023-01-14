@@ -16,7 +16,11 @@ export default function Search() {
     <>
       <Filters />
       <Box sx={{ paddingTop: "10px" }}>
-        <AdvertsList adverts={adverts ?? []} allowEditing={false} />
+        <AdvertsList
+          adverts={adverts ?? []}
+          allowEditing={false}
+          styles={{ height: "60vh" }}
+        />
       </Box>
     </>
   );
