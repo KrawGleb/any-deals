@@ -11,6 +11,6 @@ public record SearchAdvertsQuery(
     int? Goal, 
     int? Interest,
     int? Group,
-    int From = 0,
-    int Size = 25) 
+    int Page = 1,
+    int PageSize = 25) 
     : IRequest<Response>;

@@ -16,7 +16,13 @@ public class AdvertMappingProfile : Profile
         CreateMap<AdvertDbEntry, AdvertViewModel>();
         CreateMap<CreateAdvertCommand, AdvertDbEntry>();
 
-        CreateMap<SearchAdvertsQuery, SearchAdvertsParams>();
+        CreateMap<SearchAdvertsQuery, SearchAdvertsParams>()
+            .ForMember(
+                d => d.From,
+                s => s.MapFrom(r => r.PageSize * (r.Page - 1)))
+            .ForMember(
+                d => d.Size,
+                s => s.MapFrom(r => r.PageSize));
 
         CreateMap<AdvertElasticEntry, AdvertViewModel>()
             .ForMember(
