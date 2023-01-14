@@ -44,11 +44,9 @@ public class CreateAdvertCommandHandler : IRequestHandler<CreateAdvertCommand, R
         var advertOwner = await GetAdvertOwnerAsync(userId, cancellationToken);
         var advert = _mapper.Map<AdvertDbEntry>(request);
 
-        await _applicationDbContext.Adverts.AddAsync(advert, cancellationToken);
-        await _applicationDbContext.SaveChangesAsync(cancellationToken);
+        advert.Creator = advertOwner;
 
-        advertOwner.Adverts!.Add(advert);
-        await _userManager.UpdateAsync(advertOwner);
+        await _applicationDbContext.Adverts.AddAsync(advert, cancellationToken);
     }
 
     private async Task<ApplicationUser> GetAdvertOwnerAsync(string id, CancellationToken cancellationToken)

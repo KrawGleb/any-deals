@@ -10,6 +10,7 @@ public class AdvertDbEntry : DbEntryBase
     public AdvertGoal Goal { get; set; }
     public AdvertGroup Group { get; set; }
     public AdvertInterest Interest { get; set; }
+    public DateTime CreatedAt { get; set; }
 
     public string? CreatorId { get; set; }
     public ApplicationUser? Creator { get; set; }

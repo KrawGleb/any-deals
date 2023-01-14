@@ -18,6 +18,7 @@ public static class AdvertsHelper
             Category = advert.Category?.Name,
             City = advert.City?.Name,
             Creator = advert.Contacts?.Name,
-            PreviewUrl = advert.Attachments?.FirstOrDefault(a => a.Type == AttachmentType.Image)?.Link
+            PreviewUrl = advert.Attachments?.FirstOrDefault(a => a.Type == AttachmentType.Image)?.Link,
+            CreatedAt = advert.CreatedAt
         };
 }

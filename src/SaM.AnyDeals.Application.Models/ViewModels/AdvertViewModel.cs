@@ -8,6 +8,7 @@ public class AdvertViewModel
     public int Goal { get; set; }
     public int Group { get; set; }
     public int Interest { get; set; }
+    public DateTime CreatedAt { get; set; }
 
     public ApplicationUserViewModel? Creator { get; set; }
     public CityViewModel? City { get; set; }

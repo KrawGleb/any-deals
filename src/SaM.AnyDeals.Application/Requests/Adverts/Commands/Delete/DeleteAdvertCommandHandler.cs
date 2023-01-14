@@ -20,7 +20,6 @@ public class DeleteAdvertCommandHandler : IRequestHandler<DeleteAdvertCommand, R
             ?? throw new NotFoundException($"Application with id {request.Id} not found.");
 
         _applicationDbContext.Adverts.Remove(application);
-        await _applicationDbContext.SaveChangesAsync(cancellationToken);
 
         return new Response();
     }

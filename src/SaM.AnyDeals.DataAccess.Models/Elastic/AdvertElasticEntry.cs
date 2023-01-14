@@ -11,5 +11,6 @@ public class AdvertElasticEntry
     public int? Group { get; set; }
     public int? Interest { get; set; }
     public string? Category { get; set; }
+    public DateTime CreatedAt { get; set; }
     public string? PreviewUrl { get; set; }
 }

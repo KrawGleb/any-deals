@@ -36,7 +36,6 @@ public class GetMyAdvertsQueryHandler : IRequestHandler<GetMyAdvertsQuery, Respo
             .ToListAsync(cancellationToken);
         var advertsVM = _mapper.Map<List<AdvertViewModel>>(adverts);
 
-
         return new CommonResponse
         {
             Body = advertsVM

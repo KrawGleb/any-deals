@@ -36,6 +36,10 @@ public class SearchAdvertsParams
                     new TermQuery { Field = "goal", Value = Goal?.ToString() },
                     new TermQuery { Field = "group", Value = Group?.ToString() }
                 }
+            },
+            Sort = new List<ISort>
+            {
+                new FieldSort { Field = "createdAt", Order = SortOrder.Descending }
             }
         };
     }

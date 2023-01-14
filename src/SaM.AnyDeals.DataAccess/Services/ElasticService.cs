@@ -23,7 +23,9 @@ public class ElasticService : IElasticService
     public async Task<IEnumerable<AdvertElasticEntry>> SearchAdvertsAsync(SearchAdvertsParams searchParams, CancellationToken cancellationToken = default)
     {
         var request = searchParams.SearchRequest;
+        
         var response = await _elasticClient.SearchAsync<AdvertElasticEntry>(request, cancellationToken);
+
 
         LogResponse(response);
 

@@ -42,8 +42,6 @@ public class UpdateAdvertCommandHandler : IRequestHandler<UpdateAdvertCommand, R
 
         UpdateAttachments(entity, request);
         
-        await _applicationDbContext.SaveChangesAsync(cancellationToken);
-
         return new Response();
     }
 

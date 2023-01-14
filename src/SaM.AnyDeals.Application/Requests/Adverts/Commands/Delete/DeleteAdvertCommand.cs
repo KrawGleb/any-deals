@@ -1,8 +1,12 @@
 ﻿using MediatR;
+using SaM.AnyDeals.Application.Models.Interfaces;
 using SaM.AnyDeals.Application.Models.Responses;
 using SaM.AnyDeals.Common.Interfaces;
 
 namespace SaM.AnyDeals.Application.Requests.Adverts.Commands.Delete;
 
-public record DeleteAdvertCommand(int Id) : IRequest<Response>, IProtectedAdvertAction;
+public record DeleteAdvertCommand(int Id) : 
+    IRequest<Response>, 
+    IProtectedAdvertAction, 
+    IChangeDataRequest;
 

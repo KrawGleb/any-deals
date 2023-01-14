@@ -1,4 +1,5 @@
 ﻿using MediatR;
+using SaM.AnyDeals.Application.Models.Interfaces;
 using SaM.AnyDeals.Application.Models.Responses;
 using SaM.AnyDeals.Application.Models.ViewModels;
 using SaM.AnyDeals.Common.Enums;
@@ -17,4 +18,7 @@ public record UpdateAdvertCommand(
     int? CategoryId,
     ContactsViewModel? Contacts,
     List<AttachmentViewModel>? Attachments
-    ) : IRequest<Response>, IProtectedAdvertAction;
+    ) : 
+    IRequest<Response>, 
+    IProtectedAdvertAction,
+    IChangeDataRequest;
