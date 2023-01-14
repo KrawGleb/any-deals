@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using MediatR;
 using SaM.AnyDeals.Application.Models.Responses;
+using SaM.AnyDeals.Application.Models.ViewModels;
 using SaM.AnyDeals.Common.Models;
 using SaM.AnyDeals.DataAccess.Services.Interfaces;
 
@@ -22,11 +23,12 @@ public class SearchAdvertsQueryHandler : IRequestHandler<SearchAdvertsQuery, Res
     public async Task<Response> Handle(SearchAdvertsQuery request, CancellationToken cancellationToken)
     {
         var searchParams = _mapper.Map<SearchAdvertsParams>(request);
-        var adverts = await _elasticService.SearchAdvertsAsync(searchParams);
+        var adverts = await _elasticService.SearchAdvertsAsync(searchParams, cancellationToken);
+        var advertsVM = _mapper.Map<List<AdvertViewModel>>(adverts);
 
         return new CommonResponse
         {
-            Body = adverts
+            Body = advertsVM
         };
     }
 }

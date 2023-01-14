@@ -10,6 +10,7 @@ public class SearchAdvertsParams
     public string? City { get; set; }
     public string? Category { get; set; }
     public int? Goal { get; set; }
+    public int? Group { get; set; }
     public int? Interest { get; set; }
     public int? From { get; set; } = 0;
     public int Size { get; set; } = 25;
@@ -24,15 +25,16 @@ public class SearchAdvertsParams
             {
                 Must = new List<QueryContainer>
                 {
-                    new QueryStringQuery { Query = $"*{Title}*", DefaultField = "title" }
+                    new QueryStringQuery { DefaultField = "title", Query = $"*{Title}*"  },
+                    new MatchPhraseQuery { Field = "category", Query = Category?.ToLower() }
                 },
                 Filter = new List<QueryContainer>
                 {
-                    new TermQuery { Field = "category", Value = Category?.ToLower() },
                     new TermQuery { Field = "country", Value = Country?.ToLower() },
                     new TermQuery { Field = "city", Value = City?.ToLower() },
                     new TermQuery { Field = "interest", Value = Interest?.ToString() },
                     new TermQuery { Field = "goal", Value = Goal?.ToString() },
+                    new TermQuery { Field = "group", Value = Group?.ToString() }
                 }
             }
         };

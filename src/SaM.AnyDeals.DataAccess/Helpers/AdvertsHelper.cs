@@ -14,6 +14,7 @@ public static class AdvertsHelper
             Country = advert.City?.Country?.Name,
             Goal = (int)advert.Goal,
             Interest = (int)advert.Interest,
+            Group = (int)advert.Group,
             Category = advert.Category?.Name,
             City = advert.City?.Name,
             Creator = advert.Contacts?.Name,
