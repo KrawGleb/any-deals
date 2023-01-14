@@ -5,8 +5,6 @@ export interface SearchAdvertsParams {
   category?: string;
   goal?: number;
   interest?: number;
-
-  //timestamp: number;
-  //from?: number;
-  //size?: number;
+  page: number;
+  pageSize: number;
 }

@@ -4,6 +4,7 @@ import fileUploadSlice from "./fileUploadSlice";
 import { loadState, saveState } from "./localStorage";
 import { baseApi } from "../api/baseApi";
 import filtersSlice from "./filtersSlice";
+import searchSlice from "./searchSlice";
 
 const store = configureStore({
   preloadedState: loadState(),
@@ -11,6 +12,7 @@ const store = configureStore({
     auth: authSlice,
     fileUpload: fileUploadSlice,
     filters: filtersSlice,
+    searchSlice: searchSlice,
     [baseApi.reducerPath]: baseApi.reducer,
   },
   middleware: (getDefaultMiddleware) =>

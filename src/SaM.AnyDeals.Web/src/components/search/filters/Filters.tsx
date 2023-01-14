@@ -25,6 +25,7 @@ import {
   setGoalFilter,
   setGroupFilter,
   setInterestFilter,
+  setPageFilter,
   setTitleFilter,
 } from "../../../features/store/filtersSlice";
 import { RootState } from "../../../features/store/store";
@@ -37,20 +38,17 @@ export default function Filters() {
   const [title, setTitle] = useState<string | undefined>(undefined);
 
   const setInterest = (value: number[]) => {
-    console.log(value);
     setLocalInterest(value);
 
-    if (value.length === 1) {
-      dispatch(setInterestFilter(value[0]));
-      return;
-    }
-
-    dispatch(setInterestFilter(undefined));
+    value.length === 1
+      ? dispatch(setInterestFilter(value[0]))
+      : dispatch(setInterestFilter(undefined));
   };
 
   const setGoal = (value: number) => {
     setLocalGoal(value);
     dispatch(setGoalFilter(value === 2 ? undefined : value));
+    dispatch(setPageFilter(1));
   };
 
   const { data: countries } = useGetCountriesQuery();
@@ -116,9 +114,10 @@ export default function Filters() {
         <div className="filters__root">
           <Tabs
             value={group}
-            onChange={(__: any, value: number) =>
-              dispatch(setGroupFilter(value))
-            }
+            onChange={(__: any, value: number) => {
+              dispatch(setGroupFilter(value));
+              dispatch(setPageFilter(1));
+            }}
           >
             <TypeTab value={0} label="Services nearby" />
             <TypeTab value={1} label="Online services" />
