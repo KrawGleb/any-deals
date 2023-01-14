@@ -1,4 +1,6 @@
 .card {
+  font-family: Roboto, Helvetica, Arial, sans-serif;
+
   &__root {
     padding: 1rem;
     background-color: white;
@@ -63,7 +65,7 @@
 
     &__title {
       margin: 8px 0px;
-      font-family: Roboto, Helvetica, Arial, sans-serif;
+
       line-height: 1.5;
       letter-spacing: 0.00938em;
       font-style: normal;
@@ -80,7 +82,6 @@
     &__category,
     &__country {
       margin: 0px;
-      font-family: Roboto, Helvetica, Arial, sans-serif;
       font-weight: 400;
       font-size: 1rem;
       line-height: 1.5;
@@ -98,13 +99,21 @@
 
       .creator {
         margin: 0px;
-        font-family: Roboto, Helvetica, Arial, sans-serif;
         font-weight: 400;
         font-size: 1rem;
         line-height: 1.5;
         letter-spacing: 0.00938em;
         color: rgb(74, 204, 31);
         word-break: break-word;
+      }
+
+      .date {
+        margin: 0px;
+        font-weight: 400;
+        font-size: 1rem;
+        line-height: 1.5;
+        letter-spacing: 0.00938em;
+        color: rgb(178, 178, 178);
       }
     }
   }

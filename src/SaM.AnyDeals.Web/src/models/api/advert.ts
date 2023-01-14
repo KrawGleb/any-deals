@@ -16,4 +16,5 @@ export interface Advert {
   contacts: Contacts;
   attachments: Attachment[];
   creator: ApplicationUser;
+  createdAt: string;
 }
