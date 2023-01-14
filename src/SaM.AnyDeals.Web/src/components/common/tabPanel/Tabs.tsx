@@ -21,6 +21,6 @@ const CustomTabs = styled(Tabs)<TabsProps>(({ theme }) => ({
   },
 }));
 
-export default function PanelTabs({ children, ...props }: any) {
-  return <CustomTabs {...props}>{children}</CustomTabs>;
+export default function PanelTabs({ ...props }: any) {
+  return <CustomTabs {...props} />;
 }

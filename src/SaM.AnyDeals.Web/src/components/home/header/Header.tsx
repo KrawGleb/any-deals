@@ -2,21 +2,41 @@ import "./Header.scss";
 import React, { SyntheticEvent, useState } from "react";
 import PanelTab from "../../common/tabPanel/Tab";
 import PanelTabs from "../../common/tabPanel/Tabs";
-import { Box, Button, Typography } from "@mui/material";
-import { useSelector } from "react-redux";
+import {
+  Box,
+  Button,
+  List,
+  ListItemButton,
+  ListItemText,
+  Typography,
+} from "@mui/material";
+import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { RootState } from "../../../features/store/store";
+import { logout } from "../../../features/api/auth/authSlice";
+import Divider from "@mui/material/Divider";
 
 export default function Header() {
   const navigate = useNavigate();
+  const dispatch = useDispatch();
   const [value, setValue] = useState(0);
+
+  const handleLogout = () => {
+    dispatch(logout());
+    navigate("/");
+  };
 
   const handleChange = (event: SyntheticEvent, newValue: number) => {
     setValue(newValue);
   };
 
   const { userInfo }: any = useSelector((state: RootState) => state.auth);
+
   const isLoggedIn = !!userInfo.username;
+  let myAdvertsTab = undefined;
+  if (isLoggedIn) {
+    myAdvertsTab = <PanelTab label="My adverts" to="/adverts/my" />;
+  }
 
   return (
     <>
@@ -26,16 +46,23 @@ export default function Header() {
             <div className="logo">Any Deals</div>
             <PanelTabs value={value} onChange={handleChange}>
               <PanelTab label="Adverts" to="/adverts/search" />
-              {isLoggedIn ? (
-                <PanelTab label="My adverts" to="/adverts/my" />
-              ) : (
-                <></>
-              )}
+              {myAdvertsTab}
               <PanelTab label="About" to="/about" />
             </PanelTabs>
             <div className="actions">
               {isLoggedIn ? (
-                <Typography>{userInfo.username}</Typography>
+                <>
+                  <Box className="dropdown">
+                    <Typography className="dropdown__text">
+                      {userInfo.username}
+                    </Typography>
+                    <List className="dropdown__content">
+                      <ListItemButton onClick={handleLogout}>
+                        <ListItemText color="error">Logout</ListItemText>
+                      </ListItemButton>
+                    </List>
+                  </Box>
+                </>
               ) : (
                 <>
                   <Button

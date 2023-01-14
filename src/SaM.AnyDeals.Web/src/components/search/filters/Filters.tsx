@@ -19,6 +19,7 @@ import FakeSelect from "../../common/fakeSelect/FakeSelect";
 import Input from "../../common/Input";
 import { useDispatch, useSelector } from "react-redux";
 import {
+  setCategoryFilter,
   setCityFilter,
   setCountryFilter,
   setGoalFilter,
@@ -82,6 +83,8 @@ export default function Filters() {
   const handleSelectCategoryDialogClose = (value?: SelectableItem) => {
     setIsCategorySelectOpen(false);
     setSelectedCategory(value as Category);
+
+    dispatch(setCategoryFilter(value?.name));
   };
 
   const handleSearchClick = () => {
@@ -117,9 +120,9 @@ export default function Filters() {
               dispatch(setGroupFilter(value))
             }
           >
-            <TypeTab label="Services nearby" />
-            <TypeTab label="Online services" />
-            <TypeTab label="Places and events" />
+            <TypeTab value={0} label="Services nearby" />
+            <TypeTab value={1} label="Online services" />
+            <TypeTab value={2} label="Places and events" />
           </Tabs>
 
           <form className="filters__fields">

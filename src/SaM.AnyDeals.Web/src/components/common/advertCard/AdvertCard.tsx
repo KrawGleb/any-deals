@@ -40,7 +40,7 @@ export default function AdvertCard({ advert, allowEditing }: AdvertCardProps) {
           <p className="creator">{advert.contacts.name}</p>
         </Box>
       </Box>
-      {previewImage ? (
+      {previewImage && previewImage.link ? (
         <Box className="card__image">
           <img src={previewImage.link} alt="" />
         </Box>

@@ -43,7 +43,7 @@ export const advertsApiExtension = baseApi.injectEndpoints({
       transformResponse: (response: CommonResponse) => response.body,
       transformErrorResponse: (response) => transformErrorResponse(response)
     }),
-    searchAdverts: builder.query<ElasticAdvert[], SearchAdvertsParams>({
+    searchAdverts: builder.query<Advert[], SearchAdvertsParams>({
       query: (payload: SearchAdvertsParams) => ({
         url: "/api/adverts/search",
         method: "GET",
