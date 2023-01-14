@@ -1,5 +1,4 @@
 import { Advert } from "../../../models/api/advert";
-import { ElasticAdvert } from "../../../models/api/elasticAdvert";
 import { CommonResponse } from "../../../models/api/responses/commonResponse";
 import { SearchAdvertsParams } from "../../../models/searchAdvertsParams";
 import transformErrorResponse from "../../helpers/transformErrorResponse";

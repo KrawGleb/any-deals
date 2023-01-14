@@ -5,11 +5,12 @@ import Input from "../../components/common/Input";
 import * as yup from "yup";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { RegisterRequest } from "../../models/api/auth/registerRequest";
-import { registerUser } from "../../features/api/auth/authActions";
+import { loginUser, registerUser } from "../../features/api/auth/authActions";
 import { useDispatch } from "react-redux";
 import { AppDispatch } from "../../features/store/store";
 import { useNavigate } from "react-router-dom";
 import { Button } from "@mui/material";
+import { LoginRequest } from "../../models/api/auth/loginRequest";
 
 const schema = yup.object().shape({
   username: yup
@@ -43,7 +44,13 @@ export default function SignUp() {
   });
 
   const onSubmit = (data: any) => {
-    dispatch(registerUser(data as RegisterRequest));
+    dispatch(registerUser(data as RegisterRequest)).then((response: any) => {
+      if (response.payload.succeeded) {
+        dispatch(loginUser(data as LoginRequest)).then((response: any) => {
+          if (response.payload.succeeded) navigate("/");
+        });
+      }
+    });
   };
 
   return (
