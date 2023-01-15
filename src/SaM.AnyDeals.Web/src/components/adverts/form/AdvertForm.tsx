@@ -50,8 +50,8 @@ import {
 import { useGetCategoriesQuery } from "../../../features/api/extensions/categoriesApiExtension";
 
 const schema = yup.object().shape({
-  title: yup.string().required(ValidationMessages.required("Title")),
-  description: yup.string(),
+  title: yup.string().required(ValidationMessages.required("Title")).max(100),
+  description: yup.string().max(1000),
   goal: yup.number().required(ValidationMessages.required("Goal")).default(0),
   group: yup
     .number()
@@ -62,16 +62,16 @@ const schema = yup.object().shape({
   country: yup.string().required(ValidationMessages.required("Country")),
   city: yup.string().required(ValidationMessages.required("City")),
 
-  name: yup.string().required(ValidationMessages.required("Name")),
-  email: yup.string().email(ValidationMessages.email()),
-  phone: yup.string(),
-  address: yup.string(),
-  facebook: yup.string(),
-  vk: yup.string(),
-  instagram: yup.string(),
-  linkedIn: yup.string(),
-  telegram: yup.string(),
-  whatsApp: yup.string(),
+  name: yup.string().required(ValidationMessages.required("Name")).max(100),
+  email: yup.string().email(ValidationMessages.email()).max(100),
+  phone: yup.string().max(20),
+  address: yup.string().max(100),
+  facebook: yup.string().max(100),
+  vk: yup.string().max(100),
+  instagram: yup.string().max(100),
+  linkedIn: yup.string().max(100),
+  telegram: yup.string().max(100),
+  whatsApp: yup.string().max(100),
 });
 
 export default function AdvertForm({ advert }: AdvertFormProps) {
@@ -201,7 +201,7 @@ export default function AdvertForm({ advert }: AdvertFormProps) {
     setSelectedCategory(selectedCategory);
     setSelectedCountry(selectedCountry);
     setSelectedCity(selectedCity);
-    
+
     setValue("country", advert.city.country.name, setValueOptions);
     setValue("city", advert.city.name, setValueOptions);
     setValue("category", advert.category.name, setValueOptions);
@@ -422,23 +422,53 @@ export default function AdvertForm({ advert }: AdvertFormProps) {
                 </Stack>
 
                 <Stack direction="row" spacing={3}>
-                  <Input label="Phone number" {...register("phone")} />
-                  <Input label="Address" {...register("address")} />
+                  <Input
+                    label="Phone number"
+                    {...register("phone")}
+                    error={!!errors.phone}
+                    helperText={errors?.phone?.message}
+                  />
+                  <Input
+                    label="Address"
+                    {...register("address")}
+                    error={!!errors.address}
+                    helperText={errors?.address?.message}
+                  />
                 </Stack>
 
                 <Stack direction="row" spacing={3}>
                   <Input label="Facebook" {...register("facebook")} />
-                  <Input label="VK" {...register("vk")} />
+                  <Input
+                    label="VK"
+                    {...register("vk")}
+                    error={!!errors.vk}
+                    helperText={errors?.vk?.message}
+                  />
                 </Stack>
 
                 <Stack direction="row" spacing={3}>
                   <Input label="Instagram" {...register("instagram")} />
-                  <Input label="LinkedIn" {...register("linkedIn")} />
+                  <Input
+                    label="LinkedIn"
+                    {...register("linkedIn")}
+                    error={!!errors.linkedIn}
+                    helperText={errors?.linkedIn?.message}
+                  />
                 </Stack>
 
                 <Stack direction="row" spacing={3}>
-                  <Input label="Telegram" {...register("telegram")} />
-                  <Input label="WhatsApp" {...register("whatsApp")} />
+                  <Input
+                    label="Telegram"
+                    {...register("telegram")}
+                    error={!!errors.telegram}
+                    helperText={errors?.telegram?.message}
+                  />
+                  <Input
+                    label="WhatsApp"
+                    {...register("whatsApp")}
+                    error={!!errors.whatsApp}
+                    helperText={errors?.whatsApp?.message}
+                  />
                 </Stack>
               </Stack>
             </div>
@@ -484,7 +514,7 @@ export default function AdvertForm({ advert }: AdvertFormProps) {
                   endIcon={<ArrowForwardIosIcon />}
                   disabled={!isDirty || !isValid}
                 >
-                  Create and publish
+                  {advert ? "Save and continue" : "Create and publish"}
                 </Button>
               </div>
               {advert ? (
