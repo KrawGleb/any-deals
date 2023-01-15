@@ -3,7 +3,7 @@ import "./MyAdverts.scss";
 import { Button } from "@mui/material";
 import { Link } from "react-router-dom";
 import { useGetMyAdvertsQuery } from "../../../features/api/extensions/advertsApiExtension";
-import AdvertsList from "../../../components/common/advertsList/AdvertsList";
+import AdvertsList from "../../../components/adverts/list/AdvertsList";
 
 export default function MyAdverts() {
   const { data: myAdverts } = useGetMyAdvertsQuery();

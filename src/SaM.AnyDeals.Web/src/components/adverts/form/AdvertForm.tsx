@@ -19,13 +19,15 @@ import ArrowForwardIosIcon from "@mui/icons-material/ArrowForwardIos";
 
 import FakeSelect from "../../common/fakeSelect/FakeSelect";
 import Input from "../../common/Input";
-import SelectDialog from "../../common/selectDialog/SelectDialog";
+import SelectDialog from "../../dialogs/select/SelectDialog";
+import FilesUploadField from "./filesUpload/FilesUploadField";
 
 import { Category } from "../../../models/api/category";
 import { City } from "../../../models/api/city";
 import { Contacts } from "../../../models/api/contacts";
 import { Country } from "../../../models/api/country";
 import { SelectableItem } from "../../../models/selectableItem";
+import { RootState } from "../../../features/store/store";
 
 import {
   useCreateAdvertMutation,
@@ -34,8 +36,6 @@ import {
 } from "../../../features/api/extensions/advertsApiExtension";
 import { Controller, useForm } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
-import { ValidationMessages } from "../../../features/helpers/validationMessages";
-import FilesUploadField from "../../common/filesUpload/FilesUploadField";
 import { useSelector } from "react-redux";
 import { StoredFile } from "../../../models/storedFile";
 import { AttachmentType } from "../../../models/enums/attachmentType";
@@ -50,28 +50,28 @@ import {
 import { useGetCategoriesQuery } from "../../../features/api/extensions/categoriesApiExtension";
 
 const schema = yup.object().shape({
-  title: yup.string().required(ValidationMessages.required("Title")).max(100),
-  description: yup.string().max(1000),
-  goal: yup.number().required(ValidationMessages.required("Goal")).default(0),
+  title: yup.string().label("Title").required().max(100),
+  description: yup.string().label("Description").max(1000),
+  goal: yup.number().label("Goal").required().default(0),
   group: yup
     .number()
-    .required(ValidationMessages.required("Group"))
+    .label("Group")
+    .required()
     .default("" as any),
-  interest: yup.number().required().default(0),
-  category: yup.string().required(ValidationMessages.required("Category")),
-  country: yup.string().required(ValidationMessages.required("Country")),
-  city: yup.string().required(ValidationMessages.required("City")),
-
-  name: yup.string().required(ValidationMessages.required("Name")).max(100),
-  email: yup.string().email(ValidationMessages.email()).max(100),
-  phone: yup.string().max(20),
-  address: yup.string().max(100),
-  facebook: yup.string().max(100),
-  vk: yup.string().max(100),
-  instagram: yup.string().max(100),
-  linkedIn: yup.string().max(100),
-  telegram: yup.string().max(100),
-  whatsApp: yup.string().max(100),
+  interest: yup.number().label("Interest").required().default(0),
+  category: yup.string().label("Category").required(),
+  country: yup.string().label("Country").required(),
+  city: yup.string().label("City").required(),
+  name: yup.string().label("Name").required().max(100),
+  email: yup.string().label("Email").email().max(100),
+  phone: yup.string().label("Phone").max(20),
+  address: yup.string().label("Address").max(100),
+  facebook: yup.string().label("Facebook").max(100),
+  vk: yup.string().label("VK").max(100),
+  instagram: yup.string().label("Instagram").max(100),
+  linkedIn: yup.string().label("LinkedId").max(100),
+  telegram: yup.string().label("Telegram").max(100),
+  whatsApp: yup.string().label("WhatsApp").max(100),
 });
 
 export default function AdvertForm({ advert }: AdvertFormProps) {
@@ -80,7 +80,7 @@ export default function AdvertForm({ advert }: AdvertFormProps) {
   const [updateAdvert] = useUpdateAdvertMutation();
   const [deleteAdvert] = useDeleteAdvertMutation();
   const uploadedFiles = useSelector(
-    (state: any) => state.fileUpload.files as StoredFile[]
+    (state: RootState) => state.fileUpload.files as StoredFile[]
   );
   const isEditMode = !!advert;
 
@@ -514,10 +514,10 @@ export default function AdvertForm({ advert }: AdvertFormProps) {
                   endIcon={<ArrowForwardIosIcon />}
                   disabled={!isDirty || !isValid}
                 >
-                  {advert ? "Save and continue" : "Create and publish"}
+                  {isEditMode ? "Save and continue" : "Create and publish"}
                 </Button>
               </div>
-              {advert ? (
+              {isEditMode ? (
                 <Button variant="contained" color="error" onClick={onDelete}>
                   Delete advert
                 </Button>

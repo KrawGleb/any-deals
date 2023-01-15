@@ -2,7 +2,7 @@ import { Box } from "@mui/system";
 import React, { useEffect, useState } from "react";
 import InfiniteScroll from "react-infinite-scroll-component";
 import { useDispatch, useSelector } from "react-redux";
-import AdvertsList from "../../../components/common/advertsList/AdvertsList";
+import AdvertsList from "../../../components/adverts/list/AdvertsList";
 import Filters from "../../../components/search/filters/Filters";
 import { useSearchAdvertsQuery } from "../../../features/api/extensions/advertsApiExtension";
 import { setPageFilter } from "../../../features/store/filtersSlice";

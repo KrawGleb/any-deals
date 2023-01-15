@@ -3,10 +3,10 @@ import React from "react";
 import { useGetAdvertByIdQuery } from "../../../features/api/extensions/advertsApiExtension";
 import useQuery from "../../../features/hooks/useQuery";
 import { Paper } from "@mui/material";
-import GoalTag from "../../../components/adverts/goalTag/GoalTag";
-import InterestTag from "../../../components/adverts/interestTag/InterestTag";
-import AttachmentCard from "../../../components/adverts/attachmentCard/AttachmentCard";
-import ContactsGrid from "../../../components/adverts/contactsGrid/ContactsGrid";
+import GoalTag from "../../../components/adverts/fields/goalTag/GoalTag";
+import InterestTag from "../../../components/adverts/fields/interestTag/InterestTag";
+import AttachmentCard from "../../../components/adverts/fields/attachmentCard/AttachmentCard";
+import ContactsGrid from "../../../components/adverts/fields/contactsGrid/ContactsGrid";
 
 export default function AdvertsDetails() {
   const query = useQuery() as any;

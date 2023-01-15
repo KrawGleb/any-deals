@@ -5,7 +5,6 @@ export class FirebaseService {
   public static deleteFile(url?: string) {
     if (!url) return;
 
-    console.log(url);
     const fileRef = ref(firebaseStorage, url);
     deleteObject(fileRef);
   }

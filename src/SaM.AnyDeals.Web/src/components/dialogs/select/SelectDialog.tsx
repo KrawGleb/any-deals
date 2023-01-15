@@ -1,0 +1,66 @@
+import "./SelectDialog.scss";
+import React, { ChangeEvent, useEffect, useState } from "react";
+import {
+  Box,
+  Dialog,
+  Typography,
+  List,
+  ListItemText,
+  ListItemButton,
+} from "@mui/material";
+import { SelectableItem } from "../../../models/selectableItem";
+import Input from "../../common/Input";
+import { SelectDialogProps } from "./SelectDialogProps";
+
+export default function SelectDialog(props: SelectDialogProps) {
+  const { onClose, selectedValue, open, variants } = props;
+  const [filter, setFilter] = useState("");
+  const [listItems, setListItems] = useState<SelectableItem[]>([]);
+
+  useEffect(() => {
+    const timeOutId = setTimeout(() => {
+      const filteredList = variants.filter((variant) =>
+        variant.name.toLowerCase().startsWith(filter.toLowerCase())
+      );
+      setListItems(filteredList);
+    }, 500);
+
+    return () => clearTimeout(timeOutId);
+  }, [filter, variants]);
+
+  const handleClose = () => {
+    setFilter("");
+    onClose(selectedValue);
+  };
+  
+  const handleListItemClick = (value: SelectableItem) => {
+    setFilter("");
+    onClose(value);
+  };
+
+  const handleFilterChange = (e: ChangeEvent<HTMLInputElement>) =>
+    setFilter(e.target.value);
+
+  return (
+    <Dialog onClose={handleClose} open={open}>
+      <Box className="dialog__root">
+        <Typography variant="h5" className="mb-3">
+          Select
+        </Typography>
+        <Input label="Filter" className="mb-3" onChange={handleFilterChange} />
+        <List className="dialog__list">
+          {listItems.map((variant) => (
+            <li key={variant.id}>
+              <ListItemButton
+                key={variant.id}
+                onClick={() => handleListItemClick(variant)}
+              >
+                <ListItemText primary={variant.name} />
+              </ListItemButton>
+            </li>
+          ))}
+        </List>
+      </Box>
+    </Dialog>
+  );
+}

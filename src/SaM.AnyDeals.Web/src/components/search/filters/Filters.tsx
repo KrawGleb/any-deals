@@ -1,23 +1,24 @@
 import "./Filters.scss";
-import { Tabs, Box, Button, Tab, ToggleButtonGroup } from "@mui/material";
 import React, { useEffect, useState } from "react";
-import TypeTab from "../../common/typeTabs/TypeTab";
-import SearchIcon from "@mui/icons-material/Search";
-import TypeTabs from "./typeTabs/TypeTabs";
-import FormatButton from "./format/FormatButton";
+import { useDispatch, useSelector } from "react-redux";
+import { SelectableItem } from "../../../models/selectableItem";
+import { Category } from "../../../models/api/category";
 import { Country } from "../../../models/api/country";
+import { City } from "../../../models/api/city";
+import { RootState } from "../../../features/store/store";
+import GroupTab from "./GroupTab";
+import GoalTabs from "./GoalTabs";
+import InterestButton from "./InterestButton";
+import SelectDialog from "../../dialogs/select/SelectDialog";
+import FakeSelect from "../../common/fakeSelect/FakeSelect";
+import Input from "../../common/Input";
+import SearchIcon from "@mui/icons-material/Search";
+import { Tabs, Box, Button, Tab, ToggleButtonGroup } from "@mui/material";
 import {
   useGetCitiesQuery,
   useGetCountriesQuery,
 } from "../../../features/api/extensions/countriesApiExtension";
-import { SelectableItem } from "../../../models/selectableItem";
-import { City } from "../../../models/api/city";
 import { useGetCategoriesQuery } from "../../../features/api/extensions/categoriesApiExtension";
-import { Category } from "../../../models/api/category";
-import SelectDialog from "../../common/selectDialog/SelectDialog";
-import FakeSelect from "../../common/fakeSelect/FakeSelect";
-import Input from "../../common/Input";
-import { useDispatch, useSelector } from "react-redux";
 import {
   setCategoryFilter,
   setCityFilter,
@@ -28,16 +29,15 @@ import {
   setPageFilter,
   setTitleFilter,
 } from "../../../features/store/filtersSlice";
-import { RootState } from "../../../features/store/store";
 
 export default function Filters() {
   const dispatch = useDispatch();
-  const group = useSelector((state: RootState) => state.filters.group);
+
+  const filters = useSelector((state: RootState) => state.filters);
+
   const [localInterest, setLocalInterest] = useState<number[]>([]);
   const [localGoal, setLocalGoal] = useState<number>(0);
   const [title, setTitle] = useState<string | undefined>(undefined);
-
-  const filters = useSelector((state: RootState) => state.filters);
 
   const setInterest = (value: number[]) => {
     setLocalInterest(value);
@@ -49,6 +49,7 @@ export default function Filters() {
 
   const setGoal = (value: number) => {
     setLocalGoal(value);
+
     dispatch(setGoalFilter(value === 2 ? undefined : value));
     dispatch(setPageFilter(1));
   };
@@ -138,15 +139,15 @@ export default function Filters() {
       <Box className="filters">
         <div className="filters__root">
           <Tabs
-            value={group}
+            value={filters.group}
             onChange={(__: any, value: number) => {
               dispatch(setGroupFilter(value));
               dispatch(setPageFilter(1));
             }}
           >
-            <TypeTab value={0} label="Services nearby" />
-            <TypeTab value={1} label="Online services" />
-            <TypeTab value={2} label="Places and events" />
+            <GroupTab value={0} label="Services nearby" />
+            <GroupTab value={1} label="Online services" />
+            <GroupTab value={2} label="Places and events" />
           </Tabs>
 
           <form className="filters__fields">
@@ -187,21 +188,21 @@ export default function Filters() {
           </form>
 
           <Box className="type-buttons">
-            <TypeTabs
+            <GoalTabs
               value={localGoal}
               onChange={(__: any, value: number) => setGoal(value)}
             >
               <Tab value={0} disableRipple label="Requests" />
               <Tab value={1} disableRipple label="Offers" />
               <Tab value={2} disableRipple label="All" />
-            </TypeTabs>
+            </GoalTabs>
             <ToggleButtonGroup
               className="toggle-buttons"
               value={localInterest}
               onChange={(__: any, value: number[]) => setInterest(value)}
             >
-              <FormatButton value={0}>Commercial</FormatButton>
-              <FormatButton value={1}>Social</FormatButton>
+              <InterestButton value={0}>Commercial</InterestButton>
+              <InterestButton value={1}>Social</InterestButton>
             </ToggleButtonGroup>
           </Box>
         </div>

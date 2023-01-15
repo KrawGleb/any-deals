@@ -17,18 +17,20 @@ const CustomTextField = styled(TextField)<TextFieldProps>(({ theme }) => ({
   },
 }));
 
-export const Input = forwardRef(({ children, ...props }: any, ref) => {
-  return (
-    <CustomTextField
-      variant="outlined"
-      margin="none"
-      inputRef={ref}
-      fullWidth
-      {...props}
-    >
-      {children}
-    </CustomTextField>
-  );
-});
+export const Input = forwardRef(
+  ({ children, ...props }: TextFieldProps | any, ref) => {
+    return (
+      <CustomTextField
+        variant="outlined"
+        margin="none"
+        inputRef={ref}
+        fullWidth
+        {...props}
+      >
+        {children}
+      </CustomTextField>
+    );
+  }
+);
 
 export default Input;
