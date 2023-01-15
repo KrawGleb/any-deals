@@ -1,6 +1,6 @@
 import "./Filters.scss";
 import { Tabs, Box, Button, Tab, ToggleButtonGroup } from "@mui/material";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import TypeTab from "../../common/typeTabs/TypeTab";
 import SearchIcon from "@mui/icons-material/Search";
 import TypeTabs from "./typeTabs/TypeTabs";
@@ -36,6 +36,8 @@ export default function Filters() {
   const [localInterest, setLocalInterest] = useState<number[]>([]);
   const [localGoal, setLocalGoal] = useState<number>(0);
   const [title, setTitle] = useState<string | undefined>(undefined);
+
+  const filters = useSelector((state: RootState) => state.filters);
 
   const setInterest = (value: number[]) => {
     setLocalInterest(value);
@@ -84,6 +86,29 @@ export default function Filters() {
 
     dispatch(setCategoryFilter(value?.name));
   };
+
+  useEffect(() => {
+    setLocalInterest((_curr) => (filters.interest ? [filters.interest] : []));
+    setLocalGoal(filters.goal ?? 2);
+    setTitle(filters.title);
+
+    if (filters.country)
+      setSelectedCountry({
+        id: -1,
+        name: filters.country,
+      });
+    if (filters.city)
+      setSelectedCity({
+        id: -1,
+        name: filters.city,
+      } as City);
+    if (filters.category)
+      setSelectedCategory({
+        id: -1,
+        name: filters.category,
+      });
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   const handleSearchClick = () => {
     dispatch(setTitleFilter(title));

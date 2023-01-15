@@ -57,7 +57,7 @@ const filtersSlice = createSlice({
     setPageFilter(state, action: PayloadAction<number>) {
       state.page = action.payload;
     },
-    resetFiltersFilter(state) {
+    resetFilters(state) {
       state = initialState;
     },
   },
@@ -72,6 +72,7 @@ export const {
   setInterestFilter,
   setTitleFilter,
   setPageFilter,
+  resetFilters,
 } = filtersSlice.actions;
 
 export default filtersSlice.reducer;
