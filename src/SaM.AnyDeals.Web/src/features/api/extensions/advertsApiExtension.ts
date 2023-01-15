@@ -13,7 +13,7 @@ export const advertsApiExtension = baseApi.injectEndpoints({
         body: payload,
       }),
       invalidatesTags: ["Advert"],
-      transformErrorResponse
+      transformErrorResponse,
     }),
     deleteAdvert: builder.mutation({
       query: (payload: { id: number }) => ({
@@ -22,7 +22,7 @@ export const advertsApiExtension = baseApi.injectEndpoints({
         body: payload,
       }),
       invalidatesTags: ["Advert"],
-      transformErrorResponse
+      transformErrorResponse,
     }),
     updateAdvert: builder.mutation({
       query: (payload) => ({
@@ -31,7 +31,15 @@ export const advertsApiExtension = baseApi.injectEndpoints({
         body: payload,
       }),
       invalidatesTags: ["Advert"],
-      transformErrorResponse
+      transformErrorResponse,
+    }),
+    getAdvertById: builder.query<Advert, number>({
+      query: (payload: number) => ({
+        url: `/api/adverts/get/${payload}`,
+        method: "GET",
+      }),
+      providesTags: ["Advert"],
+      transformResponse: (response: CommonResponse) => response.body,
     }),
     getMyAdverts: builder.query<Advert[], void>({
       query: () => ({
@@ -40,18 +48,17 @@ export const advertsApiExtension = baseApi.injectEndpoints({
       }),
       providesTags: ["Advert"],
       transformResponse: (response: CommonResponse) => response.body,
-      transformErrorResponse: (response) => transformErrorResponse(response)
+      transformErrorResponse: (response) => transformErrorResponse(response),
     }),
     searchAdverts: builder.query<Advert[], SearchAdvertsParams>({
       query: (payload: SearchAdvertsParams) => ({
         url: "/api/adverts/search",
         method: "GET",
-        params: {...payload}
+        params: { ...payload },
       }),
       providesTags: ["Advert"],
       transformResponse: (response: CommonResponse) => response.body,
-      transformErrorResponse
-    })
+    }),
   }),
   overrideExisting: false,
 });
@@ -60,6 +67,7 @@ export const {
   useCreateAdvertMutation,
   useUpdateAdvertMutation,
   useDeleteAdvertMutation,
+  useGetAdvertByIdQuery,
   useGetMyAdvertsQuery,
   useSearchAdvertsQuery,
 } = advertsApiExtension;

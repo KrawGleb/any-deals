@@ -1,0 +1,19 @@
+.goal {
+  display: inline-flex;
+  border-radius: 6.375rem;
+  font-size: 0.875rem;
+  padding: 0px 1rem;
+  height: 1.5rem;
+  -webkit-box-align: center;
+  align-items: center;
+}
+
+.goal__request {
+  color: rgb(215, 142, 0);
+  background-color: rgba(255, 170, 6, 0.1);
+}
+
+.goal__offer {
+  color: rgb(57, 129, 238);
+  background-color: rgba(57, 129, 238, 0.14);
+}

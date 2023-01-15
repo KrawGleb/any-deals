@@ -23,44 +23,6 @@
       flex-direction: row;
       gap: 16px;
       flex-wrap: wrap;
-
-      .goal {
-        display: inline-flex;
-        border-radius: 6.375rem;
-        font-size: 0.875rem;
-        padding: 0px 1rem;
-        height: 1.5rem;
-        -webkit-box-align: center;
-        align-items: center;
-      }
-
-      .goal__request {
-        color: rgb(215, 142, 0);
-        background-color: rgba(255, 170, 6, 0.1);
-      }
-
-      .goal__offer {
-        color: rgb(57, 129, 238);
-        background-color: rgba(57, 129, 238, 0.14);
-      }
-
-      .interest {
-        display: inline-flex;
-        border-radius: 6.375rem;
-        font-size: 0.875rem;
-        height: 1.5rem;
-        -webkit-box-align: center;
-        align-items: center;
-        column-gap: 0.625rem;
-      }
-
-      .interest__commercial {
-        color: rgb(57, 129, 238);
-      }
-
-      .interest__social {
-        color: rgb(27, 176, 100);
-      }
     }
 
     &__title {

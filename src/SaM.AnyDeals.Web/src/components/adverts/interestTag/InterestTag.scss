@@ -1,0 +1,17 @@
+.interest {
+  display: inline-flex;
+  border-radius: 6.375rem;
+  font-size: 0.875rem;
+  height: 1.5rem;
+  -webkit-box-align: center;
+  align-items: center;
+  column-gap: 0.625rem;
+}
+
+.interest__commercial {
+  color: rgb(57, 129, 238);
+}
+
+.interest__social {
+  color: rgb(27, 176, 100);
+}

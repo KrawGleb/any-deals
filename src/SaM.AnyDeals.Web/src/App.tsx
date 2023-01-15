@@ -11,6 +11,7 @@ import EditAdvert from "./pages/adverts/edit/EditAdvert";
 import { useSelector } from "react-redux";
 import { RootState } from "./features/store/store";
 import About from "./pages/about/About";
+import AdvertsDetails from "./pages/adverts/details/AdvertsDetails";
 
 function App() {
   const hasToken = !!useSelector((state: RootState) => state.auth.userToken);
@@ -26,8 +27,9 @@ function App() {
           <Route path="search" element={<Search />} />
           <Route path="new" element={<NewAdvert />} />
           <Route path="edit" element={<EditAdvert />} />
+          <Route path="details" element={<AdvertsDetails />} />
         </Route>
-        <Route path="/about" element={<About />}/>
+        <Route path="/about" element={<About />} />
       </Routes>
     </div>
   );
