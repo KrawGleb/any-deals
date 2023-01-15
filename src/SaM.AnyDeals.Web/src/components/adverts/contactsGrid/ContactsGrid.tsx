@@ -1,4 +1,3 @@
-import "./ContactsGrid.scss";
 import React from "react";
 import { Contacts } from "../../../models/api/contacts";
 import { Grid } from "@mui/material";
