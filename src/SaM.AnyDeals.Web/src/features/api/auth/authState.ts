@@ -1,5 +1,7 @@
 export interface AuthState {
-    userInfo: {};
+    userInfo: {
+        username?: string;
+    };
     userToken: string | null;
     error: any;
     succeeded: boolean;

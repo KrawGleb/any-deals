@@ -31,7 +31,7 @@ export default function AdvertCard({ advert, allowEditing }: AdvertCardProps) {
         <p className="card__content__country">{`${advert.city.country?.name}, ${advert.city.name}`}</p>
         <Box className="card__content__footer">
           <p className="creator">{advert.contacts.name}</p>
-          <p className="date">{new Date(advert.createdAt).toUTCString()}</p>
+          <p className="date">{new Date(advert.createdAt).toLocaleString()}</p>
         </Box>
       </Box>
       {previewImage && previewImage.link ? (

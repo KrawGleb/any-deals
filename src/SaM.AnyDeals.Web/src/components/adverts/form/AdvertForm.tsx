@@ -48,6 +48,7 @@ import {
   useGetCountriesQuery,
 } from "../../../features/api/extensions/countriesApiExtension";
 import { useGetCategoriesQuery } from "../../../features/api/extensions/categoriesApiExtension";
+import "yup-phone";
 
 const schema = yup.object().shape({
   title: yup.string().label("Title").required().max(100),
@@ -64,7 +65,11 @@ const schema = yup.object().shape({
   city: yup.string().label("City").required(),
   name: yup.string().label("Name").required().max(100),
   email: yup.string().label("Email").email().max(100),
-  phone: yup.string().label("Phone").max(20),
+  phone: yup
+    .string()
+    .phone()
+    .label("Phone")
+    .max(20),
   address: yup.string().label("Address").max(100),
   facebook: yup.string().label("Facebook").max(100),
   vk: yup.string().label("VK").max(100),
@@ -81,6 +86,9 @@ export default function AdvertForm({ advert }: AdvertFormProps) {
   const [deleteAdvert] = useDeleteAdvertMutation();
   const uploadedFiles = useSelector(
     (state: RootState) => state.fileUpload.files as StoredFile[]
+  );
+  const username = useSelector(
+    (state: RootState) => state.auth.userInfo.username
   );
   const isEditMode = !!advert;
 
@@ -182,6 +190,11 @@ export default function AdvertForm({ advert }: AdvertFormProps) {
   };
 
   useEffect(() => {
+    setValue("name", username);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
+  useEffect(() => {
     if (!advert) return;
 
     const setValueOptions = {
@@ -218,16 +231,8 @@ export default function AdvertForm({ advert }: AdvertFormProps) {
         setValueOptions
       )
     );
-  }, [
-    advert,
-    setValue,
-    categories,
-    countries,
-    cities,
-    setSelectedCategory,
-    setSelectedCountry,
-    setSelectedCity,
-  ]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [advert, username, categories, countries, cities]);
 
   return (
     <Box>
