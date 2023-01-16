@@ -1,13 +1,16 @@
-﻿namespace SaM.AnyDeals.Application.Models.ViewModels;
+﻿using SaM.AnyDeals.Common.Enums.Adverts;
+
+namespace SaM.AnyDeals.Application.Models.ViewModels;
 
 public class AdvertViewModel
 {
     public int Id { get; set; }
     public string? Title { get; set; }
     public string? Description { get; set; }
-    public int Goal { get; set; }
-    public int Group { get; set; }
-    public int Interest { get; set; }
+    public Goal Goal { get; set; }
+    public Group Group { get; set; }
+    public Interest Interest { get; set; }
+    public Status Status { get; set; }
     public DateTime CreatedAt { get; set; }
 
     public ApplicationUserViewModel? Creator { get; set; }

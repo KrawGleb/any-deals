@@ -1,5 +1,5 @@
 ﻿using SaM.AnyDeals.DataAccess.Models.Auth;
-using SaM.AnyDeals.Common.Enums;
+using SaM.AnyDeals.Common.Enums.Adverts;
 
 namespace SaM.AnyDeals.DataAccess.Models.Entries;
 
@@ -7,9 +7,10 @@ public class AdvertDbEntry : DbEntryBase
 {
     public string? Title { get; set; }
     public string? Description { get; set; }
-    public AdvertGoal Goal { get; set; }
-    public AdvertGroup Group { get; set; }
-    public AdvertInterest Interest { get; set; }
+    public Goal Goal { get; set; }
+    public Group Group { get; set; }
+    public Interest Interest { get; set; }
+    public Status Status { get; set; }
     public DateTime CreatedAt { get; set; }
 
     public string? CreatorId { get; set; }

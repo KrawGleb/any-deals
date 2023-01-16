@@ -2,7 +2,7 @@
 using SaM.AnyDeals.Application.Models.Interfaces;
 using SaM.AnyDeals.Application.Models.Responses;
 using SaM.AnyDeals.Application.Models.ViewModels;
-using SaM.AnyDeals.Common.Enums;
+using SaM.AnyDeals.Common.Enums.Adverts;
 using SaM.AnyDeals.Common.Interfaces;
 
 namespace SaM.AnyDeals.Application.Requests.Adverts.Commands.Update;
@@ -11,9 +11,9 @@ public record UpdateAdvertCommand(
     int Id,
     string? Title,
     string? Description,
-    AdvertGoal Goal,
-    AdvertGroup Group,
-    AdvertInterest Interest,
+    Goal Goal,
+    Group Group,
+    Interest Interest,
     int? CityId,
     int? CategoryId,
     ContactsViewModel? Contacts,

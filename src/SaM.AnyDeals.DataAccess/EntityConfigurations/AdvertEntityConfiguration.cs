@@ -1,6 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using SaM.AnyDeals.Common.Constraints;
+using SaM.AnyDeals.Common.Enums.Adverts;
 using SaM.AnyDeals.DataAccess.Models.Entries;
 
 namespace SaM.AnyDeals.DataAccess.EntityConfigurations;
@@ -47,5 +48,9 @@ public class AdvertEntityConfiguration : EntityConfigurationBase<AdvertDbEntry>
             .Property(a => a.Description)
             .HasMaxLength(AdvertConstraints.DescriptionMaxLength)
             .IsRequired();
+
+        builder
+            .Property(a => a.Status)
+            .HasDefaultValue(Status.OnModeration);
     }
 }
