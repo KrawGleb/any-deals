@@ -1,7 +1,5 @@
 ﻿using AutoMapper;
-using MediatR;
 using Microsoft.EntityFrameworkCore;
-using SaM.AnyDeals.Application.Models.Responses;
 using SaM.AnyDeals.Application.Models.ViewModels;
 using SaM.AnyDeals.DataAccess;
 using SaM.AnyDeals.DataAccess.Extensions;

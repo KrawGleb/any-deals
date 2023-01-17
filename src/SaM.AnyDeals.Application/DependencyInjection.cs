@@ -1,5 +1,4 @@
 ﻿using FluentValidation;
-using MediatR;
 using Microsoft.Extensions.DependencyInjection;
 using SaM.AnyDeals.Application.Common.Behaviors;
 using SaM.AnyDeals.Application.Models.Configurations;

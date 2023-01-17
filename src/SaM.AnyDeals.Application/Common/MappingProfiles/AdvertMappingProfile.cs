@@ -29,19 +29,19 @@ public class AdvertMappingProfile : Profile
 
         CreateMap<AdvertElasticEntry, AdvertViewModel>()
             .ForMember(
-                d => d.City, 
+                d => d.City,
                 s => s.MapFrom(r => new CityViewModel { Name = r.City, Country = new CountryViewModel { Name = r.Country } }))
             .ForMember(
-                d => d.Category, 
+                d => d.Category,
                 s => s.MapFrom(r => new CategoryViewModel { Name = r.Category }))
             .ForMember(
-                d => d.Attachments, 
+                d => d.Attachments,
                 s => s.MapFrom(r => new List<AttachmentViewModel> { new AttachmentViewModel { Link = r.PreviewUrl, Type = AttachmentType.Image } }))
             .ForMember(
-                d => d.Contacts, 
+                d => d.Contacts,
                 s => s.MapFrom(r => new ContactsViewModel { Name = r.Creator }))
             .ForMember(
-                d => d.Creator, 
-                s => s.MapFrom(r => new ApplicationUserViewModel { UserName = r.Creator}));
+                d => d.Creator,
+                s => s.MapFrom(r => new ApplicationUserViewModel { UserName = r.Creator }));
     }
 }

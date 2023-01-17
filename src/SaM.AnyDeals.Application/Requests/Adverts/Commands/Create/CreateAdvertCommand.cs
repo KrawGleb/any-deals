@@ -1,7 +1,4 @@
-﻿using MediatR;
-using SaM.AnyDeals.Application.Models.Interfaces;
-using SaM.AnyDeals.Application.Models.Responses;
-using SaM.AnyDeals.Application.Models.ViewModels;
+﻿using SaM.AnyDeals.Application.Models.ViewModels;
 using SaM.AnyDeals.Common.Enums.Adverts;
 
 namespace SaM.AnyDeals.Application.Requests.Adverts.Commands.Create;

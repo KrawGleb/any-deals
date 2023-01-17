@@ -1,6 +1,4 @@
-﻿using MediatR;
-using Microsoft.AspNetCore.Identity;
-using SaM.AnyDeals.Application.Models.Responses;
+﻿using Microsoft.AspNetCore.Identity;
 using SaM.AnyDeals.DataAccess.Models.Auth;
 
 namespace SaM.AnyDeals.Application.Requests.Auth.Commands.Register;

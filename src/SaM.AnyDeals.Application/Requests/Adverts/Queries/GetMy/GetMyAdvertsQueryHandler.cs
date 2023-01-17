@@ -1,8 +1,6 @@
 ﻿using AutoMapper;
-using MediatR;
 using Microsoft.AspNetCore.Http;
 using Microsoft.EntityFrameworkCore;
-using SaM.AnyDeals.Application.Models.Responses;
 using SaM.AnyDeals.Application.Models.ViewModels;
 using SaM.AnyDeals.Common.Extensions;
 using SaM.AnyDeals.DataAccess;

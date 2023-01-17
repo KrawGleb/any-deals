@@ -1,7 +1,4 @@
-﻿using MediatR;
-using SaM.AnyDeals.Application.Models.Interfaces;
-using SaM.AnyDeals.Application.Models.Responses;
-using SaM.AnyDeals.Application.Models.ViewModels;
+﻿using SaM.AnyDeals.Application.Models.ViewModels;
 using SaM.AnyDeals.Common.Enums.Adverts;
 using SaM.AnyDeals.Common.Interfaces;
 
@@ -14,11 +11,10 @@ public record UpdateAdvertCommand(
     Goal Goal,
     Group Group,
     Interest Interest,
-    Status Status,
     int? CityId,
     int? CategoryId,
     ContactsViewModel? Contacts,
-    List<AttachmentViewModel>? Attachments) : 
-    IRequest<Response>, 
+    List<AttachmentViewModel>? Attachments) :
+    IRequest<Response>,
     IProtectedAdvertAction,
     IChangeDataRequest;

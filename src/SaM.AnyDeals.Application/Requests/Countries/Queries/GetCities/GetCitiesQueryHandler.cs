@@ -1,7 +1,5 @@
 ﻿using AutoMapper;
-using MediatR;
 using Microsoft.EntityFrameworkCore;
-using SaM.AnyDeals.Application.Models.Responses;
 using SaM.AnyDeals.Application.Models.ViewModels;
 using SaM.AnyDeals.DataAccess;
 
@@ -13,7 +11,7 @@ public class GetCitiesQueryHandler : IRequestHandler<GetCitiesQuery, Response>
     private readonly IMapper _mapper;
 
     public GetCitiesQueryHandler(
-        ApplicationDbContext applicationDbContext, 
+        ApplicationDbContext applicationDbContext,
         IMapper mapper)
     {
         _applicationDbContext = applicationDbContext;

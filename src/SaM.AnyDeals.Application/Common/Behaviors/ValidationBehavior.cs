@@ -1,5 +1,4 @@
 ﻿using FluentValidation;
-using MediatR;
 
 namespace SaM.AnyDeals.Application.Common.Behaviors;
 

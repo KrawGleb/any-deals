@@ -1,7 +1,4 @@
-﻿using MediatR;
-using SaM.AnyDeals.Application.Models.Responses;
-
-namespace SaM.AnyDeals.Application.Requests.Adverts.Queries.Get;
+﻿namespace SaM.AnyDeals.Application.Requests.Adverts.Queries.Get;
 
 public class GetAdvertQuery : IRequest<Response>
 {

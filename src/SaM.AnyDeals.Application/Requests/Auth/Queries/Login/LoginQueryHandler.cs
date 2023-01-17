@@ -1,9 +1,7 @@
-﻿using MediatR;
-using Microsoft.AspNetCore.Identity;
+﻿using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
 using SaM.AnyDeals.Application.Models.Configurations;
-using SaM.AnyDeals.Application.Models.Responses;
 using SaM.AnyDeals.Common.Enums.Auth;
 using SaM.AnyDeals.Common.Exceptions;
 using SaM.AnyDeals.DataAccess.Models.Auth;

@@ -6,14 +6,14 @@ namespace SaM.AnyDeals.Application.Common.Validators;
 
 public class AttachmentViewModelValidator : AbstractValidator<AttachmentViewModel>
 {
-	public AttachmentViewModelValidator()
-	{
-		RuleFor(x => x.Name)
-			.NotEmpty()
-			.MaximumLength(AttachmentConstraints.NameMaxLength);
+    public AttachmentViewModelValidator()
+    {
+        RuleFor(x => x.Name)
+            .NotEmpty()
+            .MaximumLength(AttachmentConstraints.NameMaxLength);
 
-		RuleFor(x => x.Link)
-			.NotEmpty()
-			.MaximumLength(AttachmentConstraints.LinkMaxLength);
-	}
+        RuleFor(x => x.Link)
+            .NotEmpty()
+            .MaximumLength(AttachmentConstraints.LinkMaxLength);
+    }
 }

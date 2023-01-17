@@ -1,6 +1,4 @@
 ﻿using AutoMapper;
-using MediatR;
-using SaM.AnyDeals.Application.Models.Responses;
 using SaM.AnyDeals.Application.Models.ViewModels;
 using SaM.AnyDeals.DataAccess.Models.Elastic;
 using SaM.AnyDeals.DataAccess.Services.Interfaces;

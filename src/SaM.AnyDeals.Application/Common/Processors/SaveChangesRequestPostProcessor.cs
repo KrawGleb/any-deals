@@ -1,7 +1,5 @@
-﻿using MediatR;
-using MediatR.Pipeline;
+﻿using MediatR.Pipeline;
 using Microsoft.EntityFrameworkCore;
-using SaM.AnyDeals.Application.Models.Interfaces;
 using SaM.AnyDeals.DataAccess;
 using SaM.AnyDeals.DataAccess.Models.Entries;
 

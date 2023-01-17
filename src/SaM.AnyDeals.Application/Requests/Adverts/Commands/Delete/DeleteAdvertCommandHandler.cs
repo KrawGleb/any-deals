@@ -1,6 +1,4 @@
-﻿using MediatR;
-using SaM.AnyDeals.Application.Models.Responses;
-using SaM.AnyDeals.Common.Exceptions;
+﻿using SaM.AnyDeals.Common.Exceptions;
 using SaM.AnyDeals.DataAccess;
 
 namespace SaM.AnyDeals.Application.Requests.Adverts.Commands.Delete;
