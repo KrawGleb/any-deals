@@ -12,6 +12,6 @@ namespace SaM.AnyDeals.API.Controllers;
 public class AdminsController : ApiControllerBase
 {
     [HttpPut("advert/{id}/status")]
-    public async Task<IActionResult> UpdateAdvertsStatus([FromRoute] int id, [FromBody] Status status)
-        => Ok(await Mediator.Send(new UpdateAdvertStatusCommand(id, status)));
+    public async Task<IActionResult> UpdateAdvertsStatus([FromRoute] int id, [FromBody] UpdateAdvertStatusCommand command)
+        => Ok(await Mediator.Send(command with { Id = id }));
 }

@@ -17,7 +17,7 @@ public class UpdateAdvertStatusCommandHandler : IRequestHandler<UpdateAdvertStat
     {
         var entry = await _applicationDbContext
             .Adverts
-            .SingleOrDefaultAsync(a => a.Id == request.Id, cancellationToken)
+            .SingleOrDefaultAsync(a => a.Id == request.Id!, cancellationToken)
             ?? throw new NotFoundException($"Advert with id {request.Id} not found.");
 
         entry.Status = request.Status;
