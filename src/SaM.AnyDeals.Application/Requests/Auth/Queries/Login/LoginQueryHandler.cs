@@ -41,7 +41,7 @@ public class LoginQueryHandler : IRequestHandler<LoginQuery, Response>
 
         if (signInResult.Succeeded)
         {
-            var token = GenerateToken(user);
+            var token = await GenerateToken(user);
 
             return new LoginResponse()
             {
@@ -53,10 +53,11 @@ public class LoginQueryHandler : IRequestHandler<LoginQuery, Response>
         return new ErrorResponse() { Errors = new string[] { "Invalid email or password." } };
     }
 
-    private string GenerateToken(ApplicationUser user)
+    private async Task<string> GenerateToken(ApplicationUser user)
     {
         var jwtTokenHandler = new JwtSecurityTokenHandler();
         var key = Encoding.UTF8.GetBytes(_jwtConfiguration.Key!);
+        var role = (await _userManager.GetRolesAsync(user)).FirstOrDefault();
 
         var tokenDescriptor = new SecurityTokenDescriptor()
         {
@@ -67,6 +68,7 @@ public class LoginQueryHandler : IRequestHandler<LoginQuery, Response>
                 new Claim(JwtRegisteredClaimNames.NameId, user.Id),
                 new Claim(JwtRegisteredClaimNames.Email, user.Email!),
                 new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString()),
+                new Claim(ClaimTypes.Role, role ?? ""),
                 new Claim("id", user.Id),
             }),
             Expires = DateTime.UtcNow.AddHours(12),
