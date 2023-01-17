@@ -24,7 +24,7 @@ namespace SaM.AnyDeals.DataAccess.Migrations
             migrationBuilder.InsertData(
                 table: "AspNetUsers",
                 columns: new[] { "Id", "AccessFailedCount", "ConcurrencyStamp", "Email", "EmailConfirmed", "LockoutEnabled", "LockoutEnd", "NormalizedEmail", "NormalizedUserName", "PasswordHash", "PhoneNumber", "PhoneNumberConfirmed", "SecurityStamp", "TwoFactorEnabled", "UserName" },
-                values: new object[] { "A3BF16BB-378C-4350-8BFF-FF1ED9CB2915", 0, "38991a85-a134-44e2-b554-cd9520fa4b85", "krawcevitsch@gmail.com", false, false, null, "KRAWCEVITSCH@GMAIL.COM", "CREATOR", "AQAAAAEAACcQAAAAENmR3VyO1iFAng5WjdT6ziiANQvfQFn4Qy7WHWJisPNljF6EUGibbRB9mTjpWJ2Y6A", null, false, "ef0ee259-1f3b-4d3a-b825-ca7a3b43f0b3", false, "Creator" });
+                values: new object[] { "A3BF16BB-378C-4350-8BFF-FF1ED9CB2915", 0, "38991a85-a134-44e2-b554-cd9520fa4b85", "krawcevitsch@gmail.com", false, false, null, "KRAWCEVITSCH@GMAIL.COM", "CREATOR", "AQAAAAIAAYagAAAAEB/hF/keKdkskDEYFdhZ7lHcIjurutz0c/qjUWulEFXc39EN4goFOXO060Dhs45Sfw==", null, false, "ef0ee259-1f3b-4d3a-b825-ca7a3b43f0b3", false, "Creator" });
 
             migrationBuilder.InsertData(
                 table: "AspNetUserRoles",

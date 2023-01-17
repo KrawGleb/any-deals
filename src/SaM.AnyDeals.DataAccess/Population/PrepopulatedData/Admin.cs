@@ -11,7 +11,7 @@ public static class Admin
         NormalizedUserName = "CREATOR",
         Email = "krawcevitsch@gmail.com",
         NormalizedEmail = "KRAWCEVITSCH@GMAIL.COM",
-        PasswordHash = "AQAAAAEAACcQAAAAENmR3VyO1iFAng5WjdT6ziiANQvfQFn4Qy7WHWJisPNljF6EUGibbRB9mTjpWJ2Y6A"
+        PasswordHash = "AQAAAAIAAYagAAAAEB/hF/keKdkskDEYFdhZ7lHcIjurutz0c/qjUWulEFXc39EN4goFOXO060Dhs45Sfw=="
     };
 
     public static ApplicationUser Instance { get => _instance; }
