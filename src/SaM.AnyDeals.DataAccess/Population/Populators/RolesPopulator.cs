@@ -9,6 +9,6 @@ public static class RolesPopulator
 {
     public static void Populate(this EntityTypeBuilder<IdentityRole> builder)
     {
-        builder.HasData(RoleEnum.Roles);
+        builder.HasData(RolesEnum.Roles);
     }
 }

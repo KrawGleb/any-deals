@@ -14,11 +14,11 @@ public record UpdateAdvertCommand(
     Goal Goal,
     Group Group,
     Interest Interest,
+    Status Status,
     int? CityId,
     int? CategoryId,
     ContactsViewModel? Contacts,
-    List<AttachmentViewModel>? Attachments
-    ) : 
+    List<AttachmentViewModel>? Attachments) : 
     IRequest<Response>, 
     IProtectedAdvertAction,
     IChangeDataRequest;

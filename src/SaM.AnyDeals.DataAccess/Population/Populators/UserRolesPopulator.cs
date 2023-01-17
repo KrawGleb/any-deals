@@ -18,7 +18,7 @@ public static class UserRolesPopulator
             .HasData(new IdentityUserRole<string>
             {
                 UserId = Admin.Instance.Id,
-                RoleId = RoleEnum.AdminRole.Id
+                RoleId = RolesEnum.AdminRole.Id
             });
     }
 }

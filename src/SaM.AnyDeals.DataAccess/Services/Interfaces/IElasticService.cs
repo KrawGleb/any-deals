@@ -1,5 +1,4 @@
 ﻿using Nest;
-using SaM.AnyDeals.Common.Models;
 using SaM.AnyDeals.DataAccess.Models.Elastic;
 
 namespace SaM.AnyDeals.DataAccess.Services.Interfaces;

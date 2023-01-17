@@ -2,7 +2,7 @@
 using MediatR;
 using SaM.AnyDeals.Application.Models.Responses;
 using SaM.AnyDeals.Application.Models.ViewModels;
-using SaM.AnyDeals.Common.Models;
+using SaM.AnyDeals.DataAccess.Models.Elastic;
 using SaM.AnyDeals.DataAccess.Services.Interfaces;
 
 namespace SaM.AnyDeals.Application.Requests.Adverts.Queries.Search;

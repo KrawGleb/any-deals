@@ -1,5 +1,6 @@
 ﻿using MediatR;
 using SaM.AnyDeals.Application.Models.Responses;
+using SaM.AnyDeals.Common.Enums.Adverts;
 
 namespace SaM.AnyDeals.Application.Requests.Adverts.Queries.Search;
 
@@ -11,6 +12,7 @@ public record SearchAdvertsQuery(
     int? Goal, 
     int? Interest,
     int? Group,
+    int? Status = (int)Status.Accepted,
     int Page = 1,
     int PageSize = 25) 
     : IRequest<Response>;

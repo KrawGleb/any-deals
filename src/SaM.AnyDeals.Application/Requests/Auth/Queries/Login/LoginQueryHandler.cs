@@ -4,6 +4,7 @@ using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
 using SaM.AnyDeals.Application.Models.Configurations;
 using SaM.AnyDeals.Application.Models.Responses;
+using SaM.AnyDeals.Common.Enums.Auth;
 using SaM.AnyDeals.Common.Exceptions;
 using SaM.AnyDeals.DataAccess.Models.Auth;
 using System.IdentityModel.Tokens.Jwt;
@@ -42,10 +43,12 @@ public class LoginQueryHandler : IRequestHandler<LoginQuery, Response>
         if (signInResult.Succeeded)
         {
             var token = await GenerateToken(user);
+            var isAdmin = await _userManager.IsInRoleAsync(user, RolesEnum.Admin);
 
             return new LoginResponse()
             {
                 Username = user.UserName,
+                IsAdmin = isAdmin,
                 Token = token,
             };
         }

@@ -2,7 +2,7 @@
 
 namespace SaM.AnyDeals.Common.Enums.Auth;
 
-public static class RoleEnum
+public static class RolesEnum
 {
     public const string Admin = "Admin";
     public const string User = "User";

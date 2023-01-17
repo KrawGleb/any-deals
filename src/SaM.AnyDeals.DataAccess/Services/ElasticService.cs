@@ -1,7 +1,6 @@
 ﻿using Microsoft.Extensions.Logging;
 using Nest;
 using SaM.AnyDeals.Common.Constants;
-using SaM.AnyDeals.Common.Models;
 using SaM.AnyDeals.DataAccess.Models.Elastic;
 using SaM.AnyDeals.DataAccess.Services.Interfaces;
 

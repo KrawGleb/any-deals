@@ -1,8 +1,11 @@
 ﻿using AutoMapper;
 using MediatR;
+using Microsoft.AspNetCore.Http;
 using Microsoft.EntityFrameworkCore;
 using SaM.AnyDeals.Application.Models.Responses;
 using SaM.AnyDeals.Application.Models.ViewModels;
+using SaM.AnyDeals.Common.Enums.Adverts;
+using SaM.AnyDeals.Common.Enums.Auth;
 using SaM.AnyDeals.Common.Exceptions;
 using SaM.AnyDeals.DataAccess;
 using SaM.AnyDeals.DataAccess.Extensions;
@@ -14,12 +17,15 @@ public class UpdateAdvertCommandHandler : IRequestHandler<UpdateAdvertCommand, R
 {
     private readonly ApplicationDbContext _applicationDbContext;
     private readonly IMapper _mapper;
+    private readonly IHttpContextAccessor _httpContextAccessor;
 
     public UpdateAdvertCommandHandler(
         ApplicationDbContext applicationDbContext,
-        IMapper mapper)
+        IMapper mapper,
+        IHttpContextAccessor httpContextAccessor)
     {
         _mapper = mapper;
+        _httpContextAccessor = httpContextAccessor;
         _applicationDbContext = applicationDbContext;
     }
 
@@ -41,6 +47,10 @@ public class UpdateAdvertCommandHandler : IRequestHandler<UpdateAdvertCommand, R
             .SetValues(request.Contacts!);
 
         UpdateAttachments(entity, request);
+
+        entity.Status = _httpContextAccessor.HttpContext.User.IsInRole(RolesEnum.Admin)
+            ? request.Status
+            : Status.OnModeration;
         
         return new Response();
     }

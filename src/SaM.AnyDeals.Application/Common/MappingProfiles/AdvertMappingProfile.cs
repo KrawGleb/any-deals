@@ -4,7 +4,6 @@ using SaM.AnyDeals.Application.Requests.Adverts.Commands.Create;
 using SaM.AnyDeals.Application.Requests.Adverts.Queries.Search;
 using SaM.AnyDeals.Common.Enums;
 using SaM.AnyDeals.Common.Enums.Adverts;
-using SaM.AnyDeals.Common.Models;
 using SaM.AnyDeals.DataAccess.Models.Elastic;
 using SaM.AnyDeals.DataAccess.Models.Entries;
 
