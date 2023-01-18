@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
+using SaM.AnyDeals.Common.Enums;
 using SaM.AnyDeals.Common.Exceptions;
 using SaM.AnyDeals.Common.Extensions;
 using SaM.AnyDeals.DataAccess;
@@ -42,6 +43,12 @@ public class CreateAdvertCommandHandler : IRequestHandler<CreateAdvertCommand, R
         var advertOwner = await GetAdvertOwnerAsync(userId, cancellationToken);
         var advert = _mapper.Map<AdvertDbEntry>(request);
 
+        if (request.CategoryId is null && request.Category is not null)
+        {
+            var draftCategory = await AddNewDraftCategoryAsync(request.Category, cancellationToken);
+            advert.Category = draftCategory;
+        }
+
         advert.Creator = advertOwner;
 
         await _applicationDbContext.Adverts.AddAsync(advert, cancellationToken);
@@ -56,5 +63,18 @@ public class CreateAdvertCommandHandler : IRequestHandler<CreateAdvertCommand, R
             ?? throw new NotFoundException($"User with id {id} not found.");
 
         return advertOwner;
+    }
+
+    private async Task<CategoryDbEntry> AddNewDraftCategoryAsync(string categoryName, CancellationToken cancellationToken)
+    {
+        var categoryEntry = new CategoryDbEntry()
+        {
+            Name = categoryName,
+            Status = Status.Draft
+        };
+
+        await _applicationDbContext.Categories.AddAsync(categoryEntry, cancellationToken);
+
+        return categoryEntry;
     }
 }

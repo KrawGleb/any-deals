@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using Microsoft.EntityFrameworkCore;
 using SaM.AnyDeals.Application.Models.ViewModels;
+using SaM.AnyDeals.Common.Enums;
 using SaM.AnyDeals.DataAccess;
 
 namespace SaM.AnyDeals.Application.Requests.Categories.Queries.Get;
@@ -22,6 +23,7 @@ public class GetCategoriesQueryHandler : IRequestHandler<GetCategoriesQuery, Res
     {
         var categories = await _applicationDbContext
             .Categories
+            .Where(c => c.Status == Status.Accepted)
             .ToListAsync(cancellationToken);
 
         var categoriesVM = _mapper.Map<List<CategoryViewModel>>(categories);

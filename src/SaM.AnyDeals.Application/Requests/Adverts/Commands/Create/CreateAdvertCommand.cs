@@ -11,6 +11,7 @@ public record CreateAdvertCommand(
     Interest Interest,
     int? CityId,
     int? CategoryId,
+    string? Category,
     ContactsViewModel? Contacts,
     List<AttachmentViewModel>? Attachments
     ) : IRequest<Response>, IChangeDataRequest;

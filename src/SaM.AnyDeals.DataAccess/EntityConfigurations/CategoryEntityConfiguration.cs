@@ -1,5 +1,7 @@
-﻿using Microsoft.EntityFrameworkCore.Metadata.Builders;
+﻿using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using SaM.AnyDeals.Common.Constraints;
+using SaM.AnyDeals.Common.Enums;
 using SaM.AnyDeals.DataAccess.Models.Entries;
 
 namespace SaM.AnyDeals.DataAccess.EntityConfigurations;
@@ -19,5 +21,9 @@ public class CategoryEntityConfiguration : EntityConfigurationBase<CategoryDbEnt
             .Property(c => c.Name)
             .HasMaxLength(CategoryConstraints.NameMaxLength)
             .IsRequired();
+
+        builder
+            .Property(c => c.Status)
+            .HasDefaultValue(Status.Draft);
     }
 }

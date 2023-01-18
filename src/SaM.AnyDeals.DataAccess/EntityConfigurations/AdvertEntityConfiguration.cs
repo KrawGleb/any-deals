@@ -1,7 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using SaM.AnyDeals.Common.Constraints;
-using SaM.AnyDeals.Common.Enums.Adverts;
+using SaM.AnyDeals.Common.Enums;
 using SaM.AnyDeals.DataAccess.Models.Entries;
 
 namespace SaM.AnyDeals.DataAccess.EntityConfigurations;
@@ -51,6 +51,6 @@ public class AdvertEntityConfiguration : EntityConfigurationBase<AdvertDbEntry>
 
         builder
             .Property(a => a.Status)
-            .HasDefaultValue(Status.OnModeration);
+            .HasDefaultValue(Status.Draft);
     }
 }

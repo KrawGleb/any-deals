@@ -1,4 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using SaM.AnyDeals.Common.Enums;
 using SaM.AnyDeals.Common.Exceptions;
 using SaM.AnyDeals.DataAccess;
 
@@ -17,10 +18,14 @@ public class UpdateAdvertStatusCommandHandler : IRequestHandler<UpdateAdvertStat
     {
         var entry = await _applicationDbContext
             .Adverts
+            .Include(a => a.Category)
             .SingleOrDefaultAsync(a => a.Id == request.Id!, cancellationToken)
             ?? throw new NotFoundException($"Advert with id {request.Id} not found.");
 
         entry.Status = request.Status;
+
+        if (entry.Category!.Status != Status.Accepted)
+            entry.Category!.Status = request.Status;
 
         return new Response();
     }

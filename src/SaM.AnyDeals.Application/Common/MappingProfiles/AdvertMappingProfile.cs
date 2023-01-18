@@ -3,7 +3,6 @@ using SaM.AnyDeals.Application.Models.ViewModels;
 using SaM.AnyDeals.Application.Requests.Adverts.Commands.Create;
 using SaM.AnyDeals.Application.Requests.Adverts.Queries.Search;
 using SaM.AnyDeals.Common.Enums;
-using SaM.AnyDeals.Common.Enums.Adverts;
 using SaM.AnyDeals.DataAccess.Models.Elastic;
 using SaM.AnyDeals.DataAccess.Models.Entries;
 
@@ -17,7 +16,10 @@ public class AdvertMappingProfile : Profile
         CreateMap<CreateAdvertCommand, AdvertDbEntry>()
             .ForMember(
                 d => d.Status,
-                s => s.MapFrom(_ => Status.OnModeration));
+                s => s.MapFrom(_ => Status.Draft))
+            .ForMember(
+                d => d.Category,
+                s => s.Ignore());
 
         CreateMap<SearchAdvertsQuery, SearchAdvertsParams>()
             .ForMember(

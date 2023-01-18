@@ -1,4 +1,4 @@
-﻿using SaM.AnyDeals.Common.Enums.Adverts;
+﻿using SaM.AnyDeals.Common.Enums;
 
 namespace SaM.AnyDeals.Application.Requests.Adverts.Queries.Search;
 

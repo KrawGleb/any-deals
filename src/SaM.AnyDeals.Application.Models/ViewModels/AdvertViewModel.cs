@@ -1,4 +1,5 @@
-﻿using SaM.AnyDeals.Common.Enums.Adverts;
+﻿using SaM.AnyDeals.Common.Enums;
+using SaM.AnyDeals.Common.Enums.Adverts;
 
 namespace SaM.AnyDeals.Application.Models.ViewModels;
 

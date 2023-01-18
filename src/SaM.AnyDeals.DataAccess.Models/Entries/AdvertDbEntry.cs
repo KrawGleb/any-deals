@@ -1,5 +1,6 @@
 ﻿using SaM.AnyDeals.DataAccess.Models.Auth;
 using SaM.AnyDeals.Common.Enums.Adverts;
+using SaM.AnyDeals.Common.Enums;
 
 namespace SaM.AnyDeals.DataAccess.Models.Entries;
 

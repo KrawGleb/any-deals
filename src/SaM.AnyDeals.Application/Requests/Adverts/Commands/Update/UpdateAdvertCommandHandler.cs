@@ -1,7 +1,7 @@
 ﻿using AutoMapper;
 using Microsoft.EntityFrameworkCore;
 using SaM.AnyDeals.Application.Models.ViewModels;
-using SaM.AnyDeals.Common.Enums.Adverts;
+using SaM.AnyDeals.Common.Enums;
 using SaM.AnyDeals.Common.Exceptions;
 using SaM.AnyDeals.DataAccess;
 using SaM.AnyDeals.DataAccess.Extensions;
@@ -41,7 +41,7 @@ public class UpdateAdvertCommandHandler : IRequestHandler<UpdateAdvertCommand, R
 
         UpdateAttachments(entity, request);
 
-        entity.Status = Status.OnModeration;
+        entity.Status = Status.Draft;
 
         return new Response();
     }
