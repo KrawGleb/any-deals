@@ -1,12 +1,14 @@
 import React from "react";
 import "./MyAdverts.scss";
 import { Button } from "@mui/material";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { useGetMyAdvertsQuery } from "../../../features/api/extensions/advertsApiExtension";
 import AdvertsList from "../../../components/adverts/list/AdvertsList";
 
 export default function MyAdverts() {
+  const navigate = useNavigate();
   const { data: myAdverts } = useGetMyAdvertsQuery();
+  const onCardClick = (id: number) => navigate(`/adverts/edit?id=${id}`);
 
   return (
     <div className="my">
@@ -20,7 +22,7 @@ export default function MyAdverts() {
         </div>
       </div>
       <AdvertsList
-        allowEditing={true}
+        onCardClick={onCardClick}
         adverts={myAdverts ?? []}
         styles={{ height: "80vh" }}
       />

@@ -33,6 +33,7 @@ import {
   useCreateAdvertMutation,
   useDeleteAdvertMutation,
   useUpdateAdvertMutation,
+  useUpdateAdvertStatusMutation,
 } from "../../../features/api/extensions/advertsApiExtension";
 import { Controller, useForm } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
@@ -49,6 +50,7 @@ import {
 } from "../../../features/api/extensions/countriesApiExtension";
 import { useGetCategoriesQuery } from "../../../features/api/extensions/categoriesApiExtension";
 import "yup-phone";
+import { Status } from "../../../models/enums/status";
 
 const schema = yup.object().shape({
   title: yup.string().label("Title").required().max(100),
@@ -65,11 +67,7 @@ const schema = yup.object().shape({
   city: yup.string().label("City").required(),
   name: yup.string().label("Name").required().max(100),
   email: yup.string().label("Email").email().max(100),
-  phone: yup
-    .string()
-    .phone()
-    .label("Phone")
-    .max(20),
+  phone: yup.string().phone().label("Phone").max(20),
   address: yup.string().label("Address").max(100),
   facebook: yup.string().label("Facebook").max(100),
   vk: yup.string().label("VK").max(100),
@@ -83,14 +81,14 @@ export default function AdvertForm({ advert }: AdvertFormProps) {
   const navigate = useNavigate();
   const [createNewAdvert] = useCreateAdvertMutation();
   const [updateAdvert] = useUpdateAdvertMutation();
+  const [updateStatus] = useUpdateAdvertStatusMutation();
   const [deleteAdvert] = useDeleteAdvertMutation();
   const uploadedFiles = useSelector(
     (state: RootState) => state.fileUpload.files as StoredFile[]
   );
-  const username = useSelector(
-    (state: RootState) => state.auth.userInfo.username
-  );
+  const userInfo = useSelector((state: RootState) => state.auth.userInfo);
   const isEditMode = !!advert;
+  const isAdmin = userInfo.isAdmin;
 
   const {
     register,
@@ -131,6 +129,15 @@ export default function AdvertForm({ advert }: AdvertFormProps) {
     setSelectedCategory(value as Category);
   };
 
+  const changeStatus = (status: number) => {
+    const updateStatusAction = updateStatus({ id: advert!.id, status });
+
+    updateStatusAction.then((response) => {
+      console.log(response);
+      exitWithoutSaving();
+    });
+  };
+
   const onSubmit = (data: any) => {
     updateFiles({ shouldSave: true });
 
@@ -163,7 +170,7 @@ export default function AdvertForm({ advert }: AdvertFormProps) {
     mutationAction.then(() => navigate("/adverts/my"));
   };
 
-  const onCancel = () => {
+  const exitWithoutSaving = () => {
     updateFiles({ shouldSave: false });
     navigate("/adverts/my");
   };
@@ -190,7 +197,7 @@ export default function AdvertForm({ advert }: AdvertFormProps) {
   };
 
   useEffect(() => {
-    setValue("name", username);
+    setValue("name", userInfo.username);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
@@ -232,7 +239,7 @@ export default function AdvertForm({ advert }: AdvertFormProps) {
       )
     );
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [advert, username, categories, countries, cities]);
+  }, [advert, categories, countries, cities]);
 
   return (
     <Box>
@@ -509,7 +516,7 @@ export default function AdvertForm({ advert }: AdvertFormProps) {
                 <Button
                   variant="contained"
                   sx={{ marginRight: "16px" }}
-                  onClick={onCancel}
+                  onClick={exitWithoutSaving}
                 >
                   Cancel
                 </Button>
@@ -522,13 +529,35 @@ export default function AdvertForm({ advert }: AdvertFormProps) {
                   {isEditMode ? "Save and continue" : "Create and publish"}
                 </Button>
               </div>
-              {isEditMode ? (
-                <Button variant="contained" color="error" onClick={onDelete}>
-                  Delete advert
-                </Button>
-              ) : (
-                <></>
-              )}
+              <Stack direction="row" spacing={2}>
+                {isAdmin && isEditMode ? (
+                  <>
+                    <Button
+                      variant="outlined"
+                      color="success"
+                      onClick={() => changeStatus(Status.Accepted)}
+                    >
+                      Accept
+                    </Button>
+                    <Button
+                      variant="outlined"
+                      color="warning"
+                      onClick={() => changeStatus(Status.Rejected)}
+                    >
+                      Reject
+                    </Button>
+                  </>
+                ) : (
+                  <></>
+                )}
+                {isEditMode ? (
+                  <Button variant="contained" color="error" onClick={onDelete}>
+                    Delete advert
+                  </Button>
+                ) : (
+                  <></>
+                )}
+              </Stack>
             </div>
           </form>
         </div>

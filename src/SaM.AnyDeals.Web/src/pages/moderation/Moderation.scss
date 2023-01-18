@@ -1,0 +1,31 @@
+.moderation {
+  &-root {
+    display: flex;
+    flex-direction: column;
+    padding: 0px 135px 60px 135px; 
+    box-sizing: border-box;
+    min-height: 100vh;
+
+    &__content {
+        display: flex;
+        height: 100%;
+        flex: 1 1;
+    }
+
+    &__back-line {
+
+    }
+  }
+
+  &-content {
+    &__nav {
+        width: 20%;
+        padding: 8px;
+    }
+
+    &__body {
+        width: 80%;
+        padding: 16px;
+    }
+  }
+}

@@ -2,7 +2,7 @@ import { Advert } from "../../../models/api/advert";
 
 export interface AdvertsListProps {
   adverts: Advert[];
-  allowEditing: boolean;
+  onCardClick: (id: number) => void;
 
   // TODO: Fix it
   styles: { height: string };

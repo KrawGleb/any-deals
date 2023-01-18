@@ -7,4 +7,5 @@ export interface SearchAdvertsParams {
   interest?: number;
   page: number;
   pageSize: number;
+  status?: number;
 }

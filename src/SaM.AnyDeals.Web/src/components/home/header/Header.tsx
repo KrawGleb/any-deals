@@ -20,8 +20,9 @@ export default function Header() {
   const dispatch = useDispatch();
   const [value, setValue] = useState(0);
 
-  const { userInfo }: any = useSelector((state: RootState) => state.auth);
-  const isLoggedIn = !!userInfo.username;
+  const authState = useSelector((state: RootState) => state.auth);
+  const isLoggedIn = !!authState.userInfo.username;
+  const isAdmin = authState.userInfo.isAdmin;
 
   const handleLogout = () => {
     dispatch(logout());
@@ -51,9 +52,19 @@ export default function Header() {
               <>
                 <Box className="dropdown">
                   <Typography className="dropdown__text">
-                    {userInfo.username}
+                    {authState.userInfo.username}
                   </Typography>
                   <List className="dropdown__content">
+                    {isAdmin ? (
+                      <ListItemButton
+                        onClick={() => navigate("/moderation")}
+                      >
+                        <ListItemText>Moderation</ListItemText>
+                      </ListItemButton>
+                    ) : (
+                      <></>
+                    )}
+
                     <ListItemButton onClick={handleLogout}>
                       <ListItemText color="error">Logout</ListItemText>
                     </ListItemButton>

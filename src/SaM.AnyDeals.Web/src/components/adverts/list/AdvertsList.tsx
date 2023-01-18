@@ -6,14 +6,14 @@ import AdvertCard from "../card/AdvertCard";
 
 export default function AdvertsList({
   adverts,
-  allowEditing,
+  onCardClick,
   styles,
 }: AdvertsListProps) {
   return (
     <Box className="list__root">
       <Stack className="list__component" spacing={2} sx={styles}>
         {adverts.map((advert, index) => (
-          <AdvertCard key={index} advert={advert} allowEditing={allowEditing} />
+          <AdvertCard key={index} advert={advert} onClick={onCardClick} />
         ))}
       </Stack>
     </Box>

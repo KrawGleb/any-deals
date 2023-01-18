@@ -2,6 +2,7 @@ import { Box } from "@mui/system";
 import React, { useEffect, useState } from "react";
 import InfiniteScroll from "react-infinite-scroll-component";
 import { useDispatch, useSelector } from "react-redux";
+import { useNavigate } from "react-router-dom";
 import AdvertsList from "../../../components/adverts/list/AdvertsList";
 import Filters from "../../../components/search/filters/Filters";
 import { useSearchAdvertsQuery } from "../../../features/api/extensions/advertsApiExtension";
@@ -11,6 +12,7 @@ import { RootState } from "../../../features/store/store";
 import { Advert } from "../../../models/api/advert";
 
 export default function Search() {
+  const navigate = useNavigate();
   const dispatch = useDispatch();
   const filters = useSelector((state: RootState) => state.filters);
   const currentPage = useSelector((state: RootState) => state.filters.page);
@@ -21,6 +23,8 @@ export default function Search() {
     (state: RootState) => state.searchSlice.adverts
   );
   let { data: adverts } = useSearchAdvertsQuery({ ...filters });
+
+  const onCardClick = (id: number) => navigate(`/adverts/details?id=${id}`);
 
   const nextPage = () => {
     dispatch(setPageFilter(currentPage + 1));
@@ -64,7 +68,7 @@ export default function Search() {
         >
           <AdvertsList
             adverts={currentAdverts}
-            allowEditing={false}
+            onCardClick={onCardClick}
             styles={{ height: "60vh" }}
           />
         </InfiniteScroll>

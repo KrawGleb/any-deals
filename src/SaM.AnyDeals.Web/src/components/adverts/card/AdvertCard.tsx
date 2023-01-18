@@ -3,24 +3,16 @@ import React from "react";
 import { Box, Paper } from "@mui/material";
 import { AdvertCardProps } from "./AdvertCardProps";
 import AttachmentType from "../../../models/enums/attachmentType";
-import { useNavigate } from "react-router-dom";
 import GoalTag from "../fields/goalTag/GoalTag";
 import InterestTag from "../fields/interestTag/InterestTag";
 
-export default function AdvertCard({ advert, allowEditing }: AdvertCardProps) {
-  const navigate = useNavigate();
+export default function AdvertCard({ advert, onClick }: AdvertCardProps) {
   const previewImage = advert.attachments.find(
     (a) => a.type === AttachmentType.Image
   );
 
-  const onClick = () => {
-    allowEditing
-      ? navigate(`/adverts/edit?id=${advert.id}`)
-      : navigate(`/adverts/details?id=${advert.id}`);
-  };
-
   return (
-    <Paper className="card__root" onClick={onClick}>
+    <Paper className="card__root" onClick={() => onClick(advert.id)}>
       <Box className="card__content">
         <Box className="card__content__header">
           <GoalTag goal={advert.goal} />

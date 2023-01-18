@@ -33,6 +33,17 @@ export const advertsApiExtension = baseApi.injectEndpoints({
       invalidatesTags: ["Advert"],
       transformErrorResponse,
     }),
+    updateAdvertStatus: builder.mutation({
+      query: (payload: {id: number, status: number}) => ({
+        url: `/api/admins/advert/${payload.id}/status`,
+        method: "PUT",
+        body: {
+          status: payload.status
+        }
+      }),
+      invalidatesTags: ["Advert"],
+      transformErrorResponse
+    }),
     getAdvertById: builder.query<Advert, number>({
       query: (payload: number) => ({
         url: `/api/adverts/get/${payload}`,
@@ -67,6 +78,7 @@ export const {
   useCreateAdvertMutation,
   useUpdateAdvertMutation,
   useDeleteAdvertMutation,
+  useUpdateAdvertStatusMutation,
   useGetAdvertByIdQuery,
   useGetMyAdvertsQuery,
   useSearchAdvertsQuery,

@@ -12,9 +12,14 @@ import { useSelector } from "react-redux";
 import { RootState } from "./features/store/store";
 import About from "./pages/about/About";
 import AdvertsDetails from "./pages/adverts/details/AdvertsDetails";
+import Moderation from "./pages/moderation/Moderation";
+import ModerationAdverts from "./pages/moderation/adverts/ModerationAdverts";
+import ModerationCategories from "./pages/moderation/categoreis/ModerationCategories";
 
 function App() {
-  const hasToken = !!useSelector((state: RootState) => state.auth.userToken);
+  const authState = useSelector((state: RootState) => state.auth);
+  const hasToken = !!authState.userToken;
+  const isAdmin = authState.userInfo.isAdmin;
 
   return (
     <div className="app">
@@ -22,14 +27,25 @@ function App() {
         <Route path="/" element={<Navigate to="/adverts/search" />} />
         <Route path="/signup" element={<SignUp />} />
         <Route path="/signin" element={<SignIn />} />
+        <Route path="/about" element={<About />} />
         <Route path="/adverts" element={<Home />}>
-          {hasToken ? <Route path="my" element={<MyAdverts />} /> : <></>}
           <Route path="search" element={<Search />} />
           <Route path="new" element={<NewAdvert />} />
           <Route path="edit" element={<EditAdvert />} />
           <Route path="details" element={<AdvertsDetails />} />
+          <Route
+            path="my"
+            element={hasToken ? <MyAdverts /> : <Navigate to="/signin" />}
+          />
         </Route>
-        <Route path="/about" element={<About />} />
+        {isAdmin ? (
+          <Route path="/moderation" element={<Moderation />}>
+            <Route path="adverts" element={<ModerationAdverts />} />
+            <Route path="categories" element={<ModerationCategories />} />
+          </Route>
+        ) : (
+          <></>
+        )}
       </Routes>
     </div>
   );
