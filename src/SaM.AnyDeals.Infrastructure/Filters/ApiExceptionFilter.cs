@@ -16,7 +16,8 @@ public class ApiExceptionFilter : IActionFilter, IOrderedFilter
         _exceptionHandlers = new Dictionary<Type, Action<ActionExecutedContext>>
         {
             { typeof(NotFoundException), HandleNotFoundException },
-            { typeof(ValidationException), HandleValidationException }
+            { typeof(ValidationException), HandleValidationException },
+            { typeof(ForbiddentActionException), HandleForbiddenActionException }
         };
     }
 
@@ -33,9 +34,9 @@ public class ApiExceptionFilter : IActionFilter, IOrderedFilter
     private void HandleException(ActionExecutedContext context)
     {
         var type = context.Exception.GetType();
-        if (_exceptionHandlers.ContainsKey(type))
+        if (_exceptionHandlers.TryGetValue(type, out Action<ActionExecutedContext>? value))
         {
-            _exceptionHandlers[type].Invoke(context);
+            value.Invoke(context);
             context.ExceptionHandled = true;
             return;
         }
@@ -69,6 +70,19 @@ public class ApiExceptionFilter : IActionFilter, IOrderedFilter
         context.Result = new ObjectResult(response)
         {
             StatusCode = StatusCodes.Status404NotFound
+        };
+    }
+
+    private void HandleForbiddenActionException(ActionExecutedContext context)
+    {
+        var response = new ErrorResponse()
+        {
+            Errors = new string[] { "Forbidden action." }
+        };
+
+        context.Result = new ObjectResult(response)
+        {
+            StatusCode = StatusCodes.Status403Forbidden
         };
     }
 
