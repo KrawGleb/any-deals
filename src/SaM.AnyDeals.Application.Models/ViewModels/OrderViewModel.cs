@@ -3,6 +3,7 @@
 public class OrderViewModel
 {
     public int Id { get; set; }
+    public int AdvertId { get; set; }
     public ApplicationUserViewModel? Customer { get; set; }
     public ApplicationUserViewModel? Executor { get; set; }
     public bool HasCustomerApproval { get; set; }
