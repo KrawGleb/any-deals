@@ -31,6 +31,7 @@ public class ApplicationDbContext : IdentityDbContext<ApplicationUser, IdentityR
     public DbSet<ContactsDbEntry> Contacts { get; set; }
     public DbSet<CountryDbEntry> Countries { get; set; }
     public DbSet<CityDbEntry> Cities { get; set; }
+    public DbSet<OrderDbEntry> Orders { get; set; }
 
     public override async Task<int> SaveChangesAsync(CancellationToken cancellationToken = default)
     {

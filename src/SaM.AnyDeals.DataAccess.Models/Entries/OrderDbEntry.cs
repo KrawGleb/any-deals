@@ -15,4 +15,5 @@ public class OrderDbEntry : DbEntryBase
 
     public bool HasCustomerApproval { get; set; }
     public bool HasExecutorApproval { get; set; }
+    public DateTime CreatedAt { get; set; }
 }
