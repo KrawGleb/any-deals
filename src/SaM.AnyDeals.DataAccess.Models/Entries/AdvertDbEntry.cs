@@ -27,4 +27,5 @@ public class AdvertDbEntry : DbEntryBase
     public ContactsDbEntry? Contacts { get; set; }
 
     public List<AttachmentDbEntry>? Attachments { get; set; }
+    public List<OrderDbEntry>? Orders { get; set; }
 }
