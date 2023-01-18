@@ -15,6 +15,7 @@ public static class AdvertsHelper
             Goal = (int)advert.Goal,
             Interest = (int)advert.Interest,
             Group = (int)advert.Group,
+            Status = (int)advert.Status,
             Category = advert.Category?.Name,
             City = advert.City?.Name,
             Creator = advert.Contacts?.Name,
