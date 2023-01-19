@@ -19,10 +19,14 @@ export default function AdvertCard({ advert, onClick }: AdvertCardProps) {
           <InterestTag interest={advert.interest} />
         </Box>
         <p className="card__content__title">{advert.title}</p>
-        <p className="card__content__category">{advert.category.name}</p>
-        <p className="card__content__country">{`${advert.city.country?.name}, ${advert.city.name}`}</p>
+        <p className="card__content__category">{advert.category?.name}</p>
+        {advert.city ? (
+          <p className="card__content__country">{`${advert.city?.country?.name}, ${advert.city?.name}`}</p>
+        ) : (
+          <></>
+        )}
         <Box className="card__content__footer">
-          <p className="creator">{advert.contacts.name}</p>
+          <p className="creator">{advert.contacts?.name}</p>
           <p className="date">{new Date(advert.createdAt).toLocaleString()}</p>
         </Box>
       </Box>

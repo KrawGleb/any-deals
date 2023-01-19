@@ -1,14 +1,17 @@
-import React from "react";
+import React, { useState } from "react";
 import "./MyAdverts.scss";
-import { Button } from "@mui/material";
-import { Link, useNavigate } from "react-router-dom";
-import { useGetMyAdvertsQuery } from "../../../features/api/extensions/advertsApiExtension";
-import AdvertsList from "../../../components/adverts/list/AdvertsList";
+import { Button, Grid } from "@mui/material";
+import { Link, Outlet, useNavigate } from "react-router-dom";
+import VerticalTabs from "../../../components/common/verticalTabs/VerticalTabs";
+import VerticalTab from "../../../components/common/verticalTabs/VerticalTab";
 
 export default function MyAdverts() {
   const navigate = useNavigate();
-  const { data: myAdverts } = useGetMyAdvertsQuery();
-  const onCardClick = (id: number) => navigate(`/adverts/edit?id=${id}`);
+  const [tab, setTab] = useState(0);
+
+  const handleChange = (_event: React.SyntheticEvent, newTab: number) => {
+    setTab(newTab);
+  };
 
   return (
     <div className="my">
@@ -21,11 +24,26 @@ export default function MyAdverts() {
           </Button>
         </div>
       </div>
-      <AdvertsList
-        onCardClick={onCardClick}
-        adverts={myAdverts ?? []}
-        styles={{ height: "80vh" }}
-      />
+      <Grid container className="my-lists__root">
+        <Grid item className="my-lists__nav">
+          <VerticalTabs value={tab} onChange={handleChange}>
+            <VerticalTab label="My" value={0} onClick={() => navigate("")} />
+            <VerticalTab
+              label="Orders"
+              value={1}
+              onClick={() => navigate("orders")}
+            />
+            <VerticalTab
+              label="Execution"
+              value={2}
+              onClick={() => navigate("execution")}
+            />
+          </VerticalTabs>
+        </Grid>
+        <Grid item className="my-lists__body">
+          <Outlet />
+        </Grid>
+      </Grid>
     </div>
   );
 }

@@ -1,13 +1,25 @@
 import React from "react";
-import { useGetMyAdvertsQuery } from "../../../features/api/extensions/advertsApiExtension";
+import {
+  useGetAdvertByIdQuery,
+  useGetMyAdvertsQuery,
+} from "../../../features/api/extensions/advertsApiExtension";
 import useQuery from "../../../features/hooks/useQuery";
 import AdvertForm from "../../../components/adverts/form/AdvertForm";
+import { RootState } from "../../../features/store/store";
+import { useSelector } from "react-redux";
+import { useNavigate } from "react-router-dom";
 
 export default function EditAdvert() {
+  const navigate = useNavigate();
   const query = useQuery() as any;
   const advertId: number = +query.get("id");
+  const userInfo = useSelector((state: RootState) => state.auth.userInfo);
   const { data: adverts } = useGetMyAdvertsQuery();
-  const advert = adverts?.find((a) => a.id === advertId);
+  const { data: advert } = useGetAdvertByIdQuery(advertId);
+
+  if (!(adverts?.find((a) => a.id === advertId) || userInfo.isAdmin)) {
+    navigate("/my");
+  }
 
   return <AdvertForm advert={advert} />;
 }

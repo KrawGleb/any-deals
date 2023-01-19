@@ -133,7 +133,6 @@ export default function AdvertForm({ advert }: AdvertFormProps) {
     const updateStatusAction = updateStatus({ id: advert!.id, status });
 
     updateStatusAction.then((response) => {
-      console.log(response);
       exitWithoutSaving();
     });
   };

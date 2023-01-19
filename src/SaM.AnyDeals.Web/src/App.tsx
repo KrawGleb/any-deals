@@ -1,5 +1,5 @@
 import React from "react";
-import { Navigate, Route, Routes } from "react-router-dom";
+import { Navigate, Outlet, Route, Routes } from "react-router-dom";
 import "./App.scss";
 import Home from "./pages/home/Home";
 import MyAdverts from "./pages/adverts/my/MyAdverts";
@@ -15,6 +15,10 @@ import AdvertsDetails from "./pages/adverts/details/AdvertsDetails";
 import Moderation from "./pages/moderation/Moderation";
 import ModerationAdverts from "./pages/moderation/adverts/ModerationAdverts";
 import ModerationCategories from "./pages/moderation/categoreis/ModerationCategories";
+import CreatedAdverts from "./pages/adverts/my/outlets/CreatedAdverts";
+import Execution from "./pages/adverts/my/outlets/Execution";
+import Orders from "./pages/adverts/my/outlets/Orders";
+import OrderDetails from "./pages/orders/details/OrderDetails";
 
 function App() {
   const authState = useSelector((state: RootState) => state.auth);
@@ -24,19 +28,27 @@ function App() {
   return (
     <div className="app">
       <Routes>
-        <Route path="/" element={<Navigate to="/adverts/search" />} />
         <Route path="/signup" element={<SignUp />} />
         <Route path="/signin" element={<SignIn />} />
         <Route path="/about" element={<About />} />
-        <Route path="/adverts" element={<Home />}>
-          <Route path="search" element={<Search />} />
-          <Route path="new" element={<NewAdvert />} />
-          <Route path="edit" element={<EditAdvert />} />
-          <Route path="details" element={<AdvertsDetails />} />
-          <Route
-            path="my"
-            element={hasToken ? <MyAdverts /> : <Navigate to="/signin" />}
-          />
+        <Route path="/" element={<Home />}>
+          <Route path="adverts" element={<Outlet />}>
+            <Route path="search" element={<Search />} />
+            <Route path="new" element={<NewAdvert />} />
+            <Route path="edit" element={<EditAdvert />} />
+            <Route path="details" element={<AdvertsDetails />} />
+            <Route
+              path="my"
+              element={hasToken ? <MyAdverts /> : <Navigate to="/signin" />}
+            >
+              <Route path="" element={<CreatedAdverts />} />
+              <Route path="orders" element={<Orders />} />
+              <Route path="execution" element={<Execution />} />
+            </Route>
+          </Route>
+          <Route path="orders" element={<Outlet />}>
+            <Route path="details" element={<OrderDetails />} />
+          </Route>
         </Route>
         {isAdmin ? (
           <Route path="/moderation" element={<Moderation />}>

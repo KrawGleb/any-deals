@@ -52,6 +52,12 @@
     align-items: flex-start;
     gap: 16px;
   }
+
+  &__footer {
+    padding-top: 12px;
+    display: flex;
+    flex-direction: row-reverse;
+  }
 }
 
 .paper {

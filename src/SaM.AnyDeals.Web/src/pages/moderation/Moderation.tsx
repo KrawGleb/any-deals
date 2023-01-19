@@ -3,14 +3,10 @@ import React, { useEffect, useState } from "react";
 import {
   Box,
   Tabs,
-  Tab,
   Grid,
   Paper,
-  Stack,
-  Typography,
-  Button,
 } from "@mui/material";
-import NavTab from "../../components/moderation/navTab/NavTab";
+import VerticalTab from "../../components/common/verticalTabs/VerticalTab";
 import { Outlet, useNavigate } from "react-router-dom";
 
 export default function Moderation() {
@@ -33,12 +29,12 @@ export default function Moderation() {
         <Grid container className="moderation-content">
           <Grid item className="moderation-content__nav">
             <Tabs orientation="vertical" value={tab} onChange={handleChange}>
-              <NavTab
+              <VerticalTab
                 label="Adverts"
                 value={0}
                 onClick={() => navigate("adverts")}
               />
-              <NavTab
+              <VerticalTab
                 label="Categories"
                 value={1}
                 onClick={() => navigate("categories")}

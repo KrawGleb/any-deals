@@ -1,3 +1,4 @@
+import "./Search.scss";
 import { Box } from "@mui/system";
 import React, { useEffect, useState } from "react";
 import InfiniteScroll from "react-infinite-scroll-component";
@@ -58,7 +59,9 @@ export default function Search() {
 
   return (
     <>
-      <Filters />
+      <div className="extra-spacer">
+        <Filters />
+      </div>
       <Box sx={{ paddingTop: "10px" }}>
         <InfiniteScroll
           dataLength={currentAdverts.length}
