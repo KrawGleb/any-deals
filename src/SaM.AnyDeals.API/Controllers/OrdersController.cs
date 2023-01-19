@@ -2,7 +2,8 @@
 using Microsoft.AspNetCore.Mvc;
 using SaM.AnyDeals.Application.Requests.Orders.Commands.Approve;
 using SaM.AnyDeals.Application.Requests.Orders.Commands.Create;
-using SaM.AnyDeals.Application.Requests.Orders.Queries.GetMyOrders;
+using SaM.AnyDeals.Application.Requests.Orders.Queries.Get;
+using SaM.AnyDeals.Application.Requests.Orders.Queries.GetMy;
 
 namespace SaM.AnyDeals.API.Controllers;
 
@@ -11,6 +12,10 @@ namespace SaM.AnyDeals.API.Controllers;
 [Authorize]
 public class OrdersController : ApiControllerBase
 {
+    [HttpGet("{id}")]
+    public async Task<IActionResult> GetByIdAsync([FromRoute] int id, CancellationToken cancellationToken)
+        => Ok(await Mediator.Send(new GetOrderByIdQuery(id), cancellationToken));
+
     [HttpGet("my")]
     public async Task<IActionResult> GetMyOrdersAsync(CancellationToken cancellationToken)
         => Ok(await Mediator.Send(new GetMyOrdersQuery(AsExecutor: false), cancellationToken));

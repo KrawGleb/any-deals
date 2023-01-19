@@ -5,12 +5,12 @@ using SaM.AnyDeals.Application.Models.ViewModels;
 using SaM.AnyDeals.Common.Extensions;
 using SaM.AnyDeals.DataAccess;
 
-namespace SaM.AnyDeals.Application.Requests.Orders.Queries.GetMyOrders;
+namespace SaM.AnyDeals.Application.Requests.Orders.Queries.GetMy;
 
 public class GetMyOrdersQueryHandler : IRequestHandler<GetMyOrdersQuery, Response>
 {
     private readonly ApplicationDbContext _applicationDbContext;
-    private readonly IHttpContextAccessor _httpContextAccessor; 
+    private readonly IHttpContextAccessor _httpContextAccessor;
     private readonly IMapper _mapper;
 
     public GetMyOrdersQueryHandler(
@@ -28,6 +28,7 @@ public class GetMyOrdersQueryHandler : IRequestHandler<GetMyOrdersQuery, Respons
         var userId = _httpContextAccessor.HttpContext.GetUserId();
         var query = _applicationDbContext
             .Orders
+            .Include(o => o.Advert)
             .Include(o => o.Executor)
             .Include(o => o.Customer)
             .AsNoTracking();
