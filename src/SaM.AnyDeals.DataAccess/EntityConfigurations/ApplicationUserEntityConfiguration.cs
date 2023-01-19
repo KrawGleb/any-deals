@@ -12,5 +12,20 @@ public class ApplicationUserEntityConfiguration : EntityConfigurationBase<Applic
             .HasMany(u => u.Adverts)
             .WithOne(a => a.Creator)
             .OnDelete(DeleteBehavior.Cascade);
+
+        builder
+            .HasMany(u => u.Orders)
+            .WithOne(a => a.Customer)
+            .OnDelete(DeleteBehavior.NoAction); 
+
+        builder
+            .HasMany(u => u.Execution)
+            .WithOne( a => a.Executor)
+            .OnDelete(DeleteBehavior.Cascade);
+
+        builder
+            .HasMany(a => a.Reviews)
+            .WithOne(r => r.Author)
+            .OnDelete(DeleteBehavior.NoAction);
     }
 }

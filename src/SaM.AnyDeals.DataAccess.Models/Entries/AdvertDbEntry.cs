@@ -28,4 +28,5 @@ public class AdvertDbEntry : DbEntryBase
 
     public List<AttachmentDbEntry>? Attachments { get; set; }
     public List<OrderDbEntry>? Orders { get; set; }
+    public List<ReviewDbEntry>? Reviews { get; set; }
 }
