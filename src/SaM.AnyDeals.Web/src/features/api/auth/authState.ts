@@ -1,5 +1,6 @@
 export interface AuthState {
     userInfo: {
+        id?: string;
         username?: string;
         isAdmin?: boolean;
         token?: string;

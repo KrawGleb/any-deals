@@ -45,6 +45,7 @@ public class LoginQueryHandler : IRequestHandler<LoginQuery, Response>
 
             return new LoginResponse()
             {
+                Id = user.Id,
                 Username = user.UserName,
                 IsAdmin = isAdmin,
                 Token = token,

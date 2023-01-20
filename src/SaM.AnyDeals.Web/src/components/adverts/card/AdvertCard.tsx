@@ -12,26 +12,26 @@ export default function AdvertCard({ advert, onClick }: AdvertCardProps) {
   );
 
   return (
-    <Paper className="card__root" onClick={() => onClick(advert.id)}>
-      <Box className="card__content">
-        <Box className="card__content__header">
+    <Paper className="advert-card__root" onClick={() => onClick(advert.id)}>
+      <Box className="advert-card__content">
+        <Box className="advert-card__content__header">
           <GoalTag goal={advert.goal} />
           <InterestTag interest={advert.interest} />
         </Box>
-        <p className="card__content__title">{advert.title}</p>
-        <p className="card__content__category">{advert.category?.name}</p>
+        <p className="advert-card__content__title">{advert.title}</p>
+        <p className="advert-card__content__category">{advert.category?.name}</p>
         {advert.city ? (
-          <p className="card__content__country">{`${advert.city?.country?.name}, ${advert.city?.name}`}</p>
+          <p className="advert-card__content__country">{`${advert.city?.country?.name}, ${advert.city?.name}`}</p>
         ) : (
           <></>
         )}
-        <Box className="card__content__footer">
+        <Box className="advert-card__content__footer">
           <p className="creator">{advert.contacts?.name}</p>
           <p className="date">{new Date(advert.createdAt).toLocaleString()}</p>
         </Box>
       </Box>
       {previewImage && previewImage.link ? (
-        <Box className="card__image">
+        <Box className="advert-card__image">
           <img src={previewImage.link} alt="" />
         </Box>
       ) : (

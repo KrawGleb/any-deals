@@ -1,18 +1,14 @@
 import React from "react";
 import { useNavigate } from "react-router-dom";
-import AdvertsList from "../../../../components/adverts/list/AdvertsList";
+import OrdersList from "../../../../components/orders/list/OrdersList";
 import { useGetMyRequestsQuery } from "../../../../features/api/extensions/ordersApiExtension";
+import { Order } from "../../../../models/api/order";
 
 export default function Execution() {
   const navigate = useNavigate();
   const { data: requests } = useGetMyRequestsQuery();
-  const onCardClick = (id: number) => navigate(`/orders/details?id=${id}`);
+  const onCardClick = (order: Order) =>
+    navigate(`/orders/details?id=${order.id}`);
 
-  return (
-    <AdvertsList
-      onCardClick={onCardClick}
-      adverts={requests?.map((o) => o.advert) ?? []}
-      styles={{ height: "80vh" }}
-    />
-  );
+  return <OrdersList onCardClick={onCardClick} orders={requests ?? []} />;
 }

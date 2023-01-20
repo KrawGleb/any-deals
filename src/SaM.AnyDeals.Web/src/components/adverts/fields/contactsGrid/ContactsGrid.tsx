@@ -14,6 +14,7 @@ import AlternateEmailIcon from "@mui/icons-material/AlternateEmail";
 import EightKIcon from "@mui/icons-material/EightK";
 
 export default function ContactsGrid({ contacts }: { contacts: Contacts }) {
+  // TODO: Use new Map() here
   const contactsIcons = {
     name: <PersonIcon />,
     address: <PlaceIcon />,

@@ -10,8 +10,8 @@ export default function AdvertsList({
   styles,
 }: AdvertsListProps) {
   return (
-    <Box className="list__root">
-      <Stack className="list__component" spacing={2} sx={styles}>
+    <Box className="adverts-list__root">
+      <Stack className="adverts-list__component" spacing={2} sx={styles}>
         {adverts.map((advert, index) => (
           <AdvertCard key={index} advert={advert} onClick={onCardClick} />
         ))}

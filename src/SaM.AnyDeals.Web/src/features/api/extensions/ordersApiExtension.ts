@@ -1,10 +1,19 @@
 import { Order } from "../../../models/api/order";
 import { CommonResponse } from "../../../models/api/responses/commonResponse";
+import { Response } from "../../../models/api/responses/response";
 import transformErrorResponse from "../../helpers/transformErrorResponse";
 import { baseApi } from "../baseApi";
 
 export const ordersApiExtension = baseApi.injectEndpoints({
   endpoints: (builder) => ({
+    getOrderById: builder.query<Order, number>({
+      query: (payload: number) => ({
+        url: `/api/Orders/${payload}`,
+        method: "GET",
+      }),
+      transformErrorResponse,
+      transformResponse: (response: CommonResponse) => response.body,
+    }),
     getMyOrders: builder.query<Order[], void>({
       query: () => ({
         url: "/api/orders/my",
@@ -12,7 +21,7 @@ export const ordersApiExtension = baseApi.injectEndpoints({
       }),
       providesTags: ["Orders"],
       transformErrorResponse,
-      transformResponse: (response: CommonResponse) => response.body
+      transformResponse: (response: CommonResponse) => response.body,
     }),
     getMyRequests: builder.query<Order[], void>({
       query: () => ({
@@ -21,7 +30,7 @@ export const ordersApiExtension = baseApi.injectEndpoints({
       }),
       providesTags: ["Orders"],
       transformErrorResponse,
-      transformResponse: (response: CommonResponse) => response.body
+      transformResponse: (response: CommonResponse) => response.body,
     }),
     createOrder: builder.mutation({
       query: (payload: { advertId: number }) => ({
@@ -32,10 +41,10 @@ export const ordersApiExtension = baseApi.injectEndpoints({
       invalidatesTags: ["Orders"],
       transformErrorResponse,
     }),
-    approveOrder: builder.mutation({
+    approveOrder: builder.mutation<Response, any>({
       query: (payload: { id: number }) => ({
-        url: "/api/orders/my",
-        method: "POST",
+        url: "/api/orders/approve",
+        method: "PUT",
         body: payload,
       }),
       invalidatesTags: ["Orders"],
@@ -46,6 +55,7 @@ export const ordersApiExtension = baseApi.injectEndpoints({
 });
 
 export const {
+  useGetOrderByIdQuery,
   useGetMyOrdersQuery,
   useGetMyRequestsQuery,
   useCreateOrderMutation,
