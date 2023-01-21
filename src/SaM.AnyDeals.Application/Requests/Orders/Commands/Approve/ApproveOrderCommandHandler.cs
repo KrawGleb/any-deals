@@ -24,7 +24,7 @@ public class ApproveOrderCommandHandler : IRequestHandler<ApproveOrderCommand, R
         var userId = _httpContextAccessor.HttpContext.GetUserId();
         var order = await _applicationDbContext
             .Orders
-            .SingleOrDefaultAsync(o => o.Id == request.Id, cancellationToken: cancellationToken)
+            .SingleOrDefaultAsync(o => o.Id == request.Id, cancellationToken)
             ?? throw new NotFoundException($"Order with id {request.Id} not found.");
 
         if (order.ExecutorId == userId)
@@ -32,7 +32,7 @@ public class ApproveOrderCommandHandler : IRequestHandler<ApproveOrderCommand, R
         else if (order.CustomerId == userId)
             order.HasCustomerApproval = true;
         else
-            throw new ForbiddentActionException();
+            throw new ForbiddenActionException();
 
         return new Response();
     }

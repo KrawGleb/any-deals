@@ -36,7 +36,7 @@ public class GetOrderByIdQueryHandler : IRequestHandler<GetOrderByIdQuery, Respo
 
         if (order.ExecutorId != userId &&
             order.CustomerId != userId)
-            throw new ForbiddentActionException("Full order data can get only customer or executor");
+            throw new ForbiddenActionException("Full order data can get only customer or executor");
 
         await LoadOrdersReferenceAsync(order, cancellationToken);
 

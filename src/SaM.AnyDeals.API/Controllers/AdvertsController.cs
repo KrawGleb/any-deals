@@ -5,6 +5,7 @@ using SaM.AnyDeals.Application.Requests.Adverts.Commands.Delete;
 using SaM.AnyDeals.Application.Requests.Adverts.Commands.Update;
 using SaM.AnyDeals.Application.Requests.Adverts.Queries.Get;
 using SaM.AnyDeals.Application.Requests.Adverts.Queries.GetMy;
+using SaM.AnyDeals.Application.Requests.Adverts.Queries.GetReviews;
 using SaM.AnyDeals.Application.Requests.Adverts.Queries.Search;
 using SaM.AnyDeals.Infrastructure.Filters;
 
@@ -33,10 +34,15 @@ public class AdvertsController : ApiControllerBase
     public async Task<IActionResult> GetMyAdvertsAsync(CancellationToken cancellationToken)
         => Ok(await Mediator.Send(new GetMyAdvertsQuery(), cancellationToken));
 
-    [HttpGet("get/{id}")]
+    [HttpGet("{id}")]
     [AllowAnonymous]
     public async Task<IActionResult> GetAvertAsync([FromRoute] int id, CancellationToken cancellationToken)
         => Ok(await Mediator.Send(new GetAdvertQuery { Id = id }, cancellationToken));
+
+    [HttpGet("{id}/reviews")]
+    [AllowAnonymous]
+    public async Task<IActionResult> GetAdvertsReviews([FromRoute] int id, CancellationToken cancellationToken)
+        => Ok(await Mediator.Send(new GetAdvertsReviewsQuery(id), cancellationToken));
 
     [HttpGet("search")]
     [AllowAnonymous]

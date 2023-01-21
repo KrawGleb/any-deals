@@ -17,7 +17,7 @@ public class ApiExceptionFilter : IActionFilter, IOrderedFilter
         {
             { typeof(NotFoundException), HandleNotFoundException },
             { typeof(ValidationException), HandleValidationException },
-            { typeof(ForbiddentActionException), HandleForbiddenActionException }
+            { typeof(ForbiddenActionException), HandleForbiddenActionException }
         };
     }
 
