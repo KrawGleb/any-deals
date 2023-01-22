@@ -1,9 +1,10 @@
 import "./OrderDetails.scss";
-import Paper from "@mui/material/Paper";
 import React, { useEffect, useState } from "react";
+import Paper from "@mui/material/Paper";
 import { useNavigate } from "react-router-dom";
 import {
   useApproveOrderMutation,
+  useArchivateOrderMutation,
   useGetOrderByIdQuery,
 } from "../../../features/api/extensions/ordersApiExtension";
 import useQuery from "../../../features/hooks/useQuery";
@@ -15,9 +16,9 @@ import { useSelector } from "react-redux";
 import { RootState } from "../../../features/store/store";
 import { Box, Stack } from "@mui/system";
 import Button from "@mui/material/Button";
-import { Response } from "../../../models/api/responses/response";
 import ReviewDialog from "../../../components/dialogs/review/ReviewDialog";
 import { Review } from "../../../models/api/review";
+import { useCreateReviewMutation } from "../../../features/api/extensions/reviewsApiExtension";
 
 export default function OrderDetails() {
   const navigate = useNavigate();
@@ -27,6 +28,8 @@ export default function OrderDetails() {
   const { data: order } = useGetOrderByIdQuery(orderId);
 
   const [approveOrderCompletion] = useApproveOrderMutation();
+  const [createReview] = useCreateReviewMutation();
+  const [archivateOrder] = useArchivateOrderMutation();
 
   const [isUserCustomer, setIsUserCustomer] = useState<boolean>();
   const [hasCustomerApproval, setHasCustomerApproval] = useState<boolean>();
@@ -38,19 +41,24 @@ export default function OrderDetails() {
   const onApproveClick = () => {
     const approveAction = approveOrderCompletion({ id: orderId });
     approveAction.then((response: any) => {
-      console.log(response.data);
       if (response.data.succeeded) {
         setHasCustomerApproval((curr) => (isUserCustomer ? true : curr));
         setHasExecutorApproval((curr) => (isUserExecutor ? true : curr));
       }
-
-      console.log(hasCustomerApproval);
-      console.log(hasExecutorApproval);
     });
   };
 
   const handleArchiveClick = () => {
-    setIsReviewDialogOpen(true);
+    if (isUserCustomer) {
+      setIsReviewDialogOpen(true);
+    } else if (isUserExecutor) {
+      const archivateOrderAction = archivateOrder({ id: orderId });
+      archivateOrderAction.then((response: any) => {
+        if (response.data.succeeded) {
+          navigate("/adverts/my");
+        }
+      });
+    }
   };
 
   const handleReviewCancelClick = () => {
@@ -59,6 +67,20 @@ export default function OrderDetails() {
 
   const handleReviewSubmitClick = (review: Review) => {
     setIsReviewDialogOpen(false);
+
+    review.advertId = order?.advert.id;
+
+    const createReviewAction = createReview(review);
+    createReviewAction.then((response: any) => {
+      if (response.data.succeeded) {
+        const archivateOrderAction = archivateOrder({ id: orderId });
+        archivateOrderAction.then((response: any) => {
+          if (response.data.succeeded) {
+            navigate("/adverts/my");
+          }
+        });
+      }
+    });
   };
 
   useEffect(() => {
@@ -115,27 +137,32 @@ export default function OrderDetails() {
                 </Box>
               </Stack>
             </div>
-            <div className="order-details__body__footer">
-              <Button
-                variant="contained"
-                disabled={!(hasCustomerApproval && hasExecutorApproval)}
-                onClick={handleArchiveClick}
-              >
-                {isUserCustomer ? " Leave review and archive" : "Archive"}
-              </Button>
+            {(isUserCustomer && order.archivatedByCustomer) ||
+            (isUserExecutor && order.archivatedByExecutor) ? (
+              <></>
+            ) : (
+              <div className="order-details__body__footer">
+                <Button
+                  variant="contained"
+                  disabled={!(hasCustomerApproval && hasExecutorApproval)}
+                  onClick={handleArchiveClick}
+                >
+                  {isUserCustomer ? " Leave review and archivate" : "Archivate"}
+                </Button>
 
-              <Button
-                variant="contained"
-                color="success"
-                onClick={onApproveClick}
-                disabled={
-                  (isUserCustomer && hasCustomerApproval) ||
-                  (isUserExecutor && hasExecutorApproval)
-                }
-              >
-                Approve completion
-              </Button>
-            </div>
+                <Button
+                  variant="contained"
+                  color="success"
+                  onClick={onApproveClick}
+                  disabled={
+                    (isUserCustomer && hasCustomerApproval) ||
+                    (isUserExecutor && hasExecutorApproval)
+                  }
+                >
+                  Approve completion
+                </Button>
+              </div>
+            )}
           </Paper>
           <Paper className="order-chat">Chat</Paper>
         </div>

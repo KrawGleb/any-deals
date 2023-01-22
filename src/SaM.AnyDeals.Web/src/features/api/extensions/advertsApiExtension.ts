@@ -46,7 +46,7 @@ export const advertsApiExtension = baseApi.injectEndpoints({
     }),
     getAdvertById: builder.query<Advert, number>({
       query: (payload: number) => ({
-        url: `/api/adverts/get/${payload}`,
+        url: `/api/adverts/${payload}`,
         method: "GET",
       }),
       providesTags: ["Advert"],

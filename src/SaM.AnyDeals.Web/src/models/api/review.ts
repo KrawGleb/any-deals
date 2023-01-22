@@ -3,4 +3,6 @@ export interface Review {
     grade: number;
     title: string;
     comment: string;
+    advertId?: number;
+    createdAt?: Date;
 }

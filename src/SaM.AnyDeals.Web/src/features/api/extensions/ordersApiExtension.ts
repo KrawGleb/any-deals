@@ -14,19 +14,21 @@ export const ordersApiExtension = baseApi.injectEndpoints({
       transformErrorResponse,
       transformResponse: (response: CommonResponse) => response.body,
     }),
-    getMyOrders: builder.query<Order[], void>({
-      query: () => ({
+    getMyOrders: builder.query<Order[], { archivated: boolean }>({
+      query: (payload) => ({
         url: "/api/orders/my",
         method: "GET",
+        params: payload,
       }),
       providesTags: ["Orders"],
       transformErrorResponse,
       transformResponse: (response: CommonResponse) => response.body,
     }),
-    getMyRequests: builder.query<Order[], void>({
-      query: () => ({
+    getMyRequests: builder.query<Order[], { archivated: boolean }>({
+      query: (payload) => ({
         url: "/api/orders/my/requests",
         method: "GET",
+        params: payload
       }),
       providesTags: ["Orders"],
       transformErrorResponse,
@@ -44,11 +46,18 @@ export const ordersApiExtension = baseApi.injectEndpoints({
     approveOrder: builder.mutation<Response, any>({
       query: (payload: { id: number }) => ({
         url: "/api/orders/approve",
-        method: "PUT",
+        method: "PATCH",
         body: payload,
       }),
       invalidatesTags: ["Orders"],
       transformErrorResponse,
+    }),
+    archivateOrder: builder.mutation<Response, any>({
+      query: (payload: { id: number }) => ({
+        url: "/api/orders/archivate",
+        method: "PATCH",
+        body: payload,
+      }),
     }),
   }),
   overrideExisting: false,
@@ -60,4 +69,5 @@ export const {
   useGetMyRequestsQuery,
   useCreateOrderMutation,
   useApproveOrderMutation,
+  useArchivateOrderMutation,
 } = ordersApiExtension;
