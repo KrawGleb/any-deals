@@ -1,5 +1,6 @@
 import { Advert } from "../../../models/api/advert";
 import { CommonResponse } from "../../../models/api/responses/commonResponse";
+import { Review } from "../../../models/api/review";
 import { SearchAdvertsParams } from "../../../models/searchAdvertsParams";
 import transformErrorResponse from "../../helpers/transformErrorResponse";
 import { baseApi } from "../baseApi";
@@ -34,15 +35,21 @@ export const advertsApiExtension = baseApi.injectEndpoints({
       transformErrorResponse,
     }),
     updateAdvertStatus: builder.mutation({
-      query: (payload: {id: number, status: number}) => ({
+      query: (payload: { id: number; status: number }) => ({
         url: `/api/admins/advert/${payload.id}/status`,
         method: "PUT",
         body: {
-          status: payload.status
-        }
+          status: payload.status,
+        },
       }),
       invalidatesTags: ["Advert"],
-      transformErrorResponse
+      transformErrorResponse,
+    }),
+    getAdvertReviews: builder.query<Review[], { id: number }>({
+      query: (payload) => ({
+        url: `/api/adverts/${payload.id}/reviews`,
+        method: "GET",
+      }),
     }),
     getAdvertById: builder.query<Advert, number>({
       query: (payload: number) => ({
@@ -79,6 +86,7 @@ export const {
   useUpdateAdvertMutation,
   useDeleteAdvertMutation,
   useUpdateAdvertStatusMutation,
+  useGetAdvertReviewsQuery,
   useGetAdvertByIdQuery,
   useGetMyAdvertsQuery,
   useSearchAdvertsQuery,

@@ -1,6 +1,9 @@
 import "./AdvertsDetails.scss";
 import React from "react";
-import { useGetAdvertByIdQuery } from "../../../features/api/extensions/advertsApiExtension";
+import {
+  useGetAdvertByIdQuery,
+  useGetAdvertReviewsQuery,
+} from "../../../features/api/extensions/advertsApiExtension";
 import useQuery from "../../../features/hooks/useQuery";
 import { Button, Paper } from "@mui/material";
 import GoalTag from "../../../components/adverts/fields/goalTag/GoalTag";
@@ -15,11 +18,14 @@ export default function AdvertsDetails() {
   const query = useQuery() as any;
   const advertId: number = +query.get("id");
   const { data: advert } = useGetAdvertByIdQuery(advertId);
+  const { data: reviews } = useGetAdvertReviewsQuery({ id: advertId });
+
+  console.log(reviews);
 
   const [createOrder] = useCreateOrderMutation();
   const orderClick = () => {
     const createOrderAction = createOrder({ advertId });
-    
+
     createOrderAction.then((response) => {
       console.log(response);
       navigate("/adverts/my/orders");
@@ -53,17 +59,22 @@ export default function AdvertsDetails() {
               )}
               <ContactsGrid contacts={advert.contacts} />
             </div>
-            <div className="paper details__attachments">
-              {advert.attachments.map((attachment, index) => (
-                <AttachmentCard key={index} attachment={attachment} />
-              ))}
-            </div>
+            {advert.attachments.length > 0 ? (
+              <div className="paper details__attachments">
+                {advert.attachments.map((attachment, index) => (
+                  <AttachmentCard key={index} attachment={attachment} />
+                ))}
+              </div>
+            ) : (
+              <></>
+            )}
             <div className="details__footer">
               <Button variant="contained" color="success" onClick={orderClick}>
                 Order
               </Button>
             </div>
           </Paper>
+          <Paper className="details__reviews">reviews</Paper>
         </div>
       ) : (
         <></>
