@@ -18,12 +18,12 @@ public class OrdersController : ApiControllerBase
         => Ok(await Mediator.Send(new GetOrderByIdQuery(id), cancellationToken));
 
     [HttpGet("my")]
-    public async Task<IActionResult> GetMyOrdersAsync(CancellationToken cancellationToken)
-        => Ok(await Mediator.Send(new GetMyOrdersQuery(AsExecutor: false), cancellationToken));
+    public async Task<IActionResult> GetMyOrdersAsync([FromQuery] bool archivated = false, CancellationToken cancellationToken = default)
+        => Ok(await Mediator.Send(new GetMyOrdersQuery(AsExecutor: false, Archivated: archivated), cancellationToken));
 
     [HttpGet("my/requests")]
-    public async Task<IActionResult> GetMyRequestsAsync(CancellationToken cancellationToken)
-        => Ok(await Mediator.Send(new GetMyOrdersQuery(AsExecutor: true), cancellationToken));
+    public async Task<IActionResult> GetMyRequestsAsync([FromQuery] bool archivated, CancellationToken cancellationToken = default)
+        => Ok(await Mediator.Send(new GetMyOrdersQuery(AsExecutor: true, Archivated: archivated), cancellationToken));
 
     [HttpPost("create")]
     public async Task<IActionResult> CreateOrderAsync([FromBody] CreateOrderCommand command, CancellationToken cancellationToken)
@@ -33,7 +33,7 @@ public class OrdersController : ApiControllerBase
     public async Task<IActionResult> ApproveOrderAsync([FromBody] ApproveOrderCommand command, CancellationToken cancellationToken)
         => Ok(await Mediator.Send(command, cancellationToken));
 
-    [HttpPatch("archive")]
+    [HttpPatch("archivate")]
     public async Task<IActionResult> ArchiveOrderAsync([FromBody] ArchiveOrderCommand command, CancellationToken cancellactionToken)
         => Ok(await Mediator.Send(command, cancellactionToken));
 

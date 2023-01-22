@@ -34,8 +34,12 @@ public class GetMyOrdersQueryHandler : IRequestHandler<GetMyOrdersQuery, Respons
             .AsNoTracking();
 
         query = request.AsExecutor
-            ? query.Where(o => o.ExecutorId == userId)
-            : query.Where(o => o.CustomerId == userId);
+            ? query.Where(
+                o => o.ExecutorId == userId &&
+                o.ArchivatedByExecutor == request.Archivated)
+            : query.Where(
+                o => o.CustomerId == userId &&
+                o.ArchivatedByCustomer == request.Archivated);
 
         var orders = await query.ToListAsync(cancellationToken);
         var ordersVM = _mapper.Map<List<OrderViewModel>>(orders);
