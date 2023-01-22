@@ -2,7 +2,7 @@
 
 namespace SaM.AnyDeals.DataAccess.Models.Entries;
 
-public class OrderDbEntry : DbEntryBase
+public class OrderDbEntry : AuditableDbEntry
 {
     public int AdvertId { get; set; }
     public AdvertDbEntry? Advert { get; set; }
@@ -17,5 +17,4 @@ public class OrderDbEntry : DbEntryBase
     public bool HasExecutorApproval { get; set; }
     public bool ArchivatedByCustomer { get; set; }
     public bool ArchivatedByExecutor { get; set; }
-    public DateTime CreatedAt { get; set; }
 }

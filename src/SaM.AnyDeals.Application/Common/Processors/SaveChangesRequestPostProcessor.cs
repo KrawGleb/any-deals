@@ -19,7 +19,7 @@ public class SaveChangesRequestPostProcessor<TRequest, TResponse> : IRequestPost
     {
         var now = DateTime.UtcNow;
 
-        _applicationDbContext.ChangeTracker.Entries<AdvertDbEntry>().ToList()
+        _applicationDbContext.ChangeTracker.Entries<AuditableDbEntry>().ToList()
             .ForEach(entry =>
             {
                 if (entry.State == EntityState.Added)

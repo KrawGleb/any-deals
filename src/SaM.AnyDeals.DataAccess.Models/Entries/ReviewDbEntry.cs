@@ -2,7 +2,7 @@
 
 namespace SaM.AnyDeals.DataAccess.Models.Entries;
 
-public class ReviewDbEntry : DbEntryBase
+public class ReviewDbEntry : AuditableDbEntry
 {
     public string? Title { get; set; }
     public string? Comment { get; set; }

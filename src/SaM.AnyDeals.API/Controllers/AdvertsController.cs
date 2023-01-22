@@ -5,8 +5,8 @@ using SaM.AnyDeals.Application.Requests.Adverts.Commands.Delete;
 using SaM.AnyDeals.Application.Requests.Adverts.Commands.Update;
 using SaM.AnyDeals.Application.Requests.Adverts.Queries.Get;
 using SaM.AnyDeals.Application.Requests.Adverts.Queries.GetMy;
-using SaM.AnyDeals.Application.Requests.Adverts.Queries.GetReviews;
 using SaM.AnyDeals.Application.Requests.Adverts.Queries.Search;
+using SaM.AnyDeals.Application.Requests.Reviews.Queries.Get;
 using SaM.AnyDeals.Infrastructure.Filters;
 
 namespace SaM.AnyDeals.API.Controllers;

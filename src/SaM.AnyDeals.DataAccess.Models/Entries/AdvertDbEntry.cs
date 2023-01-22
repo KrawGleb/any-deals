@@ -4,7 +4,7 @@ using SaM.AnyDeals.Common.Enums;
 
 namespace SaM.AnyDeals.DataAccess.Models.Entries;
 
-public class AdvertDbEntry : DbEntryBase
+public class AdvertDbEntry : AuditableDbEntry
 {
     public string? Title { get; set; }
     public string? Description { get; set; }
@@ -12,7 +12,6 @@ public class AdvertDbEntry : DbEntryBase
     public Group Group { get; set; }
     public Interest Interest { get; set; }
     public Status Status { get; set; }
-    public DateTime CreatedAt { get; set; }
 
     public string? CreatorId { get; set; }
     public ApplicationUser? Creator { get; set; }
