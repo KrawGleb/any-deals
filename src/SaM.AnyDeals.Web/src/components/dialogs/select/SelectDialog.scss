@@ -1,14 +1,25 @@
 .dialog {
-    &__root {
-        padding: 32px;
-        width: 360px
-    }
+  &__root {
+    padding: 32px;
+    width: 360px;
+  }
 
-    &__list {
-        width: 100%;
-        height: 300px;
-        max-height: 300px;
-        overflow-y: scroll;
-        overflow-x: hidden;
-    }
+  &__list {
+    width: 100%;
+    height: 300px;
+    max-height: 300px;
+    overflow-y: scroll;
+    overflow-x: hidden;
+  }
+
+  &__divider {
+    margin-top: 12px !important;
+    margin-bottom: 4px !important;
+    font-weight: bold;
+  }
+
+  &__input {
+    display: flex;
+    flex-direction: row;
+  }
 }

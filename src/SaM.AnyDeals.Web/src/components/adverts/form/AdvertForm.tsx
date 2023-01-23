@@ -209,9 +209,8 @@ export default function AdvertForm({ advert }: AdvertFormProps) {
       shouldValidate: true,
     };
 
-    const selectedCategory = categories?.find(
-      (c) => c.id === advert.category.id
-    );
+    const selectedCategory =
+      categories?.find((c) => c.id === advert.category.id) ?? advert.category;
     const selectedCountry = countries?.find(
       (c) => c.id === advert.city.country?.id
     );
@@ -256,6 +255,7 @@ export default function AdvertForm({ advert }: AdvertFormProps) {
       />
       <SelectDialog
         open={isCategorySelectOpen}
+        allowCustom={true}
         onClose={handleSelectCategoryDialogClose}
         selectedValue={selectedCategory as SelectableItem}
         variants={(categories as SelectableItem[]) ?? []}

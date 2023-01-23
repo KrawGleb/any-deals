@@ -42,7 +42,7 @@ export const advertsApiExtension = baseApi.injectEndpoints({
           status: payload.status,
         },
       }),
-      invalidatesTags: ["Advert"],
+      invalidatesTags: ["Advert", "Categories"],
       transformErrorResponse,
     }),
     getAdvertReviews: builder.query<Review[], { id: number }>({

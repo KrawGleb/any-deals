@@ -9,6 +9,7 @@ export const categoriesApiExtension = baseApi.injectEndpoints({
         url: "/api/categories",
         method: "GET",
       }),
+      providesTags: ["Categories"],
       transformResponse: (response: CommonResponse) => response.body,
     }),
   }),

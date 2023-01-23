@@ -1,4 +1,4 @@
 export interface SelectableItem {
-  id: any;
+  id?: any;
   name: string;
 }
