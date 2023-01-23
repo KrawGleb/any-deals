@@ -1,0 +1,37 @@
+.review {
+  &__card {
+    margin-bottom: 20px;
+    padding: 8px;
+
+    &__header {
+      display: flex;
+      flex-direction: row;
+      margin-bottom: 8px;
+
+      &__info {
+        margin-right: 12px;
+
+        p {
+          padding: 0px;
+          margin: 0px;
+        }
+
+        &__author {
+            font-weight: bold;
+        }
+      }
+
+      &__grade {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+      }
+    }
+
+    &__title {
+    }
+
+    &__comment {
+    }
+  }
+}

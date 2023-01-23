@@ -50,6 +50,7 @@ export const advertsApiExtension = baseApi.injectEndpoints({
         url: `/api/adverts/${payload.id}/reviews`,
         method: "GET",
       }),
+      transformResponse: (response: CommonResponse) => response.body,
     }),
     getAdvertById: builder.query<Advert, number>({
       query: (payload: number) => ({
@@ -66,7 +67,7 @@ export const advertsApiExtension = baseApi.injectEndpoints({
       }),
       providesTags: ["Advert"],
       transformResponse: (response: CommonResponse) => response.body,
-      transformErrorResponse: (response) => transformErrorResponse(response),
+      transformErrorResponse,
     }),
     searchAdverts: builder.query<Advert[], SearchAdvertsParams>({
       query: (payload: SearchAdvertsParams) => ({

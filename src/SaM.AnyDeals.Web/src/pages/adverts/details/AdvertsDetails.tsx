@@ -12,6 +12,8 @@ import AttachmentCard from "../../../components/adverts/fields/attachmentCard/At
 import ContactsGrid from "../../../components/adverts/fields/contactsGrid/ContactsGrid";
 import { useCreateOrderMutation } from "../../../features/api/extensions/ordersApiExtension";
 import { useNavigate } from "react-router-dom";
+import ReviewCard from "../../../components/review/card/ReviewCard";
+import { Review } from "../../../models/api/review";
 
 export default function AdvertsDetails() {
   const navigate = useNavigate();
@@ -74,7 +76,15 @@ export default function AdvertsDetails() {
               </Button>
             </div>
           </Paper>
-          <Paper className="details__reviews">reviews</Paper>
+          {!!reviews && reviews.length > 0 ? (
+            <Paper className="details__reviews">
+              {reviews?.map((review: Review, index: number) => (
+                <ReviewCard key={index} review={review} />
+              ))}
+            </Paper>
+          ) : (
+            <></>
+          )}
         </div>
       ) : (
         <></>
