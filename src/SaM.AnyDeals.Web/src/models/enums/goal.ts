@@ -1,13 +1,13 @@
 export class Goal {
-  private static readonly Request = 0;
-  private static readonly Offer = 1;
+  public static readonly Request = 0;
+  public static readonly Offer = 1;
 
-  private static goalToString = {
-    0: "Request",
-    1: "Offer",
-  };
+  private static goalMap = new Map<number, string>([
+    [0, "Request"],
+    [1, "Offer"],
+  ]);
 
   public static convert(goal: number) {
-    return this.goalToString[goal as keyof typeof this.goalToString];
+    return this.goalMap.get(goal);
   }
 }

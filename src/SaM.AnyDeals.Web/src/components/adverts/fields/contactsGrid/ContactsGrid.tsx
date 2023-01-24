@@ -14,33 +14,26 @@ import AlternateEmailIcon from "@mui/icons-material/AlternateEmail";
 import EightKIcon from "@mui/icons-material/EightK";
 
 export default function ContactsGrid({ contacts }: { contacts: Contacts }) {
-  // TODO: Use new Map() here
-  const contactsIcons = {
-    name: <PersonIcon />,
-    address: <PlaceIcon />,
-    email: <AlternateEmailIcon />,
-    facebook: <FacebookIcon />,
-    instagram: <InstagramIcon />,
-    telegram: <TelegramIcon />,
-    phone: <PhoneIcon />,
-    linkedIn: <LinkedInIcon />,
-    whatsApp: <WhatsAppIcon />,
-    vk: <EightKIcon />,
-  };
+  const contactsMap = new Map<string, any>([
+    ["name", <PersonIcon />],
+    ["email", <AlternateEmailIcon />],
+    ["address", <PlaceIcon />],
+    ["phone", <PhoneIcon />],
+    ["linkedin", <LinkedInIcon />],
+    ["facebook", <FacebookIcon />],
+    ["instagram", <InstagramIcon />],
+    ["telegram", <TelegramIcon />],
+    ["whatsapp", <WhatsAppIcon />],
+    ["vk", <EightKIcon />],
+  ]);
 
   return (
     <>
       <Grid container spacing={3} columns={5}>
         {Object.keys(contacts).map((key, index) =>
           contacts[key as keyof typeof contacts] ? (
-            <Grid
-              item
-              key={index}
-              xs={2}
-              display="flex"
-              gap="4px"
-            >
-              {contactsIcons[key as keyof typeof contactsIcons]}
+            <Grid item key={index} xs={2} display="flex" gap="4px">
+              {contactsMap.get(key)}
               {contacts[key as keyof typeof contacts]}
             </Grid>
           ) : (
