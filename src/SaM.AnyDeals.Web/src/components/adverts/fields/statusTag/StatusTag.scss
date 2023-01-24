@@ -1,0 +1,24 @@
+.status {
+  display: inline-flex;
+  border-radius: 6.375rem;
+  font-size: 0.875rem;
+  padding: 0px 1rem;
+  height: 1.5rem;
+  -webkit-box-align: center;
+  align-items: center;
+
+  &__accepted {
+    color: rgba(135, 193, 1, 0.774);
+    background-color: rgba(189, 255, 6, 0.23);
+  }
+
+  &__rejected {
+    color: rgb(215, 107, 0);
+    background-color: rgba(255, 147, 6, 0.1);
+  }
+
+  &__onmoderation {
+    color: rgb(136, 136, 136);
+    background-color: rgba(152, 152, 152, 0.1);
+  }
+}

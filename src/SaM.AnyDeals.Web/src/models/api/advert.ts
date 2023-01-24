@@ -10,6 +10,7 @@ export interface Advert {
   description: string;
   goal: number;
   group: number;
+  status: number;
   interest: number;
   city: City;
   category: Category;

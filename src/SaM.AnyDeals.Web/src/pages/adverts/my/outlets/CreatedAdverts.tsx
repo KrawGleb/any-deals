@@ -13,6 +13,7 @@ export default function CreatedAdverts() {
       onCardClick={onCardClick}
       adverts={myAdverts ?? []}
       styles={{ height: "80vh" }}
+      showStatus={true}
     />
   );
 }

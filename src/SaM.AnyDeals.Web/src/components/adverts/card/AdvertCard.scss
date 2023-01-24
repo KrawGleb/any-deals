@@ -21,9 +21,12 @@
 
       &__header {
         display: flex;
-        flex-direction: row;
-        gap: 16px;
-        flex-wrap: wrap;
+        justify-content: space-between;
+
+        &__tags {
+          display: flex;
+          gap: 16px;
+        }
       }
 
       &__title {
@@ -42,6 +45,7 @@
           color: rgb(216, 1, 230);
         }
       }
+
       &__category,
       &__country {
         margin: 0px;
