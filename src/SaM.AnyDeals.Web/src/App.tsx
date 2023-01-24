@@ -45,18 +45,18 @@ function App() {
               <Route path="orders" element={<Orders />} />
               <Route path="execution" element={<Execution />} />
             </Route>
+            <Route path="" element={<Navigate to="search" />} />
           </Route>
           <Route path="orders" element={<Outlet />}>
             <Route path="details" element={<OrderDetails />} />
           </Route>
+          <Route path="" element={<Navigate to="/adverts" />} />
         </Route>
-        {isAdmin ? (
+        {isAdmin && (
           <Route path="/moderation" element={<Moderation />}>
             <Route path="adverts" element={<ModerationAdverts />} />
             <Route path="categories" element={<ModerationCategories />} />
           </Route>
-        ) : (
-          <></>
         )}
       </Routes>
     </div>
