@@ -155,6 +155,7 @@ export default function AdvertForm({ advert }: AdvertFormProps) {
       id: advert?.id,
       cityId: selectedCity!.id,
       categoryId: selectedCategory!.id,
+      category: selectedCategory?.name,
       attachments,
       contacts: {
         ...data,
