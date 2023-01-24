@@ -4,17 +4,21 @@ using SaM.AnyDeals.Common.Interfaces;
 
 namespace SaM.AnyDeals.Application.Requests.Adverts.Commands.Update;
 
-public record UpdateAdvertCommand(
-    int Id,
-    string? Title,
-    string? Description,
-    Goal Goal,
-    Group Group,
-    Interest Interest,
-    int? CityId,
-    int? CategoryId,
-    ContactsViewModel? Contacts,
-    List<AttachmentViewModel>? Attachments) :
+public class UpdateAdvertCommand : 
     IRequest<Response>,
     IProtectedAdvertAction,
-    IChangeDataRequest;
+    IChangeDataRequest
+{
+    public int Id { get; set; }
+    public string? Title { get; set; }
+    public string? Description { get; set; }
+    public Goal Goal { get; set; }
+    public Group Group { get; set; }
+    public Interest Interest { get; set; }
+    public int? CityId { get; set; }
+    public int? CategoryId { get; set; }
+    public string? Category { get; set; }
+    public ContactsViewModel? Contacts { get; set; }
+    public List<AttachmentViewModel>? Attachments { get; set; }
+}
+

@@ -29,6 +29,10 @@ public class UpdateAdvertCommandHandler : IRequestHandler<UpdateAdvertCommand, R
             .SingleOrDefaultAsync(a => a.Id == request.Id, cancellationToken)
             ?? throw new NotFoundException($"Advert with id {request.Id} not found.");
 
+        request.CategoryId = request.CategoryId is null || request.CategoryId == 0
+            ? entity.CategoryId
+            : request.CategoryId;
+
         _applicationDbContext
             .Entry(entity)
             .CurrentValues
@@ -39,11 +43,38 @@ public class UpdateAdvertCommandHandler : IRequestHandler<UpdateAdvertCommand, R
             .CurrentValues
             .SetValues(request.Contacts!);
 
+        await UpdateCategoryAsync(entity, request, cancellationToken);
         UpdateAttachments(entity, request);
 
         entity.Status = Status.Draft;
 
         return new Response();
+    }
+
+    private async Task UpdateCategoryAsync(
+        AdvertDbEntry entity,
+        UpdateAdvertCommand request,
+        CancellationToken cancellationToken)
+    {
+        if (request.Category is null)
+            return;
+
+        if (entity.Category!.Status == Status.Draft)
+        {
+            entity.Category.Name = request.Category;
+        }
+        else
+        {
+            var draftCategory = new CategoryDbEntry
+            {
+                Name = request.Category,
+                Status = Status.Draft
+            };
+
+            await _applicationDbContext.Categories.AddAsync(draftCategory, cancellationToken);
+
+            entity.Category = draftCategory;
+        }
     }
 
     private void UpdateAttachments(AdvertDbEntry entity, UpdateAdvertCommand request)
