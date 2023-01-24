@@ -1,0 +1,52 @@
+.order {
+  &-chat {
+    &__root {
+      padding: 24px;
+    }
+
+    &__history {
+      background-color: rgba(221, 221, 221, 0.45);
+      height: 50vh;
+      overflow-y: scroll;
+      overflow-x: hidden;
+      padding: 12px;
+      margin-bottom: 8px;
+      border-radius: 4px;
+    }
+
+    &__input {
+      display: flex;
+      flex-direction: row;
+      gap: 12px;
+    }
+
+    &-message {
+      margin-bottom: 8px;
+
+      &__left {
+        display: flex;
+        flex-direction: row;
+
+        border-top-left-radius: 10px;
+        border-top-right-radius: 10px;
+        border-bottom-right-radius: 10px;
+      }
+
+      &__right {
+        display: flex;
+        flex-direction: row-reverse;
+
+        border-top-left-radius: 10px;
+        border-top-right-radius: 10px;
+        border-bottom-left-radius: 10px;
+      }
+
+      &__content {
+        background-color: rgba(34, 123, 249, 0.45);
+        max-width: 50%;
+        border-radius: 10px;
+        padding: 10px;
+      }
+    }
+  }
+}

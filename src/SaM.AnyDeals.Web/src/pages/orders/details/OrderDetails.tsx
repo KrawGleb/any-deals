@@ -19,6 +19,7 @@ import Button from "@mui/material/Button";
 import ReviewDialog from "../../../components/dialogs/review/ReviewDialog";
 import { Review } from "../../../models/api/review";
 import { useCreateReviewMutation } from "../../../features/api/extensions/reviewsApiExtension";
+import OrderChat from "../../../components/orders/chat/OrderChat";
 
 export default function OrderDetails() {
   const navigate = useNavigate();
@@ -164,7 +165,9 @@ export default function OrderDetails() {
               </div>
             )}
           </Paper>
-          <Paper className="order-chat">Chat</Paper>
+          <Paper className="order-chat">
+            <OrderChat orderId={orderId} />
+          </Paper>
         </div>
       ) : (
         <></>
