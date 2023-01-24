@@ -12,7 +12,6 @@ export default function CreatedAdverts() {
     <AdvertsList
       onCardClick={onCardClick}
       adverts={myAdverts ?? []}
-      styles={{ height: "80vh" }}
       showStatus={true}
     />
   );

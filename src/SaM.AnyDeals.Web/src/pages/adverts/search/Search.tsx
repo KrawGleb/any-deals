@@ -69,11 +69,7 @@ export default function Search() {
           loader={<h4>Loading...</h4>}
           hasMore={hasMore}
         >
-          <AdvertsList
-            adverts={currentAdverts}
-            onCardClick={onCardClick}
-            styles={{ height: "60vh" }}
-          />
+          <AdvertsList adverts={currentAdverts} onCardClick={onCardClick} />
         </InfiniteScroll>
       </Box>
     </>

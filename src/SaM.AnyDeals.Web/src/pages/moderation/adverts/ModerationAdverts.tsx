@@ -50,11 +50,7 @@ export default function ModerationAdverts() {
       loader={<h4>Loading...</h4>}
       hasMore={hasMore}
     >
-      <AdvertsList
-        adverts={currentAdverts}
-        styles={{ height: "80vh" }}
-        onCardClick={onCardClick}
-      />
+      <AdvertsList adverts={currentAdverts} onCardClick={onCardClick} />
     </InfiniteScroll>
   );
 }

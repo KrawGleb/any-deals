@@ -7,12 +7,11 @@ import AdvertCard from "../card/AdvertCard";
 export default function AdvertsList({
   adverts,
   onCardClick,
-  styles,
   showStatus,
 }: AdvertsListProps) {
   return (
     <Box className="adverts-list__root">
-      <Stack className="adverts-list__component" spacing={2} sx={styles}>
+      <Stack className="adverts-list__component" spacing={2}>
         {adverts.map((advert, index) => (
           <AdvertCard
             key={index}
