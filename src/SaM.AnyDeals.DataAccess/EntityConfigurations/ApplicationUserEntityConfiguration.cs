@@ -27,5 +27,10 @@ public class ApplicationUserEntityConfiguration : EntityConfigurationBase<Applic
             .HasMany(a => a.Reviews)
             .WithOne(r => r.Author)
             .OnDelete(DeleteBehavior.NoAction);
+
+        builder
+            .HasMany(a => a.Messages)
+            .WithOne(m => m.Sender)
+            .OnDelete(DeleteBehavior.NoAction);
     }
 }

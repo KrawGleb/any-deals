@@ -13,6 +13,9 @@ public class OrderDbEntry : AuditableDbEntry
     public string? ExecutorId { get; set; }
     public ApplicationUser? Executor { get; set; }
 
+    public Guid ChatId { get; set; }
+    public ChatDbEntry? Chat { get; set; }
+
     public bool HasCustomerApproval { get; set; }
     public bool HasExecutorApproval { get; set; }
     public bool ArchivatedByCustomer { get; set; }

@@ -9,4 +9,5 @@ public class ApplicationUser : IdentityUser
     public List<OrderDbEntry>? Orders { get; set; }
     public List<OrderDbEntry>? Execution { get; set; }
     public List<ReviewDbEntry>? Reviews { get; set; }
+    public List<MessageDbEntry>? Messages { get; set; }
 }

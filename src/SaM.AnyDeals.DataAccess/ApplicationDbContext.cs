@@ -33,6 +33,7 @@ public class ApplicationDbContext : IdentityDbContext<ApplicationUser, IdentityR
     public DbSet<CityDbEntry> Cities { get; set; }
     public DbSet<OrderDbEntry> Orders { get; set; }
     public DbSet<ReviewDbEntry> Reviews { get; set; }
+    public DbSet<MessageDbEntry> Messages { get; set; }
 
     public override async Task<int> SaveChangesAsync(CancellationToken cancellationToken = default)
     {

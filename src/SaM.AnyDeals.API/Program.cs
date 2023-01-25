@@ -1,7 +1,10 @@
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.HttpOverrides;
 using Microsoft.IdentityModel.Tokens;
+using SaM.AnyDeals.API.Hubs;
+using SaM.AnyDeals.API.Hubs.Services;
 using SaM.AnyDeals.Application;
+using SaM.AnyDeals.Common.Interfaces;
 using SaM.AnyDeals.DataAccess;
 using SaM.AnyDeals.DataAccess.Extensions;
 using SaM.AnyDeals.Infrastructure;
@@ -15,6 +18,9 @@ var configuration = builder.Configuration;
 services.AddDataAccess(configuration);
 services.AddApplication();
 services.AddInfrastructure();
+services.AddSignalR();
+
+services.AddTransient<IChatService, ChatService>();
 
 services
     .AddControllers(options =>
@@ -64,5 +70,6 @@ app.UseAuthentication();
 app.UseAuthorization();
 
 app.MapControllers();
+app.MapHub<ChatHub>("/chats");
 
 app.Run();
