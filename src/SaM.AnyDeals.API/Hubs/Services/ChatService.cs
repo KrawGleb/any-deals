@@ -12,7 +12,6 @@ public class ChatService : IChatService
         _context = context;
     }
 
-    public async Task NotifyGroupAsync(Guid group, string notification, object? arg = null, CancellationToken cancellationToken = default)
-        => await _context.Clients.Group(group.ToString()).SendAsync(notification, arg, cancellationToken);
-
+    public async Task NotifyAsync(string method, object? arg = null, CancellationToken cancellationToken = default)
+        => await _context.Clients.All.SendAsync(method, arg, cancellationToken);
 }

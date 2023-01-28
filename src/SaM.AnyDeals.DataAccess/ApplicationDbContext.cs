@@ -33,6 +33,7 @@ public class ApplicationDbContext : IdentityDbContext<ApplicationUser, IdentityR
     public DbSet<CityDbEntry> Cities { get; set; }
     public DbSet<OrderDbEntry> Orders { get; set; }
     public DbSet<ReviewDbEntry> Reviews { get; set; }
+    public DbSet<ChatDbEntry> Chats { get; set; }
     public DbSet<MessageDbEntry> Messages { get; set; }
 
     public override async Task<int> SaveChangesAsync(CancellationToken cancellationToken = default)
@@ -48,7 +49,7 @@ public class ApplicationDbContext : IdentityDbContext<ApplicationUser, IdentityR
         {
             var advert = entry.Entity;
 
-            if(entry.State != EntityState.Deleted)
+            if (entry.State != EntityState.Deleted)
                 await LoadAdvertEntryAsync(advert, cancellationToken);
 
             var advertElasticEntry = AdvertsHelper.MapDbEntry(advert);

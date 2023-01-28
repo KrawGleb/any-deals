@@ -11,7 +11,7 @@ public class OrderEntityConfiguration : EntityConfigurationBase<OrderDbEntry>
         builder
             .HasOne(o => o.Chat)
             .WithOne(c => c.Order)
-            .HasForeignKey<ChatDbEntry>(c => c.OrderId)
+            .HasForeignKey<OrderDbEntry>(o => o.ChatId)
             .OnDelete(DeleteBehavior.Cascade);
     }
 }

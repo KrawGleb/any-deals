@@ -2,5 +2,5 @@
 
 public interface IChatService
 {
-    Task NotifyGroupAsync(Guid group, string notification, object? arg = null, CancellationToken cancellationToken = default);
+    Task NotifyAsync(string method, object? arg = null, CancellationToken cancellationToken = default);
 }

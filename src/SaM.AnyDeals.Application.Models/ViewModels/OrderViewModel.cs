@@ -11,5 +11,5 @@ public class OrderViewModel
     public bool ArchivatedByCustomer { get; set; }
     public bool ArchivatedByExecutor { get; set; }
     public DateTime CreatedAt { get; set; }
-
+    public Guid ChatId { get; set; }
 }

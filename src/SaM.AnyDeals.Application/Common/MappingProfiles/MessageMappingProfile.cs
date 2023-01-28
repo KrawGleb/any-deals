@@ -1,6 +1,6 @@
 ﻿using AutoMapper;
 using SaM.AnyDeals.Application.Models.ViewModels;
-using SaM.AnyDeals.Application.Requests.Messages.Commands.Send;
+using SaM.AnyDeals.Application.Requests.Chat.Commands.Send;
 using SaM.AnyDeals.DataAccess.Models.Entries;
 
 namespace SaM.AnyDeals.Application.Common.MappingProfiles;

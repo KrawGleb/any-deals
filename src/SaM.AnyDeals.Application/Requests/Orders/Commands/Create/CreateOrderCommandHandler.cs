@@ -34,7 +34,8 @@ public class CreateOrderCommandHandler : IRequestHandler<CreateOrderCommand, Res
         {
             AdvertId = request.AdvertId,
             CustomerId = customerId,
-            ExecutorId = executorId
+            ExecutorId = executorId,
+            Chat = new ChatDbEntry()
         };
 
         await _applicationDbContext.Orders.AddAsync(order, cancellationToken);
