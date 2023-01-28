@@ -1,30 +1,83 @@
 import "./OrderChat.scss";
-import React from "react";
+import React, { ChangeEvent, useEffect, useState } from "react";
 import { OrderChatProps } from "./OrderChatProps";
 import { Box, Button } from "@mui/material";
 import Input from "../../common/Input";
 import SendIcon from "@mui/icons-material/Send";
-
-const lorem =
-  "What is Lorem Ipsum? Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.";
+import { HubConnectionBuilder } from "@microsoft/signalr";
+import {
+  chatApiExtension,
+  useGetMessagesQuery,
+  useSendMessageMutation,
+} from "../../../features/api/extensions/chatApiExtension";
+import { useDispatch, useSelector } from "react-redux";
+import { RootState } from "../../../features/store/store";
 
 export default function OrderChat(props: OrderChatProps) {
-  const messages = Array(10).fill(lorem);
+  const dispatch = useDispatch();
+  const userId = useSelector((state: RootState) => state.auth.userInfo.id);
+  const [message, setMessage] = useState("");
+  const handleMessageInputChange = (e: ChangeEvent<HTMLInputElement>) =>
+    setMessage(e.target.value);
+
+  const { data: messages } = useGetMessagesQuery({ id: props.orderId });
+  const [sendMessage] = useSendMessageMutation();
+
+  const handleSendClick = () => {
+    sendMessage({ orderId: props.orderId, text: message });
+  };
+
+  useEffect(() => {
+    console.log(props.orderId);
+    console.log(messages);
+  }, [messages]);
+
+  useEffect(() => {
+    const connection = new HubConnectionBuilder()
+      .withUrl("/hubs/chat")
+      .withAutomaticReconnect()
+      .build();
+
+    connection
+      .start()
+      .then(() => {
+        console.log("Connected");
+
+        connection.on("NewMessage", (userId) => {
+          if (props.customerId === userId || props.executorId === userId) {
+            console.log("new message");
+            dispatch(chatApiExtension.util.invalidateTags(["Chat"]));
+          }
+        });
+      })
+      .catch((err) => console.log(err));
+
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   return (
     <Box className="order-chat__root">
       <Box className="order-chat__history">
-        {messages.map((message, index) => (
-          <p key={index} className={index % 2 === 0 ? "from-me" : "from-them"}>
-            {message}
-          </p>
-        ))}
+        {messages &&
+          messages.map((message, index) => (
+            <p
+              key={index}
+              className={message.sender.id === userId ? "from-me" : "from-them"}
+            >
+              {message.text}
+            </p>
+          ))}
       </Box>
       <Box className="order-chat__input">
-        <Input label="Write a message" disabled={props.disabled} />
+        <Input
+          label="Write a message"
+          onChange={handleMessageInputChange}
+          disabled={props.disabled}
+        />
         <Button
           variant="contained"
           endIcon={<SendIcon />}
+          onClick={handleSendClick}
           disabled={props.disabled}
         >
           Send

@@ -166,7 +166,11 @@ export default function OrderDetails() {
             )}
           </Paper>
           <Paper className="order-chat">
-            <OrderChat orderId={orderId} />
+            <OrderChat
+              orderId={orderId}
+              customerId={order.customer.id}
+              executorId={order.executor.id}
+            />
           </Paper>
         </div>
       ) : (
