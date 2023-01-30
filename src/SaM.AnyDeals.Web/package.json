@@ -19,6 +19,7 @@
     "@types/react-dom": "^18.0.9",
     "axios": "^1.2.1",
     "firebase": "^9.15.0",
+    "oidc-client": "^1.11.5",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "react-dropzone": "^14.2.3",

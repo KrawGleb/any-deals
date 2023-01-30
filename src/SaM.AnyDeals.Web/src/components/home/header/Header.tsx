@@ -14,6 +14,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { RootState } from "../../../features/store/store";
 import { logout } from "../../../features/api/auth/authSlice";
+import { signinRedirect } from "../../../features/api/auth/userService";
 
 export default function Header() {
   const navigate = useNavigate();
@@ -56,9 +57,7 @@ export default function Header() {
                   </Typography>
                   <List className="dropdown__content">
                     {isAdmin ? (
-                      <ListItemButton
-                        onClick={() => navigate("/moderation")}
-                      >
+                      <ListItemButton onClick={() => navigate("/moderation")}>
                         <ListItemText>Moderation</ListItemText>
                       </ListItemButton>
                     ) : (
@@ -78,7 +77,7 @@ export default function Header() {
                   variant="contained"
                   color="primary"
                   className="actions__signup"
-                  onClick={() => navigate("/signup")}
+                  onClick={() => navigate("/signup-oidc")}
                 >
                   Signup
                 </Button>
@@ -87,7 +86,7 @@ export default function Header() {
                   variant="contained"
                   color="primary"
                   className="actions__login"
-                  onClick={() => navigate("/signin")}
+                  onClick={() => signinRedirect()}
                 >
                   Signin
                 </Button>

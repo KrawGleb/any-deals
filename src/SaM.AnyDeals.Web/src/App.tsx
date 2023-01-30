@@ -19,6 +19,8 @@ import CreatedAdverts from "./pages/adverts/my/outlets/CreatedAdverts";
 import Execution from "./pages/adverts/my/outlets/Execution";
 import Orders from "./pages/adverts/my/outlets/Orders";
 import OrderDetails from "./pages/orders/details/OrderDetails";
+import AuthProvider from "./features/api/auth/authProvider";
+import userManager from "./features/api/auth/userService";
 
 function App() {
   const authState = useSelector((state: RootState) => state.auth);
@@ -27,38 +29,42 @@ function App() {
 
   return (
     <div className="app">
-      <Routes>
-        <Route path="/signup" element={<SignUp />} />
-        <Route path="/signin" element={<SignIn />} />
-        <Route path="/about" element={<About />} />
-        <Route path="/" element={<Home />}>
-          <Route path="adverts" element={<Outlet />}>
-            <Route path="search" element={<Search />} />
-            <Route path="new" element={<NewAdvert />} />
-            <Route path="edit" element={<EditAdvert />} />
-            <Route path="details" element={<AdvertsDetails />} />
-            <Route
-              path="my"
-              element={hasToken ? <MyAdverts /> : <Navigate to="/signin" />}
-            >
-              <Route path="" element={<CreatedAdverts />} />
-              <Route path="orders" element={<Orders />} />
-              <Route path="execution" element={<Execution />} />
+      <AuthProvider userManager={userManager}>
+        <Routes>
+          <Route path="/signup-oidc" element={<SignUp />} />
+          <Route path="/signin-oidc" element={<SignIn />} />
+          <Route path="/about" element={<About />} />
+          <Route path="/" element={<Home />}>
+            <Route path="adverts" element={<Outlet />}>
+              <Route path="search" element={<Search />} />
+              <Route path="new" element={<NewAdvert />} />
+              <Route path="edit" element={<EditAdvert />} />
+              <Route path="details" element={<AdvertsDetails />} />
+              <Route
+                path="my"
+                element={
+                  hasToken ? <MyAdverts /> : <Navigate to="/signin-oidc" />
+                }
+              >
+                <Route path="" element={<CreatedAdverts />} />
+                <Route path="orders" element={<Orders />} />
+                <Route path="execution" element={<Execution />} />
+              </Route>
+              <Route path="" element={<Navigate to="search" />} />
             </Route>
-            <Route path="" element={<Navigate to="search" />} />
+            <Route path="orders" element={<Outlet />}>
+              <Route path="details" element={<OrderDetails />} />
+            </Route>
+            <Route path="" element={<Navigate to="/adverts" />} />
           </Route>
-          <Route path="orders" element={<Outlet />}>
-            <Route path="details" element={<OrderDetails />} />
-          </Route>
-          <Route path="" element={<Navigate to="/adverts" />} />
-        </Route>
-        {isAdmin && (
-          <Route path="/moderation" element={<Moderation />}>
-            <Route path="adverts" element={<ModerationAdverts />} />
-            <Route path="categories" element={<ModerationCategories />} />
-          </Route>
-        )}
-      </Routes>
+          {isAdmin && (
+            <Route path="/moderation" element={<Moderation />}>
+              <Route path="adverts" element={<ModerationAdverts />} />
+              <Route path="categories" element={<ModerationCategories />} />
+            </Route>
+          )}
+        </Routes>
+      </AuthProvider>
     </div>
   );
 }
