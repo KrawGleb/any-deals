@@ -424,3 +424,4 @@ src/SaM.AnyDeals.Web/yarn-error.log*
 
 # SQL Server volume
 data
+/src/SaM.AnyDeals.IdentityServer/tempkey.jwk
