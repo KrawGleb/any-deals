@@ -18,7 +18,7 @@ public static class DependencyInjection
         services.AddElastic();
 
         var connectionStringLabel = string.Empty;
-        
+
         if (bool.TryParse(Environment.GetEnvironmentVariable("UseDockerDB"), out var useDockerDB))
             connectionStringLabel = useDockerDB ? "Docker" : "Local";
         else
@@ -38,7 +38,8 @@ public static class DependencyInjection
 
             options.User.RequireUniqueEmail = true;
         })
-            .AddEntityFrameworkStores<ApplicationDbContext>();
+            .AddEntityFrameworkStores<ApplicationDbContext>()
+            .AddDefaultTokenProviders();
 
         return services;
     }

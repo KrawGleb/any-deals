@@ -9,7 +9,6 @@ using SaM.AnyDeals.DataAccess;
 using SaM.AnyDeals.DataAccess.Extensions;
 using SaM.AnyDeals.Infrastructure;
 using SaM.AnyDeals.Infrastructure.Filters;
-using System.Text;
 
 var builder = WebApplication.CreateBuilder(args);
 var services = builder.Services;
@@ -37,6 +36,10 @@ services.AddAuthentication(options =>
 })
     .AddJwtBearer(options =>
 {
+    options.Authority = "http://identity";
+    options.Audience = "AnyDealsAPI";
+    options.RequireHttpsMetadata = false;
+/*
     var key = Encoding.UTF8.GetBytes(Environment.GetEnvironmentVariable("JWTSecurityKey")!);
     options.TokenValidationParameters = new TokenValidationParameters()
     {
@@ -47,7 +50,16 @@ services.AddAuthentication(options =>
         ValidIssuer = "AnyDealsBackend",
         ValidAudience = "AnyDealsFrontend",
         RequireExpirationTime = true,
-    };
+    };*/
+});
+
+services.AddAuthorization(options =>
+{
+    options.AddPolicy("ApiScope", policy =>
+    {
+        policy.RequireAuthenticatedUser();
+        policy.RequireClaim("scope", "any-deals-api");
+    });
 });
 
 var app = builder.Build();

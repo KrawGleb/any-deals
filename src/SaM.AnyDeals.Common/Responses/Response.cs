@@ -1,4 +1,4 @@
-﻿namespace SaM.AnyDeals.Application.Models.Responses;
+﻿namespace SaM.AnyDeals.Common.Responses;
 
 public class Response
 {

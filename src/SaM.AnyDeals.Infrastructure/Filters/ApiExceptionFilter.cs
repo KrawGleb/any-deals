@@ -2,8 +2,8 @@
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Filters;
-using SaM.AnyDeals.Application.Models.Responses;
 using SaM.AnyDeals.Common.Exceptions;
+using SaM.AnyDeals.Common.Responses;
 
 namespace SaM.AnyDeals.Infrastructure.Filters;
 
