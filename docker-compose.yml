@@ -1,4 +1,4 @@
-version: '3.4'
+version: "3.4"
 
 services:
   database:
@@ -6,6 +6,13 @@ services:
     environment:
       - ACCEPT_EULA=Y
       - SA_PASSWORD=ChangeMe123!
+  identity:
+    image: ${DOCKER_REGISTRY-}identity
+    build:
+      context: src
+      dockerfile: SaM.AnyDeals.IdentityServer/Dockerfile
+    depends_on:
+      - database
   backend:
     image: ${DOCKER_REGISTRY-}backend
     build:
@@ -13,6 +20,7 @@ services:
       dockerfile: SaM.AnyDeals.API/Dockerfile
     depends_on:
       - database
+      - identity
   client:
     image: ${DOCKER_REGISTRY-}client
     build:

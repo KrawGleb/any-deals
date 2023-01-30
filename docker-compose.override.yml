@@ -1,4 +1,4 @@
-version: '3.4'
+version: "3.4"
 
 services:
   database:
@@ -6,6 +6,14 @@ services:
       - "1433:1433"
     volumes:
       - ./data:/var/opt/mssql/data
+  identity:
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+      - ASPNETCORE_URLS=http://+:80
+      - UseDockerDB=true
+      - BONSAI_URL=https:\\o0hr0acl24:hp1tmflug4@pine-530439672.eu-west-1.bonsaisearch.net:443
+    ports:
+      - "6000:80"
   backend:
     environment:
       - ASPNETCORE_ENVIRONMENT=Development
@@ -28,6 +36,6 @@ services:
       - WDS_SOCKET_PORT=0
   proxy:
     volumes:
-      - ./nginx.conf:/etc/nginx/nginx.conf 
+      - ./nginx.conf:/etc/nginx/nginx.conf
     ports:
-      - "8080:80" 
+      - "8080:80"
