@@ -2,12 +2,12 @@ import { UserManager, UserManagerSettings } from "oidc-client";
 
 const userManagerSettings: UserManagerSettings = {
   client_id: "AnyDealsWeb",
-  redirect_uri: "http://client/singin-oidc",
+  redirect_uri: "http://localhost:80/singin-oidc",
   response_type: "code",
   response_mode: "query",
-  scope: "openid profile AnyDealsApi",
-  authority: `${window.location.hostname}:8080/identity`,
-  post_logout_redirect_uri: "http://client/singout-oidc",
+  scope: "openid profile AnyDealsAPI",
+  authority: `http://localhost:80/identity`,
+  post_logout_redirect_uri: "http://localhost:80/singout-oidc",
 };
 
 const userManager = new UserManager(userManagerSettings);
