@@ -36,7 +36,7 @@ services.AddAuthentication(options =>
 })
     .AddJwtBearer(options =>
 {
-    options.Authority = "http://identity";
+    options.Authority = "http://identity:80";
     options.Audience = "AnyDealsAPI";
     options.RequireHttpsMetadata = false;
 /*

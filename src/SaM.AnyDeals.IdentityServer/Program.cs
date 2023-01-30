@@ -13,8 +13,7 @@ builder.Services.AddTransient<IAuthService, AuthService>();
 builder.Services
     .AddIdentityServer(options =>
     {
-        // see https://identityserver4.readthedocs.io/en/latest/topics/resources.html
-        options.EmitStaticAudienceClaim = true;
+        options.IssuerUri = "http://localhost:80/identity";
     })
     .AddAspNetIdentity<ApplicationUser>()
     .AddInMemoryApiResources(Config.ApiResources)
@@ -47,6 +46,7 @@ app.UseForwardedHeaders(new ForwardedHeadersOptions
 app.UseStaticFiles();
 app.UseRouting();
 app.UseIdentityServer();
+
 app.MapControllers();
 
 app.Run();

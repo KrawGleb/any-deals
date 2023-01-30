@@ -40,16 +40,11 @@ public static class Config
                 RequirePkce = true,
                 RedirectUris =
                 {
-                    "http://client/singin-oidc"
-                },
-                AllowedCorsOrigins =
-                {
-                    "http://client",
-                    "http://proxy"
+                    "http://localhost:80/singin-oidc"
                 },
                 PostLogoutRedirectUris =
                 {
-                    "http://client/singout-oidc"
+                    "http://localhost:80/singout-oidc"
                 },
                 AllowedScopes = 
                 {

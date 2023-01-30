@@ -6,6 +6,11 @@
     <input type="hidden" asp-for="ReturnUrl" />
     <div class="header">Sign Up</div>
     <div class="block">
+        <label>Email</label>
+        <input asp-for="Email" class="input" />
+        <span asp-validation-for="Email"></span>
+    </div>
+    <div class="block">
         <label>Username</label>
         <input asp-for="Username" class="input" />
         <span asp-validation-for="Username"></span>
