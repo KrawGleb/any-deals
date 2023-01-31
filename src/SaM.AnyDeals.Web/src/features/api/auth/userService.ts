@@ -2,12 +2,12 @@ import { UserManager, UserManagerSettings } from "oidc-client";
 
 const userManagerSettings: UserManagerSettings = {
   client_id: "AnyDealsWeb",
-  redirect_uri: "http://localhost:80/singin-oidc",
+  redirect_uri: "http://localhost:80/signin-oidc",
   response_type: "code",
   response_mode: "query",
   scope: "openid profile AnyDealsAPI",
   authority: `http://localhost:80/identity`,
-  post_logout_redirect_uri: "http://localhost:80/singout-oidc",
+  post_logout_redirect_uri: "http://localhost:80/signout-oidc",
 };
 
 const userManager = new UserManager(userManagerSettings);
@@ -16,7 +16,6 @@ export async function loadUser() {
   const user = await userManager.getUser();
   console.log("User: ", user);
 
-  // set token
   localStorage.setItem("userToken", user?.access_token ?? "");
 
   return user;

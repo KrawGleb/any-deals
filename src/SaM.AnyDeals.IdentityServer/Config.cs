@@ -40,11 +40,11 @@ public static class Config
                 RequirePkce = true,
                 RedirectUris =
                 {
-                    "http://localhost:80/singin-oidc"
+                    "http://localhost:80/signin-oidc"
                 },
                 PostLogoutRedirectUris =
                 {
-                    "http://localhost:80/singout-oidc"
+                    "http://localhost:80/signout-oidc"
                 },
                 AllowedScopes = 
                 {
