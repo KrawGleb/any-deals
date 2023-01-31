@@ -33,7 +33,7 @@ public class AuthController : Controller
         var response = await _authService.LoginAsync(loginViewModel, cancellationToken);
 
         if (response.Succeeded)
-            Redirect(loginViewModel.ReturnUrl!);
+            return Redirect(loginViewModel.ReturnUrl!);
 
         var errorResponse = response as ErrorResponse;
 
@@ -62,7 +62,7 @@ public class AuthController : Controller
         var response = await _authService.RegisterAsync(registerViewModel, cancellationToken);
 
         if (response.Succeeded)
-            Redirect(registerViewModel.ReturnUrl!);
+            return Redirect(registerViewModel.ReturnUrl!);
 
         var errorResponse = response as ErrorResponse;
 

@@ -22,6 +22,15 @@ builder.Services
     .AddInMemoryClients(Config.Clients)
     .AddDeveloperSigningCredential();
 
+builder.Services.Configure<CookiePolicyOptions>(options =>
+{
+    options.MinimumSameSitePolicy = SameSiteMode.Unspecified;
+    options.OnAppendCookie = (cookieContext) 
+        => cookieContext.CookieOptions.SameSite = SameSiteMode.Unspecified;
+    options.OnDeleteCookie = (cookieContext)
+        => cookieContext.CookieOptions.SameSite = SameSiteMode.Unspecified;
+});
+
 builder.Services.ConfigureApplicationCookie(config =>
 {
     config.Cookie.Name = "SaM.AnyDeals.Identity.Cookie";
@@ -43,6 +52,7 @@ app.UseForwardedHeaders(new ForwardedHeadersOptions
     ForwardedHeaders = ForwardedHeaders.XForwardedFor | ForwardedHeaders.XForwardedProto
 });
 
+app.UseCookiePolicy();
 app.UseStaticFiles();
 app.UseRouting();
 app.UseIdentityServer();
