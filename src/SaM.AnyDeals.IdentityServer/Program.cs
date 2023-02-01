@@ -1,3 +1,4 @@
+using IdentityServer4.Services;
 using Microsoft.AspNetCore.HttpOverrides;
 using SaM.AnyDeals.DataAccess;
 using SaM.AnyDeals.DataAccess.Models.Auth;
@@ -14,6 +15,13 @@ builder.Services
     .AddIdentityServer(options =>
     {
         options.IssuerUri = "http://localhost:80/identity";
+
+        options.Events.RaiseErrorEvents = true;
+        options.Events.RaiseInformationEvents = true;
+        options.Events.RaiseFailureEvents = true;
+        options.Events.RaiseSuccessEvents = true;
+
+        options.EmitStaticAudienceClaim = true;
     })
     .AddProfileService<ProfileService>()
     .AddAspNetIdentity<ApplicationUser>()
@@ -22,6 +30,8 @@ builder.Services
     .AddInMemoryApiScopes(Config.ApiScopes)
     .AddInMemoryClients(Config.Clients)
     .AddDeveloperSigningCredential();
+
+builder.Services.AddScoped<IProfileService, ProfileService>();
 
 builder.Services.Configure<CookiePolicyOptions>(options =>
 {
