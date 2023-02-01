@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.EntityFrameworkCore;
+using SaM.AnyDeals.Application.Common.Services.Interfaces;
 using SaM.AnyDeals.Common.Exceptions;
 using SaM.AnyDeals.Common.Extensions;
 using SaM.AnyDeals.DataAccess;
@@ -9,19 +10,20 @@ namespace SaM.AnyDeals.Application.Requests.Orders.Commands.Archive;
 public class ArchiveOrderCommandHandler : IRequestHandler<ArchiveOrderCommand, Response>
 {
     private readonly ApplicationDbContext _applicationDbContext;
-    private readonly IHttpContextAccessor _httpContextAccessor;
+    private readonly ICurrentUserService _currentUserService;
 
     public ArchiveOrderCommandHandler(
         ApplicationDbContext applicationDbContext,
-        IHttpContextAccessor httpContextAccessor)
+        ICurrentUserService currentUserService)
     {
         _applicationDbContext = applicationDbContext;
-        _httpContextAccessor = httpContextAccessor;
+        _currentUserService = currentUserService;
     }
 
     public async Task<Response> Handle(ArchiveOrderCommand request, CancellationToken cancellationToken)
     {
-        var userId = _httpContextAccessor.HttpContext.GetUserId();
+        var user = await _currentUserService.GetCurrentUserAsync();
+        var userId = user.Id;
         var order = await _applicationDbContext
             .Orders
             .SingleOrDefaultAsync(o => o.Id == request.Id, cancellationToken)

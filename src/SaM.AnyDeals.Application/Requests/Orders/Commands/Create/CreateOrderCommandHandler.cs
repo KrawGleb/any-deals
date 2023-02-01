@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.EntityFrameworkCore;
+using SaM.AnyDeals.Application.Common.Services.Interfaces;
 using SaM.AnyDeals.Common.Exceptions;
 using SaM.AnyDeals.Common.Extensions;
 using SaM.AnyDeals.DataAccess;
@@ -10,14 +11,14 @@ namespace SaM.AnyDeals.Application.Requests.Orders.Commands.Create;
 public class CreateOrderCommandHandler : IRequestHandler<CreateOrderCommand, Response>
 {
     private readonly ApplicationDbContext _applicationDbContext;
-    private readonly IHttpContextAccessor _httpContextAccessor;
+    private readonly ICurrentUserService _currentUserService;
 
     public CreateOrderCommandHandler(
         ApplicationDbContext applicationDbContext,
-        IHttpContextAccessor httpContextAccessor)
+        ICurrentUserService currentUserService)
     {
         _applicationDbContext = applicationDbContext;
-        _httpContextAccessor = httpContextAccessor;
+        _currentUserService = currentUserService;
     }
 
     public async Task<Response> Handle(CreateOrderCommand request, CancellationToken cancellationToken)
@@ -27,7 +28,8 @@ public class CreateOrderCommandHandler : IRequestHandler<CreateOrderCommand, Res
             .SingleOrDefaultAsync(a => a.Id == request.AdvertId, cancellationToken)
             ?? throw new NotFoundException($"Advert with id {request.AdvertId} not found.");
 
-        var customerId = _httpContextAccessor.HttpContext.GetUserId();
+        var customer = await _currentUserService.GetCurrentUserAsync();
+        var customerId = customer.Id;
         var executorId = targetAdvert.CreatorId;
 
         var order = new OrderDbEntry()

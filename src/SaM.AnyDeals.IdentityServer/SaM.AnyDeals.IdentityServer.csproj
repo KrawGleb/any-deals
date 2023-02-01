@@ -20,4 +20,10 @@
     <ProjectReference Include="..\SaM.AnyDeals.DataAccess\SaM.AnyDeals.DataAccess.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Content Update="wwwroot\css\styles.css">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+  </ItemGroup>
+
 </Project>

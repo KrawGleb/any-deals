@@ -1,8 +1,7 @@
 ﻿using AutoMapper;
-using Microsoft.AspNetCore.Http;
 using Microsoft.EntityFrameworkCore;
+using SaM.AnyDeals.Application.Common.Services.Interfaces;
 using SaM.AnyDeals.Application.Models.ViewModels;
-using SaM.AnyDeals.Common.Extensions;
 using SaM.AnyDeals.DataAccess;
 
 namespace SaM.AnyDeals.Application.Requests.Orders.Queries.GetMy;
@@ -10,22 +9,23 @@ namespace SaM.AnyDeals.Application.Requests.Orders.Queries.GetMy;
 public class GetMyOrdersQueryHandler : IRequestHandler<GetMyOrdersQuery, Response>
 {
     private readonly ApplicationDbContext _applicationDbContext;
-    private readonly IHttpContextAccessor _httpContextAccessor;
+    private readonly ICurrentUserService _currentUserService;
     private readonly IMapper _mapper;
 
     public GetMyOrdersQueryHandler(
         ApplicationDbContext applicationDbContext,
-        IHttpContextAccessor httpContextAccessor,
+        ICurrentUserService currentUserService,
         IMapper mapper)
     {
         _applicationDbContext = applicationDbContext;
-        _httpContextAccessor = httpContextAccessor;
+        _currentUserService = currentUserService;
         _mapper = mapper;
     }
 
     public async Task<Response> Handle(GetMyOrdersQuery request, CancellationToken cancellationToken)
     {
-        var userId = _httpContextAccessor.HttpContext.GetUserId();
+        var user = await _currentUserService.GetCurrentUserAsync();
+        var userId = user.Id;
         var query = _applicationDbContext
             .Orders
             .Include(o => o.Advert)

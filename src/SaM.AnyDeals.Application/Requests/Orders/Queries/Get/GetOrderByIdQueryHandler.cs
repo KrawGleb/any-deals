@@ -1,34 +1,35 @@
 ﻿using AutoMapper;
 using Microsoft.AspNetCore.Http;
 using Microsoft.EntityFrameworkCore;
+using SaM.AnyDeals.Application.Common.Services.Interfaces;
 using SaM.AnyDeals.Application.Models.ViewModels;
 using SaM.AnyDeals.Common.Exceptions;
 using SaM.AnyDeals.Common.Extensions;
 using SaM.AnyDeals.DataAccess;
 using SaM.AnyDeals.DataAccess.Models.Entries;
-using System.Threading;
 
 namespace SaM.AnyDeals.Application.Requests.Orders.Queries.Get;
 
 public class GetOrderByIdQueryHandler : IRequestHandler<GetOrderByIdQuery, Response>
 {
     private readonly ApplicationDbContext _applicationDbContext;
-    private readonly IHttpContextAccessor _httpContextAccessor;
+    private readonly ICurrentUserService _currentUserService;
     private readonly IMapper _mapper;
 
     public GetOrderByIdQueryHandler(
         ApplicationDbContext applicationDbContext,
-        IHttpContextAccessor httpContextAccessor,
-        IMapper mapper)
+        IMapper mapper,
+        ICurrentUserService currentUserService)
     {
         _applicationDbContext = applicationDbContext;
-        _httpContextAccessor = httpContextAccessor;
         _mapper = mapper;
+        _currentUserService = currentUserService;
     }
 
     public async Task<Response> Handle(GetOrderByIdQuery request, CancellationToken cancellationToken)
     {
-        var userId = _httpContextAccessor.HttpContext.GetUserId();
+        var user = await _currentUserService.GetCurrentUserAsync();
+        var userId = user.Id;
         var order = await _applicationDbContext
             .Orders
             .SingleOrDefaultAsync(a => a.Id == request.Id, cancellationToken)

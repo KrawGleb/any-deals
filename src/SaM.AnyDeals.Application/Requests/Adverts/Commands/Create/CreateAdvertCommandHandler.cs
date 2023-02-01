@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
+using SaM.AnyDeals.Application.Common.Services.Interfaces;
 using SaM.AnyDeals.Common.Enums;
 using SaM.AnyDeals.Common.Exceptions;
 using SaM.AnyDeals.Common.Extensions;
@@ -14,20 +15,20 @@ namespace SaM.AnyDeals.Application.Requests.Adverts.Commands.Create;
 public class CreateAdvertCommandHandler : IRequestHandler<CreateAdvertCommand, Response>
 {
     private readonly ApplicationDbContext _applicationDbContext;
-    private readonly IHttpContextAccessor _httpContextAccessor;
+    private readonly ICurrentUserService _currentUserService;
     private readonly IMapper _mapper;
     private readonly UserManager<ApplicationUser> _userManager;
 
     public CreateAdvertCommandHandler(
         ApplicationDbContext applicationDbContext,
-        IHttpContextAccessor httpContextAccessor,
         IMapper mapper,
-        UserManager<ApplicationUser> userManager)
+        UserManager<ApplicationUser> userManager,
+        ICurrentUserService currentUserService)
     {
         _applicationDbContext = applicationDbContext;
-        _httpContextAccessor = httpContextAccessor;
         _mapper = mapper;
         _userManager = userManager;
+        _currentUserService = currentUserService;
     }
 
     public async Task<Response> Handle(CreateAdvertCommand request, CancellationToken cancellationToken)
@@ -39,7 +40,8 @@ public class CreateAdvertCommandHandler : IRequestHandler<CreateAdvertCommand, R
 
     private async Task CreateAdvertAsync(CreateAdvertCommand request, CancellationToken cancellationToken)
     {
-        var userId = _httpContextAccessor.HttpContext.GetUserId();
+        var user = await _currentUserService.GetCurrentUserAsync();
+        var userId = user.Id;
         var advertOwner = await GetAdvertOwnerAsync(userId, cancellationToken);
         var advert = _mapper.Map<AdvertDbEntry>(request);
 

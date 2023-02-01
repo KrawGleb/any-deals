@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.EntityFrameworkCore;
+using SaM.AnyDeals.Application.Common.Services.Interfaces;
 using SaM.AnyDeals.Common.Exceptions;
 using SaM.AnyDeals.Common.Extensions;
 using SaM.AnyDeals.Common.Interfaces;
@@ -11,22 +12,23 @@ namespace SaM.AnyDeals.Application.Requests.Chat.Commands.Send;
 public class SendMessageCommandHandler : IRequestHandler<SendMessageCommand, Response>
 {
     private readonly ApplicationDbContext _applicationDbContext;
-    private readonly IHttpContextAccessor _httpContextAccessor;
+    private readonly ICurrentUserService _currentUserService;
     private readonly IChatService _chatService;
 
     public SendMessageCommandHandler(
         ApplicationDbContext applicationDbContext,
-        IHttpContextAccessor httpContextAccessor,
-        IChatService chatService)
+        IChatService chatService,
+        ICurrentUserService currentUserService)
     {
         _applicationDbContext = applicationDbContext;
-        _httpContextAccessor = httpContextAccessor;
         _chatService = chatService;
+        _currentUserService = currentUserService;
     }
 
     public async Task<Response> Handle(SendMessageCommand request, CancellationToken cancellationToken)
     {
-        var userId = _httpContextAccessor.HttpContext.GetUserId();
+        var user = await _currentUserService.GetCurrentUserAsync();
+        var userId = user.Id;
         var order = await _applicationDbContext
             .Orders
             .Include(o => o.Chat)

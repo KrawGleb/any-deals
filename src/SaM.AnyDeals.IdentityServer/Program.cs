@@ -15,6 +15,7 @@ builder.Services
     {
         options.IssuerUri = "http://localhost:80/identity";
     })
+    .AddProfileService<ProfileService>()
     .AddAspNetIdentity<ApplicationUser>()
     .AddInMemoryApiResources(Config.ApiResources)
     .AddInMemoryIdentityResources(Config.IdentityResources)

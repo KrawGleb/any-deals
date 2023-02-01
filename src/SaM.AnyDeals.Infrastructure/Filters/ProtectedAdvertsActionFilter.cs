@@ -7,6 +7,7 @@ using SaM.AnyDeals.Common.Extensions;
 using SaM.AnyDeals.Common.Interfaces;
 using SaM.AnyDeals.DataAccess;
 using SaM.AnyDeals.DataAccess.Models.Auth;
+using System.Security.Claims;
 
 namespace SaM.AnyDeals.Infrastructure.Filters;
 
@@ -34,9 +35,7 @@ public class ProtectedAdvertsActionFilter : IAsyncActionFilter
         if (request is not null)
         {
             var id = request.Id;
-            var userId = context.HttpContext.GetUserId();
-
-            allowExecute = await AllowUserEditAdvert(userId, id);
+            allowExecute = await AllowUserEditAdvert(context.HttpContext.User, id);
         }
 
         if (allowExecute)
@@ -45,17 +44,17 @@ public class ProtectedAdvertsActionFilter : IAsyncActionFilter
             context.Result = new ForbidResult();
     }
 
-    private async Task<bool> AllowUserEditAdvert(string userId, int advertId)
+    private async Task<bool> AllowUserEditAdvert(ClaimsPrincipal userClaim, int advertId)
     {
-        var user = await _userManager.FindByIdAsync(userId)
-            ?? throw new NotFoundException($"User with id {userId} not found.");
+        var user = await _userManager.GetUserAsync(userClaim)
+            ?? throw new NotFoundException($"User with not found.");
         var advert = await _applicationDbContext.Adverts.FindAsync(advertId)
             ?? throw new NotFoundException($"Advert with id {advertId} not found.");
 
         var creatorId = advert.CreatorId;
 
         return 
-            userId == creatorId ||
+            user.Id == creatorId ||
             await _userManager.IsInRoleAsync(user, RolesEnum.Admin);
     }
 }
