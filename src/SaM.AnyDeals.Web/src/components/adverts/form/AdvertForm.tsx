@@ -86,11 +86,9 @@ export default function AdvertForm({ advert }: AdvertFormProps) {
   const uploadedFiles = useSelector(
     (state: RootState) => state.fileUpload.files as StoredFile[]
   );
-  const userInfo = useSelector((state: RootState) => state.auth.user);
+  const authState = useSelector((state: RootState) => state.auth);
   const isEditMode = !!advert;
-  // TODO: Check user's roles
-  // const isAdmin = userInfo.isAdmin;
-  const isAdmin = false;
+  const isAdmin = authState.isAdmin;
 
   const {
     register,
@@ -199,7 +197,7 @@ export default function AdvertForm({ advert }: AdvertFormProps) {
   };
 
   useEffect(() => {
-    setValue("name", userInfo?.profile.preferred_username);
+    setValue("name", authState.user?.profile.preferred_username);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 

@@ -13,16 +13,11 @@ export default function EditAdvert() {
   const navigate = useNavigate();
   const query = useQuery() as any;
   const advertId: number = +query.get("id");
-  const userInfo = useSelector((state: RootState) => state.auth.user);
+  const authState = useSelector((state: RootState) => state.auth);
   const { data: adverts } = useGetMyAdvertsQuery();
   const { data: advert } = useGetAdvertByIdQuery(advertId);
 
-  // TODO: Check user's roles
-  // if (!(adverts?.find((a) => a.id === advertId) || userInfo.isAdmin)) {
-  //   navigate("/my");
-  // }
-
-  if (!adverts?.find((a) => a.id === advertId)) {
+  if (!(adverts?.find((a) => a.id === advertId) || authState.isAdmin)) {
     navigate("/my");
   }
 

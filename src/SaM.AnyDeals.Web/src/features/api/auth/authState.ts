@@ -1,5 +1,3 @@
-import { User } from "oidc-client";
-
 export interface AuthState {
   user: {
     id_token: string;
@@ -10,4 +8,5 @@ export interface AuthState {
     };
   } | null;
   isLoadingUser: boolean;
+  isAdmin: boolean;
 }

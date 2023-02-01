@@ -5,6 +5,7 @@ import { AuthState } from "../../api/auth/authState";
 const initialState: AuthState = {
   user: null,
   isLoadingUser: false,
+  isAdmin: false,
 };
 
 const authSlice = createSlice({
@@ -17,6 +18,9 @@ const authSlice = createSlice({
     userFound(state, action: PayloadAction<User>) {
       state.user = { ...action.payload } as any;
       state.isLoadingUser = false;
+      state.isAdmin =
+        (action.payload.profile as any).role.toString().toLowerCase() ===
+        "admin";
     },
     silentRenewError(state, error: PayloadAction) {
       state = initialState;
