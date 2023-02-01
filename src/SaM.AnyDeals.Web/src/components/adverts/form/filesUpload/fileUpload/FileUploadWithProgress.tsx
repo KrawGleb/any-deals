@@ -7,7 +7,7 @@ import {
 } from "firebase/storage";
 import React, { useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
-import { uploadFile } from "../../../../../features/store/fileUploadSlice";
+import { uploadFile } from "../../../../../features/store/slices/fileUploadSlice";
 import firebaseStorage from "../../../../../features/store/firebaseStorage";
 import FileHeader from "../fileHeader/FileHeader";
 import { FileUploadWithProgressProps } from "./FileUploadWithProgressProps";

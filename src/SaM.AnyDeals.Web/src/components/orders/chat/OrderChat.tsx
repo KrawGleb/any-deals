@@ -15,7 +15,9 @@ import { RootState } from "../../../features/store/store";
 
 export default function OrderChat(props: OrderChatProps) {
   const dispatch = useDispatch();
-  const userId = useSelector((state: RootState) => state.auth.userInfo.id);
+  const userId = useSelector(
+    (state: RootState) => state.auth.user?.profile.sub
+  );
   const [message, setMessage] = useState("");
   const handleMessageInputChange = (e: ChangeEvent<HTMLInputElement>) =>
     setMessage(e.target.value);

@@ -13,7 +13,6 @@ import {
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { RootState } from "../../../features/store/store";
-import { logout } from "../../../features/api/auth/authSlice";
 import { signinRedirect } from "../../../features/api/auth/userService";
 
 export default function Header() {
@@ -21,12 +20,15 @@ export default function Header() {
   const dispatch = useDispatch();
   const [value, setValue] = useState(0);
 
-  const authState = useSelector((state: RootState) => state.auth);
-  const isLoggedIn = !!authState.userInfo.username;
-  const isAdmin = authState.userInfo.isAdmin;
+  const user = useSelector((state: RootState) => state.auth.user);
+  const isLoggedIn = !!user;
+
+  // TODO: Check user's roles
+  // const isAdmin = authState.userInfo.isAdmin;
+  const isAdmin = false;
 
   const handleLogout = () => {
-    dispatch(logout());
+    console.log("Logout here");
     navigate("/");
   };
 
@@ -53,7 +55,7 @@ export default function Header() {
               <>
                 <Box className="dropdown">
                   <Typography className="dropdown__text">
-                    {authState.userInfo.username}
+                    {user!.profile.preferred_username}
                   </Typography>
                   <List className="dropdown__content">
                     {isAdmin ? (

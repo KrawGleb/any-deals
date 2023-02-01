@@ -7,8 +7,11 @@ import { useNavigate } from "react-router-dom";
 import AdvertsList from "../../../components/adverts/list/AdvertsList";
 import Filters from "../../../components/search/filters/Filters";
 import { useSearchAdvertsQuery } from "../../../features/api/extensions/advertsApiExtension";
-import { setPageFilter } from "../../../features/store/filtersSlice";
-import { addAdverts, setAdverts } from "../../../features/store/searchSlice";
+import { setPageFilter } from "../../../features/store/slices/filtersSlice";
+import {
+  addAdverts,
+  setAdverts,
+} from "../../../features/store/slices/searchSlice";
 import { RootState } from "../../../features/store/store";
 import { Advert } from "../../../models/api/advert";
 

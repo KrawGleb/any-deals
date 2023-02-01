@@ -1,5 +1,5 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
-import { Advert } from "../../models/api/advert";
+import { Advert } from "../../../models/api/advert";
 
 const searchSlice = createSlice({
   name: "searchSlice",

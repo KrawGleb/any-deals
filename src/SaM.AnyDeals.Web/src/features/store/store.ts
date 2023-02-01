@@ -1,10 +1,10 @@
 import { configureStore } from "@reduxjs/toolkit";
-import authSlice from "../api/auth/authSlice";
-import fileUploadSlice from "./fileUploadSlice";
+import fileUploadSlice from "./slices/fileUploadSlice";
 import { loadState, saveState } from "./localStorage";
 import { baseApi } from "../api/baseApi";
-import filtersSlice from "./filtersSlice";
-import searchSlice from "./searchSlice";
+import filtersSlice from "./slices/filtersSlice";
+import searchSlice from "./slices/searchSlice";
+import authSlice from "./slices/authSlice";
 
 const store = configureStore({
   preloadedState: loadState(),
@@ -19,11 +19,11 @@ const store = configureStore({
     getDefaultMiddleware().concat([baseApi.middleware]),
 });
 
-store.subscribe(() =>
-  saveState({
-    auth: store.getState().auth,
-  })
-);
+// store.subscribe(() =>
+//   saveState({
+//     auth: store.getState().auth,
+//   })
+// );
 
 export default store;
 export type AppDispatch = typeof store.dispatch;

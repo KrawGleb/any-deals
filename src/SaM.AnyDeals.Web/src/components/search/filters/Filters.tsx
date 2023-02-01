@@ -28,7 +28,7 @@ import {
   setInterestFilter,
   setPageFilter,
   setTitleFilter,
-} from "../../../features/store/filtersSlice";
+} from "../../../features/store/slices/filtersSlice";
 
 export default function Filters() {
   const dispatch = useDispatch();

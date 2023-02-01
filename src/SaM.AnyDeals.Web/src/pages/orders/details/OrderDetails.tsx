@@ -23,7 +23,7 @@ import OrderChat from "../../../components/orders/chat/OrderChat";
 
 export default function OrderDetails() {
   const navigate = useNavigate();
-  const userInfo = useSelector((state: RootState) => state.auth.userInfo);
+  const userInfo = useSelector((state: RootState) => state.auth.user);
   const query = useQuery() as any;
   const orderId: number = +query.get("id");
   const { data: order } = useGetOrderByIdQuery(orderId);
@@ -88,8 +88,8 @@ export default function OrderDetails() {
     setHasExecutorApproval(!!order?.hasExecutorApproval);
     setHasCustomerApproval(!!order?.hasCustomerApproval);
 
-    setIsUserCustomer(order?.customer.id === userInfo.id);
-    setIsUserExecutor(order?.executor.id === userInfo.id);
+    setIsUserCustomer(order?.customer.id === userInfo?.profile.sub);
+    setIsUserExecutor(order?.executor.id === userInfo?.profile.sub);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [order]);
 

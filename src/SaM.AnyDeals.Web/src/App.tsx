@@ -24,8 +24,9 @@ import userManager from "./features/api/auth/userService";
 
 function App() {
   const authState = useSelector((state: RootState) => state.auth);
-  const hasToken = !!authState.userToken;
-  const isAdmin = authState.userInfo.isAdmin;
+  const hasToken = !!authState.user?.access_token;
+  // TODO: Check user role
+  const isAdmin = false;
 
   return (
     <div className="app">

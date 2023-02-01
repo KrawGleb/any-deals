@@ -10,18 +10,24 @@ import UploadedFileComponent from "./uploadedFile/UploadedFileComponent";
 import { StoredFile } from "../../../../models/storedFile";
 import { UploadableFile } from "../../../../models/uploadableFile";
 import { FilesUploadFieldProps } from "./FilesUploadFieldProps";
-import { addFiles, deleteFile, resetFiles } from "../../../../features/store/fileUploadSlice";
+import {
+  addFiles,
+  deleteFile,
+  resetFiles,
+} from "../../../../features/store/slices/fileUploadSlice";
 
 export default function FilesUploadField({
   uploadedFiles,
 }: FilesUploadFieldProps) {
   const dispatch = useDispatch();
-  const storedFilesCount = useSelector((state: RootState) => state.fileUpload.files.length);
+  const storedFilesCount = useSelector(
+    (state: RootState) => state.fileUpload.files.length
+  );
 
   const [files, setFiles] = useState<UploadableFile[]>([]);
-  const [_storedFiles, setStoredFiles] = useState<
-    StoredFile[] | undefined
-  >(uploadedFiles);
+  const [_storedFiles, setStoredFiles] = useState<StoredFile[] | undefined>(
+    uploadedFiles
+  );
 
   const onDrop = useCallback(
     (acceptedFiles: File[], _rejectedFiles: FileRejection[]) => {
@@ -35,7 +41,7 @@ export default function FilesUploadField({
           name: file.name,
           type: file.type,
           deleted: false,
-          new: true
+          new: true,
         });
 
         uploadableFile.push({

@@ -1,5 +1,12 @@
 import React, { useEffect, useRef } from "react";
 import { User, UserManager } from "oidc-client";
+import { useDispatch } from "react-redux";
+import {
+  userExpired,
+  userExpiring,
+  userFound,
+  userSignedOut,
+} from "../../store/slices/authSlice";
 
 type AuthProviderProps = {
   userManager: UserManager;
@@ -10,11 +17,14 @@ export default function AuthProvider({
   children,
   userManager: manager,
 }: AuthProviderProps) {
+  const dispatch = useDispatch();
   let userManager = useRef<UserManager>();
+
   useEffect(() => {
     userManager.current = manager;
     const onUserLoaded = (user: User) => {
       console.log("User loaded: ", user);
+      dispatch(userFound(user));
       localStorage.setItem("userToken", user?.access_token ?? "");
     };
     const onUserUnloaded = () => {
@@ -22,12 +32,15 @@ export default function AuthProvider({
       console.log("User unloaded");
     };
     const onAccessTokenExpiring = () => {
+      dispatch(userExpiring());
       console.log("User token expiring");
     };
     const onAccessTokenExpired = () => {
+      dispatch(userExpired());
       console.log("User token expired");
     };
     const onUserSignedOut = () => {
+      dispatch(userSignedOut());
       console.log("User signed out");
     };
 

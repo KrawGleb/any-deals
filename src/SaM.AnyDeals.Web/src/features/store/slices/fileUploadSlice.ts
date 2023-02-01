@@ -1,5 +1,5 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
-import { StoredFile } from "../../models/storedFile";
+import { StoredFile } from "../../../models/storedFile";
 
 const fileUploadSlice = createSlice({
   name: "fileUpload",

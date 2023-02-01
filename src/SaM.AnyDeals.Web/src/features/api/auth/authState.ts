@@ -1,11 +1,13 @@
+import { User } from "oidc-client";
+
 export interface AuthState {
-    userInfo: {
-        id?: string;
-        username?: string;
-        isAdmin?: boolean;
-        token?: string;
+  user: {
+    id_token: string;
+    access_token: string;
+    profile: {
+      sub: string;
+      preferred_username: string;
     };
-    userToken: string | null;
-    error: any;
-    succeeded: boolean;
+  } | null;
+  isLoadingUser: boolean;
 }
