@@ -10,25 +10,21 @@ import {
   ListItemText,
   Typography,
 } from "@mui/material";
-import { useDispatch, useSelector } from "react-redux";
+import { useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { RootState } from "../../../features/store/store";
-import { signinRedirect } from "../../../features/api/auth/userService";
+import {
+  signinRedirect,
+  signoutRedirect,
+} from "../../../features/api/auth/userService";
 
 export default function Header() {
   const navigate = useNavigate();
-  const dispatch = useDispatch();
   const [value, setValue] = useState(0);
 
   const authState = useSelector((state: RootState) => state.auth);
   const isLoggedIn = !!authState.user;
   const isAdmin = authState.isAdmin;
-
-  const handleLogout = () => {
-    // TODO: Logout
-    console.log("Logout here");
-    navigate("/");
-  };
 
   const handleChange = (_event: SyntheticEvent, newValue: number) => {
     setValue(newValue);
@@ -64,7 +60,7 @@ export default function Header() {
                       <></>
                     )}
 
-                    <ListItemButton onClick={handleLogout}>
+                    <ListItemButton onClick={() => signoutRedirect()}>
                       <ListItemText color="error">Logout</ListItemText>
                     </ListItemButton>
                   </List>
@@ -76,19 +72,10 @@ export default function Header() {
                   fullWidth
                   variant="contained"
                   color="primary"
-                  className="actions__signup"
-                  onClick={() => navigate("/signup-oidc")}
-                >
-                  Signup
-                </Button>
-                <Button
-                  fullWidth
-                  variant="contained"
-                  color="primary"
                   className="actions__login"
                   onClick={() => signinRedirect()}
                 >
-                  Signin
+                  Sign In
                 </Button>
               </>
             )}
