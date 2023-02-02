@@ -74,7 +74,7 @@ public class AuthController : Controller
         return View(registerViewModel);
     }
 
-    [HttpPost]
+    [HttpGet]
     [Route("[action]")]
     public async Task<IActionResult> Logout([FromQuery] string logoutId, CancellationToken cancellationToken)
     {
