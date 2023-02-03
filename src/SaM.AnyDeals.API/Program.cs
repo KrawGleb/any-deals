@@ -36,21 +36,13 @@ services.AddAuthentication(options =>
 })
     .AddJwtBearer(options =>
 {
-    options.Authority = "http://identity:80";
+    _ = bool.TryParse(Environment.GetEnvironmentVariable("UseDockerDB"), out bool useDockerDB);
+    options.Authority = useDockerDB 
+        ? "http://identity:80" 
+        : "https://localhost:44302";
+
     options.Audience = "AnyDealsAPI";
     options.RequireHttpsMetadata = false;
-/*
-    var key = Encoding.UTF8.GetBytes(Environment.GetEnvironmentVariable("JWTSecurityKey")!);
-    options.TokenValidationParameters = new TokenValidationParameters()
-    {
-        ValidateIssuerSigningKey = true,
-        IssuerSigningKey = new SymmetricSecurityKey(key),
-        ValidateIssuer = true,
-        ValidateAudience = true,
-        ValidIssuer = "AnyDealsBackend",
-        ValidAudience = "AnyDealsFrontend",
-        RequireExpirationTime = true,
-    };*/
 });
 
 services.AddAuthorization(options =>

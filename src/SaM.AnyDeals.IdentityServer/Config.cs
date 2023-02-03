@@ -53,6 +53,28 @@ public static class Config
                     "AnyDealsAPI"
                 },
                 AllowAccessTokensViaBrowser = true,
+            },
+            new Client
+            {
+                ClientId = "Postman",
+                ClientName = "Postman",
+                AllowedGrantTypes = GrantTypes.Code,
+                RequireClientSecret = false,
+                RequirePkce = false,
+                RedirectUris =
+                {
+                    "https://oauth.pstmn.io/v1/callback"
+                },
+                PostLogoutRedirectUris = {
+                    "https://oauth.pstmn.io/v1/"
+                },
+                AllowedScopes =
+                {
+                    IdentityServerConstants.StandardScopes.OpenId,
+                    IdentityServerConstants.StandardScopes.Profile,
+                    "AnyDealsAPI"
+                },
+                AllowAccessTokensViaBrowser = true,
             }
         };
 }
