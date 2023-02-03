@@ -14,8 +14,7 @@ builder.Services.AddTransient<IAuthService, AuthService>();
 builder.Services
     .AddIdentityServer(options =>
     {
-        // TODO: Rename env variable
-        if (bool.TryParse(Environment.GetEnvironmentVariable("UseDockerDB"), out var useDockerDB))
+        if (bool.TryParse(Environment.GetEnvironmentVariable("UseProxy"), out var useDockerDB))
             options.IssuerUri = "http://localhost:80/identity";
 
         options.Events.RaiseErrorEvents = true;

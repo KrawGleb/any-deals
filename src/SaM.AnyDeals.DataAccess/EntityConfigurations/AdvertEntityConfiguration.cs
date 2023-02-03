@@ -39,13 +39,11 @@ public class AdvertEntityConfiguration : EntityConfigurationBase<AdvertDbEntry>
         builder
             .HasMany(a => a.Orders)
             .WithOne(o => o.Advert)
-            .IsRequired()
             .OnDelete(DeleteBehavior.NoAction);
 
         builder
             .HasMany(a => a.Reviews)
             .WithOne(r => r.Advert)
-            .IsRequired()
             .OnDelete(DeleteBehavior.Cascade);
     }
 

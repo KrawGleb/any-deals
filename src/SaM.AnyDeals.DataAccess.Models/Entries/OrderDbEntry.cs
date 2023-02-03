@@ -4,7 +4,7 @@ namespace SaM.AnyDeals.DataAccess.Models.Entries;
 
 public class OrderDbEntry : AuditableDbEntry
 {
-    public int AdvertId { get; set; }
+    public int? AdvertId { get; set; }
     public AdvertDbEntry? Advert { get; set; }
 
     public string? CustomerId { get; set; }

@@ -20,7 +20,7 @@ public class ApplicationUserEntityConfiguration : EntityConfigurationBase<Applic
 
         builder
             .HasMany(u => u.Execution)
-            .WithOne( a => a.Executor)
+            .WithOne(a => a.Executor)
             .OnDelete(DeleteBehavior.Cascade);
 
         builder
@@ -31,6 +31,6 @@ public class ApplicationUserEntityConfiguration : EntityConfigurationBase<Applic
         builder
             .HasMany(a => a.Messages)
             .WithOne(m => m.Sender)
-            .OnDelete(DeleteBehavior.NoAction);
+            .OnDelete(DeleteBehavior.Cascade);
     }
 }

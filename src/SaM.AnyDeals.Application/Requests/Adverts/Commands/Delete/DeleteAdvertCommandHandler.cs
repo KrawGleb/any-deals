@@ -1,4 +1,5 @@
-﻿using SaM.AnyDeals.Common.Exceptions;
+﻿using Microsoft.EntityFrameworkCore;
+using SaM.AnyDeals.Common.Exceptions;
 using SaM.AnyDeals.DataAccess;
 
 namespace SaM.AnyDeals.Application.Requests.Adverts.Commands.Delete;
@@ -14,7 +15,9 @@ public class DeleteAdvertCommandHandler : IRequestHandler<DeleteAdvertCommand, R
 
     public async Task<Response> Handle(DeleteAdvertCommand request, CancellationToken cancellationToken)
     {
-        var application = await _applicationDbContext.Adverts.FindAsync(request.Id, cancellationToken)
+        var application = await _applicationDbContext.Adverts
+            .Include(a => a.Orders)
+            .SingleOrDefaultAsync(a => a.Id == request.Id, cancellationToken)
             ?? throw new NotFoundException($"Application with id {request.Id} not found.");
 
         _applicationDbContext.Adverts.Remove(application);

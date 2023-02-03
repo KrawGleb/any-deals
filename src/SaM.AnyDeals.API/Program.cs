@@ -36,8 +36,8 @@ services.AddAuthentication(options =>
 })
     .AddJwtBearer(options =>
 {
-    _ = bool.TryParse(Environment.GetEnvironmentVariable("UseDockerDB"), out bool useDockerDB);
-    options.Authority = useDockerDB 
+    _ = bool.TryParse(Environment.GetEnvironmentVariable("UseProxy"), out bool useProxy);
+    options.Authority = useProxy 
         ? "http://identity:80" 
         : "https://localhost:44302";
 
