@@ -11,6 +11,7 @@ services:
       - ASPNETCORE_ENVIRONMENT=Development
       - ASPNETCORE_URLS=http://+:80
       - UseDockerDB=true
+      - UseProxy=true
       - BONSAI_URL=https:\\o0hr0acl24:hp1tmflug4@pine-530439672.eu-west-1.bonsaisearch.net:443
     ports:
       - "5003:80"
@@ -19,6 +20,7 @@ services:
       - ASPNETCORE_ENVIRONMENT=Development
       - ASPNETCORE_URLS=http://+:80
       - UseDockerDB=true
+      - UseProxy=true
       - JWTSecurityKey=!123__MyJWTSecretKey__123!
       - BONSAI_URL=https:\\o0hr0acl24:hp1tmflug4@pine-530439672.eu-west-1.bonsaisearch.net:443
     ports:
