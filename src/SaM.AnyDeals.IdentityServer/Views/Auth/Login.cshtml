@@ -1,23 +1,41 @@
 ﻿@model LoginViewModel
 <head>
-    <link href=@Url.Content("~/css/styles.css") rel="stylesheet" type="text/css" />
+    <link href=@Url.Content("~/identity/css/styles.css") rel="stylesheet" type="text/css" />
 </head>
-<form asp-controller="Auth" asp-action="Login" method="post">
-    <input type="hidden" asp-for="ReturnUrl" />
-    <div class="header">Login</div>
-    <div class="block">
-        <label>Email</label>
-        <input asp-for="Email" class="input" type="email" />
-        <span asp-validation-for="Email"></span>
+<div class="container">
+    <div class="back-line">
+        <div class="line">
+            <div class="line-container">
+                <i class="arrow-left"></i>
+            </div>
+            <div class="line-container">
+                <p class="prevent-select">Back</p>
+            </div>
+        </div>
     </div>
-    <div class="block">
-        <label>Password</label>
-        <input asp-for="Password" class="input" />
-        <span asp-validation-for="Password"></span>
+    <div class="content">
+        <form asp-controller="Auth" asp-action="Login" class="form" method="post">
+            <input type="hidden" asp-for="ReturnUrl" />
+            <div class="title">Sing In</div>
+
+            <input asp-for="Email" class="form-field form-field-input"
+                   placeholder="Email"
+                   type="email" />
+            <span asp-validation-for="Email"></span>
+
+            <input asp-for="Password" class="form-field form-field-input"
+                   placeholder="Password"
+                   type="password" />
+            <span asp-validation-for="Password"></span>
+
+            <button class="btn" type="submit">Login</button>
+        </form>
+
+        <div class="footer">
+            <p>Don't have an account yet?</p>
+            <a asp-controller="Auth" asp-action="Register"
+               asp-route-returnUrl="@Model.ReturnUrl" class="switch-button">Register now</a>
+        </div>
     </div>
-    <div class="block">
-        <button type="submit" class="button">Sign In</button>
-    </div>
-    <a asp-controller="Auth" asp-action="Register"
-       asp-route-returnUrl="@Model.ReturnUrl" class="switch-button">Register</a>
-</form>
+</div>
+

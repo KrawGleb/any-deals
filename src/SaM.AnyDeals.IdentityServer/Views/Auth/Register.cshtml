@@ -1,33 +1,49 @@
 ﻿@model RegisterViewModel
 <head>
-    <link href=@Url.Content("~/css/styles.css") rel="stylesheet" type="text/css" />
+    <link href=@Url.Content("~/identity/css/styles.css") rel="stylesheet" type="text/css" />
 </head>
-<form asp-controller="Auth" asp-action="Register" method="post">
-    <input type="hidden" asp-for="ReturnUrl" />
-    <div class="header">Sign Up</div>
-    <div class="block">
-        <label>Email</label>
-        <input asp-for="Email" class="input" />
-        <span asp-validation-for="Email"></span>
+<div class="container">
+    <div class="back-line">
+        <div class="line">
+            <div class="line-container">
+                <i class="arrow-left"></i>
+            </div>
+            <div class="line-container">
+                <p class="prevent-select">Back</p>
+            </div>
+        </div>
     </div>
-    <div class="block">
-        <label>Username</label>
-        <input asp-for="Username" class="input" />
-        <span asp-validation-for="Username"></span>
+    <div class="content">
+        <form asp-controller="Auth" asp-action="Register" method="post" class="form">
+            <input type="hidden" asp-for="ReturnUrl" />
+            <div class="title">Registration</div>
+
+            <input asp-for="Username" class="form-field form-field-input" 
+                   placeholder="Name" />
+            <span asp-validation-for="Username"></span>
+
+            <input asp-for="Email" class="form-field form-field-input"
+                   placeholder="Email"
+                   type="email" />
+            <span asp-validation-for="Email"></span>
+
+            <input asp-for="Password" class="form-field form-field-input"
+                   placeholder="Password"
+                   type="password" />
+            <span asp-validation-for="Password"></span>
+
+            <input asp-for="ConfirmPassword" class="form-field form-field-input"
+                   placeholder="Repeat password"
+                   type="password" />
+            <span asp-validation-for="ConfirmPassword"></span>
+
+            <button class="btn" type="submit">Register</button>
+        </form>
+
+        <div class="footer">
+            <p>Already have login and password?</p>
+            <a asp-controller="Auth" asp-action="Login" asp-route-returnUrl="@Model.ReturnUrl"
+                class="switch-button">Sign in</a>
+        </div>
     </div>
-    <div class="block">
-        <label>Password</label>
-        <input asp-for="Password" class="input" />
-        <span asp-validation-for="Password"></span>
-    </div>
-    <div class="block">
-        <label>Confirm password</label>
-        <input asp-for="ConfirmPassword" class="input" />
-        <span asp-validation-for="ConfirmPassword"></span>
-    </div>
-    <div class="block">
-        <button type="submit" class="button">Sign up</button>
-    </div>
-    <a asp-controller="Auth" asp-action="Login" asp-route-returnUrl="@Model.ReturnUrl"
-       class="switch-button">Login</a>
-</form>
+</div>
