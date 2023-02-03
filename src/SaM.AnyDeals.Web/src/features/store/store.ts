@@ -1,13 +1,11 @@
 import { configureStore } from "@reduxjs/toolkit";
 import fileUploadSlice from "./slices/fileUploadSlice";
-import { loadState, saveState } from "./localStorage";
 import { baseApi } from "../api/baseApi";
 import filtersSlice from "./slices/filtersSlice";
 import searchSlice from "./slices/searchSlice";
 import authSlice from "./slices/authSlice";
 
 const store = configureStore({
-  preloadedState: loadState(),
   reducer: {
     auth: authSlice,
     fileUpload: fileUploadSlice,
@@ -18,12 +16,6 @@ const store = configureStore({
   middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware().concat([baseApi.middleware]),
 });
-
-// store.subscribe(() =>
-//   saveState({
-//     auth: store.getState().auth,
-//   })
-// );
 
 export default store;
 export type AppDispatch = typeof store.dispatch;

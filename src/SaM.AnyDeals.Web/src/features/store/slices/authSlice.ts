@@ -19,7 +19,7 @@ const authSlice = createSlice({
       state.user = { ...action.payload } as any;
       state.isLoadingUser = false;
       state.isAdmin =
-        (action.payload.profile as any).role.toString().toLowerCase() ===
+        (action.payload.profile as any).role?.toString().toLowerCase() ===
         "admin";
     },
     silentRenewError(state, error: PayloadAction) {
