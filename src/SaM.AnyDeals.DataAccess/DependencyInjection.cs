@@ -19,7 +19,10 @@ public static class DependencyInjection
 
         var connectionStringLabel = string.Empty;
 
-        if (bool.TryParse(Environment.GetEnvironmentVariable("UseDockerDB"), out var useDockerDB))
+        var useDockerDB = false;
+        _ = bool.TryParse(Environment.GetEnvironmentVariable("UseDockerDB"), out useDockerDB);
+        
+        if(useDockerDB)
             connectionStringLabel = useDockerDB ? "Docker" : "Local";
         else
             connectionStringLabel = "Local";

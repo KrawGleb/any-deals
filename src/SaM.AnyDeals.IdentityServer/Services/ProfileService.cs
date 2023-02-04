@@ -13,22 +13,19 @@ public class ProfileService : IProfileService
     private readonly IUserClaimsPrincipalFactory<ApplicationUser> _userClaimsPrincipalFactory;
     private readonly UserManager<ApplicationUser> _userManager;
     private readonly RoleManager<IdentityRole> _roleManager;
-    private readonly ILogger<ProfileService> _logger;
+
     public ProfileService(
         UserManager<ApplicationUser> userManager,
         IUserClaimsPrincipalFactory<ApplicationUser> userClaimsPrincipalFactory,
-        RoleManager<IdentityRole> roleManager,
-        ILogger<ProfileService> logger)
+        RoleManager<IdentityRole> roleManager)
     {
         _userManager = userManager;
         _userClaimsPrincipalFactory = userClaimsPrincipalFactory;
         _roleManager = roleManager;
-        _logger = logger;
     }
 
     public async Task GetProfileDataAsync(ProfileDataRequestContext context)
     {
-        _logger.LogInformation("Try to add user roles claims");
         var user = await _userManager.GetUserAsync(context.Subject);    
         var userClaims = await _userClaimsPrincipalFactory.CreateAsync(user!);
 
@@ -41,7 +38,6 @@ public class ProfileService : IProfileService
             var roles = await _userManager.GetRolesAsync(user!);
             foreach (var roleName in roles)
             {
-                _logger.LogInformation("Role {role} was added", roleName);
                 claims.Add(new Claim(JwtClaimTypes.Role, roleName));
 
                 if (_roleManager.SupportsRoleClaims)

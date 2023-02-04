@@ -14,7 +14,8 @@ builder.Services.AddTransient<IAuthService, AuthService>();
 builder.Services
     .AddIdentityServer(options =>
     {
-        if (bool.TryParse(Environment.GetEnvironmentVariable("UseProxy"), out var useDockerDB))
+        _ = bool.TryParse(Environment.GetEnvironmentVariable("UseProxy"), out var useProxy);
+        if (useProxy)
             options.IssuerUri = "http://localhost:80/identity";
 
         options.Events.RaiseErrorEvents = true;
@@ -37,7 +38,7 @@ builder.Services.AddScoped<IProfileService, ProfileService>();
 builder.Services.Configure<CookiePolicyOptions>(options =>
 {
     options.MinimumSameSitePolicy = SameSiteMode.Unspecified;
-    options.OnAppendCookie = (cookieContext) 
+    options.OnAppendCookie = (cookieContext)
         => cookieContext.CookieOptions.SameSite = SameSiteMode.Unspecified;
     options.OnDeleteCookie = (cookieContext)
         => cookieContext.CookieOptions.SameSite = SameSiteMode.Unspecified;
@@ -46,8 +47,22 @@ builder.Services.Configure<CookiePolicyOptions>(options =>
 builder.Services.ConfigureApplicationCookie(config =>
 {
     config.Cookie.Name = "SaM.AnyDeals.Identity.Cookie";
+    config.Cookie.SameSite = SameSiteMode.Unspecified;
     config.LoginPath = "/Auth/Login";
     config.LogoutPath = "/Auth/Logout";
+});
+
+builder.Services.AddCors(o =>
+{
+    o.AddPolicy("CorsPolicy", options =>
+    {
+        options
+            .WithOrigins(
+                "http://localhost:3000",
+                "https://localhost:3000")
+            .AllowAnyHeader()
+            .AllowAnyMethod();
+    });
 });
 
 builder.Services.AddControllersWithViews();
@@ -63,6 +78,8 @@ app.UseForwardedHeaders(new ForwardedHeadersOptions
 {
     ForwardedHeaders = ForwardedHeaders.XForwardedFor | ForwardedHeaders.XForwardedProto
 });
+
+app.UseCors("CorsPolicy");
 
 app.UseCookiePolicy();
 app.UseStaticFiles();

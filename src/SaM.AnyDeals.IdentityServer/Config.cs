@@ -56,6 +56,36 @@ public static class Config
             },
             new Client
             {
+                ClientId = "LocalAnyDealsWeb",
+                ClientName = "AnyDeals Web (Local)",
+                AllowedGrantTypes = GrantTypes.Code,
+                RequireClientSecret = false,
+                RequirePkce = true,
+                RedirectUris =
+                {
+                    "http://localhost:3000/signin-oidc",
+                    "https://localhost:3000/signin-oidc"
+                },
+                AllowedCorsOrigins =
+                {
+                    "http://localhost:3000",
+                    "https://localhost:3000",
+                },
+                PostLogoutRedirectUris =
+                {
+                    "http://localhost:3000/signout-oidc",
+                    "https://localhost:3000/signout-oidc"
+                },
+                AllowedScopes =
+                {
+                    IdentityServerConstants.StandardScopes.OpenId,
+                    IdentityServerConstants.StandardScopes.Profile,
+                    "AnyDealsAPI"
+                },
+                AllowAccessTokensViaBrowser = true,
+            },
+            new Client
+            {
                 ClientId = "Postman",
                 ClientName = "Postman",
                 AllowedGrantTypes = GrantTypes.Code,
