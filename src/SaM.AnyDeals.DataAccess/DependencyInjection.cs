@@ -17,16 +17,17 @@ public static class DependencyInjection
     {
         services.AddElastic();
 
-        var connectionStringLabel = string.Empty;
+        var connectionString = string.Empty;
 
-        if (bool.TryParse(Environment.GetEnvironmentVariable("UseDockerDB"), out var useDockerDB))
-            connectionStringLabel = useDockerDB ? "Docker" : "Local";
+        _ = bool.TryParse(Environment.GetEnvironmentVariable("UseDockerDB"), out var useInDockerDB);
+        if (useInDockerDB)
+            connectionString = Environment.GetEnvironmentVariable("ConnectionString");
         else
-            connectionStringLabel = "Local";
+            connectionString = configuration.GetConnectionString("Local");
 
         services.AddDbContext<ApplicationDbContext>(options =>
             options.UseSqlServer(
-                configuration.GetConnectionString(connectionStringLabel),
+                connectionString,
                 o => o.UseQuerySplittingBehavior(QuerySplittingBehavior.SplitQuery)));
 
         services.AddIdentity<ApplicationUser, IdentityRole>(options =>
