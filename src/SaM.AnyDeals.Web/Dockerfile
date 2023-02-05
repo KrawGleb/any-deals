@@ -8,5 +8,5 @@ ENV NODE_OPTIONS=--max-old-space-size=4096
 ENV PATH /app/node_modules/.bin:$PATH
 
 RUN npm install
-COPY . .
+COPY ../SaM.AnyDeals.Web/ .
 CMD ["npm", "start"]
