@@ -1,14 +1,25 @@
 import { UserManager, UserManagerSettings } from "oidc-client";
 
-const userManagerSettings: UserManagerSettings = {
-  client_id: "AnyDealsWeb",
-  redirect_uri: `${window.location.origin}/signin-oidc`,
-  response_type: "code",
-  response_mode: "query",
-  scope: "openid profile AnyDealsAPI",
-  authority: `${window.location.origin}/identity`,
-  post_logout_redirect_uri: `${window.location.origin}/signout-oidc`,
-};
+const userManagerSettings: UserManagerSettings =
+  process.env.REACT_APP_CONTAINERIZED === "false"
+    ? {
+        client_id: "LocalAnyDealsWeb",
+        redirect_uri: "https://localhost:3000/signin-oidc",
+        response_type: "code",
+        response_mode: "query",
+        scope: "openid profile AnyDealsAPI",
+        authority: "https://localhost:44302",
+        post_logout_redirect_uri: "https://localhost:3000/signout-oidc",
+      }
+    : {
+        client_id: "AnyDealsWeb",
+        redirect_uri: `${window.location.origin}/signin-oidc`,
+        response_type: "code",
+        response_mode: "query",
+        scope: "openid profile AnyDealsAPI",
+        authority: `${window.location.origin}/identity`,
+        post_logout_redirect_uri: `${window.location.origin}/signout-oidc`,
+      };
 
 const userManager = new UserManager(userManagerSettings);
 

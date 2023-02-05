@@ -21,7 +21,7 @@ public static class DependencyInjection
 
         _ = bool.TryParse(Environment.GetEnvironmentVariable("UseDockerDB"), out var useInDockerDB);
         if (useInDockerDB)
-            connectionString = Environment.GetEnvironmentVariable("ConnectionString");
+            connectionString = Environment.GetEnvironmentVariable("ConnectionString");        
         else
             connectionString = configuration.GetConnectionString("Local");
 

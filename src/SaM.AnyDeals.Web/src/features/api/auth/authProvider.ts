@@ -24,7 +24,7 @@ export default function AuthProvider({
     userManager.current = manager;
     const onUserLoaded = (user: User) => {
       console.log("User loaded: ", user);
-      dispatch(userFound(user));
+      dispatch(userFound({ ...user } as any));
       localStorage.setItem("userToken", user?.access_token ?? "");
     };
     const onUserUnloaded = () => {

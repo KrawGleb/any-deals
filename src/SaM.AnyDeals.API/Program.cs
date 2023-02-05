@@ -1,6 +1,5 @@
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.HttpOverrides;
-using Microsoft.IdentityModel.Tokens;
 using SaM.AnyDeals.API.Hubs;
 using SaM.AnyDeals.API.Hubs.Services;
 using SaM.AnyDeals.Application;
@@ -34,9 +33,11 @@ services.AddAuthentication(options =>
     options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
     options.DefaultScheme = JwtBearerDefaults.AuthenticationScheme;
 })
-    .AddJwtBearer(options =>
+    .AddJwtBearer("Bearer", options =>
 {
-    _ = bool.TryParse(Environment.GetEnvironmentVariable("UseProxy"), out bool useProxy);
+    var useProxy = false;
+    _ = bool.TryParse(Environment.GetEnvironmentVariable("UseProxy"), out useProxy);
+
     options.Authority = useProxy 
         ? "http://identity:80" 
         : "https://localhost:44302";
@@ -45,14 +46,28 @@ services.AddAuthentication(options =>
     options.RequireHttpsMetadata = false;
 });
 
-services.AddAuthorization(options =>
+services.AddCors(o =>
+{
+    o.AddPolicy("CorsPolicy", options =>
+    {
+        options
+            .WithOrigins(
+                "http://localhost:3000",
+                "https://localhost:3000")
+            .AllowAnyHeader()
+            .AllowAnyMethod()
+            .AllowCredentials();
+    });
+});
+
+/*services.AddAuthorization(options =>
 {
     options.AddPolicy("ApiScope", policy =>
     {
         policy.RequireAuthenticatedUser();
         policy.RequireClaim("scope", "any-deals-api");
     });
-});
+});*/
 
 var app = builder.Build();
 
@@ -69,6 +84,9 @@ app.UseForwardedHeaders(new ForwardedHeadersOptions
 {
     ForwardedHeaders = ForwardedHeaders.XForwardedFor | ForwardedHeaders.XForwardedProto
 });
+
+app.UseHttpsRedirection();
+app.UseCors("CorsPolicy");
 
 app.UseAuthentication();
 app.UseAuthorization();
