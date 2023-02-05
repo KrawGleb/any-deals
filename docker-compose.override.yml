@@ -1,11 +1,6 @@
 version: "3.4"
 
 services:
-  database:
-    ports:
-      - "1433:1433"
-    volumes:
-      - ./data:/var/opt/mssql/data
   identity:
     environment:
       - ASPNETCORE_ENVIRONMENT=Development
@@ -13,6 +8,7 @@ services:
       - UseDockerDB=true
       - UseProxy=true
       - BONSAI_URL=https:\\o0hr0acl24:hp1tmflug4@pine-530439672.eu-west-1.bonsaisearch.net:443
+      - ConnectionString=Server=database;Database=SaMAnyDeals;User=SA;Password=ChangeMe123!;Encrypt=false
     ports:
       - "5003:80"
   backend:
@@ -23,6 +19,7 @@ services:
       - UseProxy=true
       - JWTSecurityKey=!123__MyJWTSecretKey__123!
       - BONSAI_URL=https:\\o0hr0acl24:hp1tmflug4@pine-530439672.eu-west-1.bonsaisearch.net:443
+      - ConnectionString=Server=database;Database=SaMAnyDeals;User=SA;Password=ChangeMe123!;Encrypt=false
     ports:
       - "5000:80"
   client:
