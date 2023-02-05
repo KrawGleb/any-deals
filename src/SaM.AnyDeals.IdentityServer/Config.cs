@@ -40,11 +40,17 @@ public static class Config
                 RequirePkce = true,
                 RedirectUris =
                 {
-                    "http://localhost:80/signin-oidc"
+                    "http://localhost/signin-oidc",
+                    "http://localhost:80/signin-oidc",
+                    "http://anydeals.norwayeast.cloudapp.azure.com/signin-oidc",
+                    "http://anydeals.norwayeast.cloudapp.azure.com:80/signin-oidc",
                 },
                 PostLogoutRedirectUris =
                 {
-                    "http://localhost:80/signout-oidc"
+                    "http://localhost/signout-oidc",
+                    "http://localhost:80/signout-oidc",
+                    "http://anydeals.norwayeast.cloudapp.azure.com/signout-oidc",
+                    "http://anydeals.norwayeast.cloudapp.azure.com:80/signout-oidc",
                 },
                 AllowedScopes = 
                 {
