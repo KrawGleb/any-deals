@@ -60,7 +60,6 @@ export default function FilesUploadField({
 
   const onDelete = (file: UploadableFile) => {
     setFiles((cur) => cur.filter((f) => f.id !== file.id));
-    console.log("Delete with id", file.id);
     dispatch(deleteFile({ id: file.id }));
   };
 

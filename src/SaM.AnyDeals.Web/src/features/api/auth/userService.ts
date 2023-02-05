@@ -10,6 +10,7 @@ const userManagerSettings: UserManagerSettings =
         scope: "openid profile AnyDealsAPI",
         authority: "https://localhost:44302",
         post_logout_redirect_uri: "https://localhost:3000/signout-oidc",
+        automaticSilentRenew: true,
       }
     : {
         client_id: "AnyDealsWeb",
@@ -25,7 +26,6 @@ const userManager = new UserManager(userManagerSettings);
 
 export async function loadUser() {
   const user = await userManager.getUser();
-  console.log("User: ", user);
 
   localStorage.setItem("userToken", user?.access_token ?? "");
 

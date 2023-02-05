@@ -22,14 +22,11 @@ export default function AdvertsDetails() {
   const { data: advert } = useGetAdvertByIdQuery(advertId);
   const { data: reviews } = useGetAdvertReviewsQuery({ id: advertId });
 
-  console.log(reviews);
-
   const [createOrder] = useCreateOrderMutation();
   const orderClick = () => {
     const createOrderAction = createOrder({ advertId });
 
     createOrderAction.then((response) => {
-      console.log(response);
       navigate("/adverts/my/orders");
     });
   };

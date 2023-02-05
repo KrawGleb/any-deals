@@ -13,7 +13,6 @@ export const baseApi = createApi({
       headers.set("Content-type", "application/json; charset=UTF-8");
 
       const token = (getState() as RootState).auth.user?.access_token;
-      console.log(token);
       if (token) {
         headers.set("authorization", `Bearer ${token}`);
         return headers;

@@ -191,7 +191,6 @@ export default function AdvertForm({ advert }: AdvertFormProps) {
       : uploadedFiles
           .filter((fileWrapper) => fileWrapper.new)
           .forEach((fileWrapper) => {
-            console.log(fileWrapper);
             FirebaseService.deleteFile(fileWrapper.url);
           });
   };

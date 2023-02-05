@@ -60,7 +60,13 @@ export default function Header() {
                       <></>
                     )}
 
-                    <ListItemButton onClick={() => signoutRedirect()}>
+                    <ListItemButton
+                      onClick={() =>
+                        signoutRedirect({
+                          id_token_hint: authState.user?.id_token,
+                        })
+                      }
+                    >
                       <ListItemText color="error">Logout</ListItemText>
                     </ListItemButton>
                   </List>

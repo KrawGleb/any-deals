@@ -12,9 +12,11 @@ export default function AdvertCard({
   onClick,
   showStatus,
 }: AdvertCardProps) {
-  const previewImage = advert.attachments.find(
+  const previewImage = advert?.attachments.find(
     (a) => a.type === AttachmentType.Image
   );
+
+  if (!advert) return <Paper>Deleted advert</Paper>;
 
   return (
     <Paper className="advert-card__root" onClick={() => onClick(advert.id)}>

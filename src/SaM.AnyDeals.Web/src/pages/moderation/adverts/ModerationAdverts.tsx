@@ -26,7 +26,6 @@ export default function ModerationAdverts() {
   };
 
   useEffect(() => {
-    console.log(adverts);
     if (adverts === undefined) return;
 
     const newAdverts: Advert[] =

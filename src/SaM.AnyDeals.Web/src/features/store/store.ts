@@ -4,8 +4,22 @@ import { baseApi } from "../api/baseApi";
 import filtersSlice from "./slices/filtersSlice";
 import searchSlice from "./slices/searchSlice";
 import authSlice from "./slices/authSlice";
+import { loadUser } from "../api/auth/userService";
+import { userFound } from "./slices/authSlice";
+
+const loadState = () => {
+  console.log("Loading state");
+  loadUser().then((user) => {
+    if (user) {
+      store.dispatch(userFound({ ...user } as any));
+    }
+  });
+
+  return {};
+};
 
 const store = configureStore({
+  preloadedState: loadState(),
   reducer: {
     auth: authSlice,
     fileUpload: fileUploadSlice,

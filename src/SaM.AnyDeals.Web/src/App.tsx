@@ -4,8 +4,7 @@ import "./App.scss";
 import Home from "./pages/home/Home";
 import MyAdverts from "./pages/adverts/my/MyAdverts";
 import Search from "./pages/adverts/search/Search";
-import SignIn from "./pages/signin/SignIn";
-import SignUp from "./pages/signup/SignUp";
+import SignIn from "./pages/auth/SignIn";
 import NewAdvert from "./pages/adverts/new/NewAdvert";
 import EditAdvert from "./pages/adverts/edit/EditAdvert";
 import { useSelector } from "react-redux";
@@ -21,6 +20,7 @@ import Orders from "./pages/adverts/my/outlets/Orders";
 import OrderDetails from "./pages/orders/details/OrderDetails";
 import AuthProvider from "./features/api/auth/authProvider";
 import userManager from "./features/api/auth/userService";
+import SignOut from "./pages/auth/SignOut";
 
 function App() {
   const authState = useSelector((state: RootState) => state.auth);
@@ -31,7 +31,7 @@ function App() {
     <div className="app">
       <AuthProvider userManager={userManager}>
         <Routes>
-          <Route path="/signup-oidc" element={<SignUp />} />
+          <Route path="/signout-oidc" element={<SignOut />} />
           <Route path="/signin-oidc" element={<SignIn />} />
           <Route path="/about" element={<About />} />
           <Route path="/" element={<Home />}>

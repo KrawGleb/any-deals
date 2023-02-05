@@ -30,11 +30,6 @@ export default function OrderChat(props: OrderChatProps) {
   };
 
   useEffect(() => {
-    console.log(props.orderId);
-    console.log(messages);
-  }, [messages]);
-
-  useEffect(() => {
     const connection = new HubConnectionBuilder()
       .withUrl("/hubs/chat")
       .withAutomaticReconnect()
@@ -43,11 +38,8 @@ export default function OrderChat(props: OrderChatProps) {
     connection
       .start()
       .then(() => {
-        console.log("Connected");
-
         connection.on("NewMessage", (userId) => {
           if (props.customerId === userId || props.executorId === userId) {
-            console.log("new message");
             dispatch(chatApiExtension.util.invalidateTags(["Chat"]));
           }
         });
