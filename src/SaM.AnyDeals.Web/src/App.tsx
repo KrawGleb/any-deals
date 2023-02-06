@@ -21,6 +21,7 @@ import OrderDetails from "./pages/orders/details/OrderDetails";
 import AuthProvider from "./features/api/auth/authProvider";
 import userManager from "./features/api/auth/userService";
 import SignOut from "./pages/auth/SignOut";
+import NotFound from "./pages/errors/notFound/NotFound";
 
 function App() {
   const authState = useSelector((state: RootState) => state.auth);
@@ -63,6 +64,8 @@ function App() {
               <Route path="categories" element={<ModerationCategories />} />
             </Route>
           )}
+
+          <Route path="*" element={<NotFound />} />
         </Routes>
       </AuthProvider>
     </div>
