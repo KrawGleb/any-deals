@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using Microsoft.EntityFrameworkCore;
 using SaM.AnyDeals.Application.Models.ViewModels;
+using SaM.AnyDeals.Common.Exceptions;
 using SaM.AnyDeals.DataAccess;
 using SaM.AnyDeals.DataAccess.Extensions;
 
@@ -31,7 +32,8 @@ public class GetAdvertQueryHandler : IRequestHandler<GetAdvertQuery, Response>
         var entry = await _applicationDbContext.Adverts
             .AsNoTracking()
             .FullInclude()
-            .FirstOrDefaultAsync(e => e.Id == id, cancellationToken);
+            .SingleOrDefaultAsync(e => e.Id == id, cancellationToken)
+            ?? throw new NotFoundException($"Advert with id {id} not found.");
 
         var viewModel = _mapper.Map<AdvertViewModel>(entry);
 

@@ -76,12 +76,7 @@ public class ApplicationDbContext : IdentityDbContext<ApplicationUser, IdentityR
     protected override void OnModelCreating(ModelBuilder builder)
     {
         builder.ApplyConfigurationsFromAssembly(Assembly.GetExecutingAssembly());
-
-        var hasUseDockerDBFlag = bool.TryParse(Environment.GetEnvironmentVariable("UseDockerDB"), out var inDockerDB);
-        if (!hasUseDockerDBFlag || !inDockerDB)
-        {
-            builder.Populate();
-        }
+        builder.Populate();
 
         base.OnModelCreating(builder);
     }

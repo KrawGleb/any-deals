@@ -37,7 +37,7 @@ public class AdvertsController : ApiControllerBase
     [HttpGet("{id}")]
     [AllowAnonymous]
     public async Task<IActionResult> GetAvertAsync([FromRoute] int id, CancellationToken cancellationToken)
-        => Ok(await Mediator.Send(new GetAdvertQuery { Id = id }, cancellationToken));
+        => Ok(await Mediator.Send(new GetAdvertQuery(id), cancellationToken));
 
     [HttpGet("{id}/reviews")]
     [AllowAnonymous]

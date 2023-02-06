@@ -29,6 +29,9 @@ public class UpdateAdvertCommandHandler : IRequestHandler<UpdateAdvertCommand, R
             .SingleOrDefaultAsync(a => a.Id == request.Id, cancellationToken)
             ?? throw new NotFoundException($"Advert with id {request.Id} not found.");
 
+        var attachments = entity.Attachments;
+        var category = entity.Category;
+
         request.CategoryId = request.CategoryId is null || request.CategoryId == 0
             ? entity.CategoryId
             : request.CategoryId;
@@ -42,6 +45,9 @@ public class UpdateAdvertCommandHandler : IRequestHandler<UpdateAdvertCommand, R
             .Entry(entity.Contacts!)
             .CurrentValues
             .SetValues(request.Contacts!);
+
+        entity.Category = category;
+        entity.Attachments = attachments;
 
         await UpdateCategoryAsync(entity, request, cancellationToken);
         UpdateAttachments(entity, request);
@@ -59,7 +65,8 @@ public class UpdateAdvertCommandHandler : IRequestHandler<UpdateAdvertCommand, R
         if (request.Category is null)
             return;
 
-        if (entity.Category!.Status == Status.Draft)
+        if (entity.Category is not null && 
+            entity.Category!.Status == Status.Draft)
         {
             entity.Category.Name = request.Category;
         }
@@ -83,11 +90,13 @@ public class UpdateAdvertCommandHandler : IRequestHandler<UpdateAdvertCommand, R
         var requestAttachments = request.Attachments ?? Enumerable.Empty<AttachmentViewModel>();
 
         var attachmentsToRemove = attachments
-            .Where(a => !requestAttachments.Any(x => x.Link == a.Link));
+            .Where(a => !requestAttachments.Any(x => x.Link == a.Link))
+            .ToList();
         _applicationDbContext.Attachments.RemoveRange(attachmentsToRemove);
 
         var attachmentsToCreate = requestAttachments
-            .Where(a => !attachments.Any(x => x.Link == a.Link));
+            .Where(a => !attachments.Any(x => x.Link == a.Link))
+            .ToList();
         var attachmentsEntities = _mapper.Map<List<AttachmentDbEntry>>(attachmentsToCreate);
         entity.Attachments?.AddRange(attachmentsEntities);
     }

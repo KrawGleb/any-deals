@@ -15,10 +15,17 @@ public class CitiesAndCountriesCsvLoader
 
     private static void LoadData()
     {
-        using var reader = new StreamReader("../SaM.AnyDeals.DataAccess/Population/PrepopulatedData/worldcities.csv");
-        using var csv = new CsvReader(reader, CultureInfo.InvariantCulture);
+        try
+        {
+            using var reader = new StreamReader("../SaM.AnyDeals.DataAccess/Population/PrepopulatedData/worldcities.csv");
+            using var csv = new CsvReader(reader, CultureInfo.InvariantCulture);
 
-        _records = csv.GetRecords<Record>().ToList();
+            _records = csv.GetRecords<Record>().ToList();
+        }
+        catch
+        {
+            _records = new List<Record>();
+        }
     }
 
     public static List<string> GetCountries()
