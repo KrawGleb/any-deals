@@ -8,7 +8,6 @@ import { loadUser } from "../api/auth/userService";
 import { userFound } from "./slices/authSlice";
 
 const loadState = () => {
-  console.log("Loading state");
   loadUser().then((user) => {
     if (user) {
       store.dispatch(userFound({ ...user } as any));

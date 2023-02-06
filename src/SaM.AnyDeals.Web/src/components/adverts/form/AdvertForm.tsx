@@ -54,8 +54,8 @@ import { Status } from "../../../models/enums/status";
 
 const schema = yup.object().shape(
   {
-    title: yup.string().label("Title").required().max(100),
-    description: yup.string().label("Description").max(1000),
+    title: yup.string().label("Title").required().max(100).default(""),
+    description: yup.string().label("Description").max(1000).default(""),
     goal: yup.number().label("Goal").required().default(0),
     group: yup
       .number()
@@ -66,20 +66,24 @@ const schema = yup.object().shape(
     category: yup.string().label("Category").required(),
     country: yup.string().label("Country").required(),
     city: yup.string().label("City").required(),
-    name: yup.string().label("Name").required().max(100),
-    email: yup.string().label("Email").email().max(100),
-    phone: yup.string().when("phone", {
-      is: (value: string) => value?.length > 0,
-      then: yup.string().phone(),
-      otherwise: yup.string(),
-    }),
-    address: yup.string().label("Address").max(100),
-    facebook: yup.string().label("Facebook").max(100),
-    vk: yup.string().label("VK").max(100),
-    instagram: yup.string().label("Instagram").max(100),
-    linkedIn: yup.string().label("LinkedId").max(100),
-    telegram: yup.string().label("Telegram").max(100),
-    whatsApp: yup.string().label("WhatsApp").max(100),
+    name: yup.string().label("Name").required().max(100).default(""),
+    email: yup.string().label("Email").email().max(100).default(""),
+    phone: yup
+      .string()
+      .when("phone", {
+        is: (value: string) => value?.length > 0,
+        then: yup.string().phone(),
+        otherwise: yup.string(),
+      })
+      .default("")
+      .label("Phone"),
+    address: yup.string().label("Address").max(100).default(""),
+    facebook: yup.string().label("Facebook").max(100).default(""),
+    vk: yup.string().label("VK").max(100).default(""),
+    instagram: yup.string().label("Instagram").max(100).default(""),
+    linkedIn: yup.string().label("LinkedId").max(100).default(""),
+    telegram: yup.string().label("Telegram").max(100).default(""),
+    whatsApp: yup.string().label("WhatsApp").max(100).default(""),
   },
   [["phone", "phone"]]
 );
@@ -347,30 +351,40 @@ export default function AdvertForm({ advert }: AdvertFormProps) {
             <div className="form__interest mb-4">
               <FormControl>
                 <Typography variant="h5">My interest</Typography>
-                <RadioGroup row defaultValue={0}>
-                  <FormControlLabel
-                    value={0}
-                    control={<Radio />}
-                    label="Commercial"
-                    {...register("interest")}
-                  />
-                  <FormControlLabel
-                    value={1}
-                    control={<Radio />}
-                    label="Social"
-                    {...register("interest")}
-                  />
-                </RadioGroup>
+                <Controller
+                  name="interest"
+                  control={control}
+                  render={({ field }) => (
+                    <RadioGroup row defaultValue={0} {...field}>
+                      <FormControlLabel
+                        value={0}
+                        control={<Radio />}
+                        label="Commercial"
+                      />
+                      <FormControlLabel
+                        value={1}
+                        control={<Radio />}
+                        label="Social"
+                      />
+                    </RadioGroup>
+                  )}
+                />
               </FormControl>
             </div>
 
             <Stack spacing={2} className="mb-5">
-              <Input
-                label="Title"
-                required
-                {...register("title")}
-                error={!!errors.title}
-                helperText={errors?.title?.message}
+              <Controller
+                name="title"
+                control={control}
+                render={({ field }) => (
+                  <Input
+                    label="Title"
+                    required
+                    {...field}
+                    error={!!errors.title}
+                    helperText={errors?.title?.message}
+                  />
+                )}
               />
               <FakeSelect
                 required
@@ -381,11 +395,12 @@ export default function AdvertForm({ advert }: AdvertFormProps) {
                 error={!!errors.category}
                 helperText={errors?.category?.message}
               />
-              <Input
-                label="Description"
-                multiline
-                rows={4}
-                {...register("description")}
+              <Controller
+                name="description"
+                control={control}
+                render={({ field }) => (
+                  <Input label="Description" multiline rows={4} {...field} />
+                )}
               />
             </Stack>
 

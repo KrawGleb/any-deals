@@ -1,5 +1,4 @@
 import { FetchBaseQueryError } from "@reduxjs/toolkit/dist/query";
-import store from "../store/store";
 
 export default function transformErrorResponse(
   response: FetchBaseQueryError
