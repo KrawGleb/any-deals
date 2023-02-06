@@ -52,30 +52,37 @@ import { useGetCategoriesQuery } from "../../../features/api/extensions/categori
 import "yup-phone";
 import { Status } from "../../../models/enums/status";
 
-const schema = yup.object().shape({
-  title: yup.string().label("Title").required().max(100),
-  description: yup.string().label("Description").max(1000),
-  goal: yup.number().label("Goal").required().default(0),
-  group: yup
-    .number()
-    .label("Group")
-    .required()
-    .default("" as any),
-  interest: yup.number().label("Interest").required().default(0),
-  category: yup.string().label("Category").required(),
-  country: yup.string().label("Country").required(),
-  city: yup.string().label("City").required(),
-  name: yup.string().label("Name").required().max(100),
-  email: yup.string().label("Email").email().max(100),
-  phone: yup.string().phone().label("Phone").max(20),
-  address: yup.string().label("Address").max(100),
-  facebook: yup.string().label("Facebook").max(100),
-  vk: yup.string().label("VK").max(100),
-  instagram: yup.string().label("Instagram").max(100),
-  linkedIn: yup.string().label("LinkedId").max(100),
-  telegram: yup.string().label("Telegram").max(100),
-  whatsApp: yup.string().label("WhatsApp").max(100),
-});
+const schema = yup.object().shape(
+  {
+    title: yup.string().label("Title").required().max(100),
+    description: yup.string().label("Description").max(1000),
+    goal: yup.number().label("Goal").required().default(0),
+    group: yup
+      .number()
+      .label("Group")
+      .required()
+      .default("" as any),
+    interest: yup.number().label("Interest").required().default(0),
+    category: yup.string().label("Category").required(),
+    country: yup.string().label("Country").required(),
+    city: yup.string().label("City").required(),
+    name: yup.string().label("Name").required().max(100),
+    email: yup.string().label("Email").email().max(100),
+    phone: yup.string().when("phone", {
+      is: (value: string) => value?.length > 0,
+      then: yup.string().phone(),
+      otherwise: yup.string(),
+    }),
+    address: yup.string().label("Address").max(100),
+    facebook: yup.string().label("Facebook").max(100),
+    vk: yup.string().label("VK").max(100),
+    instagram: yup.string().label("Instagram").max(100),
+    linkedIn: yup.string().label("LinkedId").max(100),
+    telegram: yup.string().label("Telegram").max(100),
+    whatsApp: yup.string().label("WhatsApp").max(100),
+  },
+  [["phone", "phone"]]
+);
 
 export default function AdvertForm({ advert }: AdvertFormProps) {
   const navigate = useNavigate();
