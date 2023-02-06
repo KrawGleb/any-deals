@@ -31,7 +31,13 @@ export default function OrderChat(props: OrderChatProps) {
 
   useEffect(() => {
     const connection = new HubConnectionBuilder()
-      .withUrl("/hubs/chat")
+      .withUrl(
+        `${
+          process.env.REACT_APP_CONTAINERIZED === "false"
+            ? "https://localhost:44315"
+            : ""
+        }/hubs/chat`
+      )
       .withAutomaticReconnect()
       .build();
 
