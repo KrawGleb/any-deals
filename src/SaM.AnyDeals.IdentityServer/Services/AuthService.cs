@@ -26,8 +26,15 @@ public class AuthService : IAuthService
 
     public async Task<Response> LoginAsync(LoginViewModel loginViewModel, CancellationToken cancellationToken)
     {
-        var user = await _userManager.FindByEmailAsync(loginViewModel.Email!)
-            ?? throw new NotFoundException($"User with email {loginViewModel.Email} not found.");
+        var user = await _userManager.FindByEmailAsync(loginViewModel.Email!);
+
+        if (user is null)
+        {
+            return new ErrorResponse
+            {
+                Errors = new string[] { $"User with email {loginViewModel.Email} not found." }
+            };
+        }
 
         var result = await _signInManager.PasswordSignInAsync(user, loginViewModel.Password!, false, false);
 
@@ -59,7 +66,7 @@ public class AuthService : IAuthService
             return new Response();
         }
 
-        return new ErrorResponse { Errors = new string[] { "Error occured" } };
+        return new ErrorResponse { Errors = result.Errors.Select(e => e.Description) };
 
     }
 }

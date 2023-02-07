@@ -9,9 +9,11 @@ public class RegisterViewModel
     public string? Email { get; set; }
 
     [Required]
+    [StringLength(int.MaxValue, MinimumLength = 6)]
     public string? Username { get; set; }
 
     [Required]
+    [StringLength(int.MaxValue, MinimumLength = 6)]
     public string? Password { get; set; }
 
     [Required]

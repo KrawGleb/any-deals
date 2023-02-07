@@ -8,6 +8,7 @@ using SaM.AnyDeals.DataAccess.Services.Interfaces;
 using SaM.AnyDeals.DataAccess.Services;
 using SaM.AnyDeals.DataAccess.Models.Elastic;
 using SaM.AnyDeals.Common.Constants;
+using System.Text;
 
 namespace SaM.AnyDeals.DataAccess;
 
@@ -32,6 +33,14 @@ public static class DependencyInjection
 
         services.AddIdentity<ApplicationUser, IdentityRole>(options =>
         {
+            var alphabet = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+            var numbers = "1234567890";
+            var sb = new StringBuilder();
+            sb.Append(alphabet);
+            sb.Append(alphabet.ToLower());
+            sb.Append(numbers);
+            sb.Append("_ ");
+
             options.Password.RequiredLength = 6;
             options.Password.RequireDigit = false;
             options.Password.RequireNonAlphanumeric = false;
@@ -39,6 +48,7 @@ public static class DependencyInjection
             options.Password.RequireUppercase = false;
 
             options.User.RequireUniqueEmail = true;
+            options.User.AllowedUserNameCharacters = sb.ToString();
         })
             .AddRoles<IdentityRole>()
             .AddEntityFrameworkStores<ApplicationDbContext>()

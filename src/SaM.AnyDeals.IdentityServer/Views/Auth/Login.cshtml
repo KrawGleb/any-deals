@@ -19,17 +19,26 @@
             <input type="hidden" asp-for="ReturnUrl" />
             <div class="title">Sing In</div>
 
-            <input asp-for="Email" class="form-field form-field-input"
-                   placeholder="Email"
-                   type="email" />
-            <span asp-validation-for="Email"></span>
+            <div class="field-block">
+                <input asp-for="Email" class="form-field form-field-input"
+                       placeholder="Email"
+                       type="email" />
+                <span asp-validation-for="Email"></span>
+            </div>
 
-            <input asp-for="Password" class="form-field form-field-input"
-                   placeholder="Password"
-                   type="password" />
-            <span asp-validation-for="Password"></span>
+            <div class="field-block">
+                <input asp-for="Password" class="form-field form-field-input"
+                       placeholder="Password"
+                       type="password" />
+                <span asp-validation-for="Password"></span>
+            </div>
 
             <button class="btn" type="submit">Login</button>
+
+            @foreach (var error in ViewData.ModelState.Values.SelectMany(modelState => modelState.Errors.Select(e => e.ErrorMessage)))
+            {
+                <span class="field-validation-error">@error</span>
+            }
         </form>
 
         <div class="footer">

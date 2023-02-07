@@ -59,9 +59,19 @@
     margin-bottom: 6px;
 }
 
-    .form-field:nth-last-child(2) {
-        margin-bottom: 3px;
-    }
+.form-field:nth-last-child(2) {
+    margin-bottom: 3px;
+}
+
+.field-block {
+    display: flex;
+    flex-direction: column;
+}
+
+.field-validation-error {
+    text-align: start;
+    color: red;
+}
 
 .form-field-input {
     padding: 12px 14px;
