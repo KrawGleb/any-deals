@@ -1,11 +1,7 @@
 import "./Moderation.scss";
 import React, { useEffect, useState } from "react";
-import {
-  Box,
-  Tabs,
-  Grid,
-  Paper,
-} from "@mui/material";
+import { Box, Tabs, Grid, Paper } from "@mui/material";
+import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 import VerticalTab from "../../components/common/verticalTabs/VerticalTab";
 import { Outlet, useNavigate } from "react-router-dom";
 
@@ -19,12 +15,19 @@ export default function Moderation() {
 
   useEffect(() => {
     navigate("adverts");
-  // eslint-disable-next-line react-hooks/exhaustive-deps
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   return (
     <Box className="moderation-root">
-      <div className="moderation-root__back-line">Back line</div>
+      <div className="moderation-root__back-line">
+        <div className="line" onClick={() => navigate("/")}>
+          <div className="row">
+            <ArrowBackIcon />
+          </div>
+          <p className="row nav-text prevent-select">Back</p>
+        </div>
+      </div>
       <Paper className="moderation-root__content moderation-content">
         <Grid container className="moderation-content">
           <Grid item className="moderation-content__nav">

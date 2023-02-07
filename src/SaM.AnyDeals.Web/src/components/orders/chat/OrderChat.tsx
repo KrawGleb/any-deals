@@ -46,6 +46,7 @@ export default function OrderChat(props: OrderChatProps) {
       .then(() => {
         connection.on("NewMessage", (userId) => {
           if (props.customerId === userId || props.executorId === userId) {
+            setMessage(message);
             dispatch(chatApiExtension.util.invalidateTags(["Chat"]));
           }
         });

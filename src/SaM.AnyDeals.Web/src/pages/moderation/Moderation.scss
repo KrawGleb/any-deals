@@ -2,30 +2,47 @@
   &-root {
     display: flex;
     flex-direction: column;
-    padding: 0px 135px 60px 135px; 
+    padding: 0px 135px 60px 135px;
     box-sizing: border-box;
     min-height: 100vh;
 
     &__content {
-        display: flex;
-        height: 100%;
-        flex: 1 1;
+      display: flex;
+      height: 100%;
+      flex: 1 1;
     }
 
     &__back-line {
+      display: flex;
+      flex: 0 0 50px;
+      flex-direction: column;
+      height: 50px;
+      justify-content: center;
+      color: darkmagenta;
+    }
 
+    .line {
+      display: flex;
+      flex-direction: row;
+
+      .row {
+        cursor: pointer;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+      }
     }
   }
 
   &-content {
     &__nav {
-        width: 20%;
-        padding: 8px;
+      width: 20%;
+      padding: 8px;
     }
 
     &__body {
-        width: 80%;
-        padding: 16px;
+      width: 80%;
+      padding: 16px;
     }
   }
 }

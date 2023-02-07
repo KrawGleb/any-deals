@@ -31,7 +31,7 @@ export default function Execution() {
       >
         <GoalTabs value={tab} onChange={handleChange}>
           <Tab value={0} disableRipple label="Available" />
-          <Tab value={1} disableRipple label="Achivated" />
+          <Tab value={1} disableRipple label="Archivated" />
         </GoalTabs>
       </Box>
       <OrdersList onCardClick={onCardClick} orders={requests ?? []} />;
