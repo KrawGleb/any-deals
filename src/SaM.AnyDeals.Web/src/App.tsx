@@ -21,7 +21,7 @@ import OrderDetails from "./pages/orders/details/OrderDetails";
 import AuthProvider from "./features/api/auth/authProvider";
 import userManager from "./features/api/auth/userService";
 import SignOut from "./pages/auth/SignOut";
-import NotFound from "./pages/errors/notFound/NotFound";
+import Error from "./pages/errors/Error";
 
 function App() {
   const authState = useSelector((state: RootState) => state.auth);
@@ -35,18 +35,17 @@ function App() {
           <Route path="/signout-oidc" element={<SignOut />} />
           <Route path="/signin-oidc" element={<SignIn />} />
           <Route path="/about" element={<About />} />
+          <Route
+            path="/error"
+            element={<Error text="Something went wrong" />}
+          />
           <Route path="/" element={<Home />}>
             <Route path="adverts" element={<Outlet />}>
               <Route path="search" element={<Search />} />
               <Route path="new" element={<NewAdvert />} />
               <Route path="edit" element={<EditAdvert />} />
               <Route path="details" element={<AdvertsDetails />} />
-              <Route
-                path="my"
-                element={
-                  hasToken ? <MyAdverts /> : <Navigate to="/signin-oidc" />
-                }
-              >
+              <Route path="my" element={<MyAdverts />}>
                 <Route path="" element={<CreatedAdverts />} />
                 <Route path="orders" element={<Orders />} />
                 <Route path="execution" element={<Execution />} />
@@ -64,8 +63,7 @@ function App() {
               <Route path="categories" element={<ModerationCategories />} />
             </Route>
           )}
-
-          <Route path="*" element={<NotFound />} />
+          <Route path="*" element={<Error text="Not Found" />} />
         </Routes>
       </AuthProvider>
     </div>

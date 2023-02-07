@@ -1,7 +1,6 @@
 import { Order } from "../../../models/api/order";
 import { CommonResponse } from "../../../models/api/responses/commonResponse";
 import { Response } from "../../../models/api/responses/response";
-import transformErrorResponse from "../../helpers/transformErrorResponse";
 import { baseApi } from "../baseApi";
 
 export const ordersApiExtension = baseApi.injectEndpoints({
@@ -11,7 +10,6 @@ export const ordersApiExtension = baseApi.injectEndpoints({
         url: `/api/Orders/${payload}`,
         method: "GET",
       }),
-      transformErrorResponse,
       transformResponse: (response: CommonResponse) => response.body,
     }),
     getMyOrders: builder.query<Order[], { archivated: boolean }>({
@@ -21,17 +19,15 @@ export const ordersApiExtension = baseApi.injectEndpoints({
         params: payload,
       }),
       providesTags: ["Orders"],
-      transformErrorResponse,
       transformResponse: (response: CommonResponse) => response.body,
     }),
     getMyRequests: builder.query<Order[], { archivated: boolean }>({
       query: (payload) => ({
         url: "/api/orders/my/requests",
         method: "GET",
-        params: payload
+        params: payload,
       }),
       providesTags: ["Orders"],
-      transformErrorResponse,
       transformResponse: (response: CommonResponse) => response.body,
     }),
     createOrder: builder.mutation({
@@ -41,7 +37,6 @@ export const ordersApiExtension = baseApi.injectEndpoints({
         body: payload,
       }),
       invalidatesTags: ["Orders"],
-      transformErrorResponse,
     }),
     approveOrder: builder.mutation<Response, any>({
       query: (payload: { id: number }) => ({
@@ -50,7 +45,6 @@ export const ordersApiExtension = baseApi.injectEndpoints({
         body: payload,
       }),
       invalidatesTags: ["Orders"],
-      transformErrorResponse,
     }),
     archivateOrder: builder.mutation<Response, any>({
       query: (payload: { id: number }) => ({

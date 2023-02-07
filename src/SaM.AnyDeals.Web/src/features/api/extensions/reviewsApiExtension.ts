@@ -1,6 +1,5 @@
 import { Review } from "../../../models/api/review";
 import { baseApi } from "../baseApi";
-import transformErrorResponse from "../../helpers/transformErrorResponse";
 
 export const reviewsApiExtension = baseApi.injectEndpoints({
   endpoints: (builder) => ({
@@ -11,7 +10,6 @@ export const reviewsApiExtension = baseApi.injectEndpoints({
         body: payload,
       }),
       invalidatesTags: ["Reviews"],
-      transformErrorResponse,
     }),
   }),
   overrideExisting: false,
