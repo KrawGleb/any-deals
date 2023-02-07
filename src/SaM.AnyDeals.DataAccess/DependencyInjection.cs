@@ -32,10 +32,10 @@ public static class DependencyInjection
 
         services.AddIdentity<ApplicationUser, IdentityRole>(options =>
         {
-            options.Password.RequireNonAlphanumeric = false;
-            options.Password.RequireDigit = false;
-            options.Password.RequireLowercase = false;
             options.Password.RequiredLength = 6;
+            options.Password.RequireDigit = false;
+            options.Password.RequireNonAlphanumeric = false;
+            options.Password.RequireLowercase = false;
             options.Password.RequireUppercase = false;
 
             options.User.RequireUniqueEmail = true;
