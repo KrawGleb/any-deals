@@ -36,6 +36,7 @@ public static class DependencyInjection
             options.Password.RequireDigit = false;
             options.Password.RequireLowercase = false;
             options.Password.RequiredLength = 6;
+            options.Password.RequireUppercase = false;
 
             options.User.RequireUniqueEmail = true;
         })
