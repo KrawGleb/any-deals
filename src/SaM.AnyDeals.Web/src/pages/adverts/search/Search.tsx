@@ -46,7 +46,7 @@ export default function Search() {
 
     const newAdverts: Advert[] =
       adverts?.filter(
-        (add) =>
+        (add: Advert) =>
           currentAdverts.findIndex((currAdd) => currAdd.id === add.id) === -1
       ) ?? [];
 

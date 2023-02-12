@@ -1,7 +1,9 @@
 import "./AdvertForm.scss";
-import * as yup from "yup";
-import { yupResolver } from "@hookform/resolvers/yup";
 import React, { useEffect, useState } from "react";
+
+import * as yup from "yup";
+import "yup-phone";
+import { yupResolver } from "@hookform/resolvers/yup";
 
 import {
   Box,
@@ -18,7 +20,6 @@ import ArrowBack from "@mui/icons-material/ArrowBack";
 import ArrowForwardIosIcon from "@mui/icons-material/ArrowForwardIos";
 
 import FakeSelect from "../../common/fakeSelect/FakeSelect";
-import Input from "../../common/input/Input";
 import SelectDialog from "../../dialogs/select/SelectDialog";
 import FilesUploadField from "./filesUpload/FilesUploadField";
 
@@ -49,7 +50,6 @@ import {
   useGetCountriesQuery,
 } from "../../../features/api/extensions/countriesApiExtension";
 import { useGetCategoriesQuery } from "../../../features/api/extensions/categoriesApiExtension";
-import "yup-phone";
 import { Status } from "../../../models/enums/status";
 import ControlledInput from "../../common/controlledInput/ControlledInput";
 
