@@ -48,7 +48,10 @@
 
             <button class="btn" type="submit">Register</button>
 
-            @foreach (var error in ViewData.ModelState.Values.SelectMany(modelState => modelState.Errors.Select(e => e.ErrorMessage)))
+            @foreach (var error in ViewData.ModelState.Keys.SelectMany(
+                key => key.StartsWith("ErrorResponse") 
+                    ? ViewData.ModelState[key]!.Errors.Select(e => e.ErrorMessage) 
+                    : Enumerable.Empty<string>()))
             {
                 <span class="field-validation-error">@error</span>
             }

@@ -37,10 +37,11 @@ public class AuthController : Controller
 
         var errorResponse = response as ErrorResponse;
 
+        var errorId = 0;
         errorResponse?
             .Errors?
             .ToList()
-            .ForEach((error) => ModelState.AddModelError(string.Empty, error));
+            .ForEach((error) => ModelState.AddModelError($"ErrorResponse{errorId}", error));
 
         return View(loginViewModel);
     }
@@ -66,10 +67,11 @@ public class AuthController : Controller
 
         var errorResponse = response as ErrorResponse;
 
+        var errorId = 0;
         errorResponse?
             .Errors?
             .ToList()
-            .ForEach((error) => ModelState.AddModelError(string.Empty, error));
+            .ForEach((error) => ModelState.AddModelError($"ErrorResponse{errorId++}", error));
 
         return View(registerViewModel);
     }

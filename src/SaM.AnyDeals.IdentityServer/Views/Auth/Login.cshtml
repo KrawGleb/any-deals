@@ -17,7 +17,7 @@
     <div class="content">
         <form asp-controller="Auth" asp-action="Login" class="form" method="post">
             <input type="hidden" asp-for="ReturnUrl" />
-            <div class="title">Sing In</div>
+            <div class="title">Sign In</div>
 
             <div class="field-block">
                 <input asp-for="Email" class="form-field form-field-input"
@@ -35,7 +35,10 @@
 
             <button class="btn" type="submit">Login</button>
 
-            @foreach (var error in ViewData.ModelState.Values.SelectMany(modelState => modelState.Errors.Select(e => e.ErrorMessage)))
+            @foreach (var error in ViewData.ModelState.Keys.SelectMany(
+                key => key.StartsWith("ErrorResponse")
+                    ? ViewData.ModelState[key]!.Errors.Select(e => e.ErrorMessage)
+                    : Enumerable.Empty<string>()))
             {
                 <span class="field-validation-error">@error</span>
             }

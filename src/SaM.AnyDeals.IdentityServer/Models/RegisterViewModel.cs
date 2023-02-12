@@ -6,14 +6,15 @@ public class RegisterViewModel
 {
     [Required]
     [EmailAddress]
+    [StringLength(100)]
     public string? Email { get; set; }
 
     [Required]
-    [StringLength(int.MaxValue, MinimumLength = 6)]
+    [StringLength(35, MinimumLength = 6)]
     public string? Username { get; set; }
 
     [Required]
-    [StringLength(int.MaxValue, MinimumLength = 6)]
+    [StringLength(35, MinimumLength = 6)]
     public string? Password { get; set; }
 
     [Required]
