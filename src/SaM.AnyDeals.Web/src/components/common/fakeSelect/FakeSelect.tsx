@@ -2,7 +2,7 @@ import "./FakeSelect.scss";
 import React, { forwardRef } from "react";
 import ArrowDropDownIcon from "@mui/icons-material/ArrowDropDown";
 import InputAdornment from "@mui/material/InputAdornment";
-import Input from "../Input";
+import Input from "../input/Input";
 import { TextFieldProps } from "@mui/material";
 
 export const FakeSelect = forwardRef(

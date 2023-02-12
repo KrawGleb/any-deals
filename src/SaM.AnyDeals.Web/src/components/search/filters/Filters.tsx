@@ -11,7 +11,7 @@ import GoalTabs from "./GoalTabs";
 import InterestButton from "./InterestButton";
 import SelectDialog from "../../dialogs/select/SelectDialog";
 import FakeSelect from "../../common/fakeSelect/FakeSelect";
-import Input from "../../common/Input";
+import Input from "../../common/input/Input";
 import SearchIcon from "@mui/icons-material/Search";
 import { Tabs, Box, Button, Tab, ToggleButtonGroup } from "@mui/material";
 import {

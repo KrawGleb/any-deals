@@ -11,7 +11,7 @@ import {
   Divider,
 } from "@mui/material";
 import { SelectableItem } from "../../../models/selectableItem";
-import Input from "../../common/Input";
+import Input from "../../common/input/Input";
 import { SelectDialogProps } from "./SelectDialogProps";
 
 export default function SelectDialog(props: SelectDialogProps) {

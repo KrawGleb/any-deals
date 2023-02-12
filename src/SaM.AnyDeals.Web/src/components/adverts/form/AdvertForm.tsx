@@ -18,7 +18,7 @@ import ArrowBack from "@mui/icons-material/ArrowBack";
 import ArrowForwardIosIcon from "@mui/icons-material/ArrowForwardIos";
 
 import FakeSelect from "../../common/fakeSelect/FakeSelect";
-import Input from "../../common/Input";
+import Input from "../../common/input/Input";
 import SelectDialog from "../../dialogs/select/SelectDialog";
 import FilesUploadField from "./filesUpload/FilesUploadField";
 
@@ -51,6 +51,7 @@ import {
 import { useGetCategoriesQuery } from "../../../features/api/extensions/categoriesApiExtension";
 import "yup-phone";
 import { Status } from "../../../models/enums/status";
+import ControlledInput from "../../common/controlledInput/ControlledInput";
 
 const schema = yup.object().shape(
   {
@@ -240,9 +241,11 @@ export default function AdvertForm({ advert }: AdvertFormProps) {
     setValue("interest", advert.interest, setValueOptions);
     setValue("group", advert.group, setValueOptions);
 
+    setValue("email", advert.contacts.email, setValueOptions);
+
     Object.keys(advert.contacts).forEach((contact) =>
       setValue(
-        contact as any,
+        contact,
         advert.contacts[contact as keyof typeof advert.contacts],
         setValueOptions
       )
@@ -297,31 +300,26 @@ export default function AdvertForm({ advert }: AdvertFormProps) {
                 In which section would you like to place your ad?
               </Typography>
 
-              <Controller
+              <ControlledInput
                 control={control}
                 name="group"
-                render={({ field }) => (
-                  <Input
-                    required
-                    select
-                    label="Group"
-                    defaultValue=""
-                    {...field}
-                    error={!!errors.group}
-                    helperText={errors?.group?.message}
-                  >
-                    <MenuItem key={0} value={0}>
-                      Services nearby
-                    </MenuItem>
-                    <MenuItem key={1} value={1}>
-                      Online services
-                    </MenuItem>
-                    <MenuItem key={2} value={2}>
-                      Events and places
-                    </MenuItem>
-                  </Input>
-                )}
-              />
+                required
+                select
+                label="Group"
+                defaultValue=""
+                error={!!errors.group}
+                helperMessage={errors?.group?.message}
+              >
+                <MenuItem key={0} value={0}>
+                  Services nearby
+                </MenuItem>
+                <MenuItem key={1} value={1}>
+                  Online services
+                </MenuItem>
+                <MenuItem key={2} value={2}>
+                  Events and places
+                </MenuItem>
+              </ControlledInput>
             </div>
 
             <div className="form__goal">
@@ -373,19 +371,15 @@ export default function AdvertForm({ advert }: AdvertFormProps) {
             </div>
 
             <Stack spacing={2} className="mb-5">
-              <Controller
-                name="title"
+              <ControlledInput
                 control={control}
-                render={({ field }) => (
-                  <Input
-                    label="Title"
-                    required
-                    {...field}
-                    error={!!errors.title}
-                    helperText={errors?.title?.message}
-                  />
-                )}
+                name={"title"}
+                label="Title"
+                required
+                error={!!errors.title}
+                helperMessage={errors?.title?.message}
               />
+
               <FakeSelect
                 required
                 label="Category"
@@ -395,12 +389,15 @@ export default function AdvertForm({ advert }: AdvertFormProps) {
                 error={!!errors.category}
                 helperText={errors?.category?.message}
               />
-              <Controller
+
+              <ControlledInput
+                multiline
                 name="description"
                 control={control}
-                render={({ field }) => (
-                  <Input label="Description" multiline rows={4} {...field} />
-                )}
+                label="Description"
+                rows={4}
+                error={!!errors.description}
+                helperMessage={errors?.description?.message}
               />
             </Stack>
 
@@ -439,68 +436,93 @@ export default function AdvertForm({ advert }: AdvertFormProps) {
 
               <Stack spacing={3}>
                 <Stack direction="row" spacing={3}>
-                  <Input
+                  <ControlledInput
+                    control={control}
+                    name={"name"}
                     label="Name"
                     required
-                    {...register("name")}
                     error={!!errors.name}
-                    helperText={errors?.name?.message}
+                    helperMessage={errors?.name?.message}
                   />
-                  <Input
+
+                  <ControlledInput
+                    control={control}
+                    name={"email"}
                     label="Email"
-                    {...register("email")}
                     error={!!errors.email}
-                    helperText={errors?.email?.message}
+                    helperMessage={errors?.email?.message}
                   />
                 </Stack>
 
                 <Stack direction="row" spacing={3}>
-                  <Input
+                  <ControlledInput
+                    control={control}
+                    name={"phone"}
                     label="Phone number"
-                    {...register("phone")}
                     error={!!errors.phone}
-                    helperText={errors?.phone?.message}
+                    helperMessage={errors?.phone?.message}
                   />
-                  <Input
+
+                  <ControlledInput
+                    control={control}
+                    name={"address"}
                     label="Address"
-                    {...register("address")}
-                    error={!!errors.address}
-                    helperText={errors?.address?.message}
+                    error={!!errors.phone}
+                    helperMessage={errors?.phone?.message}
                   />
                 </Stack>
 
                 <Stack direction="row" spacing={3}>
-                  <Input label="Facebook" {...register("facebook")} />
-                  <Input
+                  <ControlledInput
+                    control={control}
+                    name={"facebook"}
+                    label="Facebook"
+                    error={!!errors.facebook}
+                    helperMessage={errors?.facebook?.message}
+                  />
+
+                  <ControlledInput
+                    control={control}
+                    name={"vk"}
                     label="VK"
-                    {...register("vk")}
                     error={!!errors.vk}
-                    helperText={errors?.vk?.message}
+                    helperMessage={errors?.vk?.message}
                   />
                 </Stack>
 
                 <Stack direction="row" spacing={3}>
-                  <Input label="Instagram" {...register("instagram")} />
-                  <Input
+                  <ControlledInput
+                    control={control}
+                    name={"instagram"}
+                    label="Instagram"
+                    error={!!errors.instagram}
+                    helperMessage={errors?.instagram?.message}
+                  />
+
+                  <ControlledInput
+                    control={control}
+                    name={"linkedIn"}
                     label="LinkedIn"
-                    {...register("linkedIn")}
                     error={!!errors.linkedIn}
-                    helperText={errors?.linkedIn?.message}
+                    helperMessage={errors?.linkedIn?.message}
                   />
                 </Stack>
 
                 <Stack direction="row" spacing={3}>
-                  <Input
+                  <ControlledInput
+                    control={control}
+                    name={"telegram"}
                     label="Telegram"
-                    {...register("telegram")}
                     error={!!errors.telegram}
-                    helperText={errors?.telegram?.message}
+                    helperMessage={errors?.telegram?.message}
                   />
-                  <Input
+
+                  <ControlledInput
+                    control={control}
+                    name={"whatsApp"}
                     label="WhatsApp"
-                    {...register("whatsApp")}
-                    error={!!errors.whatsApp}
-                    helperText={errors?.whatsApp?.message}
+                    error={!!errors.phone}
+                    helperMessage={errors?.phone?.message}
                   />
                 </Stack>
               </Stack>
@@ -512,23 +534,30 @@ export default function AdvertForm({ advert }: AdvertFormProps) {
                 The first file will be visible on the announcement card
               </Typography>
 
-              <FilesUploadField
-                uploadedFiles={
-                  advert?.attachments
-                    ? advert.attachments.map(
-                        (attachment, index) =>
-                          ({
-                            id: index,
-                            name: attachment.name,
-                            type: AttachmentType.convertToString(
-                              attachment.type
-                            ),
-                            deleted: false,
-                            url: attachment.link,
-                          } as StoredFile)
-                      )
-                    : []
-                }
+              <Controller
+                control={control}
+                name={"files"}
+                render={(field) => (
+                  <FilesUploadField
+                    {...field}
+                    uploadedFiles={
+                      advert?.attachments
+                        ? advert.attachments.map(
+                            (attachment, index) =>
+                              ({
+                                id: index,
+                                name: attachment.name,
+                                type: AttachmentType.convertToString(
+                                  attachment.type
+                                ),
+                                deleted: false,
+                                url: attachment.link,
+                              } as StoredFile)
+                          )
+                        : []
+                    }
+                  />
+                )}
               />
             </div>
 

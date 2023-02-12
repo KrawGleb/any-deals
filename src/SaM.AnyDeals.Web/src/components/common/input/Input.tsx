@@ -1,5 +1,6 @@
 import { styled, TextField, TextFieldProps } from "@mui/material";
-import { forwardRef } from "react";
+import { forwardRef, ReactNode } from "react";
+import { InputProps } from "./InputProps";
 
 const CustomTextField = styled(TextField)<TextFieldProps>(({ theme }) => ({
   "& .MuiInputBase-root": {
@@ -18,13 +19,14 @@ const CustomTextField = styled(TextField)<TextFieldProps>(({ theme }) => ({
 }));
 
 export const Input = forwardRef(
-  ({ children, ...props }: TextFieldProps | any, ref) => {
+  ({ children, helperMessage, ...props }: InputProps, ref) => {
     return (
       <CustomTextField
         variant="outlined"
         margin="none"
         inputRef={ref}
         fullWidth
+        helperText={helperMessage as ReactNode}
         {...props}
       >
         {children}

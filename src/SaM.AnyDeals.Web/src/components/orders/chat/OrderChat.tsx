@@ -2,7 +2,7 @@ import "./OrderChat.scss";
 import React, { ChangeEvent, useEffect, useState } from "react";
 import { OrderChatProps } from "./OrderChatProps";
 import { Box, Button } from "@mui/material";
-import Input from "../../common/Input";
+import Input from "../../common/input/Input";
 import SendIcon from "@mui/icons-material/Send";
 import { HubConnectionBuilder } from "@microsoft/signalr";
 import {

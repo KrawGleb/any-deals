@@ -3,7 +3,7 @@ import React, { useState } from "react";
 import * as yup from "yup";
 import { Box, Button, Dialog, Rating, Typography } from "@mui/material";
 import { ReviewDialogProps } from "./ReviewDialogProps";
-import Input from "../../common/Input";
+import Input from "../../common/input/Input";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { Review } from "../../../models/api/review";
@@ -49,7 +49,7 @@ export default function ReviewDialog({
             label="Title"
             {...register("title")}
             error={!!errors.title}
-            helperText={errors?.title?.message}
+            helperMessage={errors?.title?.message}
           />
           <Rating
             max={10}
@@ -62,7 +62,7 @@ export default function ReviewDialog({
             rows={4}
             {...register("comment")}
             error={!!errors.comment}
-            helperText={errors?.comment?.message}
+            helperMessage={errors?.comment?.message}
           />
           <Box className="review-dialog__actions">
             <Button

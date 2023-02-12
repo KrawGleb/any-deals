@@ -28,14 +28,19 @@ export default function ModerationAdverts() {
   useEffect(() => {
     if (adverts === undefined) return;
 
+    console.log(adverts);
     const newAdverts: Advert[] =
-      adverts?.filter((add) =>
-        currentAdverts.findIndex((currAdd) => currAdd.id === add.id)
+      adverts?.filter(
+        (add: Advert) =>
+          currentAdverts.findIndex((currAdd) => currAdd.id === add.id) === -1
       ) ?? [];
+
+    console.log(newAdverts);
 
     if (newAdverts.length === 0) {
       setHasMore(false);
     } else {
+      nextPage();
       setHasMore(true);
       setCurrentAdverts((curr) => [...curr, ...newAdverts]);
     }

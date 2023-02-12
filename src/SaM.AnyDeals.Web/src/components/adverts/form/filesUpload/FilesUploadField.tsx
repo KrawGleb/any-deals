@@ -15,22 +15,30 @@ import {
   deleteFile,
   resetFiles,
 } from "../../../../features/store/slices/fileUploadSlice";
+import RejectedFile from "./rejectedFile/RejectedFile";
+import { FieldError } from "react-hook-form";
 
 export default function FilesUploadField({
   uploadedFiles,
+  field,
+  fieldState,
+  formState,
 }: FilesUploadFieldProps) {
   const dispatch = useDispatch();
   const storedFilesCount = useSelector(
     (state: RootState) => state.fileUpload.files.length
   );
 
-  const [files, setFiles] = useState<UploadableFile[]>([]);
+  const [_files, setFiles] = useState<UploadableFile[]>([]);
   const [_storedFiles, setStoredFiles] = useState<StoredFile[] | undefined>(
     uploadedFiles
   );
+  const [_rejectedFiles, setRejectedFiles] = useState<FileRejection[]>([]);
 
   const onDrop = useCallback(
-    (acceptedFiles: File[], _rejectedFiles: FileRejection[]) => {
+    (acceptedFiles: File[], rejectedFiles: FileRejection[]) => {
+      if (_files.length + (_storedFiles?.length ?? 0) > 25) return;
+
       let fileId = storedFilesCount;
       const storedFiles: StoredFile[] = [];
       const uploadableFile: UploadableFile[] = [];
@@ -53,6 +61,7 @@ export default function FilesUploadField({
       });
 
       setFiles((curr) => [...curr, ...uploadableFile]);
+      setRejectedFiles(rejectedFiles);
       dispatch(addFiles(storedFiles));
     },
     [dispatch, storedFilesCount]
@@ -68,12 +77,17 @@ export default function FilesUploadField({
     dispatch(deleteFile({ id: uploadedFile.id }));
   };
 
+  const onDeleteRejected = (rejection: FileRejection) => {
+    setRejectedFiles((cur) => cur?.filter((f) => f !== rejection));
+  };
+
   const { getRootProps, getInputProps } = useDropzone({
     onDrop,
     accept: {
       "image/*": [],
       "application/pdf": [],
     },
+    maxSize: 10 * 1024 * 1024, // 25Mb
   });
 
   useEffect(() => {
@@ -91,7 +105,7 @@ export default function FilesUploadField({
         </div>
       </Grid>
       <Stack spacing={1} sx={{ marginTop: "6px" }}>
-        {files.map((file, index) => (
+        {_files.map((file, index) => (
           <FileUploadWithProgress key={index} file={file} onDelete={onDelete} />
         ))}
         {_storedFiles?.map((file, index) => (
@@ -100,6 +114,9 @@ export default function FilesUploadField({
             file={file}
             onDelete={onDeleteUploaded}
           />
+        ))}
+        {_rejectedFiles?.map((file, index) => (
+          <RejectedFile key={index} file={file} onDelete={onDeleteRejected} />
         ))}
       </Stack>
     </>
