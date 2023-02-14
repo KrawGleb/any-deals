@@ -8,7 +8,7 @@ const userManagerSettings: UserManagerSettings =
         response_type: "code",
         response_mode: "query",
         scope: "openid profile AnyDealsAPI",
-        authority: "https://localhost:44302",
+        authority: "https://localhost:5051",
         post_logout_redirect_uri: "https://localhost:3000/signout-oidc",
         automaticSilentRenew: true,
       }

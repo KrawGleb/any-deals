@@ -34,7 +34,7 @@ export default function OrderChat(props: OrderChatProps) {
       .withUrl(
         `${
           process.env.REACT_APP_CONTAINERIZED === "false"
-            ? "https://localhost:44315"
+            ? "https://localhost:5001"
             : ""
         }/hubs/chat`
       )

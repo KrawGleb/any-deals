@@ -9,7 +9,7 @@ import { RootState } from "../store/store";
 const baseQuery = fetchBaseQuery({
   baseUrl:
     process.env.REACT_APP_CONTAINERIZED === "false"
-      ? "https://localhost:44315/"
+      ? "https://localhost:5001/"
       : "",
   credentials: "include",
   prepareHeaders: (headers, { getState }) => {
