@@ -108,6 +108,7 @@
     flex-direction: column;
     align-items: center;
     margin-top: 32px;
+    gap: 16px;
 }
 
 .switch-button {
@@ -124,27 +125,67 @@
     height: 22px;
 }
 
-    .arrow-left::after,
-    .arrow-left::before {
-        content: "";
-        display: block;
-        box-sizing: border-box;
-        position: absolute;
-        left: 3px;
-    }
+.arrow-left::after,
+.arrow-left::before {
+    content: "";
+    display: block;
+    box-sizing: border-box;
+    position: absolute;
+    left: 3px;
+}
 
-    .arrow-left::after {
-        width: 8px;
-        height: 8px;
-        border-bottom: 2px solid;
-        border-left: 2px solid;
-        transform: rotate(45deg);
-        bottom: 7px;
-    }
+.arrow-left::after {
+    width: 8px;
+    height: 8px;
+    border-bottom: 2px solid;
+    border-left: 2px solid;
+    transform: rotate(45deg);
+    bottom: 7px;
+}
 
-    .arrow-left::before {
-        width: 16px;
-        height: 2px;
-        bottom: 10px;
-        background: currentColor;
-    }
+.arrow-left::before {
+    width: 16px;
+    height: 2px;
+    bottom: 10px;
+    background: currentColor;
+}
+
+.google-btn {
+    padding: 2px 8px 2px 0px;
+    margin: 0px;
+    border: none;
+    background-color: white;
+    border-radius: 2px;
+    box-shadow: 0 3px 4px 0 rgba(0, 0, 0, 0.25);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    cursor: pointer;
+}
+
+.google-btn .google-icon-wrapper {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 40px;
+    height: 40px;
+    margin: 0px;
+    border-radius: 2px;
+    background-color: white;
+}
+
+.google-btn .google-icon {
+    width: 24px;
+    height: 24px;
+}
+
+.google-btn .btn-text {
+    font-size: 14px;
+    letter-spacing: 0.2px;
+    font-family: "Roboto";
+}
+
+.google-btn:hover {
+    box-shadow: 0 0 6px #4285f4;
+}

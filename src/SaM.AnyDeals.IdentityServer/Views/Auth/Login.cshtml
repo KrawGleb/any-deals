@@ -59,9 +59,22 @@
 
                     @foreach (var provider in Model.ExternalProviders ?? Enumerable.Empty<AuthenticationScheme>())
                     {
-                        <button name="provider" type="submit" value="@provider.Name">
-                            @provider.Name
-                        </button>
+                        switch (provider.Name)
+                        {
+                            case "Google":
+                                <button name="provider" type="submit" value="@provider.Name" class="google-btn">
+                                    <div class="google-icon-wrapper">
+                                        <img class="google-icon" src="https://upload.wikimedia.org/wikipedia/commons/5/53/Google_%22G%22_Logo.svg" />
+                                    </div>
+                                    <p class="btn-text"><b>@provider.Name</b></p>
+                                </button>
+                                break;
+                            default:
+                                <button name="provider" type="submit" value="@provider.Name">
+                                    @provider.Name
+                                </button>
+                                break;
+                        }
                     }
                 </form>
             </div>
