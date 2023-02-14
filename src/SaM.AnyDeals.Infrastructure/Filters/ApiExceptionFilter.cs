@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Filters;
+using Microsoft.Extensions.Logging;
 using SaM.AnyDeals.Common.Exceptions;
 using SaM.AnyDeals.Common.Responses;
 
@@ -10,9 +11,11 @@ namespace SaM.AnyDeals.Infrastructure.Filters;
 public class ApiExceptionFilter : IActionFilter, IOrderedFilter
 {
     private readonly IDictionary<Type, Action<ActionExecutedContext>> _exceptionHandlers;
+    private readonly ILogger<ApiExceptionFilter> _logger;
 
-    public ApiExceptionFilter()
+    public ApiExceptionFilter(ILogger<ApiExceptionFilter> logger)
     {
+        _logger = logger;
         _exceptionHandlers = new Dictionary<Type, Action<ActionExecutedContext>>
         {
             { typeof(NotFoundException), HandleNotFoundException },
@@ -46,6 +49,7 @@ public class ApiExceptionFilter : IActionFilter, IOrderedFilter
 
     private void HandleUnknownException(ActionExecutedContext context)
     {
+        _logger.LogInformation(context.Exception, "Unknown exception occurred");
         var response = new ErrorResponse()
         {
             Errors = new string[] {
@@ -62,6 +66,7 @@ public class ApiExceptionFilter : IActionFilter, IOrderedFilter
 
     private void HandleNotFoundException(ActionExecutedContext context)
     {
+        _logger.LogInformation(context.Exception, "Not found exception occurred");
         var response = new ErrorResponse()
         {
             Errors = new string[] { context.Exception.Message }
@@ -75,6 +80,7 @@ public class ApiExceptionFilter : IActionFilter, IOrderedFilter
 
     private void HandleForbiddenActionException(ActionExecutedContext context)
     {
+        _logger.LogInformation(context.Exception, "Forbiddenr action");
         var response = new ErrorResponse()
         {
             Errors = new string[] { "Forbidden action." }
@@ -88,6 +94,7 @@ public class ApiExceptionFilter : IActionFilter, IOrderedFilter
 
     private void HandleValidationException(ActionExecutedContext context)
     {
+        _logger.LogInformation(context.Exception, "Validation exception occurred");
         var exception = (ValidationException)context.Exception;
         var errors = exception.Errors.Select(e => e.ErrorMessage);
 

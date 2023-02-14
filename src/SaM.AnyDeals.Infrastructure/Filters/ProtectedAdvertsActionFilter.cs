@@ -47,7 +47,7 @@ public class ProtectedAdvertsActionFilter : IAsyncActionFilter
     private async Task<bool> AllowUserEditAdvert(ClaimsPrincipal userClaim, int advertId)
     {
         var user = await _userManager.GetUserAsync(userClaim)
-            ?? throw new NotFoundException($"User with not found.");
+            ?? throw new NotFoundException($"User not found.");
         var advert = await _applicationDbContext.Adverts.FindAsync(advertId)
             ?? throw new NotFoundException($"Advert with id {advertId} not found.");
 

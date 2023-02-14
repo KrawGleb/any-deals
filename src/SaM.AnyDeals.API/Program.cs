@@ -1,5 +1,6 @@
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.HttpOverrides;
+using SaM.AnyDeals.API;
 using SaM.AnyDeals.API.Hubs;
 using SaM.AnyDeals.API.Hubs.Services;
 using SaM.AnyDeals.Application;
@@ -40,24 +41,7 @@ try
     services.AddEndpointsApiExplorer();
     services.AddSwaggerGen();
 
-    services.AddAuthentication(options =>
-    {
-        options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
-        options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
-        options.DefaultScheme = JwtBearerDefaults.AuthenticationScheme;
-    })
-        .AddJwtBearer("Bearer", options =>
-    {
-        var useProxy = false;
-        _ = bool.TryParse(Environment.GetEnvironmentVariable("UseProxy"), out useProxy);
-
-        options.Authority = useProxy
-            ? "http://identity:80"
-            : "https://localhost:44302";
-
-        options.Audience = "AnyDealsAPI";
-        options.RequireHttpsMetadata = false;
-    });
+    services.ConfigureAuthentication();
 
     services.AddCors(o =>
     {
