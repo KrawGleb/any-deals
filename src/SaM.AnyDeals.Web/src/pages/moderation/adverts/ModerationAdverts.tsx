@@ -29,7 +29,6 @@ export default function ModerationAdverts() {
     if (adverts === undefined) return;
 
     if (window.innerWidth <= document.body.clientWidth) {
-      console.log("Code");
       setHasMore(!!adverts);
       nextPage();
     }
