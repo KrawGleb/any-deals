@@ -5,6 +5,7 @@ using SaM.AnyDeals.Common.Responses;
 using SaM.AnyDeals.DataAccess.Models.Auth;
 using SaM.AnyDeals.IdentityServer.Models;
 using SaM.AnyDeals.IdentityServer.Services.Interfaces;
+using System.Security.Claims;
 
 namespace SaM.AnyDeals.IdentityServer.Services;
 
@@ -26,13 +27,13 @@ public class AuthService : IAuthService
 
     public async Task<Response> LoginAsync(LoginViewModel loginViewModel, CancellationToken cancellationToken)
     {
-        var user = await _userManager.FindByEmailAsync(loginViewModel.Email!);
+        var user = await _userManager.FindByNameAsync(loginViewModel.Username!);
 
         if (user is null)
         {
             return new ErrorResponse
             {
-                Errors = new string[] { $"User with email {loginViewModel.Email} not found." }
+                Errors = new string[] { $"User with email {loginViewModel.Username} not found." }
             };
         }
 
@@ -67,6 +68,25 @@ public class AuthService : IAuthService
         }
 
         return new ErrorResponse { Errors = result.Errors.Select(e => e.Description) };
+    }
 
+    public async Task<Response> ExternalRegisterAsync(ExternalLoginInfo info, CancellationToken cancellationToken)
+    {
+        var username = info.Principal.FindFirst(ClaimTypes.Name)!.Value;
+        var user = new ApplicationUser
+        {
+            UserName = username
+        };
+
+        var result = await _userManager.CreateAsync(user);
+        var addLoginResult = await _userManager.AddLoginAsync(user, info);
+
+        if (result.Succeeded && addLoginResult.Succeeded)
+        {
+            await _signInManager.SignInAsync(user, false);
+            return new Response();
+        }
+
+        return new ErrorResponse();
     }
 }

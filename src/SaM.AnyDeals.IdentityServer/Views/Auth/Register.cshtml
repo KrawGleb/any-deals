@@ -49,18 +49,20 @@
             <button class="btn" type="submit">Register</button>
 
             @foreach (var error in ViewData.ModelState.Keys.SelectMany(
-                key => key.StartsWith("ErrorResponse") 
-                    ? ViewData.ModelState[key]!.Errors.Select(e => e.ErrorMessage) 
-                    : Enumerable.Empty<string>()))
+            key => key.StartsWith("ErrorResponse")
+            ? ViewData.ModelState[key]!.Errors.Select(e => e.ErrorMessage)
+            : Enumerable.Empty<string>()))
             {
                 <span class="field-validation-error">@error</span>
             }
         </form>
 
         <div class="footer">
-            <p>Already have login and password?</p>
-            <a asp-controller="Auth" asp-action="Login" asp-route-returnUrl="@Model.ReturnUrl"
-               class="switch-button">Sign in</a>
+            <div class="footer-switch">
+                <p>Already have login and password?</p>
+                <a asp-controller="Auth" asp-action="Login" asp-route-returnUrl="@Model.ReturnUrl"
+                   class="switch-button">Sign in</a>
+            </div>
         </div>
     </div>
 </div>

@@ -1,4 +1,5 @@
-﻿@model LoginViewModel
+﻿@using Microsoft.AspNetCore.Authentication;
+@model LoginViewModel
 <head>
     <link href=@Url.Content("~/css/styles.css") rel="stylesheet" type="text/css" />
     <link href=@Url.Content("~/identity/css/styles.css") rel="stylesheet" type="text/css" />
@@ -20,10 +21,10 @@
             <div class="title">Sign In</div>
 
             <div class="field-block">
-                <input asp-for="Email" class="form-field form-field-input"
-                       placeholder="Email"
-                       type="email" />
-                <span asp-validation-for="Email"></span>
+                <input asp-for="Username" class="form-field form-field-input"
+                       placeholder="Username"
+                       type="text" />
+                <span asp-validation-for="Username"></span>
             </div>
 
             <div class="field-block">
@@ -36,18 +37,34 @@
             <button class="btn" type="submit">Login</button>
 
             @foreach (var error in ViewData.ModelState.Keys.SelectMany(
-                key => key.StartsWith("ErrorResponse")
-                    ? ViewData.ModelState[key]!.Errors.Select(e => e.ErrorMessage)
-                    : Enumerable.Empty<string>()))
+            key => key.StartsWith("ErrorResponse")
+            ? ViewData.ModelState[key]!.Errors.Select(e => e.ErrorMessage)
+            : Enumerable.Empty<string>()))
             {
                 <span class="field-validation-error">@error</span>
             }
         </form>
 
         <div class="footer">
-            <p>Don't have an account yet?</p>
-            <a asp-controller="Auth" asp-action="Register"
-               asp-route-returnUrl="@Model.ReturnUrl" class="switch-button">Register now</a>
+            <div class="footer-switch">
+                <p>Don't have an account yet?</p>
+                <a asp-controller="Auth" asp-action="Register"
+                   asp-route-returnUrl="@Model.ReturnUrl" class="switch-button">Register now</a>
+            </div>
+            
+            <div class="footer-external">
+                <p>Sign in with</p>
+                <form asp-controller="Auth" asp-action="ExternalLogin"
+                      asp-route-returnUrl="@Model.ReturnUrl" class="form-external" method="post">
+
+                    @foreach (var provider in Model.ExternalProviders ?? Enumerable.Empty<AuthenticationScheme>())
+                    {
+                        <button name="provider" type="submit" value="@provider.Name">
+                            @provider.Name
+                        </button>
+                    }
+                </form>
+            </div>
         </div>
     </div>
 </div>
