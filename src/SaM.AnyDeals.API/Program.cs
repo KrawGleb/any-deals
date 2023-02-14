@@ -8,90 +8,104 @@ using SaM.AnyDeals.DataAccess;
 using SaM.AnyDeals.DataAccess.Extensions;
 using SaM.AnyDeals.Infrastructure;
 using SaM.AnyDeals.Infrastructure.Filters;
+using Serilog;
+using Serilog.Events;
 
-var builder = WebApplication.CreateBuilder(args);
-var services = builder.Services;
-var configuration = builder.Configuration;
+Log.Logger = new LoggerConfiguration()
+    .WriteTo.Console()
+    .MinimumLevel.Override("Microsoft.AspNetCore", LogEventLevel.Warning)
+    .CreateLogger();
 
-services.AddDataAccess(configuration);
-services.AddApplication();
-services.AddInfrastructure();
-services.AddSignalR();
-
-services.AddTransient<IChatService, ChatService>();
-
-services
-    .AddControllers(options =>
-        options.Filters.Add<ApiExceptionFilter>());
-
-services.AddEndpointsApiExplorer();
-services.AddSwaggerGen();
-
-services.AddAuthentication(options =>
+try
 {
-    options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
-    options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
-    options.DefaultScheme = JwtBearerDefaults.AuthenticationScheme;
-})
-    .AddJwtBearer("Bearer", options =>
-{
-    var useProxy = false;
-    _ = bool.TryParse(Environment.GetEnvironmentVariable("UseProxy"), out useProxy);
+    Log.Information("Starting API");
 
-    options.Authority = useProxy 
-        ? "http://identity:80" 
-        : "https://localhost:44302";
+    var builder = WebApplication.CreateBuilder(args);
+    var services = builder.Services;
+    var configuration = builder.Configuration;
 
-    options.Audience = "AnyDealsAPI";
-    options.RequireHttpsMetadata = false;
-});
+    builder.Host.UseSerilog();
 
-services.AddCors(o =>
-{
-    o.AddPolicy("CorsPolicy", options =>
+    services.AddDataAccess(configuration);
+    services.AddApplication();
+    services.AddInfrastructure();
+    services.AddSignalR();
+
+    services.AddTransient<IChatService, ChatService>();
+
+    services
+        .AddControllers(options =>
+            options.Filters.Add<ApiExceptionFilter>());
+
+    services.AddEndpointsApiExplorer();
+    services.AddSwaggerGen();
+
+    services.AddAuthentication(options =>
     {
-        options
-            .WithOrigins(
-                "http://localhost:3000",
-                "https://localhost:3000")
-            .AllowAnyHeader()
-            .AllowAnyMethod()
-            .AllowCredentials();
-    });
-});
-
-/*services.AddAuthorization(options =>
-{
-    options.AddPolicy("ApiScope", policy =>
+        options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+        options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+        options.DefaultScheme = JwtBearerDefaults.AuthenticationScheme;
+    })
+        .AddJwtBearer("Bearer", options =>
     {
-        policy.RequireAuthenticatedUser();
-        policy.RequireClaim("scope", "any-deals-api");
+        var useProxy = false;
+        _ = bool.TryParse(Environment.GetEnvironmentVariable("UseProxy"), out useProxy);
+
+        options.Authority = useProxy
+            ? "http://identity:80"
+            : "https://localhost:44302";
+
+        options.Audience = "AnyDealsAPI";
+        options.RequireHttpsMetadata = false;
     });
-});*/
 
-var app = builder.Build();
+    services.AddCors(o =>
+    {
+        o.AddPolicy("CorsPolicy", options =>
+        {
+            options
+                .WithOrigins(
+                    "http://localhost:3000",
+                    "https://localhost:3000")
+                .AllowAnyHeader()
+                .AllowAnyMethod()
+                .AllowCredentials();
+        });
+    });
 
-app.ApplyMigrations();
+    var app = builder.Build();
 
-// Configure the HTTP request pipeline.
-if (app.Environment.IsDevelopment())
-{
-    app.UseSwagger();
-    app.UseSwaggerUI();
+    app.UseSerilogRequestLogging();
+    app.ApplyMigrations();
+
+    // Configure the HTTP request pipeline.
+    if (app.Environment.IsDevelopment())
+    {
+        app.UseSwagger();
+        app.UseSwaggerUI();
+    }
+
+    app.UseForwardedHeaders(new ForwardedHeadersOptions
+    {
+        ForwardedHeaders = ForwardedHeaders.XForwardedFor | ForwardedHeaders.XForwardedProto
+    });
+
+    app.UseHttpsRedirection();
+    app.UseCors("CorsPolicy");
+
+    app.UseAuthentication();
+    app.UseAuthorization();
+
+    app.MapControllers();
+    app.MapHub<ChatHub>("/hubs/chat");
+
+    app.Run();
 }
-
-app.UseForwardedHeaders(new ForwardedHeadersOptions
+catch (Exception ex)
 {
-    ForwardedHeaders = ForwardedHeaders.XForwardedFor | ForwardedHeaders.XForwardedProto
-});
-
-app.UseHttpsRedirection();
-app.UseCors("CorsPolicy");
-
-app.UseAuthentication();
-app.UseAuthorization();
-
-app.MapControllers();
-app.MapHub<ChatHub>("/hubs/chat");
-
-app.Run();
+    Log.Fatal(ex, "Application terminated unexpectedly");
+}
+finally
+{
+    Log.CloseAndFlush();
+}
