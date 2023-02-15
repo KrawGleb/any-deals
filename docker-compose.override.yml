@@ -1,6 +1,11 @@
 version: "3.4"
 
 services:
+  database:
+    ports:
+      - "1433:1433"
+    volumes:
+      - ./data:/var/opt/mssql/data
   identity:
     environment:
       - ASPNETCORE_ENVIRONMENT=Development

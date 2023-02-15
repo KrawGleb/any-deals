@@ -1,16 +1,25 @@
 version: "3.4"
 
 services:
+  database:
+    image: "mcr.microsoft.com/mssql/server:2019-latest"
+    environment:
+      - ACCEPT_EULA=Y
+      - SA_PASSWORD=ChangeMe123!
   identity:
     image: ${DOCKER_REGISTRY-}identity
     build:
       context: src
       dockerfile: SaM.AnyDeals.IdentityServer/Dockerfile
+    depends_on:
+      - database
   backend:
     image: ${DOCKER_REGISTRY-}backend
     build:
       context: src
       dockerfile: SaM.AnyDeals.API/Dockerfile
+    depends_on:
+      - database
   client:
     image: ${DOCKER_REGISTRY-}client
     build:
