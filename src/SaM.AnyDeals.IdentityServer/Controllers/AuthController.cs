@@ -98,8 +98,8 @@ public class AuthController : Controller
         return Redirect(response.RedirectUri!);
     }
 
-    [HttpPost]
-    public async Task<IActionResult> ExternalLogin(string provider, string returnUrl, CancellationToken cancellationToken)
+    [Route("[action]")]
+    public IActionResult ExternalLogin(string provider, string returnUrl, CancellationToken cancellationToken)
     {
         var redirectUri = Url.Action(nameof(ExternalLoginCallback), "Auth", new { returnUrl });
         var properties = _signInManager.ConfigureExternalAuthenticationProperties(provider, redirectUri);
@@ -107,6 +107,7 @@ public class AuthController : Controller
         return Challenge(properties, provider);
     }
 
+    [Route("[action]")]
     public async Task<IActionResult> ExternalLoginCallback(string returnUrl, CancellationToken cancellationToken)
     {
         var info = await _signInManager.GetExternalLoginInfoAsync();
