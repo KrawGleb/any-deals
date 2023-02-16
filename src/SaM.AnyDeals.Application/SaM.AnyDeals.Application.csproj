@@ -24,8 +24,4 @@
     <ProjectReference Include="..\SaM.AnyDeals.DataAccess\SaM.AnyDeals.DataAccess.csproj" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="Requests\Admins\Queries\" />
-  </ItemGroup>
-
 </Project>

@@ -5,7 +5,6 @@ using Microsoft.EntityFrameworkCore;
 using SaM.AnyDeals.Application.Common.Services.Interfaces;
 using SaM.AnyDeals.Application.Models.ViewModels;
 using SaM.AnyDeals.Common.Exceptions;
-using SaM.AnyDeals.Common.Extensions;
 using SaM.AnyDeals.DataAccess;
 using SaM.AnyDeals.DataAccess.Extensions;
 using SaM.AnyDeals.DataAccess.Models.Auth;

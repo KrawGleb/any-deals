@@ -25,7 +25,6 @@ public class ElasticService : IElasticService
         
         var response = await _elasticClient.SearchAsync<AdvertElasticEntry>(request, cancellationToken);
 
-
         LogResponse(response);
 
         return response.Documents.ToList();

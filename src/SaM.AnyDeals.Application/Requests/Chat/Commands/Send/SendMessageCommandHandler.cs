@@ -1,8 +1,6 @@
-﻿using Microsoft.AspNetCore.Http;
-using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.EntityFrameworkCore;
 using SaM.AnyDeals.Application.Common.Services.Interfaces;
 using SaM.AnyDeals.Common.Exceptions;
-using SaM.AnyDeals.Common.Extensions;
 using SaM.AnyDeals.Common.Interfaces;
 using SaM.AnyDeals.DataAccess;
 using SaM.AnyDeals.DataAccess.Models.Entries;

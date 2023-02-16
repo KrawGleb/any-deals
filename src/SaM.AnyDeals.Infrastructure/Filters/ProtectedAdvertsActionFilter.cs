@@ -3,7 +3,6 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Filters;
 using SaM.AnyDeals.Common.Enums.Auth;
 using SaM.AnyDeals.Common.Exceptions;
-using SaM.AnyDeals.Common.Extensions;
 using SaM.AnyDeals.Common.Interfaces;
 using SaM.AnyDeals.DataAccess;
 using SaM.AnyDeals.DataAccess.Models.Auth;

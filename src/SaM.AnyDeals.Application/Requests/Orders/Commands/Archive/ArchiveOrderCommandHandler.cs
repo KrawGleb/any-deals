@@ -2,7 +2,6 @@
 using Microsoft.EntityFrameworkCore;
 using SaM.AnyDeals.Application.Common.Services.Interfaces;
 using SaM.AnyDeals.Common.Exceptions;
-using SaM.AnyDeals.Common.Extensions;
 using SaM.AnyDeals.DataAccess;
 
 namespace SaM.AnyDeals.Application.Requests.Orders.Commands.Archive;

@@ -4,7 +4,6 @@ using Microsoft.EntityFrameworkCore;
 using SaM.AnyDeals.Application.Common.Services.Interfaces;
 using SaM.AnyDeals.Application.Models.ViewModels;
 using SaM.AnyDeals.Common.Exceptions;
-using SaM.AnyDeals.Common.Extensions;
 using SaM.AnyDeals.DataAccess;
 using SaM.AnyDeals.DataAccess.Models.Entries;
 
@@ -39,7 +38,7 @@ public class GetOrderByIdQueryHandler : IRequestHandler<GetOrderByIdQuery, Respo
             order.CustomerId != userId)
             throw new ForbiddenActionException("Full order data can get only customer or executor");
 
-        await LoadOrdersReferenceAsync(order, cancellationToken);
+        await LoadOrdersReferencesAsync(order, cancellationToken);
 
         var orderVM = _mapper.Map<OrderViewModel>(order);
 
@@ -49,7 +48,7 @@ public class GetOrderByIdQueryHandler : IRequestHandler<GetOrderByIdQuery, Respo
         };
     }
 
-    private async Task LoadOrdersReferenceAsync(OrderDbEntry order, CancellationToken cancellationToken)
+    private async Task LoadOrdersReferencesAsync(OrderDbEntry order, CancellationToken cancellationToken)
     {
         await _applicationDbContext
             .Orders
