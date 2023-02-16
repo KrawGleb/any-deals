@@ -70,12 +70,14 @@ public class AuthService : IAuthService
         return new ErrorResponse { Errors = result.Errors.Select(e => e.Description) };
     }
 
-    public async Task<Response> ExternalRegisterAsync(ExternalLoginInfo info, CancellationToken cancellationToken)
+    public async Task<Response> ExternalRegisterAsync(
+        ExternalRegisterViewModel externalRegisterViewModel,
+        ExternalLoginInfo info,
+        CancellationToken cancellationToken)
     {
-        var username = info.Principal.FindFirst(ClaimTypes.Name)!.Value;
         var user = new ApplicationUser
         {
-            UserName = username
+            UserName = externalRegisterViewModel.Username
         };
 
         var result = await _userManager.CreateAsync(user);
@@ -87,6 +89,6 @@ public class AuthService : IAuthService
             return new Response();
         }
 
-        return new ErrorResponse();
+        return new ErrorResponse() { Errors = result.Errors.Select(e => e.Description) };
     }
 }

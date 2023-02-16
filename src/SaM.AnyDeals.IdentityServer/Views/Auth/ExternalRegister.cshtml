@@ -1,0 +1,43 @@
+﻿@model ExternalRegisterViewModel
+
+<head>
+    <link href=@Url.Content("~/css/styles.css") rel="stylesheet" type="text/css" />
+    <link href=@Url.Content("~/identity/css/styles.css") rel="stylesheet" type="text/css" />
+</head>
+<div class="container">
+    <div class="back-line">
+        <div class="line">
+            <div class="line-container">
+                <i class="arrow-left"></i>
+            </div>
+            <div class="line-container">
+                <p class="prevent-select">Back</p>
+            </div>
+        </div>
+    </div>
+    <div class="content">
+        <form asp-controller="Auth" asp-action="ExternalRegister" class="form" method="post">
+            <input type="hidden" asp-for="ReturnUrl" />
+            <div class="title">Complete sign up</div>
+
+            <div class="field-block">
+                <input asp-for="Username" class="form-field form-field-input"
+                       placeholder="Username"
+                       type="text" />
+                <span asp-validation-for="Username"></span>
+
+                @foreach (var error in ViewData.ModelState.Keys.SelectMany(
+                key => key.StartsWith("ErrorResponse")
+                ? ViewData.ModelState[key]!.Errors.Select(e => e.ErrorMessage)
+                : Enumerable.Empty<string>()))
+                {
+                    <span class="field-validation-error">@error</span>
+                }
+
+            </div>
+
+            <button class="btn" type="submit">Sign up</button>
+        </form>
+    </div>
+</div>
+

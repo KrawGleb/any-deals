@@ -9,5 +9,8 @@ public interface IAuthService
     Task<Response> LoginAsync(LoginViewModel loginViewModel, CancellationToken cancellationToken);
     Task<Response> RegisterAsync(RegisterViewModel registerViewModel, CancellationToken cancellationToken);
     Task<LogoutResponse> LogoutAsync(string logoutId, CancellationToken cancellationToken);
-    Task<Response> ExternalRegisterAsync(ExternalLoginInfo externalInfo, CancellationToken cancellationToken);
+    Task<Response> ExternalRegisterAsync(
+        ExternalRegisterViewModel externalRegisterViewModel,
+        ExternalLoginInfo externalInfo, 
+        CancellationToken cancellationToken);
 }

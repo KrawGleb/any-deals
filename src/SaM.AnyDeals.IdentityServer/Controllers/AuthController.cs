@@ -124,12 +124,37 @@ public class AuthController : Controller
             return Redirect(returnUrl);
         }
 
-        var response = await _authService.ExternalRegisterAsync(info, cancellationToken);
+        var username = info.Principal.FindFirst(ClaimTypes.Name)!.Value;
+        return View("ExternalRegister", new ExternalRegisterViewModel()
+        {
+            Username = username,
+            ReturnUrl = returnUrl
+        });
+    }
+
+    [Route("[action]")]
+    public async Task<IActionResult> ExternalRegister(ExternalRegisterViewModel vm, CancellationToken cancellationToken)
+    {
+        if (!ModelState.IsValid)
+            return View(vm);
+
+        var info = await _signInManager.GetExternalLoginInfoAsync();
+        if (info is null)
+            return RedirectToAction("Login", new { vm.ReturnUrl });
+
+        var response = await _authService.ExternalRegisterAsync(vm, info, cancellationToken);
+
         if (response.Succeeded)
         {
-            return Redirect(returnUrl);
+            return Redirect(vm.ReturnUrl!);
         }
 
-        return RedirectToAction("Login", new { ReturnUrl = returnUrl });
+        var errorId = 0;
+        (response as ErrorResponse)?
+            .Errors?
+            .ToList()
+            .ForEach((error) => ModelState.AddModelError($"ErrorResponse{errorId++}", error));
+
+        return View(vm);
     }
 }

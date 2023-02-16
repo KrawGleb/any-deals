@@ -34,13 +34,10 @@ public static class DependencyInjection
         services.AddIdentity<ApplicationUser, IdentityRole>(options =>
         {
             var alphabet = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
-            var ruAlphabet = "АБВГДЕЁЖЗИЙКЛМНОПРСТУФХЦЧШЩЪЫЬЭЮЯ";
             var numbers = "1234567890";
             var sb = new StringBuilder();
             sb.Append(alphabet.ToUpper());
             sb.Append(alphabet.ToLower());
-            sb.Append(ruAlphabet.ToUpper());
-            sb.Append(ruAlphabet.ToLower());
             sb.Append(numbers);
             sb.Append("_ ");
 
