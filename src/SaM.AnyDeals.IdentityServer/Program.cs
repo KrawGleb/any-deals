@@ -23,11 +23,11 @@ try
 
     services.AddDataAccess(builder.Configuration);
 
-    services.AddTransient<IAuthService, AuthService>();
-    services.AddScoped<IProfileService, ProfileService>();
-    
     services.ConfigureIdentityServer();
     services.ConfigureCookies();
+
+    services.AddTransient<IAuthService, AuthService>();
+    services.AddScoped<IProfileService, ProfileService>();
 
     services.AddCors(o =>
     {
