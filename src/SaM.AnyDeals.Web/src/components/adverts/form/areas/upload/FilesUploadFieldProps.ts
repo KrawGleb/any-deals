@@ -3,7 +3,7 @@ import {
   ControllerRenderProps,
   UseFormStateReturn,
 } from "react-hook-form";
-import { StoredFile } from "../../../../models/storedFile";
+import { StoredFile } from "../../../../../models/storedFile";
 
 export interface FilesUploadFieldProps {
   uploadedFiles?: StoredFile[];

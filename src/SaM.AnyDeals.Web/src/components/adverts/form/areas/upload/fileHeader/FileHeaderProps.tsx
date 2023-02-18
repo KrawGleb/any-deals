@@ -1,6 +1,6 @@
 import { FileRejection } from "react-dropzone";
-import { StoredFile } from "../../../../../models/storedFile";
-import { UploadableFile } from "../../../../../models/uploadableFile";
+import { StoredFile } from "../../../../../../models/storedFile";
+import { UploadableFile } from "../../../../../../models/uploadableFile";
 
 export interface FileHeaderProps {
   name: string;

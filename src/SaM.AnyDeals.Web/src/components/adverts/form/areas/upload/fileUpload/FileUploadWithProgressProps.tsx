@@ -1,4 +1,4 @@
-import { UploadableFile } from "../../../../../models/uploadableFile";
+import { UploadableFile } from "../../../../../../models/uploadableFile";
 
 export interface FileUploadWithProgressProps {
   file: UploadableFile;

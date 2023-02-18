@@ -4,17 +4,17 @@ import React, { useCallback, useEffect, useState } from "react";
 import { FileRejection, useDropzone } from "react-dropzone";
 import { useDispatch, useSelector } from "react-redux";
 import Stack from "@mui/material/Stack";
-import { RootState } from "../../../../features/store/store";
+import { RootState } from "../../../../../features/store/store";
 import FileUploadWithProgress from "./fileUpload/FileUploadWithProgress";
 import UploadedFileComponent from "./uploadedFile/UploadedFileComponent";
-import { StoredFile } from "../../../../models/storedFile";
-import { UploadableFile } from "../../../../models/uploadableFile";
+import { StoredFile } from "../../../../../models/storedFile";
+import { UploadableFile } from "../../../../../models/uploadableFile";
 import { FilesUploadFieldProps } from "./FilesUploadFieldProps";
 import {
   addFiles,
   deleteFile,
   resetFiles,
-} from "../../../../features/store/slices/fileUploadSlice";
+} from "../../../../../features/store/slices/fileUploadSlice";
 import RejectedFile from "./rejectedFile/RejectedFile";
 import { FieldError } from "react-hook-form";
 

@@ -1,4 +1,4 @@
-import { StoredFile } from "../../../../../models/storedFile";
+import { StoredFile } from "../../../../../../models/storedFile";
 
 export interface UploadedFileComponentProps {
   file: StoredFile;
