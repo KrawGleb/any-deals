@@ -467,8 +467,8 @@ export default function AdvertForm({ advert }: AdvertFormProps) {
                     control={control}
                     name={"address"}
                     label="Address"
-                    error={!!errors.phone}
-                    helperMessage={errors?.phone?.message}
+                    error={!!errors.address}
+                    helperMessage={errors?.address?.message}
                   />
                 </Stack>
 
@@ -521,8 +521,8 @@ export default function AdvertForm({ advert }: AdvertFormProps) {
                     control={control}
                     name={"whatsApp"}
                     label="WhatsApp"
-                    error={!!errors.phone}
-                    helperMessage={errors?.phone?.message}
+                    error={!!errors.whatsApp}
+                    helperMessage={errors?.whatsApp?.message}
                   />
                 </Stack>
               </Stack>

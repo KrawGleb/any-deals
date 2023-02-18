@@ -22,10 +22,10 @@ import AuthProvider from "./features/api/auth/authProvider";
 import userManager from "./features/api/auth/userService";
 import SignOut from "./pages/auth/SignOut";
 import Error from "./pages/errors/Error";
+import User from "./pages/user/User";
 
 function App() {
   const authState = useSelector((state: RootState) => state.auth);
-  const hasToken = !!authState.user?.access_token;
   const isAdmin = authState.isAdmin;
 
   return (
@@ -35,6 +35,7 @@ function App() {
           <Route path="/signout-oidc" element={<SignOut />} />
           <Route path="/signin-oidc" element={<SignIn />} />
           <Route path="/about" element={<About />} />
+          <Route path="/users/:username" element={<User />} />
           <Route
             path="/error"
             element={<Error text="Something went wrong" />}

@@ -62,6 +62,16 @@ export default function Header() {
 
                     <ListItemButton
                       onClick={() =>
+                        navigate(
+                          `/users/${authState.user?.profile.preferred_username}`
+                        )
+                      }
+                    >
+                      <ListItemText>Me</ListItemText>
+                    </ListItemButton>
+
+                    <ListItemButton
+                      onClick={() =>
                         signoutRedirect({
                           id_token_hint: authState.user?.id_token,
                         })

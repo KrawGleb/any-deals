@@ -1,0 +1,34 @@
+.user-details {
+  &__container {
+    display: flex;
+    flex-direction: column;
+    min-height: 100%;
+  }
+
+  &__header {
+    display: flex;
+    flex-direction: row-reverse;
+    flex: 0 0 200px;
+    padding: 24px;
+    gap: 20px;
+    margin: 6px 24px 24px 24px;
+
+    &__rating {
+      flex: 1 1 auto;
+      padding: 14px;
+      .rating {
+        &__description {
+          display: flex;
+          flex-direction: row;
+          flex: 1 1 auto;
+          gap: 10px;
+        }
+      }
+    }
+  }
+
+  &__adverts {
+    flex: 1 1 auto;
+    margin-bottom: 34px;
+  }
+}
