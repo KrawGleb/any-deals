@@ -8,9 +8,7 @@ import { yupResolver } from "@hookform/resolvers/yup";
 import { Box, Stack, Typography, Button } from "@mui/material";
 import ArrowBack from "@mui/icons-material/ArrowBack";
 import ArrowForwardIosIcon from "@mui/icons-material/ArrowForwardIos";
-
 import { RootState } from "../../../features/store/store";
-
 import {
   useCreateAdvertMutation,
   useDeleteAdvertMutation,
@@ -47,6 +45,21 @@ const schema = yup.object().shape(
       .required()
       .default("" as any),
     interest: yup.number().label("Interest").required().default(0),
+    price: yup
+      .number()
+      .notRequired()
+      .when(["interest"], {
+        is: (value: number) => value === 0,
+        then: yup.number().required().positive(),
+        otherwise: yup
+          .number()
+          .notRequired()
+          .transform((value) => (isNaN(value) ? undefined : value))
+          .nullable(),
+      })
+      .default(0)
+      .label("Price"),
+    paymentMethod: yup.number().default(0).label("Payment Method"),
     category: yup.string().label("Category").required(),
     country: yup.string().label("Country").required(),
     city: yup.string().label("City").required(),
@@ -92,8 +105,10 @@ export default function AdvertForm({ advert }: AdvertFormProps) {
 
   const {
     register,
+    reset,
     handleSubmit,
     setValue,
+    watch,
     control,
     formState: { isDirty, isValid, errors },
   } = useForm({
@@ -105,7 +120,7 @@ export default function AdvertForm({ advert }: AdvertFormProps) {
   const changeStatus = (status: number) => {
     const updateStatusAction = updateStatus({ id: advert!.id, status });
 
-    updateStatusAction.then((_response) => {
+    updateStatusAction.then(() => {
       exitWithoutSaving();
     });
   };
@@ -123,10 +138,6 @@ export default function AdvertForm({ advert }: AdvertFormProps) {
             type: AttachmentType.convert(fileWrapper.type),
           } as Attachment)
       );
-
-    console.log(data);
-    console.log(selectedCategory);
-    console.log(selectedLocation);
 
     const putAdvertRequest: PutAdvertRequest = {
       id: advert?.id,
@@ -180,15 +191,8 @@ export default function AdvertForm({ advert }: AdvertFormProps) {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
-  // Init
   useEffect(() => {
     if (!advert) return;
-
-    const setValueOptions = {
-      shouldTouch: true,
-      shouldDirty: true,
-      shouldValidate: true,
-    };
 
     setSelectedCategory(advert.category);
     setSelectedLocation({
@@ -196,24 +200,20 @@ export default function AdvertForm({ advert }: AdvertFormProps) {
       country: advert?.city?.country,
     });
 
-    setValue("country", advert.city.country.name, setValueOptions);
-    setValue("city", advert.city.name, setValueOptions);
-    setValue("category", advert.category.name, setValueOptions);
-    setValue("title", advert.title, setValueOptions);
-    setValue("description", advert.description, setValueOptions);
-    setValue("goal", advert.goal, setValueOptions);
-    setValue("interest", advert.interest, setValueOptions);
-    setValue("group", advert.group, setValueOptions);
+    const initialData = {
+      ...advert,
+      ...advert?.contacts,
+      city: advert?.city.name,
+      country: advert?.city?.country.name,
+      category: advert?.category.name,
+    };
 
-    setValue("email", advert.contacts.email, setValueOptions);
-
-    Object.keys(advert.contacts).forEach((contact) =>
-      setValue(
-        contact,
-        advert.contacts[contact as keyof typeof advert.contacts],
-        setValueOptions
-      )
-    );
+    reset(initialData, {
+      keepDirty: false,
+      keepErrors: false,
+      keepIsValid: false,
+      keepTouched: false,
+    });
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [advert]);
 
@@ -232,7 +232,11 @@ export default function AdvertForm({ advert }: AdvertFormProps) {
             </div>
           </div>
           <form className="form" onSubmit={handleSubmit(onSubmit, onSubmit)}>
-            <AdvertGroupFormArea control={control} errors={errors} />
+            <AdvertGroupFormArea
+              control={control}
+              errors={errors}
+              watch={watch}
+            />
             <AdvertBasicsFormArea
               control={control}
               errors={errors}

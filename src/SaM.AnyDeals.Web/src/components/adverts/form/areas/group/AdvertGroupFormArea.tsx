@@ -5,6 +5,7 @@ import {
   Paper,
   Radio,
   RadioGroup,
+  Stack,
   Typography,
 } from "@mui/material";
 import React from "react";
@@ -12,7 +13,13 @@ import { Controller } from "react-hook-form";
 import ControlledInput from "../../../../common/controlledInput/ControlledInput";
 import { AreaProps } from "../AreaProps";
 
-export default function AdvertGroupFormArea({ control, errors }: AreaProps) {
+export default function AdvertGroupFormArea({
+  control,
+  errors,
+  watch,
+}: AreaProps) {
+  const watchInterest = watch!("interest", 0);
+
   return (
     <Paper sx={{ padding: "16px" }}>
       <Typography variant="h6">Advertisement's group</Typography>
@@ -70,20 +77,58 @@ export default function AdvertGroupFormArea({ control, errors }: AreaProps) {
         <Typography variant="subtitle1" fontWeight="bold">
           My interest
         </Typography>
-        <Controller
-          name="interest"
-          control={control}
-          render={({ field }) => (
-            <RadioGroup row {...field}>
-              <FormControlLabel
-                value={0}
-                control={<Radio />}
-                label="Commercial"
+        <Box className="mb-2">
+          <Controller
+            name="interest"
+            control={control}
+            render={({ field }) => (
+              <RadioGroup row {...field}>
+                <FormControlLabel
+                  value={0}
+                  control={<Radio />}
+                  label="Commercial"
+                />
+                <FormControlLabel
+                  value={1}
+                  control={<Radio />}
+                  label="Social"
+                />
+              </RadioGroup>
+            )}
+          />
+        </Box>
+        {+watchInterest === 0 ? (
+          <Stack direction="row" gap="20px">
+            <Stack direction="row" alignItems="center" gap="4px" width="6.5rem">
+              <ControlledInput
+                control={control}
+                name="price"
+                label="Price"
+                error={!!errors.price}
               />
-              <FormControlLabel value={1} control={<Radio />} label="Social" />
-            </RadioGroup>
-          )}
-        />
+              <Typography>$</Typography>
+            </Stack>
+
+            <ControlledInput
+              control={control}
+              name="paymentMethod"
+              required
+              select
+              label="Payment Method"
+              error={!!errors.paymentMethod}
+              helperMessage={errors?.paymentMethod?.message}
+            >
+              <MenuItem key={10} value={0}>
+                Cash
+              </MenuItem>
+              <MenuItem key={11} value={1}>
+                Credit card
+              </MenuItem>
+            </ControlledInput>
+          </Stack>
+        ) : (
+          <></>
+        )}
       </Box>
     </Paper>
   );

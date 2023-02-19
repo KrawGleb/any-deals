@@ -19,11 +19,11 @@ export default function ContactsGrid({ contacts }: { contacts: Contacts }) {
     ["email", <AlternateEmailIcon />],
     ["address", <PlaceIcon />],
     ["phone", <PhoneIcon />],
-    ["linkedin", <LinkedInIcon />],
+    ["linkedIn", <LinkedInIcon />],
     ["facebook", <FacebookIcon />],
     ["instagram", <InstagramIcon />],
     ["telegram", <TelegramIcon />],
-    ["whatsapp", <WhatsAppIcon />],
+    ["whatsApp", <WhatsAppIcon />],
     ["vk", <EightKIcon />],
   ]);
 

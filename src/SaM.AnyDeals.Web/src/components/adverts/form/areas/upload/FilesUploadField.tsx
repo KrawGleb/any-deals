@@ -16,7 +16,6 @@ import {
   resetFiles,
 } from "../../../../../features/store/slices/fileUploadSlice";
 import RejectedFile from "./rejectedFile/RejectedFile";
-import { FieldError } from "react-hook-form";
 
 export default function FilesUploadField({
   uploadedFiles,
@@ -64,6 +63,7 @@ export default function FilesUploadField({
       setRejectedFiles(rejectedFiles);
       dispatch(addFiles(storedFiles));
     },
+    // eslint-disable-next-line react-hooks/exhaustive-deps
     [dispatch, storedFilesCount]
   );
 

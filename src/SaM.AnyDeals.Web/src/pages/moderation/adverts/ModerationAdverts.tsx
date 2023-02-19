@@ -28,7 +28,7 @@ export default function ModerationAdverts() {
   useEffect(() => {
     if (adverts === undefined) return;
 
-    if (window.innerWidth <= document.body.clientWidth) {
+    if (window.innerWidth <= document.body.clientWidth && hasMore) {
       setHasMore(!!adverts);
       nextPage();
     }

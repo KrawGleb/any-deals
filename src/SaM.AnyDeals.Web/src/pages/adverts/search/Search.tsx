@@ -44,12 +44,18 @@ export default function Search() {
       return;
     }
 
+    if (window.innerWidth <= document.body.clientWidth && hasMore) {
+      setHasMore(!!adverts);
+      nextPage();
+    }
+
     const newAdverts: Advert[] =
       adverts?.filter(
         (add: Advert) =>
           currentAdverts.findIndex((currAdd) => currAdd.id === add.id) === -1
       ) ?? [];
 
+    console.log(newAdverts);
     if (newAdverts.length === 0) {
       setHasMore(false);
     } else {

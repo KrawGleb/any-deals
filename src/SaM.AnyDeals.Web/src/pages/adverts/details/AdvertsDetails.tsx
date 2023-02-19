@@ -5,7 +5,7 @@ import {
   useGetAdvertReviewsQuery,
 } from "../../../features/api/extensions/advertsApiExtension";
 import useQuery from "../../../features/hooks/useQuery";
-import { Button, Paper } from "@mui/material";
+import { Box, Button, Paper } from "@mui/material";
 import GoalTag from "../../../components/adverts/fields/goalTag/GoalTag";
 import InterestTag from "../../../components/adverts/fields/interestTag/InterestTag";
 import AttachmentCard from "../../../components/adverts/fields/attachmentCard/AttachmentCard";
@@ -67,11 +67,6 @@ export default function AdvertsDetails() {
             ) : (
               <></>
             )}
-            <div className="details__footer">
-              <Button variant="contained" color="success" onClick={orderClick}>
-                Order
-              </Button>
-            </div>
           </Paper>
           {!!reviews && reviews.length > 0 ? (
             <Paper className="details__reviews">
@@ -82,6 +77,24 @@ export default function AdvertsDetails() {
           ) : (
             <></>
           )}
+
+          <Paper className="details__footer">
+            <Box className="details__footer__container">
+              <Box className="details__footer__price">
+                {advert?.price ? <p>{advert?.price} $</p> : <></>}
+              </Box>
+              <Box className="details__footer__order">
+                <Button
+                  style={{ textTransform: "none" }}
+                  variant="contained"
+                  color="success"
+                  onClick={orderClick}
+                >
+                  Order
+                </Button>
+              </Box>
+            </Box>
+          </Paper>
         </div>
       ) : (
         <></>

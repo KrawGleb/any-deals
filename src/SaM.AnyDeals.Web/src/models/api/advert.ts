@@ -8,6 +8,7 @@ export interface Advert {
   id: number;
   title: string;
   description: string;
+  price?: number;
   goal: number;
   group: number;
   status: number;
