@@ -11,6 +11,13 @@ using SaM.AnyDeals.Infrastructure;
 using SaM.AnyDeals.Infrastructure.Filters;
 using Serilog;
 using Serilog.Events;
+using System.Globalization;
+
+var culture = new CultureInfo("en-US");
+culture.NumberFormat.NumberGroupSeparator = ".";
+
+CultureInfo.DefaultThreadCurrentCulture = culture;
+CultureInfo.DefaultThreadCurrentUICulture = culture;
 
 Log.Logger = new LoggerConfiguration()
     .WriteTo.Console()

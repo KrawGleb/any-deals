@@ -6,6 +6,7 @@ namespace SaM.AnyDeals.Application.Requests.Adverts.Commands.Create;
 public record CreateAdvertCommand(
     string? Title,
     string? Description,
+    decimal? Price,
     Goal Goal,
     Group Group,
     Interest Interest,

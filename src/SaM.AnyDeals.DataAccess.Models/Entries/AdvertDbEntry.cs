@@ -8,6 +8,7 @@ public class AdvertDbEntry : AuditableDbEntry
 {
     public string? Title { get; set; }
     public string? Description { get; set; }
+    public decimal? Price { get; set; }
     public Goal Goal { get; set; }
     public Group Group { get; set; }
     public Interest Interest { get; set; }
