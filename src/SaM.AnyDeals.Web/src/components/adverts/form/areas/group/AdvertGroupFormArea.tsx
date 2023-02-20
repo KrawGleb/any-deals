@@ -1,6 +1,9 @@
 import {
   Box,
+  Checkbox,
+  FormControl,
   FormControlLabel,
+  FormGroup,
   MenuItem,
   Paper,
   Radio,
@@ -13,12 +16,23 @@ import { Controller } from "react-hook-form";
 import ControlledInput from "../../../../common/controlledInput/ControlledInput";
 import { AreaProps } from "../AreaProps";
 
+import AccountBalanceWalletIcon from "@mui/icons-material/AccountBalanceWallet";
+import PaymentIcon from "@mui/icons-material/Payment";
+import FormHelperText from "@mui/material/FormHelperText";
+
 export default function AdvertGroupFormArea({
   control,
   errors,
   watch,
 }: AreaProps) {
   const watchInterest = watch!("interest", 0);
+
+  const watchAllowedCashPayment = watch!("allowedCashPayment", true);
+  const watchAllowedCardPayment = watch!("allowedCardPayment", true);
+
+  const error =
+    [watchAllowedCardPayment, watchAllowedCashPayment].filter((v) => v).length <
+    1;
 
   return (
     <Paper sx={{ padding: "16px" }}>
@@ -98,34 +112,65 @@ export default function AdvertGroupFormArea({
           />
         </Box>
         {+watchInterest === 0 ? (
-          <Stack direction="row" gap="20px">
-            <Stack direction="row" alignItems="center" gap="4px" width="6.5rem">
-              <ControlledInput
-                control={control}
-                name="price"
-                label="Price"
-                error={!!errors.price}
-              />
-              <Typography>$</Typography>
-            </Stack>
+          <>
+            <Typography variant="subtitle2">Allowed payment methods</Typography>
+            <Stack direction="row" gap="20px">
+              <FormControl required error={error}>
+                <FormControlLabel
+                  control={
+                    <Controller
+                      name="allowedCashPayment"
+                      control={control}
+                      render={({ field }) => (
+                        <Checkbox
+                          {...field}
+                          checked={!!field.value}
+                          icon={<AccountBalanceWalletIcon />}
+                          checkedIcon={<AccountBalanceWalletIcon />}
+                        />
+                      )}
+                    />
+                  }
+                  label="Cash"
+                />
+                <FormControlLabel
+                  control={
+                    <Controller
+                      name="allowedCardPayment"
+                      control={control}
+                      render={({ field }) => (
+                        <Checkbox
+                          {...field}
+                          checked={!!field.value}
+                          icon={<PaymentIcon />}
+                          checkedIcon={<PaymentIcon />}
+                        />
+                      )}
+                    />
+                  }
+                  label="Card"
+                />
+                <FormHelperText>
+                  Select at least one payment method
+                </FormHelperText>
+              </FormControl>
 
-            <ControlledInput
-              control={control}
-              name="paymentMethod"
-              required
-              select
-              label="Payment Method"
-              error={!!errors.paymentMethod}
-              helperMessage={errors?.paymentMethod?.message}
-            >
-              <MenuItem key={10} value={0}>
-                Cash
-              </MenuItem>
-              <MenuItem key={11} value={1}>
-                Credit card
-              </MenuItem>
-            </ControlledInput>
-          </Stack>
+              <Stack
+                direction="row"
+                alignItems="center"
+                gap="4px"
+                width="6.5rem"
+              >
+                <ControlledInput
+                  control={control}
+                  name="price"
+                  label="Price"
+                  error={!!errors.price}
+                />
+                <Typography>$</Typography>
+              </Stack>
+            </Stack>
+          </>
         ) : (
           <></>
         )}

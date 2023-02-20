@@ -34,56 +34,72 @@ import { Location } from "../../../models/location";
 import { Category } from "../../../models/api/category";
 import { Contacts } from "../../../models/api/contacts";
 
-const schema = yup.object().shape(
-  {
-    title: yup.string().label("Title").required().max(100).default(""),
-    description: yup.string().label("Description").max(1000).default(""),
-    goal: yup.number().label("Goal").required().default(0),
-    group: yup
-      .number()
-      .label("Group")
-      .required()
-      .default("" as any),
-    interest: yup.number().label("Interest").required().default(0),
-    price: yup
-      .number()
-      .notRequired()
-      .when(["interest"], {
-        is: (value: number) => value === 0,
-        then: yup.number().required().positive(),
-        otherwise: yup
-          .number()
-          .notRequired()
-          .transform((value) => (isNaN(value) ? undefined : value))
-          .nullable(),
-      })
-      .default(0)
-      .label("Price"),
-    paymentMethod: yup.number().default(0).label("Payment Method"),
-    category: yup.string().label("Category").required(),
-    country: yup.string().label("Country").required(),
-    city: yup.string().label("City").required(),
-    name: yup.string().label("Name").required().max(100).default(""),
-    email: yup.string().label("Email").email().max(100).default(""),
-    phone: yup
-      .string()
-      .when("phone", {
-        is: (value: string) => value?.length > 0,
-        then: yup.string().phone(),
-        otherwise: yup.string(),
-      })
-      .default("")
-      .label("Phone"),
-    address: yup.string().label("Address").max(100).default(""),
-    facebook: yup.string().label("Facebook").max(100).default(""),
-    vk: yup.string().label("VK").max(100).default(""),
-    instagram: yup.string().label("Instagram").max(100).default(""),
-    linkedIn: yup.string().label("LinkedId").max(100).default(""),
-    telegram: yup.string().label("Telegram").max(100).default(""),
-    whatsApp: yup.string().label("WhatsApp").max(100).default(""),
-  },
-  [["phone", "phone"]]
-);
+const schema = yup
+  .object()
+  .shape(
+    {
+      title: yup.string().label("Title").required().max(100).default(""),
+      description: yup.string().label("Description").max(1000).default(""),
+      goal: yup.number().label("Goal").required().default(0),
+      group: yup
+        .number()
+        .label("Group")
+        .required()
+        .default("" as any),
+      interest: yup.number().label("Interest").required().default(0),
+      price: yup
+        .number()
+        .notRequired()
+        .when(["interest"], {
+          is: (value: number) => value === 0,
+          then: yup.number().required().positive(),
+          otherwise: yup
+            .number()
+            .notRequired()
+            .transform((value) => (isNaN(value) ? undefined : value))
+            .nullable(),
+        })
+        .default(0)
+        .label("Price"),
+      allowedCashPayment: yup
+        .bool()
+        .label("Allowed Cash Payment")
+        .default(true),
+      allowedCardPayment: yup
+        .bool()
+        .label("Allowed Card Payment")
+        .default(true),
+      category: yup.string().label("Category").required(),
+      country: yup.string().label("Country").required(),
+      city: yup.string().label("City").required(),
+      name: yup.string().label("Name").required().max(100).default(""),
+      email: yup.string().label("Email").email().max(100).default(""),
+      phone: yup
+        .string()
+        .when("phone", {
+          is: (value: string) => value?.length > 0,
+          then: yup.string().phone(),
+          otherwise: yup.string(),
+        })
+        .default("")
+        .label("Phone"),
+      address: yup.string().label("Address").max(100).default(""),
+      facebook: yup.string().label("Facebook").max(100).default(""),
+      vk: yup.string().label("VK").max(100).default(""),
+      instagram: yup.string().label("Instagram").max(100).default(""),
+      linkedIn: yup.string().label("LinkedId").max(100).default(""),
+      telegram: yup.string().label("Telegram").max(100).default(""),
+      whatsApp: yup.string().label("WhatsApp").max(100).default(""),
+    },
+    [["phone", "phone"]]
+  )
+  .test("shouldSelectAtLeastOnePaymentMethod", (obj) => {
+    if (obj.interest !== 0) return true;
+
+    if (obj.allowedCardPayment || obj.allowedCashPayment) return true;
+
+    return new yup.ValidationError("Select at least one payment method", null);
+  });
 
 export default function AdvertForm({ advert }: AdvertFormProps) {
   const navigate = useNavigate();
@@ -150,6 +166,8 @@ export default function AdvertForm({ advert }: AdvertFormProps) {
       } as Contacts,
       ...data,
     };
+
+    console.log(putAdvertRequest);
 
     const mutationAction = isEditMode
       ? updateAdvert(putAdvertRequest)
