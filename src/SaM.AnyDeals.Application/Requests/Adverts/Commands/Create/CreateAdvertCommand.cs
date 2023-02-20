@@ -7,6 +7,8 @@ public record CreateAdvertCommand(
     string? Title,
     string? Description,
     decimal? Price,
+    bool AllowedCardPayment,
+    bool AllowedCashPayment,
     Goal Goal,
     Group Group,
     Interest Interest,

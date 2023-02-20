@@ -1,4 +1,6 @@
-﻿namespace SaM.AnyDeals.Application.Models.ViewModels;
+﻿using SaM.AnyDeals.Common.Enums;
+
+namespace SaM.AnyDeals.Application.Models.ViewModels;
 
 public class OrderViewModel
 {
@@ -10,6 +12,7 @@ public class OrderViewModel
     public bool HasExecutorApproval { get; set; }
     public bool ArchivatedByCustomer { get; set; }
     public bool ArchivatedByExecutor { get; set; }
+    public PaymentMethod PaymentMethod { get; set; }
     public DateTime CreatedAt { get; set; }
     public Guid ChatId { get; set; }
 }

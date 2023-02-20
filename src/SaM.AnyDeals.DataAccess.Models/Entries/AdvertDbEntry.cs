@@ -13,6 +13,8 @@ public class AdvertDbEntry : AuditableDbEntry
     public Group Group { get; set; }
     public Interest Interest { get; set; }
     public Status Status { get; set; }
+    public bool AllowedCardPayment { get; set; }
+    public bool AllowedCashPayment { get; set; }
 
     public string? CreatorId { get; set; }
     public ApplicationUser? Creator { get; set; }

@@ -12,6 +12,8 @@ public class UpdateAdvertCommand :
     public int Id { get; set; }
     public string? Title { get; set; }
     public decimal? Price { get; set; }
+    public bool AllowedCardPayment { get; set; }
+    public bool AllowedCashPayment { get; set; }
     public string? Description { get; set; }
     public Goal Goal { get; set; }
     public Group Group { get; set; }

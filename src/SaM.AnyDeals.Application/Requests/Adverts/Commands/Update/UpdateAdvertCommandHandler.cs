@@ -2,6 +2,7 @@
 using Microsoft.EntityFrameworkCore;
 using SaM.AnyDeals.Application.Models.ViewModels;
 using SaM.AnyDeals.Common.Enums;
+using SaM.AnyDeals.Common.Enums.Adverts;
 using SaM.AnyDeals.Common.Exceptions;
 using SaM.AnyDeals.DataAccess;
 using SaM.AnyDeals.DataAccess.Extensions;
@@ -51,6 +52,7 @@ public class UpdateAdvertCommandHandler : IRequestHandler<UpdateAdvertCommand, R
 
         await UpdateCategoryAsync(entity, request, cancellationToken);
         UpdateAttachments(entity, request);
+        UpdateInterest(entity, request);
 
         entity.Status = Status.Draft;
 
@@ -99,5 +101,15 @@ public class UpdateAdvertCommandHandler : IRequestHandler<UpdateAdvertCommand, R
             .ToList();
         var attachmentsEntities = _mapper.Map<List<AttachmentDbEntry>>(attachmentsToCreate);
         entity.Attachments?.AddRange(attachmentsEntities);
+    }
+
+    private void UpdateInterest(AdvertDbEntry entity, UpdateAdvertCommand request)
+    {
+        if (request.Interest != Interest.Social)
+            return;
+
+        entity.Price = null;
+        entity.AllowedCardPayment = false;
+        entity.AllowedCashPayment = false;
     }
 }

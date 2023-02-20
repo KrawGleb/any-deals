@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using SaM.AnyDeals.Application.Common.Services.Interfaces;
 using SaM.AnyDeals.Common.Enums;
+using SaM.AnyDeals.Common.Enums.Adverts;
 using SaM.AnyDeals.DataAccess;
 using SaM.AnyDeals.DataAccess.Models.Entries;
 
@@ -35,27 +36,40 @@ public class CreateAdvertCommandHandler : IRequestHandler<CreateAdvertCommand, R
         var userId = user.Id;
         var advert = _mapper.Map<AdvertDbEntry>(request);
 
-        if (request.CategoryId is null && request.Category is not null)
-        {
-            var draftCategory = await AddNewDraftCategoryAsync(request.Category, cancellationToken);
-            advert.Category = draftCategory;
-        }
+        await AddNewDraftCategoryIfNotExistsAsync(request, advert, cancellationToken);
+        ToSocialAdvert(request, advert);
 
         advert.CreatorId = userId;
 
         await _applicationDbContext.Adverts.AddAsync(advert, cancellationToken);
     }
 
-    private async Task<CategoryDbEntry> AddNewDraftCategoryAsync(string categoryName, CancellationToken cancellationToken)
+    private async Task AddNewDraftCategoryIfNotExistsAsync(
+        CreateAdvertCommand request,
+        AdvertDbEntry advert,
+        CancellationToken cancellationToken)
     {
+        if (request.CategoryId is not null ||
+            request.Category is null)
+            return;
+
         var categoryEntry = new CategoryDbEntry()
         {
-            Name = categoryName,
+            Name = request.Category,
             Status = Status.Draft
         };
 
         await _applicationDbContext.Categories.AddAsync(categoryEntry, cancellationToken);
+        advert.Category = categoryEntry;
+    }
 
-        return categoryEntry;
+    private void ToSocialAdvert(CreateAdvertCommand request, AdvertDbEntry advert)
+    {
+        if (request.Interest != Interest.Social)
+            return;
+
+        advert.Price = null;
+        advert.AllowedCardPayment = false;
+        advert.AllowedCashPayment = false;
     }
 }
