@@ -1,0 +1,15 @@
+.order-confirmation {
+  &__container {
+    padding: 24px;
+    display: flex;
+    flex-direction: column;
+  }
+
+  &__actions {
+    align-self: flex-end;
+    justify-self: flex-end;
+    display: flex;
+    flex-direction: row;
+    gap: 12px;
+  }
+}

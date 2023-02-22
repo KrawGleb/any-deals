@@ -32,7 +32,6 @@ import AdvertContactsFormArea from "./areas/contacts/AdvertContactsFormArea";
 import AdvertFilesUploadArea from "./areas/upload/AdvertFilesUploadArea";
 import { Location } from "../../../models/location";
 import { Category } from "../../../models/api/category";
-import { Contacts } from "../../../models/api/contacts";
 
 const schema = yup
   .object()
@@ -49,7 +48,7 @@ const schema = yup
       interest: yup.number().label("Interest").required().default(0),
       price: yup
         .number()
-        .notRequired()
+        .nullable()
         .when(["interest"], {
           is: (value: number) => value === 0,
           then: yup.number().required().positive(),
@@ -72,24 +71,18 @@ const schema = yup
       category: yup.string().label("Category").required(),
       country: yup.string().label("Country").required(),
       city: yup.string().label("City").required(),
-      name: yup.string().label("Name").required().max(100).default(""),
-      email: yup.string().label("Email").email().max(100).default(""),
-      phone: yup
-        .string()
-        .when("phone", {
-          is: (value: string) => value?.length > 0,
-          then: yup.string().phone(),
-          otherwise: yup.string(),
-        })
-        .default("")
-        .label("Phone"),
-      address: yup.string().label("Address").max(100).default(""),
-      facebook: yup.string().label("Facebook").max(100).default(""),
-      vk: yup.string().label("VK").max(100).default(""),
-      instagram: yup.string().label("Instagram").max(100).default(""),
-      linkedIn: yup.string().label("LinkedId").max(100).default(""),
-      telegram: yup.string().label("Telegram").max(100).default(""),
-      whatsApp: yup.string().label("WhatsApp").max(100).default(""),
+      contacts: yup.object().shape({
+        name: yup.string().label("Name").required().max(100).default(""),
+        email: yup.string().label("Email").email().max(100).default(""),
+        phone: yup.string().default("").label("Phone"),
+        address: yup.string().label("Address").max(100).default(""),
+        facebook: yup.string().label("Facebook").max(100).default(""),
+        vk: yup.string().label("VK").max(100).default(""),
+        instagram: yup.string().label("Instagram").max(100).default(""),
+        linkedIn: yup.string().label("LinkedId").max(100).default(""),
+        telegram: yup.string().label("Telegram").max(100).default(""),
+        whatsApp: yup.string().label("WhatsApp").max(100).default(""),
+      }),
     },
     [["phone", "phone"]]
   )
@@ -99,6 +92,19 @@ const schema = yup
     if (obj.allowedCardPayment || obj.allowedCashPayment) return true;
 
     return new yup.ValidationError("Select at least one payment method", null);
+  })
+  .test("shouldAllowEmptyPhone", (obj) => {
+    if (
+      obj.contacts.phone.length === 0 ||
+      yup.string().phone().isValidSync(obj.contacts.phone)
+    )
+      return true;
+
+    return new yup.ValidationError(
+      "Invalid phone format",
+      null,
+      "contacts.phone"
+    );
   });
 
 export default function AdvertForm({ advert }: AdvertFormProps) {
@@ -144,6 +150,7 @@ export default function AdvertForm({ advert }: AdvertFormProps) {
   const onSubmit = (data: any) => {
     updateFiles({ shouldSave: true });
 
+    console.log(uploadedFiles);
     const attachments = uploadedFiles
       .filter((fileWrapper) => !fileWrapper.deleted)
       .map(
@@ -156,18 +163,16 @@ export default function AdvertForm({ advert }: AdvertFormProps) {
       );
 
     const putAdvertRequest: PutAdvertRequest = {
+      ...data,
       id: advert?.id,
       cityId: selectedLocation.city!.id,
       categoryId: selectedCategory!.id,
       category: selectedCategory?.name,
       attachments,
-      contacts: {
-        ...data,
-      } as Contacts,
-      ...data,
     };
 
-    console.log(putAdvertRequest);
+    console.log("Put request: ", putAdvertRequest);
+    console.log("Data: ", data);
 
     const mutationAction = isEditMode
       ? updateAdvert(putAdvertRequest)
@@ -205,11 +210,12 @@ export default function AdvertForm({ advert }: AdvertFormProps) {
   };
 
   useEffect(() => {
-    setValue("name", authState.user?.profile.preferred_username);
+    setValue("contacts.name", authState.user?.profile.preferred_username);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   useEffect(() => {
+    console.log(advert);
     if (!advert) return;
 
     setSelectedCategory(advert.category);
@@ -220,18 +226,21 @@ export default function AdvertForm({ advert }: AdvertFormProps) {
 
     const initialData = {
       ...advert,
-      ...advert?.contacts,
+      contacts: advert?.contacts,
       city: advert?.city.name,
       country: advert?.city?.country.name,
       category: advert?.category.name,
     };
 
+    setValue("name", initialData.contacts.name, { shouldDirty: true });
+
     reset(initialData, {
-      keepDirty: false,
+      keepDirty: true,
       keepErrors: false,
       keepIsValid: false,
       keepTouched: false,
     });
+
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [advert]);
 

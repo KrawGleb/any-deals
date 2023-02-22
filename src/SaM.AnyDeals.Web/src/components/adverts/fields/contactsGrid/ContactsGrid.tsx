@@ -1,6 +1,7 @@
 import React from "react";
+import "./ContactsGrid.scss";
 import { Contacts } from "../../../../models/api/contacts";
-import { Grid } from "@mui/material";
+import { Grid, Paper, Typography } from "@mui/material";
 
 import PersonIcon from "@mui/icons-material/Person";
 import PlaceIcon from "@mui/icons-material/Place";
@@ -15,32 +16,44 @@ import EightKIcon from "@mui/icons-material/EightK";
 
 export default function ContactsGrid({ contacts }: { contacts: Contacts }) {
   const contactsMap = new Map<string, any>([
-    ["name", <PersonIcon />],
-    ["email", <AlternateEmailIcon />],
-    ["address", <PlaceIcon />],
-    ["phone", <PhoneIcon />],
-    ["linkedIn", <LinkedInIcon />],
-    ["facebook", <FacebookIcon />],
-    ["instagram", <InstagramIcon />],
-    ["telegram", <TelegramIcon />],
-    ["whatsApp", <WhatsAppIcon />],
-    ["vk", <EightKIcon />],
+    ["email", <AlternateEmailIcon key="email" />],
+    ["address", <PlaceIcon key="address" />],
+    ["phone", <PhoneIcon key="phone" />],
+    ["linkedIn", <LinkedInIcon key="linkedIn" />],
+    ["facebook", <FacebookIcon key="facebook" />],
+    ["instagram", <InstagramIcon key="instagram" />],
+    ["telegram", <TelegramIcon key="telegram" />],
+    ["whatsApp", <WhatsAppIcon key="whatsApp" />],
+    ["vk", <EightKIcon key="vk" />],
   ]);
 
   return (
-    <>
-      <Grid container spacing={3} columns={5}>
-        {Object.keys(contacts).map((key, index) =>
-          contacts[key as keyof typeof contacts] ? (
-            <Grid item key={index} xs={2} display="flex" gap="4px">
-              {contactsMap.get(key)}
-              {contacts[key as keyof typeof contacts]}
-            </Grid>
-          ) : (
-            <></>
-          )
-        )}
-      </Grid>
-    </>
+    <Paper className="contacts">
+      <div className="contacts__row">
+        <Typography variant="subtitle1" noWrap>
+          Contacts
+        </Typography>
+      </div>
+
+      <div className="contacts__row">
+        <Typography variant="h6" noWrap>
+          {contacts.name}
+        </Typography>
+      </div>
+
+      {Object.keys({ ...contacts }).map((contact, index) =>
+        contacts[contact as keyof typeof contacts] &&
+        contactsMap.get(contact) ? (
+          <div key={index} className="contacts__row">
+            {contactsMap.get(contact)}
+            <Typography>
+              {contacts[contact as keyof typeof contacts]}
+            </Typography>
+          </div>
+        ) : (
+          <></>
+        )
+      )}
+    </Paper>
   );
 }

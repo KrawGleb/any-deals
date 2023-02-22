@@ -3,7 +3,6 @@ import {
   Checkbox,
   FormControl,
   FormControlLabel,
-  FormGroup,
   MenuItem,
   Paper,
   Radio,
@@ -116,59 +115,64 @@ export default function AdvertGroupFormArea({
             <Typography variant="subtitle2">Allowed payment methods</Typography>
             <Stack direction="row" gap="20px">
               <FormControl required error={error}>
-                <FormControlLabel
-                  control={
-                    <Controller
-                      name="allowedCashPayment"
-                      control={control}
-                      render={({ field }) => (
-                        <Checkbox
-                          {...field}
-                          checked={!!field.value}
-                          icon={<AccountBalanceWalletIcon />}
-                          checkedIcon={<AccountBalanceWalletIcon />}
+                <Stack direction="row" gap="20px">
+                  <Stack direction="column">
+                    <FormControlLabel
+                      control={
+                        <Controller
+                          name="allowedCashPayment"
+                          control={control}
+                          render={({ field }) => (
+                            <Checkbox
+                              {...field}
+                              checked={!!field.value}
+                              icon={<AccountBalanceWalletIcon />}
+                              checkedIcon={<AccountBalanceWalletIcon />}
+                            />
+                          )}
                         />
-                      )}
+                      }
+                      label="Cash"
                     />
-                  }
-                  label="Cash"
-                />
-                <FormControlLabel
-                  control={
-                    <Controller
-                      name="allowedCardPayment"
-                      control={control}
-                      render={({ field }) => (
-                        <Checkbox
-                          {...field}
-                          checked={!!field.value}
-                          icon={<PaymentIcon />}
-                          checkedIcon={<PaymentIcon />}
+                    <FormControlLabel
+                      control={
+                        <Controller
+                          name="allowedCardPayment"
+                          control={control}
+                          render={({ field }) => (
+                            <Checkbox
+                              {...field}
+                              checked={!!field.value}
+                              icon={<PaymentIcon />}
+                              checkedIcon={<PaymentIcon />}
+                            />
+                          )}
                         />
-                      )}
+                      }
+                      label="Card"
                     />
-                  }
-                  label="Card"
-                />
+                  </Stack>
+
+                  <Stack
+                    direction="row"
+                    alignItems="center"
+                    gap="4px"
+                    width="6.5rem"
+                  >
+                    <ControlledInput
+                      control={control}
+                      name="price"
+                      label="Price"
+                      error={!!errors.price}
+                    />
+                    <Typography>$</Typography>
+                  </Stack>
+                </Stack>
+
                 <FormHelperText>
                   Select at least one payment method
                 </FormHelperText>
               </FormControl>
-
-              <Stack
-                direction="row"
-                alignItems="center"
-                gap="4px"
-                width="6.5rem"
-              >
-                <ControlledInput
-                  control={control}
-                  name="price"
-                  label="Price"
-                  error={!!errors.price}
-                />
-                <Typography>$</Typography>
-              </Stack>
             </Stack>
           </>
         ) : (

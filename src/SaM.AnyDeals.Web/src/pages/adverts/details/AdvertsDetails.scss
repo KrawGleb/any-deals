@@ -8,11 +8,21 @@
 
   &__body {
     width: 1170px;
-    padding: 24px;
+    display: flex;
+    flex-direction: column;
+  }
+
+  &__container {
+    display: flex;
+    flex-direction: row;
+    width: 1170px;
+    gap: 20px;
   }
 
   &__content {
     margin-bottom: 12px;
+    padding: 12px;
+    flex: 1;
 
     & > * {
       font-weight: 380;
@@ -45,6 +55,7 @@
 
   &__attachments {
     display: flex;
+    padding: 12px;
     flex-direction: row;
     align-items: flex-start;
     gap: 16px;

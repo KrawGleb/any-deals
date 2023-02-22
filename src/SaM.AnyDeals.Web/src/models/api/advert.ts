@@ -19,4 +19,6 @@ export interface Advert {
   attachments: Attachment[];
   creator: ApplicationUser;
   createdAt: string;
+  allowedCardPayment: boolean;
+  allowedCashPayment: boolean;
 }

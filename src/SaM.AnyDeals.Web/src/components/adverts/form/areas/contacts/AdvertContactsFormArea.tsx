@@ -4,6 +4,8 @@ import ControlledInput from "../../../../common/controlledInput/ControlledInput"
 import { AreaProps } from "../AreaProps";
 
 export default function AdvertContactsFormArea({ control, errors }: AreaProps) {
+  const contactsErrors = (errors.contacts ?? {}) as any;
+
   return (
     <Paper sx={{ padding: "16px" }}>
       <Typography variant="h6">Contacts</Typography>
@@ -16,91 +18,91 @@ export default function AdvertContactsFormArea({ control, errors }: AreaProps) {
         <Stack direction="row" spacing={3}>
           <ControlledInput
             control={control}
-            name={"name"}
+            name={"contacts.name"}
             label="Name"
             required
-            error={!!errors.name}
-            helperMessage={errors?.name?.message}
+            error={!!contactsErrors?.name}
+            helperMessage={contactsErrors?.name?.message}
           />
 
           <ControlledInput
             control={control}
-            name={"email"}
+            name={"contacts.email"}
             label="Email"
-            error={!!errors.email}
-            helperMessage={errors?.email?.message}
+            error={!!contactsErrors.email}
+            helperMessage={contactsErrors?.email?.message}
           />
         </Stack>
 
         <Stack direction="row" spacing={3}>
           <ControlledInput
             control={control}
-            name={"phone"}
+            name={"contacts.phone"}
             label="Phone number"
-            error={!!errors.phone}
-            helperMessage={errors?.phone?.message}
+            error={!!contactsErrors?.phone}
+            helperMessage={contactsErrors?.phone?.message}
           />
 
           <ControlledInput
             control={control}
-            name={"address"}
+            name={"contacts.address"}
             label="Address"
-            error={!!errors.address}
-            helperMessage={errors?.address?.message}
+            error={!!contactsErrors.address}
+            helperMessage={contactsErrors?.address?.message}
           />
         </Stack>
 
         <Stack direction="row" spacing={3}>
           <ControlledInput
             control={control}
-            name={"facebook"}
+            name={"contacts.facebook"}
             label="Facebook"
-            error={!!errors.facebook}
-            helperMessage={errors?.facebook?.message}
+            error={!!contactsErrors.facebook}
+            helperMessage={contactsErrors?.facebook?.message}
           />
 
           <ControlledInput
             control={control}
-            name={"vk"}
+            name={"contacts.vk"}
             label="VK"
-            error={!!errors.vk}
-            helperMessage={errors?.vk?.message}
+            error={!!contactsErrors.vk}
+            helperMessage={contactsErrors?.vk?.message}
           />
         </Stack>
 
         <Stack direction="row" spacing={3}>
           <ControlledInput
             control={control}
-            name={"instagram"}
+            name={"contacts.instagram"}
             label="Instagram"
-            error={!!errors.instagram}
-            helperMessage={errors?.instagram?.message}
+            error={!!contactsErrors.instagram}
+            helperMessage={contactsErrors?.instagram?.message}
           />
 
           <ControlledInput
             control={control}
-            name={"linkedIn"}
+            name={"contacts.linkedIn"}
             label="LinkedIn"
-            error={!!errors.linkedIn}
-            helperMessage={errors?.linkedIn?.message}
+            error={!!contactsErrors.linkedIn}
+            helperMessage={contactsErrors?.linkedIn?.message}
           />
         </Stack>
 
         <Stack direction="row" spacing={3}>
           <ControlledInput
             control={control}
-            name={"telegram"}
+            name={"contacts.telegram"}
             label="Telegram"
-            error={!!errors.telegram}
-            helperMessage={errors?.telegram?.message}
+            error={!!contactsErrors.telegram}
+            helperMessage={contactsErrors?.telegram?.message}
           />
 
           <ControlledInput
             control={control}
-            name={"whatsApp"}
+            name={"contacts.whatsApp"}
             label="WhatsApp"
-            error={!!errors.whatsApp}
-            helperMessage={errors?.whatsApp?.message}
+            error={!!contactsErrors.whatsApp}
+            helperMessage={contactsErrors?.whatsApp?.message}
           />
         </Stack>
       </Stack>
