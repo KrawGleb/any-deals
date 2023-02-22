@@ -1,4 +1,8 @@
-﻿namespace SaM.AnyDeals.Application.Requests.Orders.Commands.Create;
+﻿using SaM.AnyDeals.Common.Enums;
 
-public record CreateOrderCommand(int AdvertId)
+namespace SaM.AnyDeals.Application.Requests.Orders.Commands.Create;
+
+public record CreateOrderCommand(
+    int AdvertId,
+    PaymentMethod PaymentMethod)
     : IRequest<Response>, IChangeDataRequest;

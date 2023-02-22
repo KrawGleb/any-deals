@@ -9,7 +9,7 @@ public class OrderDbEntry : AuditableDbEntry
     public bool HasExecutorApproval { get; set; }
     public bool ArchivatedByCustomer { get; set; }
     public bool ArchivatedByExecutor { get; set; }
-    public PaymentMethod PaymentMethod { get; set; }
+    public PaymentMethod? PaymentMethod { get; set; }
 
     public int? AdvertId { get; set; }
     public AdvertDbEntry? Advert { get; set; }
