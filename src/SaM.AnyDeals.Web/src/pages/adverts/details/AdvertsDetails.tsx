@@ -23,6 +23,7 @@ import { useSelector } from "react-redux";
 import { RootState } from "../../../features/store/store";
 
 export default function AdvertsDetails() {
+  const [hasClientSecret, setHasClientSecret] = useState(false);
   const authState = useSelector((state: RootState) => state.auth);
   const query = useQuery() as any;
   const scrollRef = useRef(null);
@@ -33,8 +34,27 @@ export default function AdvertsDetails() {
   const [createOrder] = useCreateOrderMutation();
 
   useEffect(() => {
+    const clientSecret = new URLSearchParams(window.location.search).get(
+      "payment_intent_client_secret"
+    );
+
+    if (clientSecret) {
+      setHasClientSecret(true);
+      setPaymentMethod(1);
+    }
+  }, []);
+
+  useEffect(() => {
     if (advert?.interest === Interest.Social) {
       setPaymentMethod(undefined);
+      return;
+    }
+
+    if (hasClientSecret) {
+      (scrollRef?.current! as Element).scrollIntoView({
+        behavior: "smooth",
+        block: "end",
+      });
       return;
     }
 
@@ -49,7 +69,7 @@ export default function AdvertsDetails() {
       return;
     }
 
-    const createOrderAction = createOrder({ advertId });
+    const createOrderAction = createOrder({ advertId, paymentMethod: 0 });
 
     createOrderAction.then((_response) => {
       navigate("/adverts/my/orders");

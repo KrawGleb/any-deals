@@ -6,14 +6,19 @@ import {
   useElements,
 } from "@stripe/react-stripe-js";
 import { StripePaymentElementOptions } from "@stripe/stripe-js";
+import { useCreateOrderMutation } from "../../../../../features/api/extensions/ordersApiExtension";
+import { Response } from "../../../../../models/api/responses/response";
+import { useNavigate } from "react-router-dom";
 
 export default function CheckoutForm({ id }: { id: number }) {
+  const navigate = useNavigate();
   const stripe = useStripe();
   const elements = useElements();
 
-  const [email, setEmail] = useState("");
+  const [_email, setEmail] = useState("");
   const [message, setMessage] = useState<string | null | undefined>(null);
   const [isLoading, setIsLoading] = useState(false);
+  const [createOrder] = useCreateOrderMutation();
 
   useEffect(() => {
     if (!stripe) {
@@ -31,14 +36,26 @@ export default function CheckoutForm({ id }: { id: number }) {
     stripe.retrievePaymentIntent(clientSecret).then(({ paymentIntent }) => {
       switch (paymentIntent?.status) {
         case "succeeded":
-          console.log(paymentIntent);
-          setMessage("Payment succeeded!");
+          navigate("/adverts/my/orders");
           break;
         case "processing":
           setMessage("Your payment is processing.");
           break;
         case "requires_payment_method":
           setMessage("Your payment was not successful, please try again.");
+          break;
+        case "requires_capture":
+          console.log("Requires capture");
+          createOrder({
+            advertId: id,
+            paymentMethod: 1,
+            paymentIntent: paymentIntent.id,
+          }).then((response: any) => {
+            const info = response.data;
+            if ((info as Response).succeeded) {
+              navigate("/adverts/my/orders");
+            }
+          });
           break;
         default:
           setMessage("Something went wrong.");
@@ -62,7 +79,7 @@ export default function CheckoutForm({ id }: { id: number }) {
       elements,
       confirmParams: {
         // Make sure to change this to your payment completion page
-        return_url: `https://localhost:3000/adverts/details?id=${id}`,
+        return_url: `${window.location.origin}/adverts/details?id=${id}`,
       },
     });
 

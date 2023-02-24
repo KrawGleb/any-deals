@@ -19,17 +19,6 @@ export default function AdvertPaymentArea({ advert }: { advert: Advert }) {
 
   useEffect(() => {
     if (advert) {
-      const clientSecret = new URLSearchParams(window.location.search).get(
-        "payment_intent_client_secret"
-      );
-
-      if (clientSecret) {
-        (scrollRef?.current! as Element).scrollIntoView({
-          behavior: "smooth",
-          block: "end",
-        });
-      }
-
       createIntent({ advertId: advert.id }).then((res: any) => {
         const { data }: { data: CommonResponse } = res;
 

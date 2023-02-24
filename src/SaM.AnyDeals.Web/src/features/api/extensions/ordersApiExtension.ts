@@ -31,7 +31,11 @@ export const ordersApiExtension = baseApi.injectEndpoints({
       transformResponse: (response: CommonResponse) => response.body,
     }),
     createOrder: builder.mutation({
-      query: (payload: { advertId: number }) => ({
+      query: (payload: {
+        advertId: number;
+        paymentMethod: number;
+        paymentIntent?: string;
+      }) => ({
         url: "/api/orders/create",
         method: "POST",
         body: payload,
