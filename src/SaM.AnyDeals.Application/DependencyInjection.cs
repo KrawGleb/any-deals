@@ -21,7 +21,7 @@ public static class DependencyInjection
         services.AddAutoMapper(assembly);
 
         services.AddTransient<ICurrentUserService, CurrentUserService>();
-        services.AddTransient<IPaymentService, PaymentService>();
+        services.AddTransient<IPaymentServicesAccesor, PaymentServicesAccesor>();
         services.AddTransient(typeof(IPipelineBehavior<,>), typeof(ValidationBehavior<,>));
 
         return services;
