@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import {
   PaymentElement,
   LinkAuthenticationElement,
@@ -29,10 +29,9 @@ export default function CheckoutForm({ id }: { id: number }) {
     }
 
     stripe.retrievePaymentIntent(clientSecret).then(({ paymentIntent }) => {
-      console.log(paymentIntent);
-      alert();
       switch (paymentIntent?.status) {
         case "succeeded":
+          console.log(paymentIntent);
           setMessage("Payment succeeded!");
           break;
         case "processing":

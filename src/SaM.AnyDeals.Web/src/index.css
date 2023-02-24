@@ -1,8 +1,13 @@
 @import url("https://fonts.googleapis.com/css2?family=Prosto+One&display=swap");
 
+html {
+  scroll-snap-type: y mandatory;
+}
+
 body {
   margin: 0;
   padding: 0;
+  box-sizing: border-box;
   font-size: 1rem;
   line-height: 1.5;
   letter-spacing: 0.00938em;

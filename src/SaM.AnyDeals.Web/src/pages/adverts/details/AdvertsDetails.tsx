@@ -1,100 +1,146 @@
 import "./AdvertsDetails.scss";
-import React, { useState } from "react";
-import {
-  useGetAdvertByIdQuery,
-  useGetAdvertReviewsQuery,
-} from "../../../features/api/extensions/advertsApiExtension";
+import React, { ChangeEvent, useEffect, useRef, useState } from "react";
+import { useGetAdvertByIdQuery } from "../../../features/api/extensions/advertsApiExtension";
 import useQuery from "../../../features/hooks/useQuery";
-import { Box, Button, Paper, Typography } from "@mui/material";
-import GoalTag from "../../../components/adverts/fields/goalTag/GoalTag";
-import InterestTag from "../../../components/adverts/fields/interestTag/InterestTag";
-import AttachmentCard from "../../../components/adverts/fields/attachmentCard/AttachmentCard";
-import ContactsGrid from "../../../components/adverts/fields/contactsGrid/ContactsGrid";
-import ReviewCard from "../../../components/review/card/ReviewCard";
-import { Review } from "../../../models/api/review";
-import OrderConfirmationDialog from "../../../components/dialogs/orderConfirmation/OrderConfirmationDialog";
+import {
+  Box,
+  Button,
+  FormControlLabel,
+  Paper,
+  Radio,
+  RadioGroup,
+} from "@mui/material";
+import AdvertDetailsArea from "./areas/details/AdvertDetailsArea";
+import AdvertReviewsArea from "./areas/reviews/AdvertReviewsArea";
+import AdvertPaymentArea from "./areas/payment/AdvertPaymentArea";
+
+import AccountBalanceWalletIcon from "@mui/icons-material/AccountBalanceWallet";
+import PaymentIcon from "@mui/icons-material/Payment";
 import { Interest } from "../../../models/enums/interest";
+import { useCreateOrderMutation } from "../../../features/api/extensions/ordersApiExtension";
+import { useNavigate } from "react-router-dom";
+import { useSelector } from "react-redux";
+import { RootState } from "../../../features/store/store";
 
 export default function AdvertsDetails() {
-  const [isOrderConfirmationDialogOpen, setIsOrderConfirmationDialogOpen] =
-    useState(false);
-  const handleOrderConfirmationDialogCancel = () => {
-    setIsOrderConfirmationDialogOpen(false);
-  };
-  const handleOrderClick = () => {
-    setIsOrderConfirmationDialogOpen(true);
-  };
-
+  const authState = useSelector((state: RootState) => state.auth);
   const query = useQuery() as any;
+  const scrollRef = useRef(null);
+  const navigate = useNavigate();
   const advertId: number = +query.get("id");
   const { data: advert } = useGetAdvertByIdQuery(advertId);
-  const { data: reviews } = useGetAdvertReviewsQuery({ id: advertId });
+  const [paymentMethod, setPaymentMethod] = useState<number | undefined>(0);
+  const [createOrder] = useCreateOrderMutation();
+
+  useEffect(() => {
+    if (advert?.interest === Interest.Social) {
+      setPaymentMethod(undefined);
+      return;
+    }
+
+    if (advert?.allowedCashPayment) setPaymentMethod(0);
+    else if (advert?.allowedCardPayment) setPaymentMethod(1);
+    // else throw new Error("Something wrong with payment method");
+  }, [advert]);
+
+  const handleOrderClick = () => {
+    if (paymentMethod === 1) {
+      scrollToPayment();
+      return;
+    }
+
+    const createOrderAction = createOrder({ advertId });
+
+    createOrderAction.then((_response) => {
+      navigate("/adverts/my/orders");
+    });
+  };
+
+  const handlePaymentMethodChange = (e: ChangeEvent<HTMLInputElement>) => {
+    const method = +e.target.value;
+    setPaymentMethod(method);
+  };
+
+  const scrollToPayment = () => {
+    (scrollRef?.current! as Element).scrollIntoView({
+      behavior: "smooth",
+      block: "end",
+    });
+  };
 
   return (
     <>
-      <OrderConfirmationDialog
-        open={isOrderConfirmationDialogOpen}
-        handleCancel={handleOrderConfirmationDialogCancel}
-        advert={advert}
-      />
-
       {!!advert ? (
-        <div className="details">
-          <div className="details__container">
-            <div className="details__body">
-              <Paper className="details__content">
-                <div className="details__content__header">
-                  <GoalTag goal={advert.goal} />
-                  <InterestTag interest={advert.interest} />
-                </div>
-
-                <Typography variant="h5" fontWeight="bold" className="mb-2">
-                  {advert.title}
-                </Typography>
-                <Typography variant="subtitle1">
-                  {advert.category.name}
-                </Typography>
-
-                <Typography variant="subtitle2" className="mb-2">
-                  {advert.city.country.name}, {advert.city.name}
-                </Typography>
-                {advert.description ? (
-                  <div className="details__content__description">
-                    {advert.description}
-                  </div>
-                ) : (
-                  <></>
-                )}
-              </Paper>
-              {advert.attachments.length > 0 ? (
-                <Paper className="details__attachments">
-                  {advert.attachments.map((attachment, index) => (
-                    <AttachmentCard key={index} attachment={attachment} />
-                  ))}
-                </Paper>
-              ) : (
-                <></>
-              )}
+        <div className="advert-details">
+          <div className="advert-details__container">
+            <div className="advert-details__slide advert-details__slide__details">
+              <div className="advert-details__slide__container">
+                <AdvertDetailsArea advert={advert} />
+              </div>
             </div>
-            <ContactsGrid contacts={advert.contacts} />
+            <div className="advert-details__slide advert-details__slide__reviews">
+              <div className="advert-details__slide__container">
+                <AdvertReviewsArea id={advert.id} />
+              </div>
+            </div>
+            {paymentMethod === 1 ? (
+              <div className="advert-details__slide advert-details__slide__payment">
+                <div
+                  className="advert-details__slide__container"
+                  ref={scrollRef}
+                >
+                  <AdvertPaymentArea advert={advert} />
+                </div>
+              </div>
+            ) : (
+              <></>
+            )}
           </div>
 
-          {!!reviews && reviews.length > 0 ? (
-            <Paper className="details__reviews">
-              {reviews?.map((review: Review, index: number) => (
-                <ReviewCard key={index} review={review} />
-              ))}
-            </Paper>
-          ) : (
-            <></>
-          )}
-
-          <Paper className="details__footer">
-            <Box className="details__footer__container">
-              <Box className="details__footer__price">
+          <Paper className="advert-details__footer">
+            <Box className="advert-details__footer__container">
+              <Box className="advert-details__footer__price">
                 {advert?.price ? <p>{advert?.price} $</p> : <></>}
+
+                <Box className="advert-details__footer__method">
+                  {advert?.interest === Interest.Commercial &&
+                  advert.allowedCardPayment &&
+                  advert.allowedCashPayment &&
+                  authState.user ? (
+                    <RadioGroup
+                      row
+                      defaultValue={0}
+                      value={paymentMethod}
+                      onChange={handlePaymentMethodChange}
+                    >
+                      <FormControlLabel
+                        value={0}
+                        control={
+                          <Radio
+                            icon={<AccountBalanceWalletIcon />}
+                            checkedIcon={<AccountBalanceWalletIcon />}
+                          />
+                        }
+                        label=""
+                      />
+
+                      <FormControlLabel
+                        value={1}
+                        control={
+                          <Radio
+                            icon={<PaymentIcon />}
+                            checkedIcon={<PaymentIcon />}
+                          />
+                        }
+                        label=""
+                      />
+                    </RadioGroup>
+                  ) : (
+                    <></>
+                  )}
+                </Box>
               </Box>
-              <Box className="details__footer__order">
+              <Box className="advert-details__footer__order">
                 <Button
                   style={{ textTransform: "none" }}
                   variant="contained"

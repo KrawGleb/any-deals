@@ -1,0 +1,51 @@
+.advert-details {
+  &__details__area {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+  }
+
+  &__content {
+    padding: 12px;
+    flex: 1;
+
+    & > * {
+      font-weight: 380;
+      margin-bottom: 16px;
+    }
+
+    &:last-child {
+      margin-bottom: 0px;
+    }
+
+    &__header {
+      display: flex;
+      flex-direction: row;
+      gap: 16px;
+      margin-bottom: 8px;
+    }
+
+    &__title {
+      font-size: 24px;
+      font-style: normal;
+      font-weight: 500;
+      margin-bottom: 16px;
+    }
+
+    &__properties {
+      font-size: 16px;
+      margin-bottom: 16px;
+    }
+  }
+
+  &__attachments {
+    padding: 12px;
+  }
+
+  &__row {
+    display: flex;
+    flex: 1;
+    gap: 24px;
+    width: 1175px;
+  }
+}

@@ -1,0 +1,17 @@
+.advert-details {
+  &__payment {
+    &__area {
+      display: flex;
+      flex-direction: column;
+      width: 1175px;
+      align-items: center;
+      padding: 24px;
+    }
+
+    &__container {
+      display: flex;
+      gap: 24px;
+      justify-content: space-between;
+    }
+  }
+}
