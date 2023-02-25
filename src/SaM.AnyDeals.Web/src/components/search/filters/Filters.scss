@@ -5,17 +5,15 @@
   width: 100%;
   box-sizing: border-box;
   flex-shrink: 0;
-  left: auto;
-  right: 0px;
   height: 6rem;
   box-shadow: none;
   color: black;
   background-color: transparent;
-  top: 6rem;
+  top: 4rem;
 
   &__root {
     width: 1170px;
-    padding: 3rem 0px 1rem;
+    padding: 1.75rem 0.5rem 0.5rem 0.5rem;
     align-self: center;
     background-color: rgb(240, 242, 243);
     border-radius: 8px;

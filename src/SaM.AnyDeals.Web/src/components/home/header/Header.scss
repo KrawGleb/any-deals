@@ -1,13 +1,15 @@
+@import "/src/styles/colors.scss";
+
 .spacer {
   margin-bottom: 6.5rem;
 }
 
 .header {
-  background-color: rgb(255, 198, 6);
+  background-color: $color1;
   z-index: 1000;
   align-items: center;
   display: flex;
-  height: 96px;
+  height: 72px;
   justify-content: center;
   padding: 0 86px;
   position: fixed;
@@ -19,8 +21,8 @@
     width: 1170px;
     align-items: center;
     display: flex;
-    height: 96px;
     justify-content: space-between;
+    align-self: flex-end;
 
     .logo {
       font-family: "Prosto One", cursive;

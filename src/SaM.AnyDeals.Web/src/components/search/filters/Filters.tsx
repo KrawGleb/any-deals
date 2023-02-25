@@ -140,6 +140,8 @@ export default function Filters() {
         <div className="filters__root">
           <Tabs
             value={filters.group}
+            textColor="secondary"
+            indicatorColor="secondary"
             onChange={(__: any, value: number) => {
               dispatch(setGroupFilter(value));
               dispatch(setPageFilter(1));

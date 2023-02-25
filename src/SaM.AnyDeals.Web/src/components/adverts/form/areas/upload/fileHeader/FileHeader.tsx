@@ -14,7 +14,11 @@ export default function FileHeader({
         {name}
       </Grid>
       <Grid item>
-        <Button size="small" onClick={() => onDelete(file as any)}>
+        <Button
+          size="small"
+          onClick={() => onDelete(file as any)}
+          color="error"
+        >
           Delete
         </Button>
       </Grid>
