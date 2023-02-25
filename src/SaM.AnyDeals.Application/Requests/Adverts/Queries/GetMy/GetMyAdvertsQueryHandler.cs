@@ -31,12 +31,13 @@ public class GetMyAdvertsQueryHandler : IRequestHandler<GetMyAdvertsQuery, Respo
     {
         var creator = await _currentUserService.GetCurrentUserAsync();
 
-        var adverts = await _applicationDbContext.Adverts
-            .AsNoTracking()
+        await _applicationDbContext.Users.Entry(creator)
+            .Collection(e => e.Adverts!)
+            .Query()
             .FullInclude()
-            .Where(a => a.CreatorId == creator.Id)
-            .ToListAsync(cancellationToken);
-        var advertsVM = _mapper.Map<List<AdvertViewModel>>(adverts);
+            .LoadAsync(cancellationToken);
+
+        var advertsVM = _mapper.Map<List<AdvertViewModel>>(creator.Adverts);
 
         return new CommonResponse
         {
