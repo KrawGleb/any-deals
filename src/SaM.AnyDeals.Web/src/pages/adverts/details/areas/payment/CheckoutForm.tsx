@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from "react";
+import React, { useEffect, useState } from "react";
 import {
   PaymentElement,
   LinkAuthenticationElement,
@@ -9,6 +9,7 @@ import { StripePaymentElementOptions } from "@stripe/stripe-js";
 import { useCreateOrderMutation } from "../../../../../features/api/extensions/ordersApiExtension";
 import { Response } from "../../../../../models/api/responses/response";
 import { useNavigate } from "react-router-dom";
+import { Button } from "@mui/material";
 
 export default function CheckoutForm({ id }: { id: number }) {
   const navigate = useNavigate();
@@ -107,12 +108,20 @@ export default function CheckoutForm({ id }: { id: number }) {
         id="link-authentication-element"
         onChange={(e) => setEmail(e.value.email)}
       />
-      <PaymentElement id="payment-element" options={paymentElementOptions} />
-      <button disabled={isLoading || !stripe || !elements} id="submit">
+      <PaymentElement
+        id="payment-element"
+        options={paymentElementOptions}
+        className="mb-2"
+      />
+      <Button
+        disabled={isLoading || !stripe || !elements}
+        type="submit"
+        variant="contained"
+      >
         <span id="button-text">
           {isLoading ? <div className="spinner" id="spinner"></div> : "Pay now"}
         </span>
-      </button>
+      </Button>
       {/* Show any error or success messages */}
       {message && <div id="payment-message">{message}</div>}
     </form>

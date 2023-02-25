@@ -21,6 +21,11 @@
     flex-direction: column;
   }
 
+  &__header {
+    display: flex;
+    justify-content: space-between;
+  }
+
   &__fields {
     display: flex;
     flex-wrap: wrap;

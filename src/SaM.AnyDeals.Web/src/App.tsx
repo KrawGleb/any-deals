@@ -15,7 +15,7 @@ import Moderation from "./pages/moderation/Moderation";
 import ModerationAdverts from "./pages/moderation/adverts/ModerationAdverts";
 import ModerationCategories from "./pages/moderation/categoreis/ModerationCategories";
 import CreatedAdverts from "./pages/adverts/my/outlets/CreatedAdverts";
-import Execution from "./pages/adverts/my/outlets/Execution";
+import Executions from "./pages/adverts/my/outlets/Executions";
 import Orders from "./pages/adverts/my/outlets/Orders";
 import OrderDetails from "./pages/orders/details/OrderDetails";
 import AuthProvider from "./features/api/auth/authProvider";
@@ -49,7 +49,7 @@ function App() {
               <Route path="my" element={<MyAdverts />}>
                 <Route path="" element={<CreatedAdverts />} />
                 <Route path="orders" element={<Orders />} />
-                <Route path="execution" element={<Execution />} />
+                <Route path="execution" element={<Executions />} />
               </Route>
               <Route path="" element={<Navigate to="search" />} />
             </Route>

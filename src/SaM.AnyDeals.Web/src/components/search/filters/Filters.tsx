@@ -13,13 +13,21 @@ import SelectDialog from "../../dialogs/select/SelectDialog";
 import FakeSelect from "../../common/fakeSelect/FakeSelect";
 import Input from "../../common/input/Input";
 import SearchIcon from "@mui/icons-material/Search";
-import { Tabs, Box, Button, Tab, ToggleButtonGroup } from "@mui/material";
+import {
+  Tabs,
+  Box,
+  Button,
+  Tab,
+  ToggleButtonGroup,
+  IconButton,
+} from "@mui/material";
 import {
   useGetCitiesQuery,
   useGetCountriesQuery,
 } from "../../../features/api/extensions/countriesApiExtension";
 import { useGetCategoriesQuery } from "../../../features/api/extensions/categoriesApiExtension";
 import {
+  resetFilters,
   setCategoryFilter,
   setCityFilter,
   setCountryFilter,
@@ -29,6 +37,7 @@ import {
   setPageFilter,
   setTitleFilter,
 } from "../../../features/store/slices/filtersSlice";
+import ClearIcon from "@mui/icons-material/Clear";
 
 export default function Filters() {
   const dispatch = useDispatch();
@@ -88,6 +97,16 @@ export default function Filters() {
     dispatch(setCategoryFilter(value?.name));
   };
 
+  const clearFilters = () => {
+    dispatch(resetFilters());
+    setLocalInterest([]);
+    setLocalGoal(0);
+    setTitle("");
+    setSelectedCountry(undefined);
+    setSelectedCity(undefined);
+    setSelectedCategory(undefined);
+  };
+
   useEffect(() => {
     setLocalInterest((_curr) => (filters.interest ? [filters.interest] : []));
     setLocalGoal(filters.goal ?? 2);
@@ -138,19 +157,25 @@ export default function Filters() {
 
       <Box className="filters">
         <div className="filters__root">
-          <Tabs
-            value={filters.group}
-            textColor="secondary"
-            indicatorColor="secondary"
-            onChange={(__: any, value: number) => {
-              dispatch(setGroupFilter(value));
-              dispatch(setPageFilter(1));
-            }}
-          >
-            <GroupTab value={0} label="Services nearby" />
-            <GroupTab value={1} label="Online services" />
-            <GroupTab value={2} label="Places and events" />
-          </Tabs>
+          <div className="filters__header">
+            <Tabs
+              value={filters.group}
+              textColor="secondary"
+              indicatorColor="secondary"
+              onChange={(__: any, value: number) => {
+                dispatch(setGroupFilter(value));
+                dispatch(setPageFilter(1));
+              }}
+            >
+              <GroupTab value={0} label="Services nearby" />
+              <GroupTab value={1} label="Online services" />
+              <GroupTab value={2} label="Places and events" />
+            </Tabs>
+
+            <IconButton onClick={clearFilters}>
+              <ClearIcon />
+            </IconButton>
+          </div>
 
           <form className="filters__fields">
             <FakeSelect
@@ -172,12 +197,7 @@ export default function Filters() {
               onClick={() => setIsCategorySelectOpen(true)}
             />
             <Box className="text">
-              <Input
-                label="Text in advert"
-                onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
-                  setTitle(e.target.value)
-                }
-              ></Input>
+              <Input label="Text in advert" value={title} />
               <Button
                 variant="contained"
                 sx={{ minWidth: "8rem", borderRadius: "10px" }}

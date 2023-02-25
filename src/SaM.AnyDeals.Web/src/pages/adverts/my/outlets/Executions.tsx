@@ -6,7 +6,7 @@ import GoalTabs from "../../../../components/search/filters/GoalTabs";
 import { useGetMyRequestsQuery } from "../../../../features/api/extensions/ordersApiExtension";
 import { Order } from "../../../../models/api/order";
 
-export default function Execution() {
+export default function Executions() {
   const navigate = useNavigate();
   const [tab, setTab] = useState(0);
   const [archivated, setArchivated] = useState(false);

@@ -1,5 +1,5 @@
 import "./OrderChat.scss";
-import React, { ChangeEvent, useEffect, useState } from "react";
+import React, { ChangeEvent, useEffect, useRef, useState } from "react";
 import { OrderChatProps } from "./OrderChatProps";
 import { Box, Button } from "@mui/material";
 import Input from "../../common/input/Input";
@@ -14,19 +14,22 @@ import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "../../../features/store/store";
 
 export default function OrderChat(props: OrderChatProps) {
+  const inputRef = useRef();
   const dispatch = useDispatch();
   const userId = useSelector(
     (state: RootState) => state.auth.user?.profile.sub
   );
-  const [message, setMessage] = useState("");
-  const handleMessageInputChange = (e: ChangeEvent<HTMLInputElement>) =>
-    setMessage(e.target.value);
 
   const { data: messages } = useGetMessagesQuery({ id: props.orderId });
   const [sendMessage] = useSendMessageMutation();
 
   const handleSendClick = () => {
-    sendMessage({ orderId: props.orderId, text: message });
+    sendMessage({
+      orderId: props.orderId,
+      text: (inputRef.current! as HTMLInputElement).value,
+    });
+
+    (inputRef.current! as HTMLInputElement).value = "";
   };
 
   useEffect(() => {
@@ -46,7 +49,6 @@ export default function OrderChat(props: OrderChatProps) {
       .then(() => {
         connection.on("NewMessage", (userId) => {
           if (props.customerId === userId || props.executorId === userId) {
-            setMessage(message);
             dispatch(chatApiExtension.util.invalidateTags(["Chat"]));
           }
         });
@@ -71,8 +73,8 @@ export default function OrderChat(props: OrderChatProps) {
       </Box>
       <Box className="order-chat__input">
         <Input
+          ref={inputRef}
           label="Write a message"
-          onChange={handleMessageInputChange}
           disabled={props.disabled}
         />
         <Button

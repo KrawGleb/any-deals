@@ -38,7 +38,9 @@ export default function Header() {
     <div className="spacer">
       <Box className="header">
         <div className="header__container">
-          <div className="logo">Any Deals</div>
+          <div className="logo" onClick={() => navigate("/")}>
+            Any Deals
+          </div>
           <PanelTabs value={value} onChange={handleChange}>
             <PanelTab label="Adverts" to="/adverts/search" />
             {myAdvertsTab}

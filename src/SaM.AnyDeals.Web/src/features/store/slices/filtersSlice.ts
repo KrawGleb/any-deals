@@ -58,7 +58,15 @@ const filtersSlice = createSlice({
       state.page = action.payload;
     },
     resetFilters(state) {
-      state = initialState;
+      state.group = initialState.group;
+      state.goal = initialState.goal;
+      state.interest = initialState.interest;
+      state.title = initialState.title;
+      state.city = initialState.city;
+      state.country = initialState.country;
+      state.category = initialState.category;
+      state.pageSize = initialState.pageSize;
+      state.page = initialState.page;
     },
   },
 });
