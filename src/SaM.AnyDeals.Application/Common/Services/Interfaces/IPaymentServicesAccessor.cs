@@ -2,7 +2,7 @@
 
 namespace SaM.AnyDeals.Application.Common.Services.Interfaces;
 
-public interface IPaymentServicesAccesor
+public interface IPaymentServicesAccessor
 {
     PaymentIntentService PaymentIntentService { get; }
 }

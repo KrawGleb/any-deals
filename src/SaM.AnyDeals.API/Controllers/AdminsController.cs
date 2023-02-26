@@ -1,7 +1,6 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using SaM.AnyDeals.Application.Requests.Admins.Commands.UpdateAdvertStatus;
-using SaM.AnyDeals.Common.Enums.Adverts;
 using SaM.AnyDeals.Common.Enums.Auth;
 
 namespace SaM.AnyDeals.API.Controllers;
