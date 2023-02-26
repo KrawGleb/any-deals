@@ -9,14 +9,14 @@ namespace SaM.AnyDeals.Application.Requests.Payment.Commands.CreateIntent;
 public class CreatePaymentIntentCommandHandler : IRequestHandler<CreatePaymentIntentCommand, Response>
 {
     private readonly ApplicationDbContext _applicationDbContext;
-    private readonly IPaymentServicesAccesor _paymentServicesAccesor;
+    private readonly IPaymentServicesAccessor _paymentServicesAccessor;
 
     public CreatePaymentIntentCommandHandler(
         ApplicationDbContext applicationDbContext,
-        IPaymentServicesAccesor paymentServicesAccesor)
+        IPaymentServicesAccessor paymentServicesAccessor)
     {
         _applicationDbContext = applicationDbContext;
-        _paymentServicesAccesor = paymentServicesAccesor;
+        _paymentServicesAccessor = paymentServicesAccessor;
     }
 
     public async Task<Response> Handle(CreatePaymentIntentCommand request, CancellationToken cancellationToken)
@@ -26,7 +26,7 @@ public class CreatePaymentIntentCommandHandler : IRequestHandler<CreatePaymentIn
             .SingleOrDefaultAsync(a => a.Id == request.AdvertId, cancellationToken)
             ?? throw new NotFoundException($"Advert with id {request.AdvertId} not found.");
 
-        var paymentService = _paymentServicesAccesor.PaymentIntentService;
+        var paymentService = _paymentServicesAccessor.PaymentIntentService;
         var paymentIntent = paymentService.Create(new PaymentIntentCreateOptions
         {
             Amount = (long)(advert.Price! * 100),

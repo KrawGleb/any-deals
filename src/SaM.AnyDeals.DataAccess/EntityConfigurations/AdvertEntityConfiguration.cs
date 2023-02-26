@@ -45,6 +45,10 @@ public class AdvertEntityConfiguration : EntityConfigurationBase<AdvertDbEntry>
             .HasMany(a => a.Reviews)
             .WithOne(r => r.Advert)
             .OnDelete(DeleteBehavior.Cascade);
+
+        builder
+            .Property(a => a.Price)
+            .HasPrecision(8, 2);
     }
 
     public override void ConfigureConstraints(EntityTypeBuilder<AdvertDbEntry> builder)

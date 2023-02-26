@@ -16,28 +16,32 @@ public class CreateOrderCommandHandler : IRequestHandler<CreateOrderCommand, Res
 {
     private readonly ApplicationDbContext _applicationDbContext;
     private readonly ICurrentUserService _currentUserService;
-    private readonly IPaymentServicesAccesor _paymentServicesAccesor;
+    private readonly IPaymentServicesAccessor _paymentServicesAccessor;
 
     public CreateOrderCommandHandler(
         ApplicationDbContext applicationDbContext,
         ICurrentUserService currentUserService,
-        IPaymentServicesAccesor paymentServicesAccesor)
+        IPaymentServicesAccessor paymentServicesAccessor)
     {
         _applicationDbContext = applicationDbContext;
         _currentUserService = currentUserService;
-        _paymentServicesAccesor = paymentServicesAccesor;
+        _paymentServicesAccessor = paymentServicesAccessor;
     }
 
     public async Task<Response> Handle(CreateOrderCommand request, CancellationToken cancellationToken)
     {
         var targetAdvert = await _applicationDbContext
-            .Adverts
-            .SingleOrDefaultAsync(a => a.Id == request.AdvertId, cancellationToken)
-            ?? throw new NotFoundException($"Advert with id {request.AdvertId} not found.");
+                               .Adverts
+                               .SingleOrDefaultAsync(a => a.Id == request.AdvertId, cancellationToken)
+                           ?? throw new NotFoundException($"Advert with id {request.AdvertId} not found.");
 
         var customer = await _currentUserService.GetCurrentUserAsync();
         var customerId = customer.Id;
         var executorId = targetAdvert.CreatorId;
+
+        if (customerId == executorId)
+                throw new ForbiddenActionException("Customer and executor ids are the same.");
+        
         var paymentMethod = GetPaymentMethod(targetAdvert, request);
         var order = new OrderDbEntry()
         {
@@ -55,7 +59,8 @@ public class CreateOrderCommandHandler : IRequestHandler<CreateOrderCommand, Res
         return new Response() { Succeeded = orderWasCommited };
     }
 
-    private async Task<bool> TryCommitOrderAsync(CreateOrderCommand request, OrderDbEntry order, CancellationToken cancellationToken)
+    private async Task<bool> TryCommitOrderAsync(CreateOrderCommand request, OrderDbEntry order,
+        CancellationToken cancellationToken)
     {
         try
         {
@@ -95,7 +100,7 @@ public class CreateOrderCommandHandler : IRequestHandler<CreateOrderCommand, Res
         _ = paymentIntent
             ?? throw new ArgumentNullException(nameof(paymentIntent));
 
-        var paymentService = _paymentServicesAccesor.PaymentIntentService;
+        var paymentService = _paymentServicesAccessor.PaymentIntentService;
         var intentDetails = paymentService.Get(paymentIntent);
 
         var options = new PaymentIntentCaptureOptions
@@ -116,7 +121,7 @@ public class CreateOrderCommandHandler : IRequestHandler<CreateOrderCommand, Res
             (advert.AllowedCardPayment ?? false))
             return AnyDeals.Common.Enums.PaymentMethod.Card;
         else if (request.PaymentMethod == AnyDeals.Common.Enums.PaymentMethod.Cash &&
-            (advert.AllowedCashPayment ?? false))
+                 (advert.AllowedCashPayment ?? false))
             return AnyDeals.Common.Enums.PaymentMethod.Cash;
 
         throw new InvalidOperationException("Failed to recognize payment method.");

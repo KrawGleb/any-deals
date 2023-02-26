@@ -32,5 +32,9 @@ public class ApplicationUserEntityConfiguration : EntityConfigurationBase<Applic
             .HasMany(a => a.Messages)
             .WithOne(m => m.Sender)
             .OnDelete(DeleteBehavior.Cascade);
+
+        builder
+            .Property(a => a.Balance)
+            .HasPrecision(8, 2);
     }
 }

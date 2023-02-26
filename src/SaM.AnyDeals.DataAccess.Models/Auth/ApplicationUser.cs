@@ -5,6 +5,7 @@ namespace SaM.AnyDeals.DataAccess.Models.Auth;
 
 public class ApplicationUser : IdentityUser
 {
+    public decimal Balance { get; set; }
     public List<AdvertDbEntry>? Adverts { get; set; }
     public List<OrderDbEntry>? Orders { get; set; }
     public List<OrderDbEntry>? Execution { get; set; }
