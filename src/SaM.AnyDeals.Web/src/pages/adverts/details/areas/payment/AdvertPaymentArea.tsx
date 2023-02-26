@@ -1,7 +1,5 @@
 import React, { useEffect, useRef, useState } from "react";
 import "./AdvertPaymentArea.scss";
-import * as yup from "yup";
-import { yupResolver } from "@hookform/resolvers/yup";
 
 import { Typography, Paper } from "@mui/material";
 
@@ -23,7 +21,6 @@ export default function AdvertPaymentArea({ advert }: { advert: Advert }) {
         const { data }: { data: CommonResponse } = res;
 
         if (data.succeeded) {
-          console.log(data.body.clientSecret);
           setClientSecret(data.body.clientSecret);
         }
       });

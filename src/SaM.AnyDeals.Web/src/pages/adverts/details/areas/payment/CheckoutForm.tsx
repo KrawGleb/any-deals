@@ -46,7 +46,6 @@ export default function CheckoutForm({ id }: { id: number }) {
           setMessage("Your payment was not successful, please try again.");
           break;
         case "requires_capture":
-          console.log("Requires capture");
           createOrder({
             advertId: id,
             paymentMethod: 1,

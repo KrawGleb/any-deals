@@ -52,7 +52,6 @@ export default function ModerationAdverts() {
     <InfiniteScroll
       dataLength={currentAdverts.length}
       next={() => {
-        console.log("Scroll");
         nextPage();
       }}
       loader={<h4>Loading...</h4>}

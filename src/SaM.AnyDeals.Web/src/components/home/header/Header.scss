@@ -36,6 +36,11 @@
 
     .actions {
       display: flex;
+      gap: 16px;
+
+      &__balance {
+        cursor: pointer;
+      }
 
       &__signup {
         margin-right: 12px;

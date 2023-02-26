@@ -1,3 +1,5 @@
+import { ApplicationUser } from "../../../models/api/applicationUser";
+import { CommonResponse } from "../../../models/api/responses/commonResponse";
 import { baseApi } from "../baseApi";
 
 export const usersApiExtension = baseApi.injectEndpoints({
@@ -8,9 +10,16 @@ export const usersApiExtension = baseApi.injectEndpoints({
         method: "GET",
       }),
     }),
+    getMe: builder.query<ApplicationUser, void>({
+      query: () => ({
+        url: `/api/users/me`,
+        method: "GET",
+      }),
+      transformResponse: (response: CommonResponse) => response.body,
+    }),
   }),
 
   overrideExisting: false,
 });
 
-export const { useGetUserDetailsQuery } = usersApiExtension;
+export const { useGetUserDetailsQuery, useGetMeQuery } = usersApiExtension;

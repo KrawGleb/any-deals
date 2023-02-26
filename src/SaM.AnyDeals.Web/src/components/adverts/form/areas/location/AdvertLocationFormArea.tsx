@@ -34,7 +34,6 @@ export default function AdvertLocationFormArea({
   };
 
   useEffect(() => {
-    console.log(location);
     setSelectedCountry(location.country);
     setSelectedCity(location.city);
     // eslint-disable-next-line react-hooks/exhaustive-deps

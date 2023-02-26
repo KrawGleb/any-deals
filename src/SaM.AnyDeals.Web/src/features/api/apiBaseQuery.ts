@@ -35,10 +35,7 @@ export const baseQueryWithErrorHandling: BaseQueryFn<
       window.location.replace("/");
     }
 
-    if (
-      result.error.status === "FETCH_ERROR" ||
-      result.error.status.toString().startsWith("5")
-    ) {
+    if (result.error.status.toString().startsWith("5")) {
       console.log("Server error", result.error);
       window.location.replace("/error");
     }

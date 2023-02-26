@@ -21,7 +21,6 @@ export default function User() {
 
   const userDetails: ApplicationUserDetails | undefined =
     userDetailsResponse?.body;
-  console.log(userDetails);
 
   return (
     <Box className="user-details__container">

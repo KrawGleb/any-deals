@@ -1,5 +1,5 @@
 import "./Header.scss";
-import React, { SyntheticEvent, useState } from "react";
+import React, { SyntheticEvent, useEffect, useState } from "react";
 import PanelTab from "./tabPanel/PanelTab";
 import PanelTabs from "./tabPanel/PanelTabs";
 import {
@@ -17,6 +17,8 @@ import {
   signinRedirect,
   signoutRedirect,
 } from "../../../features/api/auth/userService";
+import { useGetMeQuery } from "../../../features/api/extensions/usersApiExtension";
+import { skipToken } from "@reduxjs/toolkit/dist/query";
 
 export default function Header() {
   const navigate = useNavigate();
@@ -26,9 +28,15 @@ export default function Header() {
   const isLoggedIn = !!authState.user;
   const isAdmin = authState.isAdmin;
 
+  const { data: me } = useGetMeQuery(!isLoggedIn ? skipToken : undefined);
+
   const handleChange = (_event: SyntheticEvent, newValue: number) => {
     setValue(newValue);
   };
+
+  useEffect(() => {
+    console.log(me);
+  }, [me]);
 
   const myAdvertsTab = isLoggedIn ? (
     <PanelTab label="My adverts" to="/adverts/my" />
@@ -49,6 +57,11 @@ export default function Header() {
           <div className="actions">
             {isLoggedIn ? (
               <>
+                <div>
+                  <Typography fontWeight="bold" className="actions__balance">
+                    {me?.balance}$
+                  </Typography>
+                </div>
                 <Box className="dropdown">
                   <Typography className="dropdown__text">
                     {authState.user!.profile.preferred_username}
