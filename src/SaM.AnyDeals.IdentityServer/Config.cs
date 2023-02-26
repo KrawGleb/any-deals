@@ -9,7 +9,7 @@ public static class Config
     public static IEnumerable<ApiResource> ApiResources =>
         new List<ApiResource>
         {
-            new ApiResource("AnyDealsAPI", "AnyDeals API", new [] { JwtClaimTypes.Name })
+            new("AnyDealsAPI", "AnyDeals API", new[] { JwtClaimTypes.Name })
             {
                 Scopes = { "AnyDealsAPI" }
             }
@@ -25,13 +25,13 @@ public static class Config
     public static IEnumerable<ApiScope> ApiScopes =>
         new List<ApiScope>
         {
-            new ApiScope("AnyDealsAPI", "AnyDeals API"),
+            new("AnyDealsAPI", "AnyDeals API")
         };
 
     public static IEnumerable<Client> Clients =>
         new List<Client>
         {
-            new Client
+            new()
             {
                 ClientId = "AnyDealsWeb",
                 ClientName = "AnyDeals Web (Docker)",
@@ -43,24 +43,24 @@ public static class Config
                     "http://localhost/signin-oidc",
                     "http://localhost:80/signin-oidc",
                     "http://anydeals.norwayeast.cloudapp.azure.com/signin-oidc",
-                    "http://anydeals.norwayeast.cloudapp.azure.com:80/signin-oidc",
+                    "http://anydeals.norwayeast.cloudapp.azure.com:80/signin-oidc"
                 },
                 PostLogoutRedirectUris =
                 {
                     "http://localhost/signout-oidc",
                     "http://localhost:80/signout-oidc",
                     "http://anydeals.norwayeast.cloudapp.azure.com/signout-oidc",
-                    "http://anydeals.norwayeast.cloudapp.azure.com:80/signout-oidc",
+                    "http://anydeals.norwayeast.cloudapp.azure.com:80/signout-oidc"
                 },
-                AllowedScopes = 
+                AllowedScopes =
                 {
                     IdentityServerConstants.StandardScopes.OpenId,
                     IdentityServerConstants.StandardScopes.Profile,
                     "AnyDealsAPI"
                 },
-                AllowAccessTokensViaBrowser = true,
+                AllowAccessTokensViaBrowser = true
             },
-            new Client
+            new()
             {
                 ClientId = "LocalAnyDealsWeb",
                 ClientName = "AnyDeals Web (Local)",
@@ -75,7 +75,7 @@ public static class Config
                 AllowedCorsOrigins =
                 {
                     "http://localhost:3000",
-                    "https://localhost:3000",
+                    "https://localhost:3000"
                 },
                 PostLogoutRedirectUris =
                 {
@@ -88,9 +88,9 @@ public static class Config
                     IdentityServerConstants.StandardScopes.Profile,
                     "AnyDealsAPI"
                 },
-                AllowAccessTokensViaBrowser = true,
+                AllowAccessTokensViaBrowser = true
             },
-            new Client
+            new()
             {
                 ClientId = "Postman",
                 ClientName = "Postman",
@@ -101,7 +101,8 @@ public static class Config
                 {
                     "https://oauth.pstmn.io/v1/callback"
                 },
-                PostLogoutRedirectUris = {
+                PostLogoutRedirectUris =
+                {
                     "https://oauth.pstmn.io/v1/"
                 },
                 AllowedScopes =
@@ -110,7 +111,7 @@ public static class Config
                     IdentityServerConstants.StandardScopes.Profile,
                     "AnyDealsAPI"
                 },
-                AllowAccessTokensViaBrowser = true,
+                AllowAccessTokensViaBrowser = true
             }
         };
 }

@@ -30,10 +30,10 @@ public class GetAdvertQueryHandler : IRequestHandler<GetAdvertQuery, Response>
     private async Task<AdvertViewModel> GetAdvertAsync(int id, CancellationToken cancellationToken)
     {
         var entry = await _applicationDbContext.Adverts
-            .AsNoTracking()
-            .FullInclude()
-            .SingleOrDefaultAsync(e => e.Id == id, cancellationToken)
-            ?? throw new NotFoundException($"Advert with id {id} not found.");
+                        .AsNoTracking()
+                        .FullInclude()
+                        .SingleOrDefaultAsync(e => e.Id == id, cancellationToken)
+                    ?? throw new NotFoundException($"Advert with id {id} not found.");
 
         var viewModel = _mapper.Map<AdvertViewModel>(entry);
 

@@ -1,12 +1,10 @@
 ﻿using AutoFixture;
-using AutoMapper;
 using Moq;
 using SaM.AnyDeals.Application.Common.Services.Interfaces;
 using SaM.AnyDeals.Application.Models.ViewModels;
 using SaM.AnyDeals.Application.Requests.Adverts.Queries.GetMy;
 using SaM.AnyDeals.Application.Tests.Common;
 using SaM.AnyDeals.Common.Responses;
-using SaM.AnyDeals.DataAccess.Models.Entries;
 
 namespace SaM.AnyDeals.Application.Tests.TestRequests.Adverts.Queries;
 

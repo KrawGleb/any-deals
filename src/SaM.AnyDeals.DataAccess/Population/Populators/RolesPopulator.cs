@@ -1,7 +1,6 @@
 ﻿using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using SaM.AnyDeals.Common.Enums.Auth;
-using SaM.AnyDeals.DataAccess.Models.Entries;
 
 namespace SaM.AnyDeals.DataAccess.Population.Populators;
 

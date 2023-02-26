@@ -1,5 +1,4 @@
-﻿using Microsoft.AspNetCore.Http;
-using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.EntityFrameworkCore;
 using SaM.AnyDeals.Application.Common.Services.Interfaces;
 using SaM.AnyDeals.Common.Exceptions;
 using SaM.AnyDeals.DataAccess;
@@ -24,9 +23,9 @@ public class ArchiveOrderCommandHandler : IRequestHandler<ArchiveOrderCommand, R
         var user = await _currentUserService.GetCurrentUserAsync();
         var userId = user.Id;
         var order = await _applicationDbContext
-            .Orders
-            .SingleOrDefaultAsync(o => o.Id == request.Id, cancellationToken)
-            ?? throw new NotFoundException($"Order with id {request.Id} not found.");
+                        .Orders
+                        .SingleOrDefaultAsync(o => o.Id == request.Id, cancellationToken)
+                    ?? throw new NotFoundException($"Order with id {request.Id} not found.");
 
         if (order.ExecutorId == userId)
             order.ArchivatedByExecutor = true;

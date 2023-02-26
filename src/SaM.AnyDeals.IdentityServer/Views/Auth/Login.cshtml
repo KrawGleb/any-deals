@@ -1,8 +1,8 @@
-﻿@using Microsoft.AspNetCore.Authentication;
+﻿@using Microsoft.AspNetCore.Authentication
 @model LoginViewModel
 <head>
-    <link href=@Url.Content("~/css/styles.css") rel="stylesheet" type="text/css" />
-    <link href=@Url.Content("~/identity/css/styles.css") rel="stylesheet" type="text/css" />
+    <link href=@Url.Content("~/css/styles.css") rel="stylesheet" type="text/css"/>
+    <link href=@Url.Content("~/identity/css/styles.css") rel="stylesheet" type="text/css"/>
 </head>
 <div class="container">
     <div class="back-line">
@@ -17,29 +17,29 @@
     </div>
     <div class="content">
         <form asp-controller="Auth" asp-action="Login" class="form" method="post">
-            <input type="hidden" asp-for="ReturnUrl" />
+            <input type="hidden" asp-for="ReturnUrl"/>
             <div class="title">Sign In</div>
 
             <div class="field-block">
                 <input asp-for="Username" class="form-field form-field-input"
                        placeholder="Username"
-                       type="text" />
+                       type="text"/>
                 <span asp-validation-for="Username"></span>
             </div>
 
             <div class="field-block">
                 <input asp-for="Password" class="form-field form-field-input"
                        placeholder="Password"
-                       type="password" />
+                       type="password"/>
                 <span asp-validation-for="Password"></span>
             </div>
 
             <button class="btn" type="submit">Login</button>
 
             @foreach (var error in ViewData.ModelState.Keys.SelectMany(
-            key => key.StartsWith("ErrorResponse")
-            ? ViewData.ModelState[key]!.Errors.Select(e => e.ErrorMessage)
-            : Enumerable.Empty<string>()))
+                key => key.StartsWith("ErrorResponse")
+                    ? ViewData.ModelState[key]!.Errors.Select(e => e.ErrorMessage)
+                    : Enumerable.Empty<string>()))
             {
                 <span class="field-validation-error">@error</span>
             }
@@ -49,9 +49,11 @@
             <div class="footer-switch">
                 <p>Don't have an account yet?</p>
                 <a asp-controller="Auth" asp-action="Register"
-                   asp-route-returnUrl="@Model.ReturnUrl" class="switch-button">Register now</a>
+                   asp-route-returnUrl="@Model.ReturnUrl" class="switch-button">
+                    Register now
+                </a>
             </div>
-            
+
             <div class="footer-external">
                 <p>Sign in with</p>
                 <form asp-controller="Auth" asp-action="ExternalLogin"
@@ -64,9 +66,11 @@
                             case "Google":
                                 <button name="provider" type="submit" value="@provider.Name" class="google-btn">
                                     <div class="google-icon-wrapper">
-                                        <img class="google-icon" src="https://upload.wikimedia.org/wikipedia/commons/5/53/Google_%22G%22_Logo.svg" />
+                                        <img class="google-icon" src="https://upload.wikimedia.org/wikipedia/commons/5/53/Google_%22G%22_Logo.svg"/>
                                     </div>
-                                    <p class="btn-text"><b>@provider.Name</b></p>
+                                    <p class="btn-text">
+                                        <b>@provider.Name</b>
+                                    </p>
                                 </button>
                                 break;
                             default:
@@ -81,4 +85,3 @@
         </div>
     </div>
 </div>
-

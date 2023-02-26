@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Identity;
+﻿using System.Security.Claims;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Filters;
 using SaM.AnyDeals.Common.Enums.Auth;
@@ -6,7 +7,6 @@ using SaM.AnyDeals.Common.Exceptions;
 using SaM.AnyDeals.Common.Interfaces;
 using SaM.AnyDeals.DataAccess;
 using SaM.AnyDeals.DataAccess.Models.Auth;
-using System.Security.Claims;
 
 namespace SaM.AnyDeals.Infrastructure.Filters;
 
@@ -14,6 +14,7 @@ public class ProtectedAdvertsActionFilter : IAsyncActionFilter
 {
     private readonly ApplicationDbContext _applicationDbContext;
     private readonly UserManager<ApplicationUser> _userManager;
+
     public ProtectedAdvertsActionFilter(
         ApplicationDbContext applicationDbContext,
         UserManager<ApplicationUser> userManager)
@@ -46,15 +47,14 @@ public class ProtectedAdvertsActionFilter : IAsyncActionFilter
     private async Task<bool> AllowUserEditAdvert(ClaimsPrincipal userClaim, int advertId)
     {
         var user = await _userManager.GetUserAsync(userClaim)
-            ?? throw new NotFoundException($"User not found.");
+                   ?? throw new NotFoundException("User not found.");
         var advert = await _applicationDbContext.Adverts.FindAsync(advertId)
-            ?? throw new NotFoundException($"Advert with id {advertId} not found.");
+                     ?? throw new NotFoundException($"Advert with id {advertId} not found.");
 
         var creatorId = advert.CreatorId;
 
-        return 
+        return
             user.Id == creatorId ||
             await _userManager.IsInRoleAsync(user, RolesEnum.Admin);
     }
 }
-

@@ -1,6 +1,6 @@
 ﻿namespace SaM.AnyDeals.Common.Constraints;
 
-public static class ContactsConstraints 
+public static class ContactsConstraints
 {
     public const int NameMaxLength = 100;
     public const int EmailMaxLength = 100;

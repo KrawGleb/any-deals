@@ -28,9 +28,9 @@ public class GetCategoriesQueryHandler : IRequestHandler<GetCategoriesQuery, Res
 
         var categoriesVM = _mapper.Map<List<CategoryViewModel>>(categories);
 
-        return new CommonResponse()
+        return new CommonResponse
         {
-            Body = categoriesVM,
+            Body = categoriesVM
         };
     }
 }

@@ -5,5 +5,5 @@ namespace SaM.AnyDeals.Application.Common.Services;
 
 public class PaymentServicesAccessor : IPaymentServicesAccessor
 {
-    public PaymentIntentService PaymentIntentService { get => new(); }
+    public PaymentIntentService PaymentIntentService => new();
 }

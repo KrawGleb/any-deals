@@ -1,14 +1,14 @@
-﻿using Microsoft.AspNetCore.Identity;
+﻿using System.Text;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Nest;
-using SaM.AnyDeals.DataAccess.Models.Auth;
-using SaM.AnyDeals.DataAccess.Services.Interfaces;
-using SaM.AnyDeals.DataAccess.Services;
-using SaM.AnyDeals.DataAccess.Models.Elastic;
 using SaM.AnyDeals.Common.Constants;
-using System.Text;
+using SaM.AnyDeals.DataAccess.Models.Auth;
+using SaM.AnyDeals.DataAccess.Models.Elastic;
+using SaM.AnyDeals.DataAccess.Services;
+using SaM.AnyDeals.DataAccess.Services.Interfaces;
 
 namespace SaM.AnyDeals.DataAccess;
 
@@ -32,23 +32,23 @@ public static class DependencyInjection
                 o => o.UseQuerySplittingBehavior(QuerySplittingBehavior.SplitQuery)));
 
         services.AddIdentity<ApplicationUser, IdentityRole>(options =>
-        {
-            var alphabet = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
-            var numbers = "1234567890";
-            var sb = new StringBuilder();
-            sb.Append(alphabet.ToUpper());
-            sb.Append(alphabet.ToLower());
-            sb.Append(numbers);
-            sb.Append("_ ");
+            {
+                var alphabet = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+                var numbers = "1234567890";
+                var sb = new StringBuilder();
+                sb.Append(alphabet.ToUpper());
+                sb.Append(alphabet.ToLower());
+                sb.Append(numbers);
+                sb.Append("_ ");
 
-            options.Password.RequiredLength = 6;
-            options.Password.RequireDigit = false;
-            options.Password.RequireNonAlphanumeric = false;
-            options.Password.RequireLowercase = false;
-            options.Password.RequireUppercase = false;
+                options.Password.RequiredLength = 6;
+                options.Password.RequireDigit = false;
+                options.Password.RequireNonAlphanumeric = false;
+                options.Password.RequireLowercase = false;
+                options.Password.RequireUppercase = false;
 
-            options.User.AllowedUserNameCharacters = sb.ToString();
-        })
+                options.User.AllowedUserNameCharacters = sb.ToString();
+            })
             .AddRoles<IdentityRole>()
             .AddEntityFrameworkStores<ApplicationDbContext>()
             .AddDefaultTokenProviders();
@@ -75,7 +75,6 @@ public static class DependencyInjection
                 index => index.Map<AdvertElasticEntry>(x => x.AutoMap()));
 
             return client;
-
         });
 
         services.AddScoped<IElasticService, ElasticService>();

@@ -26,9 +26,9 @@ public class UpdateAdvertCommandHandler : IRequestHandler<UpdateAdvertCommand, R
     public async Task<Response> Handle(UpdateAdvertCommand request, CancellationToken cancellationToken)
     {
         var entity = await _applicationDbContext.Adverts
-            .FullInclude()
-            .SingleOrDefaultAsync(a => a.Id == request.Id, cancellationToken)
-            ?? throw new NotFoundException($"Advert with id {request.Id} not found.");
+                         .FullInclude()
+                         .SingleOrDefaultAsync(a => a.Id == request.Id, cancellationToken)
+                     ?? throw new NotFoundException($"Advert with id {request.Id} not found.");
 
         var attachments = entity.Attachments;
         var category = entity.Category;
@@ -67,7 +67,7 @@ public class UpdateAdvertCommandHandler : IRequestHandler<UpdateAdvertCommand, R
         if (request.Category is null)
             return;
 
-        if (entity.Category is not null && 
+        if (entity.Category is not null &&
             entity.Category!.Status == Status.Draft)
         {
             entity.Category.Name = request.Category;

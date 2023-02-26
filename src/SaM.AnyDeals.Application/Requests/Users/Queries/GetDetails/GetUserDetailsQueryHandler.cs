@@ -24,27 +24,27 @@ public class GetUserDetailsQueryHandler : IRequestHandler<GetUserDetailsQuery, R
     public async Task<Response> Handle(GetUserDetailsQuery request, CancellationToken cancellationToken)
     {
         var user = await _applicationDbContext
-            .Users
-            .Include(u => u.Adverts!)
-                .ThenInclude(a => a.Category!)
-            .Include(u => u.Adverts!)
-                .ThenInclude(a => a.Reviews)
-            .Include(u => u.Orders)
-            .SingleOrDefaultAsync(
-                u => u.UserName == request.Username, 
-                cancellationToken)
-            ?? throw new NotFoundException($"User with username {request.Username} not found.");
+                       .Users
+                       .Include(u => u.Adverts!)
+                       .ThenInclude(a => a.Category!)
+                       .Include(u => u.Adverts!)
+                       .ThenInclude(a => a.Reviews)
+                       .Include(u => u.Orders)
+                       .SingleOrDefaultAsync(
+                           u => u.UserName == request.Username,
+                           cancellationToken)
+                   ?? throw new NotFoundException($"User with username {request.Username} not found.");
 
         var averageRatings = user
             .Adverts!
             .GroupBy(advert => advert.Category!.Name)
-            .Select(grouped => new AverageRatingDescription()
+            .Select(grouped => new AverageRatingDescription
             {
                 Category = grouped.Key,
                 ReviewsCount = grouped.Sum(x => x.Reviews!.Count),
                 AverageRating = grouped.Average(
-                    x => x.Reviews!.Count == 0 
-                        ? 0 
+                    x => x.Reviews!.Count == 0
+                        ? 0
                         : x.Reviews.Average(a => a.Grade))
             })
             .Where(res => res.ReviewsCount > 0)
@@ -58,16 +58,16 @@ public class GetUserDetailsQueryHandler : IRequestHandler<GetUserDetailsQuery, R
         var userVM = _mapper.Map<ApplicationUserViewModel>(user);
         var advertsVM = _mapper.Map<List<AdvertViewModel>>(adverts);
 
-        var response = new GetUserDetailsResponse()
+        var response = new GetUserDetailsResponse
         {
             User = userVM,
             Adverts = advertsVM,
             AverageRatingDescriptions = averageRatings
         };
 
-        return new CommonResponse()
+        return new CommonResponse
         {
-            Body = response,
+            Body = response
         };
     }
 }

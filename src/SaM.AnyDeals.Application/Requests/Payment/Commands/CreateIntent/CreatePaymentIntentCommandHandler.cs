@@ -22,9 +22,9 @@ public class CreatePaymentIntentCommandHandler : IRequestHandler<CreatePaymentIn
     public async Task<Response> Handle(CreatePaymentIntentCommand request, CancellationToken cancellationToken)
     {
         var advert = await _applicationDbContext
-            .Adverts
-            .SingleOrDefaultAsync(a => a.Id == request.AdvertId, cancellationToken)
-            ?? throw new NotFoundException($"Advert with id {request.AdvertId} not found.");
+                         .Adverts
+                         .SingleOrDefaultAsync(a => a.Id == request.AdvertId, cancellationToken)
+                     ?? throw new NotFoundException($"Advert with id {request.AdvertId} not found.");
 
         var paymentService = _paymentServicesAccessor.PaymentIntentService;
         var paymentIntent = paymentService.Create(new PaymentIntentCreateOptions
@@ -39,9 +39,9 @@ public class CreatePaymentIntentCommandHandler : IRequestHandler<CreatePaymentIn
             {
                 Card = new PaymentIntentPaymentMethodOptionsCardOptions
                 {
-                    CaptureMethod = "manual",
-                },
-            },
+                    CaptureMethod = "manual"
+                }
+            }
         });
 
         return new CommonResponse

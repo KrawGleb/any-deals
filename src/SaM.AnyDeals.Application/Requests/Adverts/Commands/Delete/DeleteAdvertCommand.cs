@@ -6,4 +6,3 @@ public record DeleteAdvertCommand(int Id) :
     IRequest<Response>,
     IProtectedAdvertAction,
     IChangeDataRequest;
-

@@ -1,14 +1,9 @@
 ﻿using AutoFixture;
-using AutoMapper;
-using Microsoft.EntityFrameworkCore;
-using Moq;
 using SaM.AnyDeals.Application.Models.ViewModels;
 using SaM.AnyDeals.Application.Requests.Adverts.Queries.Get;
 using SaM.AnyDeals.Application.Tests.Common;
 using SaM.AnyDeals.Common.Exceptions;
 using SaM.AnyDeals.Common.Responses;
-using SaM.AnyDeals.DataAccess.Extensions;
-using SaM.AnyDeals.DataAccess.Models.Entries;
 
 namespace SaM.AnyDeals.Application.Tests.TestRequests.Adverts.Queries;
 

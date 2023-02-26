@@ -1,11 +1,10 @@
-﻿using Microsoft.AspNetCore.Identity;
+﻿using System.Security.Claims;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore.Metadata.Internal;
 using SaM.AnyDeals.Common.Responses;
 using SaM.AnyDeals.DataAccess.Models.Auth;
 using SaM.AnyDeals.IdentityServer.Models;
 using SaM.AnyDeals.IdentityServer.Services.Interfaces;
-using System.Security.Claims;
 
 namespace SaM.AnyDeals.IdentityServer.Controllers;
 
@@ -38,7 +37,8 @@ public class AuthController : Controller
 
     [HttpPost]
     [Route("[action]")]
-    public async Task<IActionResult> Login([FromForm] LoginViewModel loginViewModel, CancellationToken cancellationToken)
+    public async Task<IActionResult> Login([FromForm] LoginViewModel loginViewModel,
+        CancellationToken cancellationToken)
     {
         if (!ModelState.IsValid)
             return View(loginViewModel);
@@ -54,7 +54,7 @@ public class AuthController : Controller
         errorResponse?
             .Errors?
             .ToList()
-            .ForEach((error) => ModelState.AddModelError($"ErrorResponse{errorId}", error));
+            .ForEach(error => ModelState.AddModelError($"ErrorResponse{errorId}", error));
 
         return View(loginViewModel);
     }
@@ -68,7 +68,8 @@ public class AuthController : Controller
 
     [HttpPost]
     [Route("[action]")]
-    public async Task<IActionResult> Register([FromForm] RegisterViewModel registerViewModel, CancellationToken cancellationToken)
+    public async Task<IActionResult> Register([FromForm] RegisterViewModel registerViewModel,
+        CancellationToken cancellationToken)
     {
         if (!ModelState.IsValid)
             return View(registerViewModel);
@@ -84,7 +85,7 @@ public class AuthController : Controller
         errorResponse?
             .Errors?
             .ToList()
-            .ForEach((error) => ModelState.AddModelError($"ErrorResponse{errorId++}", error));
+            .ForEach(error => ModelState.AddModelError($"ErrorResponse{errorId++}", error));
 
         return View(registerViewModel);
     }
@@ -125,7 +126,7 @@ public class AuthController : Controller
         }
 
         var username = info.Principal.FindFirst(ClaimTypes.Name)!.Value;
-        return View("ExternalRegister", new ExternalRegisterViewModel()
+        return View("ExternalRegister", new ExternalRegisterViewModel
         {
             Username = username,
             ReturnUrl = returnUrl
@@ -153,7 +154,7 @@ public class AuthController : Controller
         (response as ErrorResponse)?
             .Errors?
             .ToList()
-            .ForEach((error) => ModelState.AddModelError($"ErrorResponse{errorId++}", error));
+            .ForEach(error => ModelState.AddModelError($"ErrorResponse{errorId++}", error));
 
         return View(vm);
     }

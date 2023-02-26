@@ -4,7 +4,7 @@ using SaM.AnyDeals.Common.Interfaces;
 
 namespace SaM.AnyDeals.Application.Requests.Adverts.Commands.Update;
 
-public class UpdateAdvertCommand : 
+public class UpdateAdvertCommand :
     IRequest<Response>,
     IProtectedAdvertAction,
     IChangeDataRequest
@@ -24,4 +24,3 @@ public class UpdateAdvertCommand :
     public ContactsViewModel? Contacts { get; set; }
     public List<AttachmentViewModel>? Attachments { get; set; }
 }
-

@@ -1,14 +1,11 @@
-﻿using Microsoft.AspNetCore.Http;
-using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.EntityFrameworkCore;
 using SaM.AnyDeals.Application.Common.Services.Interfaces;
-using SaM.AnyDeals.Common.Enums;
 using SaM.AnyDeals.Common.Enums.Adverts;
 using SaM.AnyDeals.Common.Exceptions;
 using SaM.AnyDeals.DataAccess;
 using SaM.AnyDeals.DataAccess.Models.Entries;
 using Stripe;
-using System.Linq;
-using System.Threading;
+using PaymentMethod = SaM.AnyDeals.Common.Enums.PaymentMethod;
 
 namespace SaM.AnyDeals.Application.Requests.Orders.Commands.Create;
 
@@ -43,7 +40,7 @@ public class CreateOrderCommandHandler : IRequestHandler<CreateOrderCommand, Res
                 throw new ForbiddenActionException("Customer and executor ids are the same.");
         
         var paymentMethod = GetPaymentMethod(targetAdvert, request);
-        var order = new OrderDbEntry()
+        var order = new OrderDbEntry
         {
             AdvertId = request.AdvertId,
             PaymentMethod = paymentMethod,
@@ -56,7 +53,7 @@ public class CreateOrderCommandHandler : IRequestHandler<CreateOrderCommand, Res
         var orderWasCommited = await TryCommitOrderAsync(request, order, cancellationToken);
         if (!orderWasCommited) await RollbackOrderAsync(request, order);
 
-        return new Response() { Succeeded = orderWasCommited };
+        return new Response { Succeeded = orderWasCommited };
     }
 
     private async Task<bool> TryCommitOrderAsync(CreateOrderCommand request, OrderDbEntry order,
@@ -67,7 +64,7 @@ public class CreateOrderCommandHandler : IRequestHandler<CreateOrderCommand, Res
             await _applicationDbContext.Orders.AddAsync(order, cancellationToken);
             await _applicationDbContext.SaveChangesAsync(cancellationToken);
 
-            if (order.PaymentMethod == AnyDeals.Common.Enums.PaymentMethod.Card)
+            if (order.PaymentMethod == PaymentMethod.Card)
             {
                 var paymentIntent = await CapturePaymentAsync(request.PaymentIntent);
                 if (paymentIntent.Status != "succeeded")
@@ -112,17 +109,22 @@ public class CreateOrderCommandHandler : IRequestHandler<CreateOrderCommand, Res
         return capture;
     }
 
-    private AnyDeals.Common.Enums.PaymentMethod? GetPaymentMethod(AdvertDbEntry advert, CreateOrderCommand request)
+    private PaymentMethod? GetPaymentMethod(AdvertDbEntry advert, CreateOrderCommand request)
     {
         if (advert.Interest == Interest.Social)
             return null;
 
-        if (request.PaymentMethod == AnyDeals.Common.Enums.PaymentMethod.Card &&
+        if (request.PaymentMethod == PaymentMethod.Card &&
             (advert.AllowedCardPayment ?? false))
-            return AnyDeals.Common.Enums.PaymentMethod.Card;
-        else if (request.PaymentMethod == AnyDeals.Common.Enums.PaymentMethod.Cash &&
-                 (advert.AllowedCashPayment ?? false))
-            return AnyDeals.Common.Enums.PaymentMethod.Cash;
+        {
+            return PaymentMethod.Card;
+        }
+
+        if (request.PaymentMethod == PaymentMethod.Cash &&
+            (advert.AllowedCashPayment ?? false))
+        {
+            return PaymentMethod.Cash;
+        }
 
         throw new InvalidOperationException("Failed to recognize payment method.");
     }

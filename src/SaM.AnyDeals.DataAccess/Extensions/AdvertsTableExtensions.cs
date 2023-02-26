@@ -11,7 +11,7 @@ public static class AdvertsTableExtensions
             .Include(a => a.Contacts)
             .Include(a => a.Creator)
             .Include(a => a.City)
-                .ThenInclude(c => c!.Country)
+            .ThenInclude(c => c!.Country)
             .Include(a => a.Category)
             .Include(a => a.Attachments);
     }

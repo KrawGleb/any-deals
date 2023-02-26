@@ -8,12 +8,12 @@ namespace SaM.AnyDeals.Application.Tests.Common;
 public abstract class TestRequestHandlerBase : IDisposable
 {
     protected readonly ApplicationDbContext _applicationDbContext;
-    protected readonly IMapper _mapper;
     protected readonly Fixture _fixture;
+    protected readonly IMapper _mapper;
 
     public TestRequestHandlerBase()
     {
-        _fixture = new();
+        _fixture = new Fixture();
         _applicationDbContext = DbContextFactory.Create();
 
         var mapperCfg = new MapperConfiguration(cfg =>

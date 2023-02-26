@@ -1,4 +1,4 @@
-using Microsoft.AspNetCore.Authentication.JwtBearer;
+using System.Globalization;
 using Microsoft.AspNetCore.HttpOverrides;
 using SaM.AnyDeals.API;
 using SaM.AnyDeals.API.Hubs;
@@ -11,7 +11,6 @@ using SaM.AnyDeals.Infrastructure;
 using SaM.AnyDeals.Infrastructure.Filters;
 using Serilog;
 using Serilog.Events;
-using System.Globalization;
 
 var culture = new CultureInfo("en-US");
 culture.NumberFormat.NumberGroupSeparator = ".";

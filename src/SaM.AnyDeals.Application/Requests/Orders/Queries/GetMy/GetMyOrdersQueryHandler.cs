@@ -36,17 +36,17 @@ public class GetMyOrdersQueryHandler : IRequestHandler<GetMyOrdersQuery, Respons
         query = request.AsExecutor
             ? query.Where(
                 o => o.ExecutorId == userId &&
-                o.ArchivatedByExecutor == request.Archivated)
+                     o.ArchivatedByExecutor == request.Archivated)
             : query.Where(
                 o => o.CustomerId == userId &&
-                o.ArchivatedByCustomer == request.Archivated);
+                     o.ArchivatedByCustomer == request.Archivated);
 
         var orders = await query.ToListAsync(cancellationToken);
         var ordersVM = _mapper.Map<List<OrderViewModel>>(orders);
 
         return new CommonResponse
         {
-            Body = ordersVM,
+            Body = ordersVM
         };
     }
 }

@@ -16,9 +16,8 @@ public class SearchAdvertsParams
     public int? From { get; set; } = 0;
     public int Size { get; set; } = 25;
 
-    public SearchRequest SearchRequest
-    {
-        get => new(ElasticConstants.IndexName)
+    public SearchRequest SearchRequest =>
+        new(ElasticConstants.IndexName)
         {
             From = From,
             Size = Size,
@@ -26,7 +25,7 @@ public class SearchAdvertsParams
             {
                 Must = new List<QueryContainer>
                 {
-                    new QueryStringQuery { DefaultField = "title", Query = $"*{Title}*"  },
+                    new QueryStringQuery { DefaultField = "title", Query = $"*{Title}*" },
                     new MatchPhraseQuery { Field = "category", Query = Category?.ToLower() }
                 },
                 Filter = new List<QueryContainer>
@@ -36,7 +35,7 @@ public class SearchAdvertsParams
                     new TermQuery { Field = "interest", Value = Interest?.ToString() },
                     new TermQuery { Field = "goal", Value = Goal?.ToString() },
                     new TermQuery { Field = "group", Value = Group?.ToString() },
-                    new TermQuery { Field = "status", Value = Status?.ToString() },
+                    new TermQuery { Field = "status", Value = Status?.ToString() }
                 }
             },
             Sort = new List<ISort>
@@ -44,5 +43,4 @@ public class SearchAdvertsParams
                 new FieldSort { Field = "createdAt", Order = SortOrder.Descending }
             }
         };
-    }
 }

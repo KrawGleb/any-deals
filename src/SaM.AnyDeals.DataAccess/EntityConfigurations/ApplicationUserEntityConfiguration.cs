@@ -16,7 +16,7 @@ public class ApplicationUserEntityConfiguration : EntityConfigurationBase<Applic
         builder
             .HasMany(u => u.Orders)
             .WithOne(a => a.Customer)
-            .OnDelete(DeleteBehavior.NoAction); 
+            .OnDelete(DeleteBehavior.NoAction);
 
         builder
             .HasMany(u => u.Execution)

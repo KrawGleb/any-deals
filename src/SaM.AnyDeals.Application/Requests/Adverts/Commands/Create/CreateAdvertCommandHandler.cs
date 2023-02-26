@@ -53,7 +53,7 @@ public class CreateAdvertCommandHandler : IRequestHandler<CreateAdvertCommand, R
             request.Category is null)
             return;
 
-        var categoryEntry = new CategoryDbEntry()
+        var categoryEntry = new CategoryDbEntry
         {
             Name = request.Category,
             Status = Status.Draft

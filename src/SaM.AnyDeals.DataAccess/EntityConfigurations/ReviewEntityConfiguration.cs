@@ -1,5 +1,4 @@
-﻿using Microsoft.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore.Metadata.Builders;
+﻿using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using SaM.AnyDeals.Common.Constraints;
 using SaM.AnyDeals.DataAccess.Models.Entries;
 

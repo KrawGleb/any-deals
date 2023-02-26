@@ -19,10 +19,11 @@ public class ElasticService : IElasticService
         _logger = logger;
     }
 
-    public async Task<IEnumerable<AdvertElasticEntry>> SearchAdvertsAsync(SearchAdvertsParams searchParams, CancellationToken cancellationToken = default)
+    public async Task<IEnumerable<AdvertElasticEntry>> SearchAdvertsAsync(SearchAdvertsParams searchParams,
+        CancellationToken cancellationToken = default)
     {
         var request = searchParams.SearchRequest;
-        
+
         var response = await _elasticClient.SearchAsync<AdvertElasticEntry>(request, cancellationToken);
 
         LogResponse(response);
@@ -30,31 +31,35 @@ public class ElasticService : IElasticService
         return response.Documents.ToList();
     }
 
-    public async Task<IndexResponse> IndexAdvertAsync(AdvertElasticEntry advert, CancellationToken cancellationToken = default)
+    public async Task<IndexResponse> IndexAdvertAsync(AdvertElasticEntry advert,
+        CancellationToken cancellationToken = default)
     {
         var response = await _elasticClient
-             .IndexAsync(
-                 advert, x => x.Index(ElasticConstants.IndexName), cancellationToken);
+            .IndexAsync(
+                advert, x => x.Index(ElasticConstants.IndexName), cancellationToken);
 
         LogResponse(response);
 
         return response;
     }
 
-    public async Task<UpdateResponse<AdvertElasticEntry>> UpdateAdvertAsync(AdvertElasticEntry advert, CancellationToken cancellationToken = default)
+    public async Task<UpdateResponse<AdvertElasticEntry>> UpdateAdvertAsync(AdvertElasticEntry advert,
+        CancellationToken cancellationToken = default)
     {
         var response = await _elasticClient
-                .UpdateAsync<AdvertElasticEntry>(
-                    advert.Id, u => u.Index(ElasticConstants.IndexName).Doc(advert), cancellationToken);
+            .UpdateAsync<AdvertElasticEntry>(
+                advert.Id, u => u.Index(ElasticConstants.IndexName).Doc(advert), cancellationToken);
 
         LogResponse(response);
 
         return response;
     }
 
-    public async Task<DeleteResponse> DeleteAdvertAsync(AdvertElasticEntry advert, CancellationToken cancellationToken = default)
+    public async Task<DeleteResponse> DeleteAdvertAsync(AdvertElasticEntry advert,
+        CancellationToken cancellationToken = default)
     {
-        var response = await _elasticClient.DeleteAsync<AdvertElasticEntry>(advert.Id.ToString(), ct: cancellationToken);
+        var response =
+            await _elasticClient.DeleteAsync<AdvertElasticEntry>(advert.Id.ToString(), ct: cancellationToken);
 
         LogResponse(response);
 

@@ -1,3 +1,3 @@
 ﻿namespace SaM.AnyDeals.Application.Requests.Countries.Queries.Get;
 
-public record GetCountriesQuery() : IRequest<Response>;
+public record GetCountriesQuery : IRequest<Response>;

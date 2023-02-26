@@ -17,4 +17,4 @@ public record CreateAdvertCommand(
     string? Category,
     ContactsViewModel? Contacts,
     List<AttachmentViewModel>? Attachments
-    ) : IRequest<Response>, IChangeDataRequest;
+) : IRequest<Response>, IChangeDataRequest;

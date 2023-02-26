@@ -2,9 +2,15 @@
 
 public class ForbiddenActionException : Exception
 {
-    public ForbiddenActionException() : base() { }
+    public ForbiddenActionException()
+    {
+    }
 
-    public ForbiddenActionException(string message) : base(message) { }
+    public ForbiddenActionException(string message) : base(message)
+    {
+    }
 
-    public ForbiddenActionException(string message, Exception innerException) : base(message, innerException) { }
+    public ForbiddenActionException(string message, Exception innerException) : base(message, innerException)
+    {
+    }
 }

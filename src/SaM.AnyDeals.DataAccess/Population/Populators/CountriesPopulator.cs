@@ -11,10 +11,10 @@ public static class CountriesPopulator
         var countries = CitiesAndCountriesCsvLoader.GetCountries();
         var countryId = 1;
 
-        var entries = countries.Select(country => new CountryDbEntry()
+        var entries = countries.Select(country => new CountryDbEntry
         {
             Id = countryId++,
-            Name = country,
+            Name = country
         }).ToList();
 
         builder.HasData(entries);

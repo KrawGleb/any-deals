@@ -2,7 +2,6 @@
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using SaM.AnyDeals.Common.Constraints;
 using SaM.AnyDeals.DataAccess.Models.Entries;
-using SaM.AnyDeals.DataAccess.Population;
 
 namespace SaM.AnyDeals.DataAccess.EntityConfigurations;
 

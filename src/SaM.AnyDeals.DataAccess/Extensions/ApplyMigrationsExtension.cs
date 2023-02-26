@@ -10,7 +10,7 @@ public static class ApplyMigrationsExtension
     {
         using var serviceScope = application.ApplicationServices.CreateScope();
         var context = serviceScope.ServiceProvider.GetService<ApplicationDbContext>()
-            ?? throw new InvalidOperationException();
+                      ?? throw new InvalidOperationException();
 
         context.Database.Migrate();
     }

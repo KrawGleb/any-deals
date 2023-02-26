@@ -1,5 +1,4 @@
-﻿
-using SaM.AnyDeals.Common.Enums;
+﻿using SaM.AnyDeals.Common.Enums;
 
 namespace SaM.AnyDeals.DataAccess.Models.Entries;
 

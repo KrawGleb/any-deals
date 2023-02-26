@@ -16,9 +16,9 @@ public class DeleteAdvertCommandHandler : IRequestHandler<DeleteAdvertCommand, R
     public async Task<Response> Handle(DeleteAdvertCommand request, CancellationToken cancellationToken)
     {
         var application = await _applicationDbContext.Adverts
-            .Include(a => a.Orders)
-            .SingleOrDefaultAsync(a => a.Id == request.Id, cancellationToken)
-            ?? throw new NotFoundException($"Application with id {request.Id} not found.");
+                              .Include(a => a.Orders)
+                              .SingleOrDefaultAsync(a => a.Id == request.Id, cancellationToken)
+                          ?? throw new NotFoundException($"Application with id {request.Id} not found.");
 
         _applicationDbContext.Adverts.Remove(application);
 

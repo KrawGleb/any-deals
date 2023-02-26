@@ -1,19 +1,17 @@
 ﻿using IdentityServer4.Services;
 using Microsoft.AspNetCore.Identity;
-using SaM.AnyDeals.Common.Exceptions;
 using SaM.AnyDeals.Common.Responses;
 using SaM.AnyDeals.DataAccess.Models.Auth;
 using SaM.AnyDeals.IdentityServer.Models;
 using SaM.AnyDeals.IdentityServer.Services.Interfaces;
-using System.Security.Claims;
 
 namespace SaM.AnyDeals.IdentityServer.Services;
 
 public class AuthService : IAuthService
 {
-    private readonly UserManager<ApplicationUser> _userManager;
-    private readonly SignInManager<ApplicationUser> _signInManager;
     private readonly IIdentityServerInteractionService _interactionService;
+    private readonly SignInManager<ApplicationUser> _signInManager;
+    private readonly UserManager<ApplicationUser> _userManager;
 
     public AuthService(
         UserManager<ApplicationUser> userManager,
@@ -33,7 +31,7 @@ public class AuthService : IAuthService
         {
             return new ErrorResponse
             {
-                Errors = new string[] { $"User with email {loginViewModel.Username} not found." }
+                Errors = new[] { $"User with email {loginViewModel.Username} not found." }
             };
         }
 
@@ -41,7 +39,7 @@ public class AuthService : IAuthService
 
         return result.Succeeded
             ? new Response()
-            : new ErrorResponse { Errors = new string[] { "Invalid email or password." } };
+            : new ErrorResponse { Errors = new[] { "Invalid email or password." } };
     }
 
     public async Task<LogoutResponse> LogoutAsync(string logoutId, CancellationToken cancellationToken)
@@ -49,7 +47,7 @@ public class AuthService : IAuthService
         await _signInManager.SignOutAsync();
         var logoutRequest = await _interactionService.GetLogoutContextAsync(logoutId);
 
-        return new() { RedirectUri = logoutRequest.PostLogoutRedirectUri };
+        return new LogoutResponse { RedirectUri = logoutRequest.PostLogoutRedirectUri };
     }
 
     public async Task<Response> RegisterAsync(RegisterViewModel registerViewModel, CancellationToken cancellationToken)
@@ -89,6 +87,6 @@ public class AuthService : IAuthService
             return new Response();
         }
 
-        return new ErrorResponse() { Errors = result.Errors.Select(e => e.Description) };
+        return new ErrorResponse { Errors = result.Errors.Select(e => e.Description) };
     }
 }

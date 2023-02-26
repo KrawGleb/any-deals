@@ -1,15 +1,12 @@
-﻿using Microsoft.AspNetCore.Identity;
+﻿using System.Reflection;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.Configuration;
-using SaM.AnyDeals.Common.Enums;
 using SaM.AnyDeals.DataAccess.Helpers;
 using SaM.AnyDeals.DataAccess.Models.Auth;
-using SaM.AnyDeals.DataAccess.Models.Elastic;
 using SaM.AnyDeals.DataAccess.Models.Entries;
 using SaM.AnyDeals.DataAccess.Population;
 using SaM.AnyDeals.DataAccess.Services.Interfaces;
-using System.Reflection;
 
 namespace SaM.AnyDeals.DataAccess;
 
@@ -40,7 +37,7 @@ public class ApplicationDbContext : IdentityDbContext<ApplicationUser, IdentityR
     {
         var changedAdvertsEntries = ChangeTracker
             .Entries<AdvertDbEntry>()
-            .Select((entry) => new { entry.State, entry.Entity })
+            .Select(entry => new { entry.State, entry.Entity })
             .ToList();
 
         var saveChangesResult = await base.SaveChangesAsync(cancellationToken);
@@ -65,8 +62,6 @@ public class ApplicationDbContext : IdentityDbContext<ApplicationUser, IdentityR
                 case EntityState.Added:
                     await _elasticService.IndexAdvertAsync(advertElasticEntry, cancellationToken);
                     break;
-                default:
-                    break;
             }
         }
 
@@ -81,7 +76,8 @@ public class ApplicationDbContext : IdentityDbContext<ApplicationUser, IdentityR
         base.OnModelCreating(builder);
     }
 
-    private async Task<AdvertDbEntry> LoadAdvertEntryAsync(AdvertDbEntry entry, CancellationToken cancellationToken = default)
+    private async Task<AdvertDbEntry> LoadAdvertEntryAsync(AdvertDbEntry entry,
+        CancellationToken cancellationToken = default)
     {
         await Adverts.Entry(entry)
             .Reference(a => a.City)

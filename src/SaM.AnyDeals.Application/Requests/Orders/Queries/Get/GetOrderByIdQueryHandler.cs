@@ -1,5 +1,4 @@
 ﻿using AutoMapper;
-using Microsoft.AspNetCore.Http;
 using Microsoft.EntityFrameworkCore;
 using SaM.AnyDeals.Application.Common.Services.Interfaces;
 using SaM.AnyDeals.Application.Models.ViewModels;
@@ -30,9 +29,9 @@ public class GetOrderByIdQueryHandler : IRequestHandler<GetOrderByIdQuery, Respo
         var user = await _currentUserService.GetCurrentUserAsync();
         var userId = user.Id;
         var order = await _applicationDbContext
-            .Orders
-            .SingleOrDefaultAsync(a => a.Id == request.Id, cancellationToken)
-            ?? throw new NotFoundException($"Order with id {request.Id} not found.");
+                        .Orders
+                        .SingleOrDefaultAsync(a => a.Id == request.Id, cancellationToken)
+                    ?? throw new NotFoundException($"Order with id {request.Id} not found.");
 
         if (order.ExecutorId != userId &&
             order.CustomerId != userId)
@@ -42,7 +41,7 @@ public class GetOrderByIdQueryHandler : IRequestHandler<GetOrderByIdQuery, Respo
 
         var orderVM = _mapper.Map<OrderViewModel>(order);
 
-        return new CommonResponse()
+        return new CommonResponse
         {
             Body = orderVM
         };

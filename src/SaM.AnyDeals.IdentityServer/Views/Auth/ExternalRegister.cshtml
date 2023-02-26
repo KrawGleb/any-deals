@@ -1,8 +1,8 @@
 ﻿@model ExternalRegisterViewModel
 
 <head>
-    <link href=@Url.Content("~/css/styles.css") rel="stylesheet" type="text/css" />
-    <link href=@Url.Content("~/identity/css/styles.css") rel="stylesheet" type="text/css" />
+    <link href=@Url.Content("~/css/styles.css") rel="stylesheet" type="text/css"/>
+    <link href=@Url.Content("~/identity/css/styles.css") rel="stylesheet" type="text/css"/>
 </head>
 <div class="container">
     <div class="back-line">
@@ -17,19 +17,19 @@
     </div>
     <div class="content">
         <form asp-controller="Auth" asp-action="ExternalRegister" class="form" method="post">
-            <input type="hidden" asp-for="ReturnUrl" />
+            <input type="hidden" asp-for="ReturnUrl"/>
             <div class="title">Complete sign up</div>
 
             <div class="field-block">
                 <input asp-for="Username" class="form-field form-field-input"
                        placeholder="Username"
-                       type="text" />
+                       type="text"/>
                 <span asp-validation-for="Username"></span>
 
                 @foreach (var error in ViewData.ModelState.Keys.SelectMany(
-                key => key.StartsWith("ErrorResponse")
-                ? ViewData.ModelState[key]!.Errors.Select(e => e.ErrorMessage)
-                : Enumerable.Empty<string>()))
+                    key => key.StartsWith("ErrorResponse")
+                        ? ViewData.ModelState[key]!.Errors.Select(e => e.ErrorMessage)
+                        : Enumerable.Empty<string>()))
                 {
                     <span class="field-validation-error">@error</span>
                 }
@@ -40,4 +40,3 @@
         </form>
     </div>
 </div>
-

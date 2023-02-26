@@ -1,12 +1,9 @@
 ﻿using AutoFixture;
-using AutoMapper;
-using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Moq;
 using SaM.AnyDeals.Application.Common.Services.Interfaces;
 using SaM.AnyDeals.Application.Requests.Adverts.Commands.Create;
 using SaM.AnyDeals.Application.Tests.Common;
-using SaM.AnyDeals.DataAccess.Models.Entries;
 
 namespace SaM.AnyDeals.Application.Tests.TestRequests.Adverts.Commands;
 
@@ -23,11 +20,11 @@ public class CreateAdvertCommandHandlerTests : TestRequestHandlerBase
         var command = _fixture.Create<CreateAdvertCommand>();
 
         _currentUserServiceMock.Setup(x => x.GetCurrentUserAsync()).ReturnsAsync(user);
-        
+
         var handler = new CreateAdvertCommandHandler(
-           _applicationDbContext,
-           _mapper,
-           _currentUserServiceMock.Object);
+            _applicationDbContext,
+            _mapper,
+            _currentUserServiceMock.Object);
 
         // Act
         var response = await handler.Handle(command, CancellationToken.None);
@@ -46,7 +43,7 @@ public class CreateAdvertCommandHandlerTests : TestRequestHandlerBase
         var advert = FixtureBuilder.CreateAdvert();
         var command = _fixture.Create<CreateAdvertCommand>();
 
-        command = command with { CategoryId = null } ;
+        command = command with { CategoryId = null };
 
         _currentUserServiceMock.Setup(x => x.GetCurrentUserAsync()).ReturnsAsync(user);
 

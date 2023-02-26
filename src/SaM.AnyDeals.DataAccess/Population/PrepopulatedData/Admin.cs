@@ -1,11 +1,10 @@
 ﻿using SaM.AnyDeals.DataAccess.Models.Auth;
-using System.Security;
 
 namespace SaM.AnyDeals.DataAccess.Population.PrepopulatedData;
 
 public static class Admin
 {
-    private static readonly ApplicationUser _instance = new()
+    public static ApplicationUser Instance { get; } = new()
     {
         Id = "A3BF16BB-378C-4350-8BFF-FF1ED9CB2915",
         UserName = "Creator",
@@ -16,6 +15,4 @@ public static class Admin
         ConcurrencyStamp = "f8f7f881-1a3d-46d6-a74e-17bcd658cc46",
         SecurityStamp = "30114e5f-fa10-44df-81a8-9a250136a760"
     };
-
-    public static ApplicationUser Instance { get => _instance; }
 }

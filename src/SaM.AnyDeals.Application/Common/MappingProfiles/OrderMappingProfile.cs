@@ -6,8 +6,8 @@ namespace SaM.AnyDeals.Application.Common.MappingProfiles;
 
 public class OrderMappingProfile : Profile
 {
-	public OrderMappingProfile()
-	{
-		CreateMap<OrderDbEntry, OrderViewModel>();
-	}
+    public OrderMappingProfile()
+    {
+        CreateMap<OrderDbEntry, OrderViewModel>();
+    }
 }

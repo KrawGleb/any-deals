@@ -1,6 +1,6 @@
-﻿using CsvHelper;
+﻿using System.Globalization;
+using CsvHelper;
 using CsvHelper.Configuration.Attributes;
-using System.Globalization;
 
 namespace SaM.AnyDeals.DataAccess.Population.Helpers;
 
@@ -17,7 +17,8 @@ public class CitiesAndCountriesCsvLoader
     {
         try
         {
-            using var reader = new StreamReader("../SaM.AnyDeals.DataAccess/Population/PrepopulatedData/worldcities.csv");
+            using var reader =
+                new StreamReader("../SaM.AnyDeals.DataAccess/Population/PrepopulatedData/worldcities.csv");
             using var csv = new CsvReader(reader, CultureInfo.InvariantCulture);
 
             _records = csv.GetRecords<Record>().ToList();

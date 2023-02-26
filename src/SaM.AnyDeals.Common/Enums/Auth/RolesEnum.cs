@@ -18,7 +18,7 @@ public static class RolesEnum
     {
         Id = "A98F783C-2C85-46AB-BC7D-73F766D04DB3",
         Name = User,
-        NormalizedName = User.ToUpper(),
+        NormalizedName = User.ToUpper()
     };
 
     public static readonly IEnumerable<IdentityRole> Roles = new List<IdentityRole>

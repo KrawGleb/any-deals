@@ -17,10 +17,10 @@ public class UpdateAdvertStatusCommandHandler : IRequestHandler<UpdateAdvertStat
     public async Task<Response> Handle(UpdateAdvertStatusCommand request, CancellationToken cancellationToken)
     {
         var entry = await _applicationDbContext
-            .Adverts
-            .Include(a => a.Category)
-            .SingleOrDefaultAsync(a => a.Id == request.Id!, cancellationToken)
-            ?? throw new NotFoundException($"Advert with id {request.Id} not found.");
+                        .Adverts
+                        .Include(a => a.Category)
+                        .SingleOrDefaultAsync(a => a.Id == request.Id!, cancellationToken)
+                    ?? throw new NotFoundException($"Advert with id {request.Id} not found.");
 
         entry.Status = request.Status;
 

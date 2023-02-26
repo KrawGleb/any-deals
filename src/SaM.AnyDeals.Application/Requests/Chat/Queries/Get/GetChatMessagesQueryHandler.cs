@@ -22,14 +22,14 @@ public class GetChatMessagesQueryHandler : IRequestHandler<GetChatMessagesQuery,
     public async Task<Response> Handle(GetChatMessagesQuery request, CancellationToken cancellationToken)
     {
         var order = await _applicationDbContext
-            .Orders
-                .Include(o => o.Chat)
-            .FirstOrDefaultAsync(o => o.Id == request.OrderId, cancellationToken)
-            ?? throw new NotFoundException($"Order with id {request.OrderId} not found.");
+                        .Orders
+                        .Include(o => o.Chat)
+                        .FirstOrDefaultAsync(o => o.Id == request.OrderId, cancellationToken)
+                    ?? throw new NotFoundException($"Order with id {request.OrderId} not found.");
 
         var messages = await _applicationDbContext
             .Messages
-                .Include(m => m.Sender)
+            .Include(m => m.Sender)
             .Where(m => m.ChatId == order.ChatId)
             .OrderBy(m => m.CreatedAt)
             .ToListAsync(cancellationToken);

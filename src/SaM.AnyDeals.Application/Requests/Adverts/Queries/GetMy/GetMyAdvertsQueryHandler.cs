@@ -1,13 +1,9 @@
 ﻿using AutoMapper;
-using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using SaM.AnyDeals.Application.Common.Services.Interfaces;
 using SaM.AnyDeals.Application.Models.ViewModels;
-using SaM.AnyDeals.Common.Exceptions;
 using SaM.AnyDeals.DataAccess;
 using SaM.AnyDeals.DataAccess.Extensions;
-using SaM.AnyDeals.DataAccess.Models.Auth;
 
 namespace SaM.AnyDeals.Application.Requests.Adverts.Queries.GetMy;
 

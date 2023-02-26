@@ -23,7 +23,7 @@ public class CurrentUserService : ICurrentUserService
     {
         var userClaim = _httpContextAccessor.HttpContext.User;
         var user = await _userManager.GetUserAsync(userClaim)
-            ?? throw new NotFoundException("User not found.");
+                   ?? throw new NotFoundException("User not found.");
 
         return user;
     }

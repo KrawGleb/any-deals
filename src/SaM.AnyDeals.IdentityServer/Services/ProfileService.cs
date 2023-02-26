@@ -1,18 +1,18 @@
-﻿using IdentityModel;
+﻿using System.Security.Claims;
+using IdentityModel;
 using IdentityServer4.Extensions;
 using IdentityServer4.Models;
 using IdentityServer4.Services;
 using Microsoft.AspNetCore.Identity;
 using SaM.AnyDeals.DataAccess.Models.Auth;
-using System.Security.Claims;
 
 namespace SaM.AnyDeals.IdentityServer.Services;
 
 public class ProfileService : IProfileService
 {
+    private readonly RoleManager<IdentityRole> _roleManager;
     private readonly IUserClaimsPrincipalFactory<ApplicationUser> _userClaimsPrincipalFactory;
     private readonly UserManager<ApplicationUser> _userManager;
-    private readonly RoleManager<IdentityRole> _roleManager;
 
     public ProfileService(
         UserManager<ApplicationUser> userManager,
@@ -26,7 +26,7 @@ public class ProfileService : IProfileService
 
     public async Task GetProfileDataAsync(ProfileDataRequestContext context)
     {
-        var user = await _userManager.GetUserAsync(context.Subject);    
+        var user = await _userManager.GetUserAsync(context.Subject);
         var userClaims = await _userClaimsPrincipalFactory.CreateAsync(user!);
 
         var claims = userClaims.Claims
@@ -48,7 +48,6 @@ public class ProfileService : IProfileService
                         claims.AddRange(await _roleManager.GetClaimsAsync(role));
                 }
             }
-
         }
 
         context.IssuedClaims = claims;

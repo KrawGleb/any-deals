@@ -37,7 +37,7 @@ public class ApproveOrderCommandHandler : IRequestHandler<ApproveOrderCommand, R
             throw new ForbiddenActionException();
 
         await AddFundsOnCompletedOrderAsync(order, cancellationToken);
-        
+
         return new Response();
     }
 
@@ -61,7 +61,7 @@ public class ApproveOrderCommandHandler : IRequestHandler<ApproveOrderCommand, R
             .Entry(order)
             .Reference(o => o.Executor)
             .LoadAsync(cancellationToken);
-        
+
         order.Executor!.Balance += order.Advert!.Price ?? 0;
 
         await _applicationDbContext.SaveChangesAsync(cancellationToken);

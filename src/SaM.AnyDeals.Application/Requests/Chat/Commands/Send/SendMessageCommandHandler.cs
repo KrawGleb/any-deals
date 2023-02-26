@@ -10,8 +10,8 @@ namespace SaM.AnyDeals.Application.Requests.Chat.Commands.Send;
 public class SendMessageCommandHandler : IRequestHandler<SendMessageCommand, Response>
 {
     private readonly ApplicationDbContext _applicationDbContext;
-    private readonly ICurrentUserService _currentUserService;
     private readonly IChatService _chatService;
+    private readonly ICurrentUserService _currentUserService;
 
     public SendMessageCommandHandler(
         ApplicationDbContext applicationDbContext,
@@ -28,12 +28,12 @@ public class SendMessageCommandHandler : IRequestHandler<SendMessageCommand, Res
         var user = await _currentUserService.GetCurrentUserAsync();
         var userId = user.Id;
         var order = await _applicationDbContext
-            .Orders
-            .Include(o => o.Chat)
-                .ThenInclude(c => c!.Messages)
-            .FirstOrDefaultAsync(o => o.Id == request.OrderId &&
-                                (o.ExecutorId == userId || o.CustomerId == userId), cancellationToken)
-            ?? throw new NotFoundException($"Order with id {request.OrderId} not found.");
+                        .Orders
+                        .Include(o => o.Chat)
+                        .ThenInclude(c => c!.Messages)
+                        .FirstOrDefaultAsync(o => o.Id == request.OrderId &&
+                                                  (o.ExecutorId == userId || o.CustomerId == userId), cancellationToken)
+                    ?? throw new NotFoundException($"Order with id {request.OrderId} not found.");
 
         var message = new MessageDbEntry
         {

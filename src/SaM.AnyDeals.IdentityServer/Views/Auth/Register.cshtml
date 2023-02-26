@@ -1,7 +1,7 @@
 ﻿@model RegisterViewModel
 <head>
-    <link href=@Url.Content("~/css/styles.css") rel="stylesheet" type="text/css" />
-    <link href=@Url.Content("~/identity/css/styles.css") rel="stylesheet" type="text/css" />
+    <link href=@Url.Content("~/css/styles.css") rel="stylesheet" type="text/css"/>
+    <link href=@Url.Content("~/identity/css/styles.css") rel="stylesheet" type="text/css"/>
 </head>
 <div class="container">
     <div class="back-line">
@@ -16,42 +16,42 @@
     </div>
     <div class="content">
         <form asp-controller="Auth" asp-action="Register" method="post" class="form">
-            <input type="hidden" asp-for="ReturnUrl" />
+            <input type="hidden" asp-for="ReturnUrl"/>
             <div class="title">Registration</div>
 
             <div class="field-block">
                 <input asp-for="Username" class="form-field form-field-input"
-                       placeholder="Name" />
+                       placeholder="Name"/>
                 <span asp-validation-for="Username"></span>
             </div>
 
             <div class="field-block">
                 <input asp-for="Email" class="form-field form-field-input"
                        placeholder="Email"
-                       type="email" />
+                       type="email"/>
                 <span asp-validation-for="Email"></span>
             </div>
 
             <div class="field-block">
                 <input asp-for="Password" class="form-field form-field-input"
                        placeholder="Password"
-                       type="password" />
+                       type="password"/>
                 <span asp-validation-for="Password"></span>
             </div>
 
             <div class="field-block">
                 <input asp-for="ConfirmPassword" class="form-field form-field-input"
                        placeholder="Repeat password"
-                       type="password" />
+                       type="password"/>
                 <span asp-validation-for="ConfirmPassword"></span>
             </div>
 
             <button class="btn" type="submit">Register</button>
 
             @foreach (var error in ViewData.ModelState.Keys.SelectMany(
-            key => key.StartsWith("ErrorResponse")
-            ? ViewData.ModelState[key]!.Errors.Select(e => e.ErrorMessage)
-            : Enumerable.Empty<string>()))
+                key => key.StartsWith("ErrorResponse")
+                    ? ViewData.ModelState[key]!.Errors.Select(e => e.ErrorMessage)
+                    : Enumerable.Empty<string>()))
             {
                 <span class="field-validation-error">@error</span>
             }
@@ -61,7 +61,9 @@
             <div class="footer-switch">
                 <p>Already have login and password?</p>
                 <a asp-controller="Auth" asp-action="Login" asp-route-returnUrl="@Model.ReturnUrl"
-                   class="switch-button">Sign in</a>
+                   class="switch-button">
+                    Sign in
+                </a>
             </div>
         </div>
     </div>

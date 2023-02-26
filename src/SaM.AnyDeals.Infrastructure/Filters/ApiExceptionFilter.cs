@@ -24,9 +24,9 @@ public class ApiExceptionFilter : IActionFilter, IOrderedFilter
         };
     }
 
-    public int Order => int.MaxValue - 10;
-
-    public void OnActionExecuting(ActionExecutingContext context) { }
+    public void OnActionExecuting(ActionExecutingContext context)
+    {
+    }
 
     public void OnActionExecuted(ActionExecutedContext context)
     {
@@ -34,10 +34,12 @@ public class ApiExceptionFilter : IActionFilter, IOrderedFilter
             HandleException(context);
     }
 
+    public int Order => int.MaxValue - 10;
+
     private void HandleException(ActionExecutedContext context)
     {
         var type = context.Exception.GetType();
-        if (_exceptionHandlers.TryGetValue(type, out Action<ActionExecutedContext>? value))
+        if (_exceptionHandlers.TryGetValue(type, out var value))
         {
             value.Invoke(context);
             context.ExceptionHandled = true;
@@ -50,9 +52,10 @@ public class ApiExceptionFilter : IActionFilter, IOrderedFilter
     private void HandleUnknownException(ActionExecutedContext context)
     {
         _logger.LogInformation(context.Exception, "Unknown exception occurred");
-        var response = new ErrorResponse()
+        var response = new ErrorResponse
         {
-            Errors = new string[] {
+            Errors = new[]
+            {
                 "An error occured while processing request.",
                 context.Exception.Message
             }
@@ -67,9 +70,9 @@ public class ApiExceptionFilter : IActionFilter, IOrderedFilter
     private void HandleNotFoundException(ActionExecutedContext context)
     {
         _logger.LogInformation(context.Exception, "Not found exception occurred");
-        var response = new ErrorResponse()
+        var response = new ErrorResponse
         {
-            Errors = new string[] { context.Exception.Message }
+            Errors = new[] { context.Exception.Message }
         };
 
         context.Result = new ObjectResult(response)
@@ -81,9 +84,9 @@ public class ApiExceptionFilter : IActionFilter, IOrderedFilter
     private void HandleForbiddenActionException(ActionExecutedContext context)
     {
         _logger.LogInformation(context.Exception, "Forbiddenr action");
-        var response = new ErrorResponse()
+        var response = new ErrorResponse
         {
-            Errors = new string[] { "Forbidden action." }
+            Errors = new[] { "Forbidden action." }
         };
 
         context.Result = new ObjectResult(response)
@@ -98,7 +101,7 @@ public class ApiExceptionFilter : IActionFilter, IOrderedFilter
         var exception = (ValidationException)context.Exception;
         var errors = exception.Errors.Select(e => e.ErrorMessage);
 
-        var response = new ErrorResponse()
+        var response = new ErrorResponse
         {
             Errors = errors
         };
@@ -108,5 +111,4 @@ public class ApiExceptionFilter : IActionFilter, IOrderedFilter
             StatusCode = StatusCodes.Status400BadRequest
         };
     }
-
 }

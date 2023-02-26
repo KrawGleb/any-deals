@@ -3,6 +3,6 @@
 public class CountryDbEntry : DbEntryBase
 {
     public string? Name { get; set; }
-    
+
     public List<CityDbEntry>? Cities { get; set; }
 }

@@ -4,4 +4,3 @@ public class Response
 {
     public virtual bool Succeeded { get; set; } = true;
 }
-

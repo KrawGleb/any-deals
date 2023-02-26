@@ -7,9 +7,9 @@ namespace SaM.AnyDeals.Application.Common.MappingProfiles;
 
 public class ReviewMappingProfile : Profile
 {
-	public ReviewMappingProfile()
-	{
-		CreateMap<ReviewDbEntry, ReviewViewModel>();
-		CreateMap<CreateReviewCommand, ReviewDbEntry>();
-	}
+    public ReviewMappingProfile()
+    {
+        CreateMap<ReviewDbEntry, ReviewViewModel>();
+        CreateMap<CreateReviewCommand, ReviewDbEntry>();
+    }
 }
