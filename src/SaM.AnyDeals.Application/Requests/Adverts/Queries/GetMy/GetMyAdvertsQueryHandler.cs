@@ -3,7 +3,6 @@ using Microsoft.EntityFrameworkCore;
 using SaM.AnyDeals.Application.Common.Services.Interfaces;
 using SaM.AnyDeals.Application.Models.ViewModels;
 using SaM.AnyDeals.DataAccess;
-using SaM.AnyDeals.DataAccess.Extensions;
 
 namespace SaM.AnyDeals.Application.Requests.Adverts.Queries.GetMy;
 
@@ -27,17 +26,23 @@ public class GetMyAdvertsQueryHandler : IRequestHandler<GetMyAdvertsQuery, Respo
     {
         var creator = await _currentUserService.GetCurrentUserAsync();
 
-        await _applicationDbContext.Users.Entry(creator)
-            .Collection(e => e.Adverts!)
-            .Query()
-            .FullInclude()
+        var query = await _applicationDbContext
+            .Adverts
+            .Include(a => a.Contacts)
+            .Include(a => a.Attachments)
+            .Include(a => a.Category)
+            .Where(a => a.CreatorId == creator.Id)
+            .ToListAsync(cancellationToken);
+
+        await _applicationDbContext
+            .Adverts
+            .Where(a => query.Contains(a))
+            .Include(a => a.City)
+            .ThenInclude(c => c!.Country)
             .LoadAsync(cancellationToken);
 
-        var advertsVM = _mapper.Map<List<AdvertViewModel>>(creator.Adverts);
+        var advertsVM = _mapper.Map<List<AdvertViewModel>>(query);
 
-        return new CommonResponse
-        {
-            Body = advertsVM
-        };
+        return new CommonResponse { Body = advertsVM };
     }
 }
