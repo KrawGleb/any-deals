@@ -16,7 +16,7 @@ export default function AdvertCard({
     (a) => a.type === AttachmentType.Image
   );
 
-  if (!advert) return <Paper>Deleted advert</Paper>;
+  if (!advert) return null;
 
   return (
     <Paper className="advert-card__root" onClick={() => onClick(advert.id)}>

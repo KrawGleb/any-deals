@@ -1,5 +1,104 @@
+@import "/src/styles/colors.scss";
+
 .order {
-    &-card {
-        
+  &-card {
+    font-family: Roboto, Helvetica, Arial, sans-serif;
+
+    &__root {
+      padding: 1rem;
+      background-color: white;
+      border-radius: 8px;
+      cursor: pointer;
+      display: flex;
+      flex-wrap: wrap;
+      -webkit-box-align: center;
+      align-items: center;
+      row-gap: 1rem;
+      border: 1px solid rgba(0, 0, 0, 0.23);
+      transition: all 0.2s ease-in-out 0s;
     }
+
+    &__content {
+      flex-grow: 1;
+
+      &__header {
+        display: flex;
+        justify-content: space-between;
+
+        &__tags {
+          display: flex;
+          gap: 16px;
+        }
+      }
+
+      &__title {
+        margin: 8px 0px;
+
+        line-height: 1.5;
+        letter-spacing: 0.00938em;
+        font-style: normal;
+        font-weight: 500;
+        font-size: 24px;
+        overflow-wrap: anywhere;
+        color: rgb(57, 5, 188);
+        transition: color 150ms ease-in-out 0s;
+
+        &:hover {
+          color: rgb(216, 1, 230);
+        }
+      }
+
+      &__category,
+      &__country {
+        margin: 0px;
+        font-weight: 400;
+        font-size: 1rem;
+        line-height: 1.5;
+        letter-spacing: 0.00938em;
+      }
+
+      &__country {
+        margin: 8px 0px;
+      }
+
+      &__footer {
+        display: flex;
+        column-gap: 32px;
+        flex-wrap: wrap;
+
+        .creator {
+          margin: 0px;
+          font-weight: 400;
+          font-size: 1rem;
+          line-height: 1.5;
+          letter-spacing: 0.00938em;
+          color: rgb(74, 204, 31);
+          word-break: break-word;
+        }
+
+        .date {
+          margin: 0px;
+          font-weight: 400;
+          font-size: 1rem;
+          line-height: 1.5;
+          letter-spacing: 0.00938em;
+          color: rgb(178, 178, 178);
+        }
+      }
+    }
+
+    &__image {
+      border-radius: 0.5rem;
+      border: 1px solid rgb(223, 226, 228);
+      padding: 6px;
+      margin: 0px auto;
+
+      img {
+        width: 100px;
+        height: 100px;
+        object-fit: contain;
+        margin: 0px;
+      }
+    }
+  }
 }

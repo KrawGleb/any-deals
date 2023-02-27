@@ -5,6 +5,8 @@ import OrderCard from "../card/OrderCard";
 import { OrdersListProps } from "./OrdersListProps";
 
 export default function OrdersList({ orders, onCardClick }: OrdersListProps) {
+  console.log(orders);
+
   return (
     <Box className="orders-list__root">
       <Stack className="orders-list__component" spacing={2}>
