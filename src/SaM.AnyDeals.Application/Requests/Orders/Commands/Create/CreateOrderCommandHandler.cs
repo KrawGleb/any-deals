@@ -38,7 +38,7 @@ public class CreateOrderCommandHandler : IRequestHandler<CreateOrderCommand, Res
 
         if (customerId == executorId)
                 throw new ForbiddenActionException("Customer and executor ids are the same.");
-        
+
         var paymentMethod = GetPaymentMethod(targetAdvert, request);
         var order = new OrderDbEntry
         {
@@ -50,10 +50,10 @@ public class CreateOrderCommandHandler : IRequestHandler<CreateOrderCommand, Res
             Chat = new ChatDbEntry()
         };
 
-        var orderWasCommited = await TryCommitOrderAsync(request, order, cancellationToken);
-        if (!orderWasCommited) await RollbackOrderAsync(request, order);
+        var succeeded = await TryCommitOrderAsync(request, order, cancellationToken);
+        if (!succeeded) await RollbackOrderAsync(request, order);
 
-        return new Response { Succeeded = orderWasCommited };
+        return new Response { Succeeded = succeeded };
     }
 
     private async Task<bool> TryCommitOrderAsync(CreateOrderCommand request, OrderDbEntry order,
