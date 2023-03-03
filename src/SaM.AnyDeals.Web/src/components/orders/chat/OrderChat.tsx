@@ -33,28 +33,32 @@ export default function OrderChat(props: OrderChatProps) {
   };
 
   useEffect(() => {
-    const connection = new HubConnectionBuilder()
-      .withUrl(
-        `${
-          process.env.REACT_APP_CONTAINERIZED === "false"
-            ? "https://localhost:5001"
-            : ""
-        }/hubs/chat`
-      )
-      .withAutomaticReconnect()
-      .build();
+    const init = async () => {
+      const connection = new HubConnectionBuilder()
+        .withUrl(
+          `${
+            process.env.REACT_APP_CONTAINERIZED === "false"
+              ? "https://localhost:5001"
+              : ""
+          }/hubs/chat`
+        )
+        .withAutomaticReconnect()
+        .build();
 
-    connection
-      .start()
-      .then(() => {
+      try {
+        await connection.start();
+
         connection.on("NewMessage", (userId) => {
           if (props.customerId === userId || props.executorId === userId) {
             dispatch(chatApiExtension.util.invalidateTags(["Chat"]));
           }
         });
-      })
-      .catch((err) => console.log(err));
+      } catch (error) {
+        console.log(error);
+      }
+    };
 
+    init();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 

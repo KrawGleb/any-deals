@@ -23,6 +23,8 @@ import userManager from "./features/api/auth/userService";
 import SignOut from "./pages/auth/SignOut";
 import Error from "./pages/errors/Error";
 import User from "./pages/user/User";
+import SilentRenew from "./pages/auth/SilentRenew";
+import AutoSilentRenew from "./pages/auth/AutoSilentRenew";
 
 function App() {
   const authState = useSelector((state: RootState) => state.auth);
@@ -30,10 +32,12 @@ function App() {
 
   return (
     <div className="app">
+      <AutoSilentRenew />
       <AuthProvider userManager={userManager}>
         <Routes>
           <Route path="/signout-oidc" element={<SignOut />} />
           <Route path="/signin-oidc" element={<SignIn />} />
+          <Route path="/silent" element={<SilentRenew />} />
           <Route path="/about" element={<About />} />
           <Route path="/users/:username" element={<User />} />
           <Route

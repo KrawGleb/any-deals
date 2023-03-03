@@ -5,13 +5,13 @@ import { signinRedirectCallback } from "../../features/api/auth/userService";
 export default function SignIn() {
   const navigate = useNavigate();
   useEffect(() => {
-    const signinAsync = async () => {
+    const signInAsync = async () => {
       await signinRedirectCallback();
 
       navigate("/");
     };
 
-    signinAsync();
+    signInAsync();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
   return <div>Redirecting....</div>;

@@ -32,11 +32,13 @@ export const baseQueryWithErrorHandling: BaseQueryFn<
   if (result.error) {
     if (result.error.status.toString().startsWith("4")) {
       console.log("Client error", result.error);
-      window.location.replace("/");
     }
-
-    if (result.error.status.toString().startsWith("5")) {
+    else if (result.error.status.toString().startsWith("5")) {
       console.log("Server error", result.error);
+      window.location.replace("/error");
+    }
+    else {
+      console.log("Unknown error", result.error);
       window.location.replace("/error");
     }
   }

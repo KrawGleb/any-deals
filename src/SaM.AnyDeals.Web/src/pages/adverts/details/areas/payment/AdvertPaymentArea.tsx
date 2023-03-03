@@ -16,15 +16,19 @@ export default function AdvertPaymentArea({ advert }: { advert: Advert }) {
   const scrollRef = useRef(null);
 
   useEffect(() => {
-    if (advert) {
-      createIntent({ advertId: advert.id }).then((res: any) => {
-        const { data }: { data: CommonResponse } = res;
+    const init = async () => {
+      if (!advert) return;
 
-        if (data.succeeded) {
-          setClientSecret(data.body.clientSecret);
-        }
-      });
-    }
+      const response = await createIntent({ advertId: advert.id });
+      const { data }: { data: CommonResponse } = response as any;
+
+      if (data.succeeded) {
+        setClientSecret(data.body.clientSecret);
+      }
+    };
+
+    init();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [advert]);
 
   const options = {

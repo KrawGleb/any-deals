@@ -63,17 +63,14 @@ export default function AdvertsDetails() {
     // else throw new Error("Something wrong with payment method");
   }, [advert]);
 
-  const handleOrderClick = () => {
+  const handleOrderClick = async () => {
     if (paymentMethod === 1) {
       scrollToPayment();
       return;
     }
 
-    const createOrderAction = createOrder({ advertId, paymentMethod: 0 });
-
-    createOrderAction.then((_response) => {
-      navigate("/adverts/my/orders");
-    });
+    await createOrder({ advertId, paymentMethod: 0 });
+    navigate("/adverts/my/orders");
   };
 
   const handlePaymentMethodChange = (e: ChangeEvent<HTMLInputElement>) => {

@@ -59,13 +59,13 @@ public class AuthService : IAuthService
         };
 
         var result = await _userManager.CreateAsync(user, registerViewModel.Password!);
-        if (result.Succeeded)
+        if (!result.Succeeded)
         {
-            await _signInManager.SignInAsync(user, false);
-            return new Response();
+            return new ErrorResponse { Errors = result.Errors.Select(e => e.Description) };
         }
 
-        return new ErrorResponse { Errors = result.Errors.Select(e => e.Description) };
+        await _signInManager.SignInAsync(user, false);
+        return new Response();
     }
 
     public async Task<Response> ExternalRegisterAsync(
@@ -81,12 +81,12 @@ public class AuthService : IAuthService
         var result = await _userManager.CreateAsync(user);
         var addLoginResult = await _userManager.AddLoginAsync(user, info);
 
-        if (result.Succeeded && addLoginResult.Succeeded)
+        if (!result.Succeeded || !addLoginResult.Succeeded)
         {
-            await _signInManager.SignInAsync(user, false);
-            return new Response();
+            return new ErrorResponse { Errors = result.Errors.Select(e => e.Description) };
         }
 
-        return new ErrorResponse { Errors = result.Errors.Select(e => e.Description) };
+        await _signInManager.SignInAsync(user, false);
+        return new Response();
     }
 }

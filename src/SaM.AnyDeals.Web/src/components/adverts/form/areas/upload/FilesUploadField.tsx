@@ -87,7 +87,7 @@ export default function FilesUploadField({
       "image/*": [],
       "application/pdf": [],
     },
-    maxSize: 10 * 1024 * 1024, // 25Mb
+    maxSize: 10 * 1024 * 1024, // 10Mb
   });
 
   useEffect(() => {

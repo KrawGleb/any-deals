@@ -39,26 +39,23 @@ export default function OrderDetails() {
 
   const [isReviewDialogOpen, setIsReviewDialogOpen] = useState(false);
 
-  const onApproveClick = () => {
-    const approveAction = approveOrderCompletion({ id: orderId });
-    approveAction.then((response: any) => {
-      if (response.data.succeeded) {
-        setHasCustomerApproval((curr) => (isUserCustomer ? true : curr));
-        setHasExecutorApproval((curr) => (isUserExecutor ? true : curr));
-      }
-    });
+  const onApproveClick = async () => {
+    const response = await approveOrderCompletion({ id: orderId });
+
+    if ((response as any).data.succeeded) {
+      setHasCustomerApproval((curr) => (isUserCustomer ? true : curr));
+      setHasExecutorApproval((curr) => (isUserExecutor ? true : curr));
+    }
   };
 
-  const handleArchiveClick = () => {
+  const handleArchiveClick = async () => {
     if (isUserCustomer) {
       setIsReviewDialogOpen(true);
     } else if (isUserExecutor) {
-      const archivateOrderAction = archivateOrder({ id: orderId });
-      archivateOrderAction.then((response: any) => {
-        if (response.data.succeeded) {
-          navigate("/adverts/my");
-        }
-      });
+      const archivateOrderResponse = await archivateOrder({ id: orderId });
+      if ((archivateOrderResponse as any).data.succeeded) {
+        navigate("/adverts/my");
+      }
     }
   };
 
@@ -66,22 +63,18 @@ export default function OrderDetails() {
     setIsReviewDialogOpen(false);
   };
 
-  const handleReviewSubmitClick = (review: Review) => {
+  const handleReviewSubmitClick = async (review: Review) => {
     setIsReviewDialogOpen(false);
 
     review.advertId = order?.advert.id;
 
-    const createReviewAction = createReview(review);
-    createReviewAction.then((response: any) => {
-      if (response.data.succeeded) {
-        const archivateOrderAction = archivateOrder({ id: orderId });
-        archivateOrderAction.then((response: any) => {
-          if (response.data.succeeded) {
-            navigate("/adverts/my");
-          }
-        });
+    const createReviewResponse = await createReview(review);
+    if ((createReviewResponse as any).data.succeeded) {
+      const archivateOrderResponse = await archivateOrder({ id: orderId });
+      if ((archivateOrderResponse as any).data.succeeded) {
+        navigate("/adverts/my");
       }
-    });
+    }
   };
 
   useEffect(() => {
