@@ -22,19 +22,21 @@ export default function CheckoutForm({ id }: { id: number }) {
   const [createOrder] = useCreateOrderMutation();
 
   useEffect(() => {
-    if (!stripe) {
-      return;
-    }
+    const init = async () => {
+      if (!stripe) return;
 
-    const clientSecret = new URLSearchParams(window.location.search).get(
-      "payment_intent_client_secret"
-    );
+      const clientSecret = new URLSearchParams(window.location.search).get(
+        "payment_intent_client_secret"
+      );
 
-    if (!clientSecret) {
-      return;
-    }
+      if (!clientSecret) {
+        return;
+      }
 
-    stripe.retrievePaymentIntent(clientSecret).then(({ paymentIntent }) => {
+      const { paymentIntent } = await stripe.retrievePaymentIntent(
+        clientSecret
+      );
+
       switch (paymentIntent?.status) {
         case "succeeded":
           navigate("/adverts/my/orders");
@@ -46,22 +48,23 @@ export default function CheckoutForm({ id }: { id: number }) {
           setMessage("Your payment was not successful, please try again.");
           break;
         case "requires_capture":
-          createOrder({
+          const response = await createOrder({
             advertId: id,
             paymentMethod: 1,
             paymentIntent: paymentIntent.id,
-          }).then((response: any) => {
-            const info = response.data;
-            if ((info as Response).succeeded) {
-              navigate("/adverts/my/orders");
-            }
           });
+          const info = (response as any).data;
+          if ((info as Response).succeeded) {
+            navigate("/adverts/my/orders");
+          }
           break;
         default:
           setMessage("Something went wrong.");
           break;
       }
-    });
+    };
+
+    init();
   }, [stripe]);
 
   const handleSubmit = async (e: any) => {

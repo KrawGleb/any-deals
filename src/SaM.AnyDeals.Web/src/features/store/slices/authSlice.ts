@@ -13,7 +13,9 @@ const authSlice = createSlice({
   initialState,
   reducers: {
     userExpired(state) {
-      state = initialState;
+      state.user = initialState.user;
+      state.isLoadingUser = initialState.isLoadingUser;
+      state.isAdmin = initialState.isAdmin;
     },
     userFound(state, action: PayloadAction<User>) {
       state.user = { ...action.payload } as any;

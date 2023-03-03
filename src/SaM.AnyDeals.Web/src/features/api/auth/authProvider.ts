@@ -36,7 +36,7 @@ export default function AuthProvider({
       console.log("User token expiring");
     };
     const onAccessTokenExpired = () => {
-      dispatch(userExpired());
+      //dispatch(userExpired());
       console.log("User token expired");
     };
     const onUserSignedOut = () => {
@@ -50,7 +50,7 @@ export default function AuthProvider({
     userManager.current?.events.addAccessTokenExpired(onAccessTokenExpired);
     userManager.current?.events.addUserSignedOut(onUserSignedOut);
 
-    return function cleanup() {
+    return () => {
       if (userManager && userManager.current) {
         userManager.current.events.removeUserLoaded(onUserLoaded);
         userManager.current.events.removeUserUnloaded(onUserUnloaded);

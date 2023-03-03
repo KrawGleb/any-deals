@@ -11,6 +11,8 @@ const userManagerSettings: UserManagerSettings =
         authority: "https://localhost:5051",
         post_logout_redirect_uri: "https://localhost:3000/signout-oidc",
         automaticSilentRenew: true,
+        silent_redirect_uri: "https://localhost:3000/silent",
+        silentRequestTimeout: 100000,
       }
     : {
         client_id: "AnyDealsWeb",
@@ -20,6 +22,9 @@ const userManagerSettings: UserManagerSettings =
         scope: "openid profile AnyDealsAPI",
         authority: `${window.location.origin}/identity`,
         post_logout_redirect_uri: `${window.location.origin}/signout-oidc`,
+        automaticSilentRenew: true,
+        silent_redirect_uri: `${window.location.origin}/silent`,
+        silentRequestTimeout: 100000,
       };
 
 const userManager = new UserManager(userManagerSettings);
