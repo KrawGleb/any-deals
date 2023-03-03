@@ -7,31 +7,25 @@
     </PropertyGroup>
 
     <ItemGroup>
-        <Folder Include="Migrations\"/>
+        <Folder Include="Migrations\" />
     </ItemGroup>
 
     <ItemGroup>
-        <PackageReference Include="CsvHelper" Version="30.0.1"/>
-        <PackageReference Include="Microsoft.AspNetCore.Identity" Version="2.2.0"/>
-        <PackageReference Include="Microsoft.AspNetCore.Identity.EntityFrameworkCore" Version="7.0.2"/>
-        <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="7.0.2"/>
+        <PackageReference Include="CsvHelper" Version="30.0.1" />
+        <PackageReference Include="Microsoft.AspNetCore.Identity" Version="2.2.0" />
+        <PackageReference Include="Microsoft.AspNetCore.Identity.EntityFrameworkCore" Version="7.0.2" />
+        <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="7.0.2" />
         <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="7.0.2">
             <PrivateAssets>all</PrivateAssets>
             <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
         </PackageReference>
-        <PackageReference Include="Microsoft.Extensions.Configuration.Abstractions" Version="7.0.0"/>
-        <PackageReference Include="Microsoft.Extensions.DependencyInjection.Abstractions" Version="7.0.0"/>
-        <PackageReference Include="NEST" Version="7.11.1"/>
+        <PackageReference Include="Microsoft.Extensions.Configuration.Abstractions" Version="7.0.0" />
+        <PackageReference Include="Microsoft.Extensions.DependencyInjection.Abstractions" Version="7.0.0" />
+        <PackageReference Include="NEST" Version="7.11.1" />
     </ItemGroup>
 
     <ItemGroup>
-        <ProjectReference Include="..\SaM.AnyDeals.DataAccess.Models\SaM.AnyDeals.DataAccess.Models.csproj"/>
-    </ItemGroup>
-
-    <ItemGroup>
-        <None Update="Population\PrepopulatedData\worldcities.csv">
-            <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-        </None>
+        <ProjectReference Include="..\SaM.AnyDeals.DataAccess.Models\SaM.AnyDeals.DataAccess.Models.csproj" />
     </ItemGroup>
 
 </Project>
