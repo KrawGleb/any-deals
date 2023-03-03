@@ -33,7 +33,7 @@ public class UpdateAdvertCommandHandler : IRequestHandler<UpdateAdvertCommand, R
         var attachments = entity.Attachments;
         var category = entity.Category;
 
-        request.CategoryId = request.CategoryId is null || request.CategoryId == 0
+        request.CategoryId = request.CategoryId is null or 0
             ? entity.CategoryId
             : request.CategoryId;
 
@@ -64,15 +64,17 @@ public class UpdateAdvertCommandHandler : IRequestHandler<UpdateAdvertCommand, R
         UpdateAdvertCommand request,
         CancellationToken cancellationToken)
     {
+        _ = entity.Category
+            ?? throw new InvalidOperationException($"Advert with id {entity.Id} has null category");
+        
         if (request.Category is null)
             return;
 
-        if (entity.Category is not null &&
-            entity.Category!.Status == Status.Draft)
+        if (entity.Category.Status == Status.Draft)
         {
             entity.Category.Name = request.Category;
         }
-        else
+        else if (entity.CategoryId != request.CategoryId)
         {
             var draftCategory = new CategoryDbEntry
             {
@@ -92,7 +94,7 @@ public class UpdateAdvertCommandHandler : IRequestHandler<UpdateAdvertCommand, R
         var requestAttachments = request.Attachments ?? Enumerable.Empty<AttachmentViewModel>();
 
         var attachmentsToRemove = attachments
-            .Where(a => !requestAttachments.Any(x => x.Link == a.Link))
+            .Where(a => requestAttachments.All(x => x.Link != a.Link))
             .ToList();
         _applicationDbContext.Attachments.RemoveRange(attachmentsToRemove);
 

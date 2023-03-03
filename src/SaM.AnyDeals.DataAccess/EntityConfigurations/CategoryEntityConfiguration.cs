@@ -23,6 +23,10 @@ public class CategoryEntityConfiguration : EntityConfigurationBase<CategoryDbEnt
             .IsRequired();
 
         builder
+            .HasIndex(c => c.Name)
+            .IsUnique();
+
+        builder
             .Property(c => c.Status)
             .HasDefaultValue(Status.Draft);
     }
