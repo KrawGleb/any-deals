@@ -38,12 +38,17 @@ public static class Config
                 AllowedGrantTypes = GrantTypes.Code,
                 RequireClientSecret = false,
                 RequirePkce = true,
+                AccessTokenLifetime = 60 * 60, // 1 hour
                 RedirectUris =
                 {
                     "http://localhost/signin-oidc",
                     "http://localhost:80/signin-oidc",
                     "http://anydeals.norwayeast.cloudapp.azure.com/signin-oidc",
-                    "http://anydeals.norwayeast.cloudapp.azure.com:80/signin-oidc"
+                    "http://anydeals.norwayeast.cloudapp.azure.com:80/signin-oidc",
+                    "http://localhost/silent",
+                    "http://localhost:80/silent",
+                    "http://anydeals.norwayeast.cloudapp.azure.com/silent",
+                    "http://anydeals.norwayeast.cloudapp.azure.com:80/silent",
                 },
                 PostLogoutRedirectUris =
                 {
@@ -67,10 +72,13 @@ public static class Config
                 AllowedGrantTypes = GrantTypes.Code,
                 RequireClientSecret = false,
                 RequirePkce = true,
+                AccessTokenLifetime = 60 * 60, // 1 hour
                 RedirectUris =
                 {
                     "http://localhost:3000/signin-oidc",
-                    "https://localhost:3000/signin-oidc"
+                    "http://localhost:3000/silent",
+                    "https://localhost:3000/signin-oidc",
+                    "https://localhost:3000/silent"
                 },
                 AllowedCorsOrigins =
                 {
