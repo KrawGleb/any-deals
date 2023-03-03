@@ -8,6 +8,7 @@
 
     <ItemGroup>
         <Folder Include="Migrations\" />
+        <Folder Include="Migrations\Data" />
     </ItemGroup>
 
     <ItemGroup>
@@ -26,6 +27,15 @@
 
     <ItemGroup>
         <ProjectReference Include="..\SaM.AnyDeals.DataAccess.Models\SaM.AnyDeals.DataAccess.Models.csproj" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <None Update="Migrations\Data\cities.csv">
+        <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      </None>
+      <None Update="Migrations\Data\countries.csv">
+        <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      </None>
     </ItemGroup>
 
 </Project>
