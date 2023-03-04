@@ -24,7 +24,7 @@ namespace SaM.AnyDeals.DataAccess.Migrations
                 AS
                 BEGIN
                     DECLARE @sql NVARCHAR(MAX)
-                    SET @sql = ' TRUNCATE TABLE ' + @tableName +
+                    SET @sql = ' DELETE FROM ' + @tableName +
                                ' BULK INSERT ' + @tableName +
                                ' FROM ''' + @csvFilePath + ''' ' +
                                ' WITH ( ' +
