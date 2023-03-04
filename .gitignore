@@ -419,7 +419,7 @@ src/SaM.AnyDeals.Web/yarn-debug.log*
 src/SaM.AnyDeals.Web/yarn-error.log*
 
 # SQL Server volume
-data
+/data
 /src/SaM.AnyDeals.IdentityServer/tempkey.jwk
 
 # JetBrains
