@@ -25,9 +25,36 @@ public class CreateAdvertCommandHandler : IRequestHandler<CreateAdvertCommand, R
 
     public async Task<Response> Handle(CreateAdvertCommand request, CancellationToken cancellationToken)
     {
-        await CreateAdvertAsync(request, cancellationToken);
+        switch (request.Goal)
+        {
+            case Goal.Request:
+                await CreateRequestAsync(request, cancellationToken);
+                break;
+            case Goal.Offer:
+                await CreateOfferAsync(request, cancellationToken);
+                break;
+            default:
+                throw new InvalidOperationException();
+        }
 
         return new Response();
+    }
+
+    private async Task CreateRequestAsync(CreateAdvertCommand request, CancellationToken cancellationToken)
+    {
+        request = request with
+        {
+            Price = null,
+            AllowedCardPayment = false,
+            AllowedCashPayment = false
+        };
+
+        await CreateAdvertAsync(request, cancellationToken);
+    }
+
+    private async Task CreateOfferAsync(CreateAdvertCommand request, CancellationToken cancellationToken)
+    {
+        await CreateAdvertAsync(request, cancellationToken);
     }
 
     private async Task CreateAdvertAsync(CreateAdvertCommand request, CancellationToken cancellationToken)

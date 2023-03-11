@@ -43,9 +43,8 @@ public class ApproveOrderCommandHandler : IRequestHandler<ApproveOrderCommand, R
 
     private async Task AddFundsOnCompletedOrderAsync(OrderDbEntry order, CancellationToken cancellationToken)
     {
-        if (!order.HasCustomerApproval || !order.HasExecutorApproval)
+        if (!order.HasCustomerApproval)
             return;
-
 
         await _applicationDbContext
             .Orders
