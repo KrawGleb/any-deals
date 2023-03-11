@@ -10,7 +10,7 @@ import EditAdvert from "./pages/adverts/edit/EditAdvert";
 import { useSelector } from "react-redux";
 import { RootState } from "./features/store/store";
 import About from "./pages/about/About";
-import AdvertsDetails from "./pages/adverts/details/AdvertsDetails";
+import AdvertDetails from "./pages/adverts/details/AdvertDetails";
 import Moderation from "./pages/moderation/Moderation";
 import ModerationAdverts from "./pages/moderation/adverts/ModerationAdverts";
 import ModerationCategories from "./pages/moderation/categoreis/ModerationCategories";
@@ -49,7 +49,7 @@ function App() {
               <Route path="search" element={<Search />} />
               <Route path="new" element={<NewAdvert />} />
               <Route path="edit" element={<EditAdvert />} />
-              <Route path="details" element={<AdvertsDetails />} />
+              <Route path="details" element={<AdvertDetails />} />
               <Route path="my" element={<MyAdverts />}>
                 <Route path="" element={<CreatedAdverts />} />
                 <Route path="orders" element={<Orders />} />

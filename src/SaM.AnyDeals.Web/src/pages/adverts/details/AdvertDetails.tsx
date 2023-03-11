@@ -1,4 +1,4 @@
-import "./AdvertsDetails.scss";
+import "./AdvertDetails.scss";
 import React, { ChangeEvent, useEffect, useRef, useState } from "react";
 import { useGetAdvertByIdQuery } from "../../../features/api/extensions/advertsApiExtension";
 import useQuery from "../../../features/hooks/useQuery";
@@ -24,14 +24,19 @@ import { RootState } from "../../../features/store/store";
 
 export default function AdvertsDetails() {
   const [hasClientSecret, setHasClientSecret] = useState(false);
-  const authState = useSelector((state: RootState) => state.auth);
   const query = useQuery() as any;
   const scrollRef = useRef(null);
+
   const navigate = useNavigate();
   const advertId: number = +query.get("id");
   const { data: advert } = useGetAdvertByIdQuery(advertId);
   const [paymentMethod, setPaymentMethod] = useState<number | undefined>(0);
   const [createOrder] = useCreateOrderMutation();
+
+  const authState = useSelector((state: RootState) => state.auth);
+  const isAuthorize = !!authState.user;
+  const isOwner =
+    isAuthorize && advert?.creator.id === authState.user?.profile.sub;
 
   useEffect(() => {
     const clientSecret = new URLSearchParams(window.location.search).get(
@@ -114,61 +119,66 @@ export default function AdvertsDetails() {
             )}
           </div>
 
-          <Paper className="advert-details__footer">
-            <Box className="advert-details__footer__container">
-              <Box className="advert-details__footer__price">
-                {advert?.price ? <p>{advert?.price} $</p> : <></>}
+          {isAuthorize ? (
+            <Paper className="advert-details__footer">
+              <Box className="advert-details__footer__container">
+                <Box className="advert-details__footer__price">
+                  {advert?.price ? <p>{advert?.price} $</p> : <></>}
 
-                <Box className="advert-details__footer__method">
-                  {advert?.interest === Interest.Commercial &&
-                  advert.allowedCardPayment &&
-                  advert.allowedCashPayment &&
-                  authState.user ? (
-                    <RadioGroup
-                      row
-                      defaultValue={0}
-                      value={paymentMethod}
-                      onChange={handlePaymentMethodChange}
-                    >
-                      <FormControlLabel
-                        value={0}
-                        control={
-                          <Radio
-                            icon={<AccountBalanceWalletIcon />}
-                            checkedIcon={<AccountBalanceWalletIcon />}
-                          />
-                        }
-                        label=""
-                      />
+                  <Box className="advert-details__footer__method">
+                    {advert?.interest === Interest.Commercial &&
+                    advert.allowedCardPayment &&
+                    advert.allowedCashPayment &&
+                    !isOwner ? (
+                      <RadioGroup
+                        row
+                        defaultValue={0}
+                        value={paymentMethod}
+                        onChange={handlePaymentMethodChange}
+                      >
+                        <FormControlLabel
+                          value={0}
+                          control={
+                            <Radio
+                              icon={<AccountBalanceWalletIcon />}
+                              checkedIcon={<AccountBalanceWalletIcon />}
+                            />
+                          }
+                          label=""
+                        />
 
-                      <FormControlLabel
-                        value={1}
-                        control={
-                          <Radio
-                            icon={<PaymentIcon />}
-                            checkedIcon={<PaymentIcon />}
-                          />
-                        }
-                        label=""
-                      />
-                    </RadioGroup>
-                  ) : (
-                    <></>
-                  )}
+                        <FormControlLabel
+                          value={1}
+                          control={
+                            <Radio
+                              icon={<PaymentIcon />}
+                              checkedIcon={<PaymentIcon />}
+                            />
+                          }
+                          label=""
+                        />
+                      </RadioGroup>
+                    ) : (
+                      <></>
+                    )}
+                  </Box>
+                </Box>
+                <Box className="advert-details__footer__order">
+                  <Button
+                    style={{ textTransform: "none" }}
+                    variant="contained"
+                    color="success"
+                    onClick={handleOrderClick}
+                    disabled={isOwner}
+                  >
+                    Order
+                  </Button>
                 </Box>
               </Box>
-              <Box className="advert-details__footer__order">
-                <Button
-                  style={{ textTransform: "none" }}
-                  variant="contained"
-                  color="success"
-                  onClick={handleOrderClick}
-                >
-                  Order
-                </Button>
-              </Box>
-            </Box>
-          </Paper>
+            </Paper>
+          ) : (
+            <></>
+          )}
         </div>
       ) : (
         <></>
