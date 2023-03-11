@@ -26,7 +26,8 @@ public class GetChatMessagesQueryHandler : IRequestHandler<GetChatMessagesQuery,
                         .Include(o => o.Chat)
                         .FirstOrDefaultAsync(o => o.Id == request.OrderId, cancellationToken)
                     ?? throw new NotFoundException($"Order with id {request.OrderId} not found.");
-
+        
+        // TODO: Try to load chat 
         var messages = await _applicationDbContext
             .Messages
             .Include(m => m.Sender)

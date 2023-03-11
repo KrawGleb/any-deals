@@ -36,9 +36,10 @@ namespace SaM.AnyDeals.DataAccess.Migrations
                 END
                 """);
 
-            var countriesFile = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Migrations/Data/countries.csv");
-            var citiesFile = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Migrations/Data/cities.csv");
-
+            var dataFolder = Environment.GetEnvironmentVariable("MIGRATION_DATA_FOLDER");
+            var countriesFile = Path.Combine(dataFolder, "countries.csv");
+            var citiesFile = Path.Combine(dataFolder, "cities.csv");
+            
             migrationBuilder.Sql(
                 $"""
                     EXEC [dbo].[LoadDataFromCSV] '{countriesFile}', 'Countries'
