@@ -1,0 +1,15 @@
+.animated-box {
+  animation: slideInUp 0.5s ease-in-out both;
+}
+
+@keyframes slideInUp {
+  from {
+    transform: translateY(100%);
+    opacity: 0;
+  }
+
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
