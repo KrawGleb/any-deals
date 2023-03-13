@@ -32,6 +32,9 @@ import AdvertContactsFormArea from "./areas/contacts/AdvertContactsFormArea";
 import AdvertFilesUploadArea from "./areas/upload/AdvertFilesUploadArea";
 import { Location } from "../../../models/location";
 import { Category } from "../../../models/api/category";
+import { Interest } from "../../../models/enums/interest";
+import { Group } from "../../../models/enums/group";
+import { Goal } from "../../../models/enums/goal";
 
 const schema = yup
   .object()
@@ -49,8 +52,9 @@ const schema = yup
       price: yup
         .number()
         .nullable()
-        .when(["interest"], {
-          is: (value: number) => value === 0,
+        .when(["goal", "interest"], {
+          is: (goalValue: number, interestValue: number) =>
+            goalValue === Goal.Offer && interestValue === Interest.Commercial,
           then: yup.number().required().positive(),
           otherwise: yup
             .number()
@@ -87,8 +91,8 @@ const schema = yup
     [["phone", "phone"]]
   )
   .test("shouldSelectAtLeastOnePaymentMethod", (obj) => {
-    if (obj.interest !== 0) return true;
-
+    if (obj.goal !== Goal.Offer || obj.interest !== Interest.Commercial)
+      return true;
     if (obj.allowedCardPayment || obj.allowedCashPayment) return true;
 
     return new yup.ValidationError("Select at least one payment method", null);

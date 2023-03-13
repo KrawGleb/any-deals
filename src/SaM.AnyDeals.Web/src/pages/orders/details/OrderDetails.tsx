@@ -163,6 +163,7 @@ export default function OrderDetails() {
               orderId={orderId}
               customerId={order.customer.id}
               executorId={order.executor.id}
+              disabled={hasCustomerApproval && hasExecutorApproval}
             />
           </Paper>
         </div>

@@ -16,6 +16,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 		.editorconfig = .editorconfig
 		.gitignore = .gitignore
 		README.md = README.md
+		Dockerfile = Dockerfile
 	EndProjectSection
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SaM.AnyDeals.Application", "src\SaM.AnyDeals.Application\SaM.AnyDeals.Application.csproj", "{B3698EAF-1EF0-44F7-B9F9-14A05F468BF9}"

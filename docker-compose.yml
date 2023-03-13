@@ -2,7 +2,10 @@ version: "3.4"
 
 services:
   database:
-    image: "mcr.microsoft.com/mssql/server:2019-latest"
+    image: ${DOCKER_REGISTRY-}database
+    build:
+      context: .
+      dockerfile: Dockerfile
     environment:
       - ACCEPT_EULA=Y
       - SA_PASSWORD=ChangeMe123!

@@ -1,5 +1,5 @@
 import "./Filters.scss";
-import React, { useEffect, useState } from "react";
+import React, { ChangeEvent, useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { SelectableItem } from "../../../models/selectableItem";
 import { Category } from "../../../models/api/category";
@@ -197,7 +197,12 @@ export default function Filters() {
               onClick={() => setIsCategorySelectOpen(true)}
             />
             <Box className="text">
-              <Input label="Text in advert" value={title} />
+              <Input
+                label="Text in advert"
+                onChange={(e: ChangeEvent<HTMLInputElement>) =>
+                  setTitle(e.target.value)
+                }
+              />
               <Button
                 variant="contained"
                 sx={{ minWidth: "8rem", borderRadius: "10px" }}

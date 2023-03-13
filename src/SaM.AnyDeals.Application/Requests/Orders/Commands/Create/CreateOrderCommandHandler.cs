@@ -3,6 +3,7 @@ using SaM.AnyDeals.Application.Common.Services.Interfaces;
 using SaM.AnyDeals.Common.Enums.Adverts;
 using SaM.AnyDeals.Common.Exceptions;
 using SaM.AnyDeals.DataAccess;
+using SaM.AnyDeals.DataAccess.Models.Auth;
 using SaM.AnyDeals.DataAccess.Models.Entries;
 using Stripe;
 using PaymentMethod = SaM.AnyDeals.Common.Enums.PaymentMethod;
@@ -27,19 +28,18 @@ public class CreateOrderCommandHandler : IRequestHandler<CreateOrderCommand, Res
 
     public async Task<Response> Handle(CreateOrderCommand request, CancellationToken cancellationToken)
     {
-        var targetAdvert = await _applicationDbContext
+        var advert = await _applicationDbContext
                                .Adverts
                                .SingleOrDefaultAsync(a => a.Id == request.AdvertId, cancellationToken)
                            ?? throw new NotFoundException($"Advert with id {request.AdvertId} not found.");
 
-        var customer = await _currentUserService.GetCurrentUserAsync();
-        var customerId = customer.Id;
-        var executorId = targetAdvert.CreatorId;
+        var initiator = await _currentUserService.GetCurrentUserAsync();
+        var (executorId, customerId) = GetActorsIds(advert, initiator);
 
         if (customerId == executorId)
-                throw new ForbiddenActionException("Customer and executor ids are the same.");
+            throw new ForbiddenActionException("Customer and executor are the same user.");
 
-        var paymentMethod = GetPaymentMethod(targetAdvert, request);
+        var paymentMethod = GetPaymentMethod(advert, request);
         var order = new OrderDbEntry
         {
             AdvertId = request.AdvertId,
@@ -51,12 +51,21 @@ public class CreateOrderCommandHandler : IRequestHandler<CreateOrderCommand, Res
         };
 
         var succeeded = await TryCommitOrderAsync(request, order, cancellationToken);
-        if (!succeeded) await RollbackOrderAsync(request, order);
+        if (!succeeded) await RollbackOrderAsync(order);
 
         return new Response { Succeeded = succeeded };
     }
 
-    private async Task<bool> TryCommitOrderAsync(CreateOrderCommand request, OrderDbEntry order,
+    private (string ExecutorId, string CustomerId) GetActorsIds(AdvertDbEntry advert, ApplicationUser initiator)
+    {
+        return advert.Goal == Goal.Offer
+            ? (advert.CreatorId!, initiator.Id!)
+            : (initiator.Id!, advert.CreatorId!);
+    }
+
+    private async Task<bool> TryCommitOrderAsync(
+        CreateOrderCommand request,
+        OrderDbEntry order,
         CancellationToken cancellationToken)
     {
         try
@@ -79,7 +88,7 @@ public class CreateOrderCommandHandler : IRequestHandler<CreateOrderCommand, Res
         return true;
     }
 
-    private async Task RollbackOrderAsync(CreateOrderCommand request, OrderDbEntry order)
+    private async Task RollbackOrderAsync(OrderDbEntry order)
     {
         var savedOrder = await _applicationDbContext
             .Orders
@@ -98,7 +107,7 @@ public class CreateOrderCommandHandler : IRequestHandler<CreateOrderCommand, Res
             ?? throw new ArgumentNullException(nameof(paymentIntent));
 
         var paymentService = _paymentServicesAccessor.PaymentIntentService;
-        var intentDetails = paymentService.Get(paymentIntent);
+        var intentDetails = await paymentService.GetAsync(paymentIntent);
 
         var options = new PaymentIntentCaptureOptions
         {
@@ -111,21 +120,15 @@ public class CreateOrderCommandHandler : IRequestHandler<CreateOrderCommand, Res
 
     private PaymentMethod? GetPaymentMethod(AdvertDbEntry advert, CreateOrderCommand request)
     {
-        if (advert.Interest == Interest.Social)
+        if (advert.Goal == Goal.Request ||
+            advert.Interest == Interest.Social)
             return null;
 
-        if (request.PaymentMethod == PaymentMethod.Card &&
-            (advert.AllowedCardPayment ?? false))
+        return request.PaymentMethod switch
         {
-            return PaymentMethod.Card;
-        }
-
-        if (request.PaymentMethod == PaymentMethod.Cash &&
-            (advert.AllowedCashPayment ?? false))
-        {
-            return PaymentMethod.Cash;
-        }
-
-        throw new InvalidOperationException("Failed to recognize payment method.");
+            PaymentMethod.Card when (advert.AllowedCardPayment ?? false) => PaymentMethod.Card,
+            PaymentMethod.Cash when (advert.AllowedCashPayment ?? false) => PaymentMethod.Cash,
+            _ => throw new InvalidOperationException("Failed to recognize payment method.")
+        };
     }
 }

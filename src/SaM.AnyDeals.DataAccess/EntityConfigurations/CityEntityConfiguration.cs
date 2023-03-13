@@ -6,13 +6,6 @@ namespace SaM.AnyDeals.DataAccess.EntityConfigurations;
 
 public class CityEntityConfiguration : EntityConfigurationBase<CityDbEntry>
 {
-    public override void ConfigureRelationships(EntityTypeBuilder<CityDbEntry> builder)
-    {
-        builder
-            .HasOne(c => c.Country)
-            .WithMany(c => c.Cities);
-    }
-
     public override void ConfigureConstraints(EntityTypeBuilder<CityDbEntry> builder)
     {
         builder

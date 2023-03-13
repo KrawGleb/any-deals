@@ -1,5 +1,5 @@
 import "./OrderChat.scss";
-import React, { ChangeEvent, useEffect, useRef, useState } from "react";
+import React, { useEffect, useRef } from "react";
 import { OrderChatProps } from "./OrderChatProps";
 import { Box, Button } from "@mui/material";
 import Input from "../../common/input/Input";
@@ -14,6 +14,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "../../../features/store/store";
 
 export default function OrderChat(props: OrderChatProps) {
+  const lastMessageRef = useRef<HTMLParagraphElement>(null);
   const inputRef = useRef();
   const dispatch = useDispatch();
   const userId = useSelector(
@@ -24,9 +25,12 @@ export default function OrderChat(props: OrderChatProps) {
   const [sendMessage] = useSendMessageMutation();
 
   const handleSendClick = () => {
+    const text = (inputRef.current! as HTMLInputElement).value;
+    if (!text) return;
+
     sendMessage({
       orderId: props.orderId,
-      text: (inputRef.current! as HTMLInputElement).value,
+      text,
     });
 
     (inputRef.current! as HTMLInputElement).value = "";
@@ -62,6 +66,14 @@ export default function OrderChat(props: OrderChatProps) {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
+  useEffect(() => {
+    if (!lastMessageRef?.current) return;
+
+    (lastMessageRef?.current! as Element).scrollIntoView({
+      behavior: "smooth",
+    });
+  }, [messages, lastMessageRef]);
+
   return (
     <Box className="order-chat__root">
       <Box className="order-chat__history">
@@ -70,18 +82,20 @@ export default function OrderChat(props: OrderChatProps) {
             <p
               key={index}
               className={message.sender.id === userId ? "from-me" : "from-them"}
+              ref={index === messages.length - 1 ? lastMessageRef : undefined}
             >
               {message.text}
             </p>
           ))}
       </Box>
-      <Box className="order-chat__input">
+      <form className="order-chat__input" onSubmit={(e) => e.preventDefault()}>
         <Input
           ref={inputRef}
           label="Write a message"
           disabled={props.disabled}
         />
         <Button
+          type="submit"
           variant="contained"
           endIcon={<SendIcon />}
           onClick={handleSendClick}
@@ -89,7 +103,7 @@ export default function OrderChat(props: OrderChatProps) {
         >
           Send
         </Button>
-      </Box>
+      </form>
     </Box>
   );
 }

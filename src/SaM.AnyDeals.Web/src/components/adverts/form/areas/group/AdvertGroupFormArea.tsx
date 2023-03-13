@@ -18,14 +18,16 @@ import { AreaProps } from "../AreaProps";
 import AccountBalanceWalletIcon from "@mui/icons-material/AccountBalanceWallet";
 import PaymentIcon from "@mui/icons-material/Payment";
 import FormHelperText from "@mui/material/FormHelperText";
+import { Interest } from "../../../../../models/enums/interest";
+import { Goal } from "../../../../../models/enums/goal";
 
 export default function AdvertGroupFormArea({
   control,
   errors,
   watch,
 }: AreaProps) {
+  const watchGoal = watch!("goal", 0);
   const watchInterest = watch!("interest", 0);
-
   const watchAllowedCashPayment = watch!("allowedCashPayment", true);
   const watchAllowedCardPayment = watch!("allowedCardPayment", true);
 
@@ -110,7 +112,8 @@ export default function AdvertGroupFormArea({
             )}
           />
         </Box>
-        {+watchInterest === 0 ? (
+        {+watchGoal !== Goal.Request &&
+        +watchInterest === Interest.Commercial ? (
           <>
             <Typography variant="subtitle2">Allowed payment methods</Typography>
             <Stack direction="row" gap="20px">
