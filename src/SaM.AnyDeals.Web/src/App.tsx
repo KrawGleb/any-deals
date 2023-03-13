@@ -19,8 +19,6 @@ import AutoSilentRenew from "./pages/auth/AutoSilentRenew";
 import SignOut from "./pages/auth/SignOut";
 import SignIn from "./pages/auth/SignIn";
 
-// Lazy loaded pages
-// About
 const ErrorPage = lazy(() => import("./pages/errors/Error"));
 const AboutPage = lazy(() => import("./pages/about/About"));
 const UserPage = lazy(() => import("./pages/user/User"));

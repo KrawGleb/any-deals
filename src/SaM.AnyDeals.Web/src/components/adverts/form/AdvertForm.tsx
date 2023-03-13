@@ -33,7 +33,6 @@ import AdvertFilesUploadArea from "./areas/upload/AdvertFilesUploadArea";
 import { Location } from "../../../models/location";
 import { Category } from "../../../models/api/category";
 import { Interest } from "../../../models/enums/interest";
-import { Group } from "../../../models/enums/group";
 import { Goal } from "../../../models/enums/goal";
 
 const schema = yup

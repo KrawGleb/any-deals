@@ -14,6 +14,7 @@ import {
 } from "../../../features/store/slices/searchSlice";
 import { RootState } from "../../../features/store/store";
 import { Advert } from "../../../models/api/advert";
+import { CircularProgress } from "@mui/material";
 
 export default function Search() {
   const navigate = useNavigate();
@@ -74,7 +75,11 @@ export default function Search() {
         <InfiniteScroll
           dataLength={currentAdverts.length}
           next={nextPage}
-          loader={<h4>Loading...</h4>}
+          loader={
+            <Box className="loader">
+              <CircularProgress color="secondary" />
+            </Box>
+          }
           hasMore={hasMore}
         >
           <AdvertsList adverts={currentAdverts} onCardClick={onCardClick} />

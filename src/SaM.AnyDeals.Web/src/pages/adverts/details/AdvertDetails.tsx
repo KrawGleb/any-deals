@@ -65,8 +65,7 @@ export default function AdvertsDetails() {
 
     if (advert?.allowedCashPayment) setPaymentMethod(0);
     else if (advert?.allowedCardPayment) setPaymentMethod(1);
-    // else throw new Error("Something wrong with payment method");
-  }, [advert]);
+  }, [advert, hasClientSecret]);
 
   const handleOrderClick = async () => {
     if (paymentMethod === 1) {
