@@ -29,6 +29,8 @@ public class GetUserDetailsQueryHandler : IRequestHandler<GetUserDetailsQuery, R
                        .ThenInclude(a => a.Category!)
                        .Include(u => u.Adverts!)
                        .ThenInclude(a => a.Reviews)
+                       .Include(u => u.Adverts!)
+                       .ThenInclude(a => a.Contacts!)
                        .Include(u => u.Orders)
                        .SingleOrDefaultAsync(
                            u => u.UserName == request.Username,
