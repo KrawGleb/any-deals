@@ -1,17 +1,30 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import "./MyAdverts.scss";
 import { Button, Grid } from "@mui/material";
 import { Link, Outlet, useNavigate } from "react-router-dom";
 import VerticalTabs from "../../../components/common/verticalTabs/VerticalTabs";
 import VerticalTab from "../../../components/common/verticalTabs/VerticalTab";
+import { useDispatch, useSelector } from "react-redux";
+import { setHeaderTab } from "../../../features/store/slices/tabsSlice";
+import { RootState } from "../../../features/store/store";
 
 export default function MyAdverts() {
   const navigate = useNavigate();
+  const dispatch = useDispatch();
   const [tab, setTab] = useState(0);
+  const tabsState = useSelector((state: RootState) => state.tabs);
 
   const handleChange = (_event: React.SyntheticEvent, newTab: number) => {
     setTab(newTab);
   };
+
+  useEffect(() => {
+    dispatch(setHeaderTab(1));
+  }, [dispatch]);
+
+  useEffect(() => {
+    setTab(tabsState.myTab);
+  }, [tabsState]);
 
   return (
     <div className="my">

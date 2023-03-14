@@ -15,6 +15,7 @@ import {
 import { RootState } from "../../../features/store/store";
 import { Advert } from "../../../models/api/advert";
 import { CircularProgress } from "@mui/material";
+import { setHeaderTab } from "../../../features/store/slices/tabsSlice";
 
 export default function Search() {
   const navigate = useNavigate();
@@ -34,6 +35,10 @@ export default function Search() {
   const nextPage = () => {
     dispatch(setPageFilter(currentPage + 1));
   };
+
+  useEffect(() => {
+    dispatch(setHeaderTab(0));
+  }, [dispatch]);
 
   useEffect(() => {
     if (adverts === undefined) return;

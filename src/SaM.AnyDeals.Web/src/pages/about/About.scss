@@ -4,5 +4,34 @@
 
   &__title {
     font-family: "Prosto One", cursive;
+    mix-blend-mode: color-dodge;
+    font-size: 5rem;
+    text-align: center;
+    margin: 0;
+    padding: 2vh 200px 10vh 200px;
+    color: lightsalmon;
+  }
+
+  &__quote {
+  }
+
+  &__header {
+    box-sizing: border-box;
+    padding: 20px;
+    padding-bottom: 40px;
+    position: relative;
+    background-image: url("https://firebasestorage.googleapis.com/v0/b/listography-690a0.appspot.com/o/assets%2Fhome.webp?alt=media&token=7852d11c-b2e4-4df3-872f-ff5bcf293a94");
+    background-size: cover;
+
+    &::before {
+      content: inherit;
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background-image: inherit;
+      transform: scaleX(-1);
+    }
   }
 }

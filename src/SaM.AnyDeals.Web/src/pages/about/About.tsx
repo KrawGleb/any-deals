@@ -1,63 +1,57 @@
-import {
-  Box,
-  Button,
-  Container,
-  Grid,
-  Stack,
-  Typography,
-  Paper,
-} from "@mui/material";
+import { Box, Button, Stack, Typography, Paper } from "@mui/material";
 import "./About.scss";
-import React from "react";
+import React, { useEffect } from "react";
+import { useNavigate } from "react-router";
+import { setHeaderTab } from "../../features/store/slices/tabsSlice";
+import { useDispatch } from "react-redux";
 
 export default function About() {
+  const navigate = useNavigate();
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    dispatch(setHeaderTab(2));
+  }, [dispatch]);
+
   return (
     <Paper className="about">
-      <Box marginBottom="20px">
-        <Typography className="about__title" variant="h3" align="center">
-          Any Deals
-        </Typography>
-      </Box>
+      <Box className="about__header">
+        <Box marginBottom="20px">
+          <Typography className="about__title" variant="h3" align="center">
+            Any Deals
+          </Typography>
+        </Box>
 
-      <Box
-        borderRight={3}
-        borderColor="grey.500"
-        width="34%"
-        margin="13px 0 50px auto"
-        paddingRight="10px"
-      >
-        <Typography
-          variant="h6"
-          align="right"
-          color="text.secondary"
-          paddingRight="5px"
-          paragraph
+        <Box
+          borderLeft={3}
+          borderColor="grey.500"
+          width="46%"
+          paddingLeft="10px"
+          className="about__quote"
         >
-          The biggest challenge of the 21st century is to offer opportunities
-          for all humans to develop their full potential, unhampered by
-          discrimination based on race, gender, religion, ethnicity or social
-          status.
-        </Typography>
-        <Typography
-          variant="h6"
-          align="right"
-          color="gray"
-          paddingRight="5px"
-          paragraph
-        >
-          Ban Ki-moon
-        </Typography>
+          <Typography
+            variant="h6"
+            align="left"
+            color="text.secondary"
+            paddingRight="5px"
+            paragraph
+          >
+            The biggest challenge of the 21st century is to offer opportunities
+            for all humans to develop their full potential, unhampered by
+            discrimination based on race, gender, religion, ethnicity or social
+            status.
+          </Typography>
+          <Typography
+            variant="h6"
+            align="left"
+            color="gray"
+            paddingRight="5px"
+            paragraph
+          >
+            - Ban Ki-moon
+          </Typography>
+        </Box>
       </Box>
-
-      <Grid container>
-        <Grid item style={{ overflow: "hidden" }}>
-          <img
-            src="https://miro.medium.com/max/2625/1*xs36gT9hM34aKPucjGWQLQ.jpeg"
-            alt=""
-            style={{ width: "100%" }}
-          />
-        </Grid>
-      </Grid>
 
       <Box sx={{ p: 6 }}>
         <Typography variant="subtitle1" textAlign="center">
@@ -90,7 +84,11 @@ export default function About() {
           spacing={2}
           justifyContent="center"
         >
-          <Button variant="contained" color="secondary">
+          <Button
+            variant="contained"
+            color="secondary"
+            onClick={() => navigate("/")}
+          >
             Search ads
           </Button>
         </Stack>

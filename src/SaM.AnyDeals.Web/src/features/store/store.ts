@@ -6,6 +6,7 @@ import searchSlice from "./slices/searchSlice";
 import authSlice from "./slices/authSlice";
 import { loadUser } from "../api/auth/userService";
 import { userFound } from "./slices/authSlice";
+import tabsSlice from "./slices/tabsSlice";
 
 const loadState = () => {
   loadUser().then((user) => {
@@ -24,6 +25,7 @@ const store = configureStore({
     fileUpload: fileUploadSlice,
     filters: filtersSlice,
     searchSlice: searchSlice,
+    tabs: tabsSlice,
     [baseApi.reducerPath]: baseApi.reducer,
   },
   middleware: (getDefaultMiddleware) =>

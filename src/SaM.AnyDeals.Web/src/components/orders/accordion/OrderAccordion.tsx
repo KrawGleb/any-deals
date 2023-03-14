@@ -35,10 +35,10 @@ export default function OrderAccordion({
             <InterestTag interest={advert.interest} />
           </Box>
           <Box className="order-accordion__summary__content">
-            <Typography className="order-accordion__summary__title">
+            <p className="order-accordion__summary__title">
               {advert.title}
               <ExpandMoreIcon fontSize="large" />
-            </Typography>
+            </p>
           </Box>
         </Box>
       </AccordionSummary>

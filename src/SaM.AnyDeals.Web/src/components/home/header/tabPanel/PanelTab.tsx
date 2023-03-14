@@ -15,8 +15,6 @@ const CustomTab = styled(Tab)<TabProps>(({ theme }) => ({
   },
 }));
 
-export default function PanelTab(props: any) {
-  return (
-    <CustomTab disableRipple {...props} component={Link} />
-  );
+export default function PanelTab(props: TabProps | any) {
+  return <CustomTab disableRipple component={Link} {...props} />;
 }
