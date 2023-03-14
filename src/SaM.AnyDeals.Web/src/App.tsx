@@ -46,13 +46,13 @@ function App() {
             <Route path="/signout-oidc" element={<SignOut />} />
             <Route path="/signin-oidc" element={<SignIn />} />
             <Route path="/silent" element={<SilentRenew />} />
-            <Route path="/about" element={<AboutPage />} />
             <Route path="/users/:username" element={<UserPage />} />
             <Route
               path="/error"
               element={<ErrorPage text="Something went wrong" />}
             />
             <Route path="/" element={<Home />}>
+              <Route path="about" element={<AboutPage />} />
               <Route path="adverts" element={<Outlet />}>
                 <Route path="search" element={<Search />} />
                 <Route path="new" element={<NewAdvert />} />
