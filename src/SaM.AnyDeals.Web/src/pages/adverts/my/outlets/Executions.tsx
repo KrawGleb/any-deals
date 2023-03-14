@@ -5,6 +5,7 @@ import OrdersList from "../../../../components/orders/list/OrdersList";
 import GoalTabs from "../../../../components/search/filters/GoalTabs";
 import { useGetMyRequestsQuery } from "../../../../features/api/extensions/ordersApiExtension";
 import { Order } from "../../../../models/api/order";
+import OrderAccordion from "../../../../components/orders/accordion/OrderAccordion";
 
 export default function Executions() {
   const navigate = useNavigate();
