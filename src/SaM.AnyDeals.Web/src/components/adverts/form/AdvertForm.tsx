@@ -153,7 +153,6 @@ export default function AdvertForm({ advert }: AdvertFormProps) {
   const onSubmit = (data: any) => {
     updateFiles({ shouldSave: true });
 
-    console.log(uploadedFiles);
     const attachments = uploadedFiles
       .filter((fileWrapper) => !fileWrapper.deleted)
       .map(
@@ -173,9 +172,6 @@ export default function AdvertForm({ advert }: AdvertFormProps) {
       category: selectedCategory?.name,
       attachments,
     };
-
-    console.log("Put request: ", putAdvertRequest);
-    console.log("Data: ", data);
 
     const mutationAction = isEditMode
       ? updateAdvert(putAdvertRequest)
@@ -218,7 +214,6 @@ export default function AdvertForm({ advert }: AdvertFormProps) {
   }, []);
 
   useEffect(() => {
-    console.log(advert);
     if (!advert) return;
 
     setSelectedCategory(advert.category);

@@ -34,10 +34,6 @@ export default function Header() {
     setValue(newValue);
   };
 
-  useEffect(() => {
-    console.log(me);
-  }, [me]);
-
   const myAdvertsTab = isLoggedIn ? (
     <PanelTab label="My adverts" to="/adverts/my" />
   ) : undefined;
