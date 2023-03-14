@@ -17,11 +17,10 @@ import {
 } from "../../../../../features/store/slices/fileUploadSlice";
 import RejectedFile from "./rejectedFile/RejectedFile";
 
+const maxFilesCount = 10;
+
 export default function FilesUploadField({
   uploadedFiles,
-  field,
-  fieldState,
-  formState,
 }: FilesUploadFieldProps) {
   const dispatch = useDispatch();
   const storedFilesCount = useSelector(
@@ -34,9 +33,13 @@ export default function FilesUploadField({
   );
   const [_rejectedFiles, setRejectedFiles] = useState<FileRejection[]>([]);
 
+  useEffect(() => {
+    setStoredFiles(uploadedFiles);
+  }, [uploadedFiles]);
+
   const onDrop = useCallback(
     (acceptedFiles: File[], rejectedFiles: FileRejection[]) => {
-      if (_files.length + (_storedFiles?.length ?? 0) > 25) return;
+      if (_files.length + (_storedFiles?.length ?? 0) > maxFilesCount) return;
 
       let fileId = storedFilesCount;
       const storedFiles: StoredFile[] = [];
