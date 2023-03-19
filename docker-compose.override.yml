@@ -34,7 +34,6 @@ services:
     ports:
       - "5001:3000"
     volumes:
-      - ./src/SaM.AnyDeals.Web/:/app:delegated
       - /app/node_modules
   proxy:
     volumes:
