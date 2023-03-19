@@ -29,17 +29,8 @@ export default function About() {
           paddingLeft="10px"
           className="about__quote"
         >
-          <Typography
-            variant="h6"
-            align="left"
-            color="text.secondary"
-            paddingRight="5px"
-            paragraph
-          >
-            The biggest challenge of the 21st century is to offer opportunities
-            for all humans to develop their full potential, unhampered by
-            discrimination based on race, gender, religion, ethnicity or social
-            status.
+          <Typography variant="h6" align="left" paddingRight="5px" paragraph>
+            Opportunity does not waste time with those who are unprepared.
           </Typography>
           <Typography
             variant="h6"
@@ -48,7 +39,7 @@ export default function About() {
             paddingRight="5px"
             paragraph
           >
-            - Ban Ki-moon
+            - Idowu Koyenikan
           </Typography>
         </Box>
       </Box>

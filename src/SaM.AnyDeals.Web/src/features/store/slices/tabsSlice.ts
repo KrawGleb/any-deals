@@ -13,7 +13,6 @@ const tabsSlice = createSlice({
   initialState,
   reducers: {
     setHeaderTab(state, action: PayloadAction<number>) {
-      console.log("Set header tab to ", action.payload);
       state.headerTab = action.payload;
     },
     setMyTab(state, action: PayloadAction<number>) {

@@ -56,7 +56,7 @@ export default function AdvertsDetails() {
     }
 
     if (hasClientSecret) {
-      (scrollRef?.current! as Element).scrollIntoView({
+      (scrollRef?.current! as Element)?.scrollIntoView({
         behavior: "smooth",
         block: "end",
       });

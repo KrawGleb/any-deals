@@ -58,8 +58,6 @@ export default function User() {
     .slice(0, 5)
     .map((v, index) => ({ ...v, fill: preparedColors[index] }));
 
-  console.log(topFiveFromDataWithColors);
-
   return (
     <Box className="user-details__container">
       <BackLine link="/" />

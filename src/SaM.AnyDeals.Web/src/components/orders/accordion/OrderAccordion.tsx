@@ -5,7 +5,6 @@ import {
   AccordionDetails,
   AccordionSummary,
   Box,
-  Divider,
   Typography,
 } from "@mui/material";
 import { Order } from "../../../models/api/order";
@@ -26,6 +25,7 @@ export default function OrderAccordion({
 
   const advert = orders[0].advert;
 
+  if (!advert) return null;
   return (
     <Accordion className="order-accordion" key={key}>
       <AccordionSummary>

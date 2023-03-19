@@ -1,7 +1,6 @@
 import "./OrdersList.scss";
 import React from "react";
 import { Box, Stack } from "@mui/material";
-import OrderCard from "../card/OrderCard";
 import { OrdersListProps } from "./OrdersListProps";
 import OrderAccordion from "../accordion/OrderAccordion";
 import { Order } from "../../../models/api/order";
@@ -9,7 +8,7 @@ import { Order } from "../../../models/api/order";
 export default function OrdersList({ orders, onCardClick }: OrdersListProps) {
   const groupedByAdverts =
     orders?.reduce((acc: any, curr) => {
-      const advertId = curr.advert.id as keyof typeof acc;
+      const advertId = curr.advert?.id as keyof typeof acc;
       if (!acc[advertId]) {
         acc[advertId] = [];
       }

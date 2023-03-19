@@ -6,7 +6,6 @@ export default function AutoSilentRenew() {
     async function renewTokens() {
       try {
         const user = await userManager.getUser();
-        console.log("Silent: ", user?.expires_in);
         if (user && user.expires_in < 60) {
           await userManager.signinSilent();
         }

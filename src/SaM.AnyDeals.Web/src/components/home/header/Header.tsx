@@ -40,7 +40,7 @@ export default function Header() {
   }, [tabsState]);
 
   const myAdvertsTab = isLoggedIn ? (
-    <PanelTab label="My adverts" to="/adverts/my" />
+    <PanelTab value={1} label="My adverts" to="/adverts/my" />
   ) : undefined;
 
   return (
@@ -51,9 +51,9 @@ export default function Header() {
             Any Deals
           </div>
           <PanelTabs value={tab} onChange={handleChange}>
-            <PanelTab label="Adverts" to="/adverts/search" />
+            <PanelTab value={0} label="Adverts" to="/adverts/search" />
             {myAdvertsTab}
-            <PanelTab label="About" to="/about" />
+            <PanelTab value={2} label="About" to="/about" />
           </PanelTabs>
           <div className="actions">
             {isLoggedIn ? (
