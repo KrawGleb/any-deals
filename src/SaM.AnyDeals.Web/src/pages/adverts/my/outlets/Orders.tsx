@@ -1,13 +1,16 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Box, Tab } from "@mui/material";
 import { useNavigate } from "react-router-dom";
 import OrdersList from "../../../../components/orders/list/OrdersList";
 import GoalTabs from "../../../../components/search/filters/GoalTabs";
 import { useGetMyOrdersQuery } from "../../../../features/api/extensions/ordersApiExtension";
 import { Order } from "../../../../models/api/order";
+import { useDispatch } from "react-redux";
+import { setMyTab } from "../../../../features/store/slices/tabsSlice";
 
 export default function Orders() {
   const navigate = useNavigate();
+  const dispatch = useDispatch();
   const [tab, setTab] = useState(0);
   const [archivated, setArchivated] = useState(false);
   const { data: orders } = useGetMyOrdersQuery({ archivated });
@@ -18,6 +21,10 @@ export default function Orders() {
     setTab(newTab);
     setArchivated(newTab === 1);
   };
+
+  useEffect(() => {
+    dispatch(setMyTab(1));
+  }, [dispatch]);
 
   return (
     <div>

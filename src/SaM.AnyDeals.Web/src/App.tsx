@@ -19,8 +19,6 @@ import AutoSilentRenew from "./pages/auth/AutoSilentRenew";
 import SignOut from "./pages/auth/SignOut";
 import SignIn from "./pages/auth/SignIn";
 
-// Lazy loaded pages
-// About
 const ErrorPage = lazy(() => import("./pages/errors/Error"));
 const AboutPage = lazy(() => import("./pages/about/About"));
 const UserPage = lazy(() => import("./pages/user/User"));
@@ -48,13 +46,13 @@ function App() {
             <Route path="/signout-oidc" element={<SignOut />} />
             <Route path="/signin-oidc" element={<SignIn />} />
             <Route path="/silent" element={<SilentRenew />} />
-            <Route path="/about" element={<AboutPage />} />
             <Route path="/users/:username" element={<UserPage />} />
             <Route
               path="/error"
               element={<ErrorPage text="Something went wrong" />}
             />
             <Route path="/" element={<Home />}>
+              <Route path="about" element={<AboutPage />} />
               <Route path="adverts" element={<Outlet />}>
                 <Route path="search" element={<Search />} />
                 <Route path="new" element={<NewAdvert />} />

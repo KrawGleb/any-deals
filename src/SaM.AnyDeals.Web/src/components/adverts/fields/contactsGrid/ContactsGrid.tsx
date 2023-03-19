@@ -35,7 +35,7 @@ export default function ContactsGrid({ contacts }: { contacts: Contacts }) {
         </Typography>
       </div>
 
-      <div className="contacts__row">
+      <div className="contacts__row contacts__name">
         <Typography variant="h6" noWrap>
           {contacts.name}
         </Typography>

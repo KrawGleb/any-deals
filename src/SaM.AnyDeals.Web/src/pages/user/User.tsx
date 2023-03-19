@@ -8,6 +8,8 @@ import BackLine from "../../components/common/backLine/BackLine";
 import { RadialBarChart, RadialBar, Legend } from "recharts";
 import Grid from "@mui/material/Unstable_Grid2";
 import AdvertsList from "../../components/adverts/list/AdvertsList";
+import Placeholder from "../../components/common/placeholder/Placeholder";
+import AnimatedBox from "../../components/common/animated/box/AnimatedBox";
 
 const preparedColors = ["#8A2BE2", "#FF69B4", "#00CED1", "#FFA500", "#32CD32"];
 
@@ -56,8 +58,6 @@ export default function User() {
     .slice(0, 5)
     .map((v, index) => ({ ...v, fill: preparedColors[index] }));
 
-  console.log(topFiveFromDataWithColors);
-
   return (
     <Box className="user-details__container">
       <BackLine link="/" />
@@ -72,17 +72,24 @@ export default function User() {
               Ratings
             </Typography>
             <Box className="user-details__body__rating__body">
-              <Box>
-                <Grid container columnGap={2} rowGap={1}>
-                  {userDetails?.averageRatingDescriptions.map((desc) => (
-                    <Grid className="user-details__body__rating__body__item">
-                      <Typography>{desc.category}</Typography>
-                      <Rating max={10} value={desc.averageRating} readOnly />
-                      <Typography>{`(${desc.reviewsCount})`}</Typography>
-                    </Grid>
-                  ))}
-                </Grid>
-              </Box>
+              {userDetails?.averageRatingDescriptions &&
+              userDetails?.averageRatingDescriptions.length > 0 ? (
+                <Box>
+                  <Grid container columnGap={2} rowGap={1}>
+                    {userDetails?.averageRatingDescriptions.map((desc) => (
+                      <Grid className="user-details__body__rating__body__item">
+                        <Typography>{desc.category}</Typography>
+                        <Rating max={10} value={desc.averageRating} readOnly />
+                        <Typography>{`(${desc.reviewsCount})`}</Typography>
+                      </Grid>
+                    ))}
+                  </Grid>
+                </Box>
+              ) : (
+                <Box className="user-details__body__rating__empty">
+                  <Placeholder />
+                </Box>
+              )}
 
               <RadialBarChart
                 cx={"50%"}
@@ -134,12 +141,16 @@ export default function User() {
           </Box>
 
           <Paper className="user-details__sidebar__body">
-            <Typography variant="h5" fontWeight="bold">
-              {userDetails?.user.userName}
-            </Typography>
-            <Typography variant="subtitle2" color="gray">
-              {userDetails?.user.email}
-            </Typography>
+            <AnimatedBox delay={0.1}>
+              <Typography variant="h5" fontWeight="bold">
+                {userDetails?.user.userName}
+              </Typography>
+            </AnimatedBox>
+            <AnimatedBox delay={0.2}>
+              <Typography variant="subtitle2" color="gray">
+                {userDetails?.user.email}
+              </Typography>
+            </AnimatedBox>
           </Paper>
         </Box>
       </Box>

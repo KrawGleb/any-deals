@@ -4,4 +4,5 @@ public static class AdvertConstraints
 {
     public const int TitleMaxLength = 100;
     public const int DescriptionMaxLength = 1000;
+    public const int AttachmentsMaxCount = 10;
 }

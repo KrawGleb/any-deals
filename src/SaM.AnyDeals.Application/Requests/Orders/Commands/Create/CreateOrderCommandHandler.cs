@@ -1,5 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using SaM.AnyDeals.Application.Common.Services.Interfaces;
+using SaM.AnyDeals.Common.Enums;
 using SaM.AnyDeals.Common.Enums.Adverts;
 using SaM.AnyDeals.Common.Exceptions;
 using SaM.AnyDeals.DataAccess;
@@ -29,16 +30,15 @@ public class CreateOrderCommandHandler : IRequestHandler<CreateOrderCommand, Res
     public async Task<Response> Handle(CreateOrderCommand request, CancellationToken cancellationToken)
     {
         var advert = await _applicationDbContext
-                               .Adverts
-                               .SingleOrDefaultAsync(a => a.Id == request.AdvertId, cancellationToken)
-                           ?? throw new NotFoundException($"Advert with id {request.AdvertId} not found.");
+                         .Adverts
+                         .SingleOrDefaultAsync(a => a.Id == request.AdvertId, cancellationToken)
+                     ?? throw new NotFoundException($"Advert with id {request.AdvertId} not found.");
+        ThrowExceptionIfAdvertIsDraft(advert);
 
         var initiator = await _currentUserService.GetCurrentUserAsync();
         var (executorId, customerId) = GetActorsIds(advert, initiator);
-
-        if (customerId == executorId)
-            throw new ForbiddenActionException("Customer and executor are the same user.");
-
+        ThrowExceptionIfCustomerAndExecutorAreSame(customerId, executorId);    
+        
         var paymentMethod = GetPaymentMethod(advert, request);
         var order = new OrderDbEntry
         {
@@ -130,5 +130,17 @@ public class CreateOrderCommandHandler : IRequestHandler<CreateOrderCommand, Res
             PaymentMethod.Cash when (advert.AllowedCashPayment ?? false) => PaymentMethod.Cash,
             _ => throw new InvalidOperationException("Failed to recognize payment method.")
         };
+    }
+
+    private void ThrowExceptionIfAdvertIsDraft(AdvertDbEntry advert)
+    {
+        if (advert.Status == Status.Draft)
+            throw new ForbiddenActionException("Cannot create order for draft advert.");
+    }
+
+    private void ThrowExceptionIfCustomerAndExecutorAreSame(string customerId, string executorId)
+    {
+        if (customerId == executorId)
+            throw new ForbiddenActionException("Customer and executor are the same user.");
     }
 }

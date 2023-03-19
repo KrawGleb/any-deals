@@ -1,0 +1,59 @@
+.order {
+  &-accordion {
+    &__summary {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+
+      &__title {
+        margin: 0px;
+        padding: 0px;
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+
+        line-height: 1.5;
+        letter-spacing: 0.00938em;
+        font-style: normal;
+        font-weight: 500;
+        font-size: 24px;
+        overflow-wrap: anywhere;
+        color: rgb(57, 5, 188);
+        transition: color 150ms ease-in-out 0s;
+
+        &:hover {
+          color: rgb(216, 1, 230);
+        }
+      }
+
+      &__header {
+        display: flex;
+        flex-direction: row;
+        gap: 16px;
+      }
+    }
+
+    &__details {
+      border-top: 1px solid rgba(207, 207, 207, 0.441);
+      border-bottom: 1px solid rgba(207, 207, 207, 0.441);
+      margin-bottom: 12px;
+      cursor: pointer;
+
+      &__header {
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        gap: 3rem;
+
+        &__id {
+          color: rgb(57, 5, 188);
+          transition: color 150ms ease-in-out 0s;
+
+          &:hover {
+            color: rgb(216, 1, 230);
+          }
+        }
+      }
+    }
+  }
+}

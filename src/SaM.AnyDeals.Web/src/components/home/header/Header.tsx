@@ -22,7 +22,8 @@ import { skipToken } from "@reduxjs/toolkit/dist/query";
 
 export default function Header() {
   const navigate = useNavigate();
-  const [value, setValue] = useState(0);
+  const tabsState = useSelector((state: RootState) => state.tabs);
+  const [tab, setTab] = useState(0);
 
   const authState = useSelector((state: RootState) => state.auth);
   const isLoggedIn = !!authState.user;
@@ -30,16 +31,16 @@ export default function Header() {
 
   const { data: me } = useGetMeQuery(!isLoggedIn ? skipToken : undefined);
 
-  const handleChange = (_event: SyntheticEvent, newValue: number) => {
-    setValue(newValue);
+  const handleChange = (_event: SyntheticEvent, nextTab: number) => {
+    setTab(nextTab);
   };
 
   useEffect(() => {
-    console.log(me);
-  }, [me]);
+    setTab(tabsState.headerTab);
+  }, [tabsState]);
 
   const myAdvertsTab = isLoggedIn ? (
-    <PanelTab label="My adverts" to="/adverts/my" />
+    <PanelTab value={1} label="My adverts" to="/adverts/my" />
   ) : undefined;
 
   return (
@@ -49,10 +50,10 @@ export default function Header() {
           <div className="logo" onClick={() => navigate("/")}>
             Any Deals
           </div>
-          <PanelTabs value={value} onChange={handleChange}>
-            <PanelTab label="Adverts" to="/adverts/search" />
+          <PanelTabs value={tab} onChange={handleChange}>
+            <PanelTab value={0} label="Adverts" to="/adverts/search" />
             {myAdvertsTab}
-            <PanelTab label="About" to="/about" />
+            <PanelTab value={2} label="About" to="/about" />
           </PanelTabs>
           <div className="actions">
             {isLoggedIn ? (

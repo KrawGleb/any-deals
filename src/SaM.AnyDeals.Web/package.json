@@ -40,7 +40,7 @@
   },
   "scripts": {
     "https": "set \"REACT_APP_CONTAINERIZED=false\" && set \"HTTPS=true\" && set \"SSL_CRT_FILE=./cert/cert.pem\" && set \"SSL_KEY_FILE=./cert/key.pem\" && npm start",
-    "start": "react-scripts start",
+    "start": "react-scripts start --no-ws",
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject"
