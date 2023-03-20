@@ -1,5 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using SaM.AnyDeals.Application.Common.Services.Interfaces;
+using SaM.AnyDeals.Common.Enums;
 using SaM.AnyDeals.Common.Enums.Adverts;
 using SaM.AnyDeals.Common.Exceptions;
 using SaM.AnyDeals.DataAccess;
@@ -52,7 +53,9 @@ public class ApproveOrderCommandHandler : IRequestHandler<ApproveOrderCommand, R
             .Reference(o => o.Advert)
             .LoadAsync(cancellationToken);
 
-        if (order.Advert!.Interest == Interest.Social || order.Advert.Price is null)
+        if (order.Advert!.Interest == Interest.Social ||
+            order.Advert.Price is null ||
+            order.PaymentMethod == PaymentMethod.Cash)
             return;
 
         await _applicationDbContext
