@@ -20,7 +20,8 @@ public class ApiExceptionFilter : IActionFilter, IOrderedFilter
         {
             { typeof(NotFoundException), HandleNotFoundException },
             { typeof(ValidationException), HandleValidationException },
-            { typeof(ForbiddenActionException), HandleForbiddenActionException }
+            { typeof(ForbiddenActionException), HandleForbiddenActionException },
+            { typeof(TaskCanceledException), HandleTaskCanceledException }
         };
     }
 
@@ -83,7 +84,7 @@ public class ApiExceptionFilter : IActionFilter, IOrderedFilter
 
     private void HandleForbiddenActionException(ActionExecutedContext context)
     {
-        _logger.LogInformation(context.Exception, "Forbiddenr action");
+        _logger.LogInformation(context.Exception, "Forbidden action");
         var response = new ErrorResponse
         {
             Errors = new[] { "Forbidden action." }
@@ -110,5 +111,10 @@ public class ApiExceptionFilter : IActionFilter, IOrderedFilter
         {
             StatusCode = StatusCodes.Status400BadRequest
         };
+    }
+
+    private void HandleTaskCanceledException(ActionExecutedContext context)
+    {
+        _logger.LogInformation("Task was canceled");
     }
 }
