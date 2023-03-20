@@ -48,7 +48,7 @@ public class AdvertEntityConfiguration : EntityConfigurationBase<AdvertDbEntry>
 
         builder
             .Property(a => a.Price)
-            .HasPrecision(8, 2);
+            .HasPrecision(9, 2);
     }
 
     public override void ConfigureConstraints(EntityTypeBuilder<AdvertDbEntry> builder)

@@ -37,11 +37,6 @@ export default function Moderation() {
                 value={0}
                 onClick={() => navigate("adverts")}
               />
-              <VerticalTab
-                label="Categories"
-                value={1}
-                onClick={() => navigate("categories")}
-              />
             </Tabs>
           </Grid>
           <Grid item className="moderation-content__body">

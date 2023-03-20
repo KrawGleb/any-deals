@@ -18,8 +18,8 @@ public class UpdateAdvertCommandValidator : AbstractValidator<UpdateAdvertComman
             .MaximumLength(CategoryConstraints.NameMaxLength);
 
         RuleFor(x => x.Price)
-            .Must(p => p is null or >= 0);
-
+            .Must(p => p is null or >= 0 and <= AdvertConstraints.PriceMaxValue);
+        
         RuleFor(x => x.Attachments)
             .Must(a => a is null || a.Count <= AdvertConstraints.AttachmentsMaxCount);
     }

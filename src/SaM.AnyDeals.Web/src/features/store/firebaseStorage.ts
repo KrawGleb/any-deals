@@ -7,7 +7,7 @@ const firebaseApp = initializeApp({
   databaseURL:
     "https://listography-690a0-default-rtdb.europe-west1.firebasedatabase.app",
   projectId: "listography-690a0",
-  storageBucket: "listography-690a0.appspot.com",
+  storageBucket: "gs://listography-690a0.appspot.com",
   messagingSenderId: "964387488071",
   appId: "1:964387488071:web:3d3c5189100cd089868c62",
 });
