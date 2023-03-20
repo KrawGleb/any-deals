@@ -56,11 +56,11 @@ public class ApplicationDbContext : IdentityDbContext<ApplicationUser, IdentityR
                 case EntityState.Deleted:
                     await _elasticService.DeleteAdvertAsync(advertElasticEntry, cancellationToken);
                     break;
-                case EntityState.Modified:
-                    await _elasticService.UpdateAdvertAsync(advertElasticEntry, cancellationToken);
-                    break;
                 case EntityState.Added:
                     await _elasticService.IndexAdvertAsync(advertElasticEntry, cancellationToken);
+                    break;
+                default:
+                    await _elasticService.UpdateAdvertAsync(advertElasticEntry, cancellationToken);
                     break;
             }
         }
