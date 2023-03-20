@@ -50,6 +50,7 @@ const schema = yup
       interest: yup.number().label("Interest").required().default(0),
       price: yup
         .number()
+        .max(1_000_000)
         .nullable()
         .when(["goal", "interest"], {
           is: (goalValue: number, interestValue: number) =>

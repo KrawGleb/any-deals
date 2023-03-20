@@ -1,7 +1,7 @@
 import { Paper } from "@mui/material";
 import { Controller } from "react-hook-form";
 import Typography from "@mui/material/Typography";
-import React from "react";
+import React, { useEffect, useState } from "react";
 import AttachmentType from "../../../../../models/enums/attachmentType";
 import { StoredFile } from "../../../../../models/storedFile";
 import { AdvertFilesUploadAreaProps } from "./AdvertFilesUploadAreaProps";
@@ -11,6 +11,27 @@ export default function AdvertFilesUploadArea({
   control,
   attachments,
 }: AdvertFilesUploadAreaProps) {
+  const [uploadedFiles, setUploadedFiles] = useState<StoredFile[] | undefined>(
+    []
+  );
+
+  useEffect(() => {
+    if (!attachments) return;
+
+    setUploadedFiles(
+      attachments.map(
+        (attachment, index) =>
+          ({
+            id: index,
+            name: attachment.name,
+            type: AttachmentType.convertToString(attachment.type),
+            deleted: false,
+            url: attachment.link,
+          } as StoredFile)
+      )
+    );
+  }, [attachments]);
+
   return (
     <Paper sx={{ padding: "16px" }}>
       <Typography variant="h6">Documents, images</Typography>
@@ -22,23 +43,7 @@ export default function AdvertFilesUploadArea({
         control={control}
         name={"files"}
         render={(field) => (
-          <FilesUploadField
-            {...field}
-            uploadedFiles={
-              attachments
-                ? attachments.map(
-                    (attachment, index) =>
-                      ({
-                        id: index,
-                        name: attachment.name,
-                        type: AttachmentType.convertToString(attachment.type),
-                        deleted: false,
-                        url: attachment.link,
-                      } as StoredFile)
-                  )
-                : []
-            }
-          />
+          <FilesUploadField {...field} uploadedFiles={uploadedFiles} />
         )}
       />
     </Paper>

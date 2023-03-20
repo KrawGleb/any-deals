@@ -32,7 +32,6 @@ export default function Executions() {
         sx={{
           display: "flex",
           flexDirection: "row-reverse",
-          padding: "1rem 5.5rem",
           width: "1170px",
         }}
       >

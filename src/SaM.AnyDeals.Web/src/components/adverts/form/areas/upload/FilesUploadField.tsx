@@ -28,13 +28,14 @@ export default function FilesUploadField({
   );
 
   const [_files, setFiles] = useState<UploadableFile[]>([]);
-  const [_storedFiles, setStoredFiles] = useState<StoredFile[] | undefined>(
-    uploadedFiles
-  );
+  const [_storedFiles, setStoredFiles] = useState<StoredFile[] | undefined>([]);
   const [_rejectedFiles, setRejectedFiles] = useState<FileRejection[]>([]);
 
   useEffect(() => {
     setStoredFiles(uploadedFiles);
+    dispatch(resetFiles());
+    dispatch(addFiles(uploadedFiles ?? []));
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [uploadedFiles]);
 
   const onDrop = useCallback(
@@ -76,6 +77,9 @@ export default function FilesUploadField({
   };
 
   const onDeleteUploaded = (uploadedFile: StoredFile) => {
+    console.log("Delete uploaded");
+    console.log("Current stored files:");
+    console.log(_storedFiles);
     setStoredFiles((cur) => cur?.filter((f) => f.id !== uploadedFile.id));
     dispatch(deleteFile({ id: uploadedFile.id }));
   };
@@ -92,12 +96,6 @@ export default function FilesUploadField({
     },
     maxSize: 10 * 1024 * 1024, // 10Mb
   });
-
-  useEffect(() => {
-    dispatch(resetFiles());
-    dispatch(addFiles(uploadedFiles ?? []));
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
 
   return (
     <>
