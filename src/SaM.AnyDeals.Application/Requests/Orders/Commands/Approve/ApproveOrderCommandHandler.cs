@@ -33,20 +33,18 @@ public class ApproveOrderCommandHandler : IRequestHandler<ApproveOrderCommand, R
         if (order.ExecutorId == userId)
             order.HasExecutorApproval = true;
         else if (order.CustomerId == userId)
+        {
             order.HasCustomerApproval = true;
+            await AddFundsOnCompletedOrderAsync(order, cancellationToken);
+        }
         else
             throw new ForbiddenActionException();
-
-        await AddFundsOnCompletedOrderAsync(order, cancellationToken);
-
+        
         return new Response();
     }
 
     private async Task AddFundsOnCompletedOrderAsync(OrderDbEntry order, CancellationToken cancellationToken)
     {
-        if (!order.HasCustomerApproval)
-            return;
-
         await _applicationDbContext
             .Orders
             .Entry(order)
