@@ -46,7 +46,7 @@ export default function Filters() {
 
   const [localInterest, setLocalInterest] = useState<number[]>([]);
   const [localGoal, setLocalGoal] = useState<number>(0);
-  const [title, setTitle] = useState<string | undefined>(undefined);
+  const [title, setTitle] = useState<string | undefined>("");
 
   const setInterest = (value: number[]) => {
     setLocalInterest(value);
@@ -110,7 +110,7 @@ export default function Filters() {
   useEffect(() => {
     setLocalInterest((_curr) => (filters.interest ? [filters.interest] : []));
     setLocalGoal(filters.goal ?? 2);
-    setTitle(filters.title);
+    setTitle(filters.title ?? "");
 
     if (filters.country)
       setSelectedCountry({
@@ -133,6 +133,9 @@ export default function Filters() {
   const handleSearchClick = () => {
     dispatch(setTitleFilter(title));
   };
+
+  const handleTextFilterChange = (e: ChangeEvent<HTMLInputElement>) =>
+    setTitle(e.target.value);
 
   return (
     <>
@@ -198,10 +201,10 @@ export default function Filters() {
             />
             <Box className="text">
               <Input
+                type="text"
                 label="Text in advert"
-                onChange={(e: ChangeEvent<HTMLInputElement>) =>
-                  setTitle(e.target.value)
-                }
+                value={title}
+                onChange={handleTextFilterChange}
               />
               <Button
                 variant="contained"

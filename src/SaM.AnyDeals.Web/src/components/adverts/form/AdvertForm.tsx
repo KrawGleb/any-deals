@@ -109,6 +109,13 @@ const schema = yup
       null,
       "contacts.phone"
     );
+  })
+  .test("shouldCheckEmptyTitle", (obj) => {
+    const title = obj.title;
+
+    return !title.trim()
+      ? new yup.ValidationError("Title should not be empty", null, "title")
+      : true;
   });
 
 export default function AdvertForm({ advert }: AdvertFormProps) {

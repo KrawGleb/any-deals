@@ -93,6 +93,7 @@ export default function OrderChat(props: OrderChatProps) {
           ref={inputRef}
           label="Write a message"
           disabled={props.disabled}
+          inputProps={{ maxLength: 500 }}
         />
         <Button
           type="submit"

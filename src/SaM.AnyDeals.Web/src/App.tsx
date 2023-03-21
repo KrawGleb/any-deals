@@ -35,6 +35,7 @@ const ModerationCategoriesPage = lazy(
 
 function App() {
   const authState = useSelector((state: RootState) => state.auth);
+  const isAuthorized = !!authState.user;
   const isAdmin = authState.isAdmin;
 
   return (
@@ -55,14 +56,18 @@ function App() {
               <Route path="about" element={<AboutPage />} />
               <Route path="adverts" element={<Outlet />}>
                 <Route path="search" element={<Search />} />
-                <Route path="new" element={<NewAdvert />} />
-                <Route path="edit" element={<EditAdvert />} />
                 <Route path="details" element={<AdvertDetails />} />
-                <Route path="my" element={<MyAdverts />}>
-                  <Route path="" element={<CreatedAdverts />} />
-                  <Route path="orders" element={<Orders />} />
-                  <Route path="execution" element={<Executions />} />
-                </Route>
+                {isAuthorized && (
+                  <>
+                    <Route path="new" element={<NewAdvert />} />
+                    <Route path="edit" element={<EditAdvert />} />
+                    <Route path="my" element={<MyAdverts />}>
+                      <Route path="" element={<CreatedAdverts />} />
+                      <Route path="orders" element={<Orders />} />
+                      <Route path="executions" element={<Executions />} />
+                    </Route>
+                  </>
+                )}
                 <Route path="" element={<Navigate to="search" />} />
               </Route>
               <Route path="orders" element={<Outlet />}>

@@ -47,9 +47,9 @@ export default function MyAdverts() {
               onClick={() => navigate("orders")}
             />
             <VerticalTab
-              label="Execution"
+              label="Executions"
               value={2}
-              onClick={() => navigate("execution")}
+              onClick={() => navigate("executions")}
             />
           </VerticalTabs>
         </Grid>
